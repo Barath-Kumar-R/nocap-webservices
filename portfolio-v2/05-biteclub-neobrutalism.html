@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bite Club Dental — Thirukalukundram</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{ --ink:#0A0A0A; --white:#FFFFFF; --yellow:#F5FF3D; --red:#FF3B30; --blue:#2F5CFF; --bg:#FFFDF4; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Space Mono',monospace; background:var(--bg); color:var(--ink);}
+  h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; line-height:1.1; text-transform:uppercase;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .hard{border:4px solid var(--ink); box-shadow:8px 8px 0 var(--ink);}
+
+  nav{padding:20px 0; border-bottom:4px solid var(--ink); background:var(--white);}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-family:'Archivo Black',sans-serif; font-size:20px; text-transform:uppercase; display:flex; align-items:center; gap:10px;}
+  .logo-box{width:34px; height:34px; background:var(--red); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center;}
+  .logo-box svg{width:18px; height:18px; stroke:white; fill:none; stroke-width:2;}
+  .nav-links{display:flex; gap:0; font-size:13px; font-weight:700; text-transform:uppercase;}
+  .nav-links a{text-decoration:none; color:var(--ink); padding:10px 18px; border-left:3px solid var(--ink);}
+  .btn-brut{background:var(--yellow); color:var(--ink); padding:11px 20px; border:3px solid var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:13px; text-decoration:none; text-transform:uppercase;}
+
+  .hero{padding:64px 0; border-bottom:4px solid var(--ink);}
+  .hero-grid{display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:start;}
+  .tag{display:inline-block; background:var(--ink); color:var(--yellow); font-size:12px; font-weight:700; padding:6px 14px; text-transform:uppercase; margin-bottom:20px;}
+  .hero h1{font-size:clamp(34px,5vw,58px);}
+  .hero h1 mark{background:var(--red); color:white; padding:0 8px; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .hero p{margin-top:22px; font-size:15px; line-height:1.8; max-width:460px;}
+  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn-blk{background:var(--ink); color:white; padding:16px 26px; font-family:'Archivo Black',sans-serif; font-size:14px; text-decoration:none; border:3px solid var(--ink); text-transform:uppercase;}
+  .btn-out{background:var(--white); color:var(--ink); padding:16px 26px; font-family:'Archivo Black',sans-serif; font-size:14px; text-decoration:none; border:3px solid var(--ink); text-transform:uppercase;}
+
+  .hero-photo{height:340px; background:var(--blue); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
+  .hero-photo svg{width:30px; height:30px; stroke:white; fill:none; stroke-width:1.6;}
+  .hero-photo span{font-size:10.5px; color:white; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;}
+
+  section{padding:70px 0;}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; margin-bottom:40px; padding-bottom:24px; border-bottom:4px solid var(--ink);}
+  .sec-head h2{font-size:clamp(24px,3.2vw,36px);}
+  .sec-head p{font-size:13px; max-width:280px;}
+
+  .price-sheet{border-top:3px solid var(--ink); border-left:3px solid var(--ink);}
+  .price-row{display:grid; grid-template-columns:70px 1fr 1fr 140px; border-right:3px solid var(--ink); border-bottom:3px solid var(--ink);}
+  .price-row.head{background:var(--ink); color:white; font-weight:700; text-transform:uppercase; font-size:11.5px;}
+  .price-row div{padding:16px 18px; display:flex; align-items:center; font-size:13.5px;}
+  .price-row div:not(:last-child){border-right:3px solid var(--ink);}
+  .price-row.head div:not(:last-child){border-right:3px solid #333;}
+  .price-row .code{font-weight:700;}
+  .price-row .amt{font-family:'Archivo Black',sans-serif; font-size:16px;}
+  .row-yellow{background:var(--yellow);}
+  .row-red{background:var(--red); color:white;}
+  .row-blue{background:var(--blue); color:white;}
+
+  .about-brut{display:grid; grid-template-columns:0.85fr 1.15fr; gap:0;}
+  .about-photo{background:repeating-linear-gradient(45deg,#EFEFEF,#EFEFEF 12px,#E2E2E2 12px,#E2E2E2 13px); border:4px solid var(--ink); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
+  .about-photo svg{width:28px; height:28px; stroke:#666; fill:none; stroke-width:1.4;}
+  .about-photo span{font-size:10.5px; color:#666; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;}
+  .about-copy{padding:0 0 0 44px; display:flex; flex-direction:column; justify-content:center;}
+  .about-copy h3{font-size:26px; margin-bottom:16px;}
+  .about-copy p{font-size:14px; line-height:1.85;}
+  .stat-strip{display:flex; gap:0; margin-top:28px; border:3px solid var(--ink);}
+  .stat-strip div{flex:1; padding:16px; border-right:3px solid var(--ink);}
+  .stat-strip div:last-child{border-right:none;}
+  .stat-strip b{font-family:'Archivo Black',sans-serif; font-size:22px; display:block;}
+  .stat-strip span{font-size:10.5px; text-transform:uppercase;}
+
+  .contact-brut{display:grid; grid-template-columns:1fr 1fr; gap:0; border:4px solid var(--ink);}
+  .contact-info{padding:40px; border-right:4px solid var(--ink); background:var(--ink); color:var(--white);}
+  .info-row{display:flex; gap:14px; padding:16px 0; border-bottom:2px solid #333;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{width:100px; font-size:11px; font-weight:700; color:var(--yellow); flex-shrink:0; text-transform:uppercase;}
+  .info-row .val{font-size:13.5px;}
+  .form{padding:40px; display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:3px solid var(--ink); padding:14px; font-family:'Space Mono',monospace; font-size:13.5px;}
+  .form button{background:var(--red); color:white; border:3px solid var(--ink); padding:15px; font-family:'Archivo Black',sans-serif; font-size:13.5px; cursor:pointer; text-transform:uppercase;}
+
+  footer{padding:26px 0; font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:4px solid var(--ink); font-weight:700;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:5px 5px 0 var(--ink); text-decoration:none;}
+  .wa-float svg{width:26px; height:26px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .4s ease, transform .4s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .price-row{grid-template-columns:50px 1fr 100px;}
+    .price-row .desc-col{display:none;}
+    .about-brut{grid-template-columns:1fr;}
+    .about-copy{padding:32px 0 0;}
+    .about-photo{min-height:260px;}
+    .contact-brut{grid-template-columns:1fr;}
+    .contact-info{border-right:none; border-bottom:4px solid var(--ink);}
+  }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="logo-box"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Bite Club Dental</div>
+    <div class="nav-links"><a href="#pricing">Pricing</a><a href="#about">About</a><a href="#contact">Visit</a></div>
+    <a class="btn-brut" href="#contact">Book →</a>
+  </div>
+</nav>
+
+<header class="wrap hero reveal">
+  <div class="hero-grid">
+    <div>
+      <span class="tag">Thirukalukundram · No-Fluff Dentistry</span>
+      <h1>We <mark>tell you the price</mark> before we touch a tooth.</h1>
+      <p>No vague estimates, no "we'll see once we're in there." Every procedure is listed with a real number. If it changes, we tell you why, before we do it.</p>
+      <div class="hero-ctas">
+        <a class="btn-blk" href="#contact">Book appointment</a>
+        <a class="btn-out" href="#pricing">See real prices</a>
+      </div>
+    </div>
+    <div class="hero-photo hard"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Clinic photo</span></div>
+  </div>
+</header>
+
+<section class="wrap" id="pricing">
+  <div class="sec-head reveal">
+    <div><span class="tag">The Price List</span><h2 style="margin-top:12px;">No hidden line items.</h2></div>
+    <p>Every number below is what you pay. Not "starting from." Not "call for quote."</p>
+  </div>
+  <div class="price-sheet reveal">
+    <div class="price-row head"><div>Code</div><div>Procedure</div><div class="desc-col">Notes</div><div>Price</div></div>
+    <div class="price-row"><div class="code">GEN-01</div><div>Consultation + X-ray</div><div class="desc-col">Full exam, written plan</div><div class="amt">₹500</div></div>
+    <div class="price-row row-yellow"><div class="code">GEN-02</div><div>Cleaning & Polish</div><div class="desc-col">Ultrasonic scaling</div><div class="amt">₹1,100</div></div>
+    <div class="price-row"><div class="code">RST-03</div><div>Composite Filling</div><div class="desc-col">Per tooth</div><div class="amt">₹1,400+</div></div>
+    <div class="price-row row-red"><div class="code">END-04</div><div>Root Canal</div><div class="desc-col">Crown billed separately</div><div class="amt">₹5,800+</div></div>
+    <div class="price-row row-blue"><div class="code">IMP-05</div><div>Single Implant</div><div class="desc-col">Guided placement + crown</div><div class="amt">₹24,000+</div></div>
+    <div class="price-row"><div class="code">EMR-06</div><div>Emergency Slot</div><div class="desc-col">Same-day, walk-in</div><div class="amt">₹700</div></div>
+  </div>
+</section>
+
+<section class="wrap" id="about">
+  <div class="sec-head reveal"><div><span class="tag">Who's Behind This</span><h2 style="margin-top:12px;">One dentist, zero upsell.</h2></div></div>
+  <div class="about-brut reveal">
+    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Dentist portrait</span></div>
+    <div class="about-copy">
+      <h3>Dr. [Name], BDS.</h3>
+      <p>Started Bite Club after years of patients asking "why does the price change every visit." Now it doesn't. Every treatment plan is quoted flat and explained in plain terms before you agree to anything.</p>
+      <div class="stat-strip">
+        <div><b>7 yrs</b><span>SOLO PRACTICE</span></div>
+        <div><b>0</b><span>SURPRISE BILLS</span></div>
+        <div><b>4.8★</b><span>GOOGLE RATING</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="sec-head reveal"><div><span class="tag">Visit</span><h2 style="margin-top:12px;">Book a real slot.</h2></div></div>
+  <div class="contact-brut reveal">
+    <div class="contact-info">
+      <div class="info-row"><div class="lbl">Address</div><div class="val">Mahabalipuram Road, Thirukalukundram 603109</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM – 7 PM</div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--yellow); font-weight:700;">Message us →</a></div></div>
+    </div>
+    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nProcedure code (if known): ' + this.code.value);">
+      <input name="name" type="text" placeholder="Full name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <input name="code" type="text" placeholder="Procedure code (optional, see price list)">
+      <button type="submit">Book slot</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 BITE CLUB DENTAL, THIRUKALUKUNDRAM.</span>
+  <span>DESIGN PORTFOLIO PIECE · NOT A LIVE BUSINESS</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

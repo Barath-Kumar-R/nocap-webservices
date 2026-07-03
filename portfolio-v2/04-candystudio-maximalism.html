@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Candy Studio Dental Aesthetics — Uttiramerur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800;900&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{ --pink:#FF3D8A; --lime:#C6FF3D; --purple:#7B2FF7; --orange:#FF7A00; --ink:#0A0A0A; --white:#FFFFFF; --bg:#FFF6FB; }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Manrope',sans-serif; background:var(--bg); color:var(--ink); overflow-x:hidden; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Unbounded',sans-serif; font-weight:800; line-height:1.15;}
+  a{color:inherit;}
+  .wrap{max-width:1200px; margin:0 auto; padding:0 24px;}
+
+  .ticker{background:var(--ink); color:var(--lime); padding:11px 0; overflow:hidden; white-space:nowrap; font-family:'Unbounded',sans-serif; font-size:13px; font-weight:700; letter-spacing:0.02em;}
+  .ticker-track{display:inline-block; animation:scroll 22s linear infinite;}
+  .ticker span{margin:0 22px;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){ .ticker-track{animation:none;} }
+
+  nav{padding:22px 0;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{font-family:'Unbounded',sans-serif; font-weight:800; font-size:18px; display:flex; align-items:center; gap:10px;}
+  .logo-dot{width:14px; height:14px; background:var(--pink); border-radius:50%; box-shadow:5px 0 0 var(--lime), 10px 0 0 var(--purple);}
+  .nav-links{display:flex; gap:26px; font-size:14px; font-weight:700;}
+  .nav-links a{text-decoration:none; color:var(--ink);}
+  .btn-hot{background:var(--pink); color:white; padding:12px 22px; border-radius:100px; font-size:13.5px; font-weight:800; text-decoration:none; box-shadow:4px 4px 0 var(--ink);}
+
+  .hero{padding:50px 0 100px; position:relative;}
+  .blob{position:absolute; border-radius:50%; filter:blur(0px); z-index:0; opacity:0.85;}
+  .hero-grid{display:grid; grid-template-columns:1.15fr 0.85fr; gap:30px; align-items:center; position:relative; z-index:1;}
+  .sticker{position:absolute; background:var(--lime); border:2.5px solid var(--ink); border-radius:100px; padding:8px 18px; font-size:12.5px; font-weight:800; transform:rotate(-8deg); z-index:2;}
+  .hero h1{font-size:clamp(36px,5vw,60px); margin-top:8px;}
+  .hero h1 .hl{color:var(--pink); -webkit-text-stroke:2px var(--ink);}
+  .hero p{margin-top:22px; font-size:16px; font-weight:600; max-width:440px; line-height:1.6;}
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn-primary{background:var(--purple); color:white; padding:16px 28px; border-radius:100px; font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; text-decoration:none; box-shadow:5px 5px 0 var(--ink); border:2.5px solid var(--ink);}
+  .btn-secondary{background:var(--white); color:var(--ink); padding:16px 28px; border-radius:100px; font-family:'Unbounded',sans-serif; font-size:14px; font-weight:700; text-decoration:none; border:2.5px solid var(--ink);}
+
+  .hero-photo{position:relative; height:420px; background:var(--orange); border:3px solid var(--ink); border-radius:32px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; box-shadow:8px 8px 0 var(--ink); transform:rotate(2deg);}
+  .hero-photo svg{width:34px; height:34px; stroke:white; fill:none; stroke-width:1.6;}
+  .hero-photo span{font-size:11px; color:white; text-transform:uppercase; letter-spacing:0.06em; font-weight:800;}
+
+  section{padding:80px 0;}
+  .sec-head{text-align:center; max-width:640px; margin:0 auto 50px;}
+  .sec-head .eyebrow{display:inline-block; background:var(--purple); color:white; padding:8px 18px; border-radius:100px; font-family:'Unbounded',sans-serif; font-size:12px; font-weight:700; transform:rotate(-2deg);}
+  .sec-head h2{font-size:clamp(26px,3.6vw,40px); margin-top:16px;}
+
+  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .svc-card{border:3px solid var(--ink); border-radius:24px; padding:26px; box-shadow:6px 6px 0 var(--ink); transition:transform .15s;}
+  .svc-card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink);}
+  .svc-card h3{font-size:16.5px; margin:16px 0 8px;}
+  .svc-card p{font-size:13px; font-weight:600; line-height:1.6; opacity:0.85;}
+  .svc-num{font-family:'Unbounded',sans-serif; font-size:24px; font-weight:900;}
+
+  .about-max{display:grid; grid-template-columns:0.9fr 1.1fr; gap:50px; align-items:center; background:var(--ink); border-radius:32px; padding:56px; color:white; position:relative; overflow:hidden;}
+  .about-photo{height:340px; background:var(--purple); border:3px solid white; border-radius:24px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; transform:rotate(-2deg);}
+  .about-photo svg{width:30px; height:30px; stroke:white; fill:none; stroke-width:1.6;}
+  .about-photo span{font-size:11px; color:white; text-transform:uppercase; letter-spacing:0.05em; font-weight:800;}
+  .about-copy .eyebrow{background:var(--lime); color:var(--ink); display:inline-block; padding:8px 18px; border-radius:100px; font-family:'Unbounded',sans-serif; font-size:12px; font-weight:700;}
+  .about-copy h3{font-size:28px; margin:18px 0 14px; color:white;}
+  .about-copy p{font-size:15px; line-height:1.8; font-weight:500; opacity:0.9;}
+  .stat-row{display:flex; gap:16px; margin-top:26px; flex-wrap:wrap;}
+  .stat-chip{background:white; color:var(--ink); border-radius:16px; padding:14px 20px;}
+  .stat-chip b{font-family:'Unbounded',sans-serif; font-size:20px; display:block;}
+  .stat-chip span{font-size:11px; font-weight:700;}
+
+  .contact-max{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .contact-card{border:3px solid var(--ink); border-radius:24px; padding:36px; box-shadow:6px 6px 0 var(--ink);}
+  .info-row{display:flex; gap:14px; padding:14px 0; border-bottom:2px dotted var(--ink);}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{width:100px; font-family:'Unbounded',sans-serif; font-size:11px; font-weight:700; color:var(--pink); flex-shrink:0; text-transform:uppercase;}
+  .info-row .val{font-size:14.5px; font-weight:600;}
+  .form{display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:2.5px solid var(--ink); border-radius:14px; padding:14px 16px; font-family:'Manrope',sans-serif; font-size:14.5px; font-weight:600;}
+  .form button{background:var(--lime); color:var(--ink); border:2.5px solid var(--ink); border-radius:100px; padding:15px; font-family:'Unbounded',sans-serif; font-size:13.5px; font-weight:700; cursor:pointer; box-shadow:4px 4px 0 var(--ink);}
+
+  footer{padding:32px 0; font-size:13px; font-weight:700; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:4px 4px 0 var(--ink); text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .svc-grid{grid-template-columns:1fr 1fr;}
+    .about-max{grid-template-columns:1fr; padding:34px;}
+    .contact-max{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<div class="ticker"><div class="ticker-track">
+  <span>✦ COSMETIC DENTISTRY ✦ SMILE MAKEOVERS ✦ TEETH WHITENING ✦ VENEERS ✦ UTTIRAMERUR'S BOLDEST SMILES ✦ COSMETIC DENTISTRY ✦ SMILE MAKEOVERS ✦ TEETH WHITENING ✦ VENEERS ✦ UTTIRAMERUR'S BOLDEST SMILES ✦</span>
+</div></div>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="logo-dot"></div>Candy Studio</div>
+    <div class="nav-links"><a href="#services">Services</a><a href="#about">Studio</a><a href="#contact">Book</a></div>
+    <a class="btn-hot" href="#contact">Get glam</a>
+  </div>
+</nav>
+
+<header class="wrap hero reveal">
+  <div class="blob" style="width:340px; height:340px; background:var(--lime); top:-40px; right:60px;"></div>
+  <div class="hero-grid">
+    <div>
+      <span class="sticker" style="position:static; display:inline-block;">✨ Cosmetic-First Studio</span>
+      <h1 style="margin-top:18px;">Smiles that get <span class="hl">screenshotted.</span></h1>
+      <p>Veneers, whitening and smile makeovers for a younger, louder, more-online Uttiramerur — with the aftercare to keep it that way.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#contact">Book a smile consult</a>
+        <a class="btn-secondary" href="#services">See the menu</a>
+      </div>
+    </div>
+    <div class="hero-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Studio interior photo</span></div>
+  </div>
+</header>
+
+<section class="wrap" id="services">
+  <div class="sec-head reveal"><span class="eyebrow">The Menu</span><h2>Pick your glow-up.</h2></div>
+  <div class="svc-grid reveal">
+    <div class="svc-card" style="background:var(--pink); color:white;"><span class="svc-num">01</span><h3>Teeth Whitening</h3><p>In-chair, one session, up to 6 shades brighter.</p></div>
+    <div class="svc-card" style="background:var(--lime);"><span class="svc-num">02</span><h3>Veneers</h3><p>Porcelain or composite — full smile in 2 visits.</p></div>
+    <div class="svc-card" style="background:var(--purple); color:white;"><span class="svc-num">03</span><h3>Smile Makeover</h3><p>Full design consult, mockup shown before you commit.</p></div>
+    <div class="svc-card" style="background:var(--orange); color:white;"><span class="svc-num">04</span><h3>Clear Aligners</h3><p>Straighten without anyone clocking the braces.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="about">
+  <div class="about-max reveal">
+    <div class="blob" style="width:220px; height:220px; background:var(--pink); bottom:-60px; right:-40px; opacity:0.35;"></div>
+    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Cosmetic dentist portrait</span></div>
+    <div class="about-copy">
+      <span class="eyebrow">The Studio</span>
+      <h3>Cosmetic-only, on purpose.</h3>
+      <p>Dr. [Name] trained exclusively in aesthetic dentistry — no general check-ups competing for chair time. Every consult starts with a digital smile design so you see the result before treatment begins.</p>
+      <div class="stat-row">
+        <div class="stat-chip"><b>1,200+</b><span>SMILE MAKEOVERS</span></div>
+        <div class="stat-chip"><b>2 visits</b><span>AVG. VENEER TIMELINE</span></div>
+        <div class="stat-chip"><b>4.9 ★</b><span>GOOGLE RATING</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="sec-head reveal"><span class="eyebrow">Book It</span><h2>Slide into our DMs — or just call.</h2></div>
+  <div class="contact-max reveal">
+    <div class="contact-card" style="background:var(--lime);">
+      <div class="info-row"><div class="lbl">Address</div><div class="val">Chennai Main Road, Uttiramerur 603406</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Tue–Sun, 11 AM – 8 PM</div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--pink); font-weight:800;">Message the studio →</a></div></div>
+    </div>
+    <form class="contact-card form" style="background:white;" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Smile Consult Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nInterested in: ' + this.interest.value);">
+      <input name="name" type="text" placeholder="Full name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <input name="interest" type="text" placeholder="Interested in? (e.g. Veneers)">
+      <button type="submit">Book my consult ✨</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Candy Studio Dental Aesthetics, Uttiramerur.</span>
+  <span>Design portfolio piece · Not a live business</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

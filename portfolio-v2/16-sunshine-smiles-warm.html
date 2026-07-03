@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunshine Smiles Kids & Family Dental — Guduvancheri</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --yellow:#FFC857; --coral:#FF8C69; --teal:#3AAFA9; --teal-deep:#2A8B86; --cream:#FFF8ED; --ink:#2B2118; --muted:#7A6E60;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink);}
+  h1,h2,h3{font-family:'Fredoka',sans-serif; font-weight:600; color:var(--ink);}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
+  .eyebrow{font-family:'Fredoka',sans-serif; font-size:13px; letter-spacing:0.04em; color:var(--teal-deep); font-weight:600;}
+
+  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(255,248,237,0.94); backdrop-filter:blur(8px); border-bottom:3px solid var(--yellow);}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:1180px; margin:0 auto;}
+  .logo{font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; display:flex; align-items:center; gap:10px;}
+  .logo .mascot{width:34px; height:34px;}
+  .nav-links{display:flex; gap:28px; font-size:15px; font-weight:600;}
+  .nav-links a{text-decoration:none; color:var(--ink);}
+  .nav-links a:hover{color:var(--coral);}
+  .btn-fill{background:var(--coral); color:white; padding:12px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none; box-shadow:0 4px 0 #D96F4F;}
+  .burger{display:none; background:none; border:none; font-size:24px; cursor:pointer; color:var(--ink);}
+  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:18px 28px 24px; border-top:2px dashed var(--yellow);}
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{text-decoration:none; color:var(--ink); font-size:16px; font-weight:600;}
+
+  .hero{padding:140px 0 80px; position:relative; overflow:hidden;}
+  .hero::before{content:''; position:absolute; top:-80px; right:-80px; width:340px; height:340px; background:var(--yellow); border-radius:50%; opacity:0.35; z-index:0;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center; position:relative; z-index:1;}
+  .hero h1{font-size:clamp(34px,4.8vw,56px); line-height:1.14;}
+  .hero h1 .u{position:relative; color:var(--coral); display:inline-block;}
+  .hero p{font-size:16.5px; line-height:1.75; color:var(--muted); max-width:440px; margin:20px 0 30px; font-weight:500;}
+  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-outline{border:2.5px solid var(--ink); color:var(--ink); padding:11px 24px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  .photo-ph{height:420px; border-radius:32px 32px 32px 4px; background:linear-gradient(160deg,#FFE8C2,#FFD9A0); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; position:relative;}
+  .photo-ph svg{width:34px; height:34px; opacity:0.55;}
+  .photo-ph span{font-size:12px; color:var(--muted); font-weight:700;}
+  .star{position:absolute; z-index:2;}
+
+  section{padding:96px 0;}
+  .sec-head{text-align:center; max-width:560px; margin:0 auto 52px;}
+  .sec-head h2{font-size:clamp(26px,3.4vw,38px); margin-top:10px;}
+  .sec-head p{color:var(--muted); font-size:15px; margin-top:12px; font-weight:500;}
+
+  .mascot-strip{background:var(--teal); border-top:3px solid var(--ink); border-bottom:3px solid var(--ink);}
+  .mascot-strip .wrap{display:flex; align-items:center; gap:40px; padding:56px 28px;}
+  .mascot-big{width:140px; height:140px; flex-shrink:0;}
+  .mascot-strip h2{color:white; font-size:clamp(22px,3vw,32px);}
+  .mascot-strip p{color:#EAF7F5; font-size:15px; margin-top:10px; font-weight:500; max-width:480px;}
+
+  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .svc-card{background:white; border:3px solid var(--ink); border-radius:22px; padding:32px 26px; box-shadow:6px 6px 0 var(--ink); transition:transform .2s;}
+  .svc-card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink);}
+  .svc-icon{width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
+  .svc-icon svg{width:24px; height:24px; stroke:var(--ink);}
+  .svc-card h3{font-size:19px; margin-bottom:10px;}
+  .svc-card p{font-size:14px; color:var(--muted); line-height:1.6; font-weight:500;}
+
+  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:52px; align-items:center;}
+  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:32px;}
+  .stat-pill{background:var(--yellow); border:2.5px solid var(--ink); border-radius:100px; padding:10px 20px; font-weight:700; font-size:13.5px;}
+
+  .steps-row{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .step-card{text-align:center;}
+  .step-num{width:56px; height:56px; border-radius:50%; background:var(--coral); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; color:white; font-size:20px; margin:0 auto 16px;}
+  .step-card h4{font-size:15.5px; margin-bottom:6px;}
+  .step-card p{font-size:12.5px; color:var(--muted); font-weight:500; line-height:1.5;}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:52px;}
+  .info-row{display:flex; gap:16px; padding:16px 0; border-bottom:2px dashed #E0D3BE;}
+  .info-row .lbl{width:100px; font-size:12px; color:var(--teal-deep); font-weight:700; flex-shrink:0;}
+  .form{display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:2.5px solid var(--ink); border-radius:14px; padding:14px; font-family:'Nunito',sans-serif; font-size:14px; background:white;}
+  .form button{background:var(--coral); color:white; border:3px solid var(--ink); border-radius:100px; padding:15px; font-size:14px; font-weight:700; cursor:pointer; box-shadow:0 4px 0 #D96F4F;}
+
+  footer{padding:32px 0; border-top:3px solid var(--yellow); font-size:13px; color:var(--muted); font-weight:600;}
+  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 0 #17994A; text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:900px){
+    .nav-links,.btn-outline{display:none;}
+    .burger{display:block;}
+    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
+    .svc-grid{grid-template-columns:1fr;}
+    .steps-row{grid-template-columns:1fr 1fr; gap:28px;}
+    .mascot-strip .wrap{flex-direction:column; text-align:center; padding:40px 28px;}
+    section{padding:66px 0;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <div class="logo">
+      <svg class="mascot" viewBox="0 0 60 60"><path d="M30 8c-9 0-15 8-15 18 0 12 6 22 9 26 2 2.5 3 1 3.5-1 1-4 1.5-6 2.5-6s1.5 2 2.5 6c.5 2 1.5 3.5 3.5 1 3-4 9-14 9-26 0-10-6-18-15-18z" fill="#fff" stroke="#2B2118" stroke-width="2.5"/><circle cx="24" cy="26" r="2.5" fill="#2B2118"/><circle cx="36" cy="26" r="2.5" fill="#2B2118"/><path d="M25 33q5 4 10 0" stroke="#2B2118" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+      Sunshine Smiles
+    </div>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#about">Our Clinic</a>
+      <a href="#visit">First Visit</a>
+      <a href="#contact">Book</a>
+    </div>
+    <a class="btn-fill" href="#contact">Book a Visit</a>
+    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
+  </div>
+  <div class="mobile-menu" id="mMenu">
+    <a href="#services">Services</a>
+    <a href="#about">Our Clinic</a>
+    <a href="#visit">First Visit</a>
+    <a href="#contact">Book</a>
+  </div>
+</nav>
+
+<section class="hero wrap">
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow">★ Guduvancheri, Chennai</div>
+      <h1 style="margin-top:12px;">Where kids <span class="u">actually</span> look forward to the dentist.</h1>
+      <p>Sunshine Smiles treats the whole family, but we built the clinic around kids first — a play corner, a no-drill-sound promise for checkups, and dentists who explain everything in words a six-year-old understands.</p>
+      <div class="hero-ctas">
+        <a class="btn-fill" href="#contact">Book a Visit</a>
+        <a class="btn-outline" href="#services">Our Services</a>
+      </div>
+    </div>
+    <div class="photo-ph">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7A6E60" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
+      <span>Play corner photo</span>
+    </div>
+  </div>
+</section>
+
+<section class="mascot-strip">
+  <div class="wrap">
+    <svg class="mascot-big" viewBox="0 0 60 60"><path d="M30 8c-9 0-15 8-15 18 0 12 6 22 9 26 2 2.5 3 1 3.5-1 1-4 1.5-6 2.5-6s1.5 2 2.5 6c.5 2 1.5 3.5 3.5 1 3-4 9-14 9-26 0-10-6-18-15-18z" fill="#FFF8ED" stroke="#2B2118" stroke-width="2.5"/><circle cx="24" cy="26" r="2.5" fill="#2B2118"/><circle cx="36" cy="26" r="2.5" fill="#2B2118"/><path d="M25 33q5 4 10 0" stroke="#2B2118" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+    <div>
+      <h2>Meet Dr. Molar — our clinic's favourite explainer.</h2>
+      <p>Every kid gets a puppet-and-mirror walkthrough of their own mouth before any tool comes near it. No surprises, no tears.</p>
+    </div>
+  </div>
+</section>
+
+<section id="services">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div class="eyebrow">★ What We Treat</div>
+      <h2>Dentistry for every age at home.</h2>
+    </div>
+    <div class="svc-grid">
+      <div class="svc-card"><div class="svc-icon" style="background:var(--yellow);"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Kids' Checkups</h3><p>Gentle first visits from age 2, with sticker charts and no scary tools shown upfront.</p></div>
+      <div class="svc-card"><div class="svc-icon" style="background:#C9EAE8;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Family Cleanings</h3><p>Back-to-back slots for the whole family on one Saturday morning.</p></div>
+      <div class="svc-card"><div class="svc-icon" style="background:#FFD9C7;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 12h16M4 12a8 8 0 0116 0"/></svg></div><h3>Braces for Teens</h3><p>Metal and ceramic braces, with a payment plan spread across the treatment.</p></div>
+      <div class="svc-card"><div class="svc-icon" style="background:var(--yellow);"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg></div><h3>Cavity Fillings</h3><p>Tooth-coloured fillings, done calmly with a running commentary for nervous kids.</p></div>
+      <div class="svc-card"><div class="svc-icon" style="background:#C9EAE8;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21c-4-3-8-6-8-11a5 5 0 0110-1 5 5 0 0110 1c0 5-4 8-8 11z"/></svg></div><h3>Adult General Care</h3><p>Root canals, crowns, and whitening for parents and grandparents too.</p></div>
+      <div class="svc-card"><div class="svc-icon" style="background:#FFD9C7;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Emergency Care</h3><p>Same-day slots held for toothaches and after-school playground mishaps.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid reveal">
+    <div class="photo-ph" style="border-radius:4px 32px 32px 32px; height:400px;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#7A6E60" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
+      <span>Doctor & team photo</span>
+    </div>
+    <div>
+      <div class="eyebrow">★ About Us</div>
+      <h2 style="margin-top:10px; font-size:clamp(24px,3vw,34px);">Started by a mum who couldn't find a kid-friendly dentist nearby.</h2>
+      <p style="font-size:15px; color:var(--muted); line-height:1.8; margin-top:14px; font-weight:500;">Dr. [Full Name] opened Sunshine Smiles after driving 40 minutes each way for her own kids' checkups. Guduvancheri families now get the same unhurried, play-first approach five minutes from home.</p>
+      <div class="stat-row">
+        <div class="stat-pill">8 yrs open</div>
+        <div class="stat-pill">2,000+ kids treated</div>
+        <div class="stat-pill">4.8 ★ rating</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="visit">
+  <div class="wrap reveal">
+    <div class="sec-head">
+      <div class="eyebrow">★ First Visit</div>
+      <h2>What to expect, so nobody's nervous.</h2>
+    </div>
+    <div class="steps-row">
+      <div class="step-card"><div class="step-num">1</div><h4>Say hi to Dr. Molar</h4><p>A quick puppet intro before anything else happens.</p></div>
+      <div class="step-card"><div class="step-num">2</div><h4>Count the teeth</h4><p>A mirror check, explained out loud, no tools yet.</p></div>
+      <div class="step-card"><div class="step-num">3</div><h4>Gentle clean</h4><p>Polish and clean with flavoured paste, kid's choice.</p></div>
+      <div class="step-card"><div class="step-num">4</div><h4>Sticker & report</h4><p>A sticker for them, a written note for you.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap contact-grid reveal">
+    <div>
+      <div class="eyebrow">★ Visit Us</div>
+      <h2 style="margin:10px 0 30px; font-size:clamp(24px,3vw,34px);">Book a family visit.</h2>
+      <div class="info-row"><div class="lbl">ADDRESS</div><div>27 GST Road, Guduvancheri, Chengalpattu Dt. 603202</div></div>
+      <div class="info-row"><div class="lbl">PHONE</div><div>+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">HOURS</div><div>Mon–Sat, 9:30 AM – 7:30 PM · Sun 10 AM – 1 PM</div></div>
+      <div class="info-row"><div class="lbl">WHATSAPP</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--teal-deep); font-weight:700;">Message us →</a></div></div>
+    </div>
+    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Booking Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
+      <input name="name" type="text" placeholder="Parent's name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <textarea name="note" rows="4" placeholder="Kid's age / reason for visit"></textarea>
+      <button type="submit">Book a Visit</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap foot-inner">
+  <span>© 2026 Sunshine Smiles Kids & Family Dental.</span>
+  <span>Design portfolio piece · Not a live business</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  els.forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
