@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoCap Webservices — Website Styles for Clinics, Built Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8; --ink:#111114; --muted:#63636D; --line:#E7E5E0; --white:#FFFFFF;
+    --lime:#C8FF3D; --coral:#FF4D2E; --navy:#12163B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;}
+  .wrap{max-width:1260px; margin:0 auto; padding:0 28px;}
+
+  /* NAV */
+  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(250,250,248,0.9); backdrop-filter:blur(10px); z-index:100;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:19px;}
+  .logo .mark{width:30px; height:30px; background:var(--ink); border-radius:8px; display:flex; align-items:center; justify-content:center;}
+  .logo .mark span{color:var(--lime); font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:15px;}
+  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:600;}
+  .nav-links a{text-decoration:none; color:var(--ink);}
+  .btn-nav{background:var(--ink); color:var(--white); padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:700; text-decoration:none;}
+
+  /* TICKER */
+  .ticker{background:var(--ink); color:var(--lime); padding:12px 0; overflow:hidden; white-space:nowrap;}
+  .ticker-track{display:inline-block; animation:scroll 30s linear infinite; font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:500; letter-spacing:0.02em;}
+  .ticker-track span{margin:0 20px; color:var(--muted);}
+  .ticker-track b{color:var(--lime); margin:0 20px;}
+  @keyframes scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+  @media (prefers-reduced-motion:reduce){ .ticker-track{animation:none;} }
+
+  /* HERO */
+  .hero{padding:80px 0 100px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--muted); background:var(--white); border:1px solid var(--line); padding:8px 16px; border-radius:100px;}
+  .eyebrow .dot{width:7px; height:7px; border-radius:50%; background:var(--coral);}
+  .hero h1{font-size:clamp(36px,4.8vw,58px); line-height:1.05; margin-top:22px;}
+  .hero h1 .u{background:var(--lime); padding:0 6px;}
+  .hero p{margin-top:24px; font-size:16.5px; color:var(--muted); line-height:1.7; max-width:480px;}
+  .hero-ctas{display:flex; gap:14px; margin-top:34px; flex-wrap:wrap;}
+  .btn-primary{background:var(--ink); color:var(--white); padding:16px 28px; border-radius:100px; font-size:14.5px; font-weight:700; text-decoration:none;}
+  .btn-secondary{background:var(--white); border:1px solid var(--line); color:var(--ink); padding:16px 28px; border-radius:100px; font-size:14.5px; font-weight:700; text-decoration:none;}
+  .hero-stats{display:flex; gap:36px; margin-top:44px; flex-wrap:wrap;}
+  .hero-stats div b{font-family:'Bricolage Grotesque',sans-serif; font-size:26px; display:block;}
+  .hero-stats div span{font-size:12px; color:var(--muted);}
+
+  /* FANNED PREVIEW STACK */
+  .fan{position:relative; height:420px;}
+  .bcard{position:absolute; width:280px; border-radius:14px; overflow:hidden; box-shadow:0 24px 50px -14px rgba(17,17,20,0.25); border:1px solid rgba(0,0,0,0.06);}
+  .bcard .chrome{background:#EDEBE5; padding:8px 12px; display:flex; align-items:center; gap:6px;}
+  .bcard .chrome .d{width:8px; height:8px; border-radius:50%; background:#D2D0C8;}
+  .bcard .chrome .url{background:var(--white); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); padding:3px 8px; margin-left:6px; flex:1;}
+  .bcard .swatch{height:170px;}
+  .bc1{top:10px; left:40px; transform:rotate(-6deg); z-index:1;}
+  .bc2{top:70px; left:150px; transform:rotate(4deg); z-index:3;}
+  .bc3{top:170px; left:20px; transform:rotate(-2deg); z-index:2;}
+
+  /* SECTIONS */
+  section{padding:80px 0;}
+  .sec-head{text-align:center; max-width:640px; margin:0 auto 20px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,42px); margin-top:14px;}
+  .sec-head p{color:var(--muted); font-size:15.5px; margin-top:14px; line-height:1.7;}
+
+  /* FILTERS */
+  .filters{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:40px 0 44px;}
+  .filter-btn{background:var(--white); border:1px solid var(--line); color:var(--muted); padding:10px 20px; border-radius:100px; font-size:13.5px; font-weight:600; cursor:pointer; transition:all .15s;}
+  .filter-btn.active, .filter-btn:hover{background:var(--ink); color:var(--white); border-color:var(--ink);}
+
+  /* GALLERY */
+  .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
+  .g-card{background:var(--white); border:1px solid var(--line); border-radius:18px; overflow:hidden; text-decoration:none; color:var(--ink); display:block; transition:transform .2s, box-shadow .2s;}
+  .g-card:hover{transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(17,17,20,0.18);}
+  .g-chrome{padding:10px 14px; display:flex; align-items:center; gap:6px; background:#F2F1EC; border-bottom:1px solid var(--line);}
+  .g-chrome .d{width:8px; height:8px; border-radius:50%; background:#D2D0C8;}
+  .g-chrome .url{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-left:6px;}
+  .g-swatch{height:150px; display:flex; align-items:flex-end; padding:14px 16px;}
+  .g-swatch span{background:rgba(0,0,0,0.28); color:white; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:5px 11px; border-radius:100px;}
+  .g-body{padding:20px 22px 24px;}
+  .g-tag{font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral); font-weight:700;}
+  .g-body h3{font-size:17.5px; margin:9px 0 7px; font-family:'Inter',sans-serif; font-weight:700;}
+  .g-body p{font-size:13px; color:var(--muted); line-height:1.6;}
+  .g-body .loc{font-size:11.5px; color:#8F8E88; margin-top:12px; display:flex; justify-content:space-between; align-items:center;}
+  .g-body .loc .go{color:var(--ink); font-weight:700;}
+
+  /* WHY / PROCESS */
+  .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
+  .why-card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:28px 24px;}
+  .why-num{font-family:'Bricolage Grotesque',sans-serif; font-size:13px; color:var(--coral); font-weight:800;}
+  .why-card h3{font-size:17px; margin:14px 0 8px;}
+  .why-card p{font-size:13.5px; color:var(--muted); line-height:1.65;}
+
+  /* PROCESS STRIP */
+  .process{background:var(--navy); border-radius:28px; padding:56px 50px; color:white;}
+  .process-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:30px; margin-top:36px;}
+  .process-step .n{font-family:'Bricolage Grotesque',sans-serif; font-size:32px; color:var(--lime);}
+  .process-step h4{font-size:16px; margin:12px 0 8px; color:white;}
+  .process-step p{font-size:13px; color:#B7BAD1; line-height:1.6;}
+
+  /* CTA */
+  .cta{background:linear-gradient(120deg,var(--coral),#FF9E2F 45%,var(--lime)); border-radius:28px; padding:64px 50px; text-align:center; color:var(--ink);}
+  .cta h2{font-size:clamp(26px,3.6vw,40px); max-width:640px; margin:0 auto;}
+  .cta p{margin-top:16px; font-size:15.5px; max-width:480px; margin-left:auto; margin-right:auto; opacity:0.85;}
+  .cta-ctas{display:flex; gap:14px; justify-content:center; margin-top:32px; flex-wrap:wrap;}
+  .btn-dark{background:var(--ink); color:white; padding:16px 30px; border-radius:100px; font-size:14.5px; font-weight:700; text-decoration:none;}
+  .btn-outline-dark{background:transparent; border:2px solid var(--ink); color:var(--ink); padding:14px 28px; border-radius:100px; font-size:14.5px; font-weight:700; text-decoration:none;}
+
+  footer{padding:40px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:13.5px; color:var(--muted);}
+  footer .foot-links{display:flex; gap:20px;}
+  footer a{text-decoration:none; color:var(--muted);}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(0,0,0,0.2); text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:980px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .fan{height:340px; margin-top:20px;}
+    .gallery{grid-template-columns:1fr 1fr;}
+    .why-grid{grid-template-columns:1fr 1fr;}
+    .process-grid{grid-template-columns:1fr 1fr;}
+    .process{padding:40px 28px;}
+    .cta{padding:48px 28px;}
+  }
+  @media (max-width:640px){
+    .gallery{grid-template-columns:1fr;}
+    .why-grid{grid-template-columns:1fr;}
+    .process-grid{grid-template-columns:1fr;}
+    .bcard{width:220px;}
+    .bc2{left:90px;} .bc3{left:0;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="mark"><span>N</span></div>NoCap Webservices</div>
+    <div class="nav-links"><a href="#gallery">Styles</a><a href="#why">Why Us</a><a href="#process">How It Works</a><a href="#contact">Contact</a></div>
+    <a class="btn-nav" href="#contact">Get a quote</a>
+  </div>
+</nav>
+
+<div class="ticker"><div class="ticker-track">
+  <span>NINETEEN LIVE MOCKUPS —</span><b>BENTO GRID</b><span>·</span><b>MINIMALIST</b><span>·</span><b>FLAT DESIGN</b><span>·</span><b>MAXIMALISM</b><span>·</span><b>NEO-BRUTALISM</b><span>·</span><b>GLASSMORPHISM</b><span>·</span><b>AI-NATIVE</b><span>·</span><b>SPATIAL UI</b><span>·</span><b>AURORA</b><span>·</span><b>COLLAGE</b><span>·</span><b>PIXEL ART</b><span>·</span><b>LUXURY EDITORIAL</b><span>·</span><b>SPA-WELLNESS</b><span>·</span><b>SWISS GRID</b><span>·</span><b>CORPORATE-FAMILY</b><span>·</span><b>PLAYFUL PASTEL</b><span>·</span><b>NEIGHBOURHOOD WARM</b><span>·</span><b>DARK MODE</b><span>·</span><b>POSTER GRAPHIC</b><span>— ALL BUILT, NOT DRAWN —</span><b>BENTO GRID</b><span>·</span><b>MINIMALIST</b><span>·</span><b>FLAT DESIGN</b><span>·</span><b>MAXIMALISM</b><span>·</span><b>NEO-BRUTALISM</b><span>·</span><b>GLASSMORPHISM</b><span>·</span><b>AI-NATIVE</b><span>·</span><b>SPATIAL UI</b><span>·</span><b>AURORA</b><span>·</span><b>COLLAGE</b><span>·</span><b>PIXEL ART</b><span>·</span><b>LUXURY EDITORIAL</b><span>·</span><b>SPA-WELLNESS</b><span>·</span><b>SWISS GRID</b><span>·</span><b>CORPORATE-FAMILY</b><span>·</span><b>PLAYFUL PASTEL</b><span>·</span><b>NEIGHBOURHOOD WARM</b><span>·</span><b>DARK MODE</b><span>·</span><b>POSTER GRAPHIC</b><span>— ALL BUILT, NOT DRAWN —</span>
+</div></div>
+
+<header class="wrap hero reveal">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Chennai · Chengalpattu · Kanchipuram</span>
+      <h1>Your clinic's website, in <span class="u">any style</span> you actually like.</h1>
+      <p>We don't show you a slide deck. We build a real, working demo of your clinic's website first — pick a direction below, and we'll rebuild it with your name, your team, your services.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#gallery">Browse all 19 styles</a>
+        <a class="btn-secondary" href="#contact">Talk to us on WhatsApp</a>
+      </div>
+      <div class="hero-stats">
+        <div><b>19</b><span>WORKING STYLES</span></div>
+        <div><b>0</b><span>UPFRONT BUILD FEE*</span></div>
+        <div><b>48 hrs</b><span>TYPICAL DEMO TURNAROUND</span></div>
+      </div>
+    </div>
+    <div class="fan">
+      <div class="bcard bc1">
+        <div class="chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">bite-club-dental.html</div></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#0A0A0A,#F5FF3D 60%,#FF3B30);"></div>
+      </div>
+      <div class="bcard bc3">
+        <div class="chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">aurora-calm-dental.html</div></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#0B1220,#34D9C9,#8B5CF6);"></div>
+      </div>
+      <div class="bcard bc2">
+        <div class="chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">meridian-dental.html</div></div>
+        <div class="swatch" style="background:linear-gradient(135deg,#0F8B8D,#FF6B5B,#FFC145);"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="gallery">
+  <div class="sec-head reveal">
+    <span class="eyebrow">The Style Library</span>
+    <h2>Nineteen directions. Pick the one that's you.</h2>
+    <p>Every card below is a real, working page — open it, scroll it, click the WhatsApp button. Nothing here is a static image.</p>
+  </div>
+
+  <div class="filters reveal">
+    <button class="filter-btn active" data-filter="all">All 19</button>
+    <button class="filter-btn" data-filter="modern">Modern & Minimalist</button>
+    <button class="filter-btn" data-filter="bold">Trendy & Bold</button>
+    <button class="filter-btn" data-filter="tech">Futuristic & Tech</button>
+    <button class="filter-btn" data-filter="tactile">Artistic & Tactile</button>
+    <button class="filter-btn" data-filter="luxury">Luxury & Premium</button>
+    <button class="filter-btn" data-filter="warm">Warm & Family</button>
+  </div>
+
+  <div class="gallery reveal" id="galleryGrid">
+
+    <a class="g-card" data-cat="modern" href="01-meridian-dental-bento.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">01-meridian-bento.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#0F8B8D,#FF6B5B,#FFC145);"><span>Bento Grid</span></div>
+      <div class="g-body">
+        <div class="g-tag">Modern & Minimalist</div>
+        <h3>Meridian Dental Group</h3>
+        <p>Modular, organised blocks for a multi-specialist clinic with a lot to show at once.</p>
+        <div class="loc"><span>Maraimalai Nagar</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="modern" href="02-still-dental-minimal.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">02-still-minimal.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#4A5C56,#17171A);"><span>Minimalist</span></div>
+      <div class="g-body">
+        <div class="g-tag">Modern & Minimalist</div>
+        <h3>Still Dental Studio</h3>
+        <p>Huge whitespace and restraint, for a solo dentist who wants to feel unhurried.</p>
+        <div class="loc"><span>Sriperumbudur</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="modern" href="03-happytooth-flat.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">03-happytooth-flat.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#4C9AFF,#FF6F61,#FFD23F);"><span>Flat Design</span></div>
+      <div class="g-body">
+        <div class="g-tag">Modern & Minimalist</div>
+        <h3>Happy Tooth Family Dental</h3>
+        <p>Bright, illustrated and friendly — built for a clinic that treats every age.</p>
+        <div class="loc"><span>Thiruporur</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="bold" href="04-candystudio-maximalism.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">04-candystudio-max.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#FF3D8A,#7B2FF7,#C6FF3D);"><span>Maximalism</span></div>
+      <div class="g-body">
+        <div class="g-tag">Trendy & Bold</div>
+        <h3>Candy Studio Dental Aesthetics</h3>
+        <p>Loud, saturated and confident — for a cosmetic studio chasing a younger crowd.</p>
+        <div class="loc"><span>Uttiramerur</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="bold" href="05-biteclub-neobrutalism.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">05-biteclub-brutalism.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#0A0A0A,#F5FF3D 55%,#FF3B30);"><span>Neo-Brutalism</span></div>
+      <div class="g-body">
+        <div class="g-tag">Trendy & Bold</div>
+        <h3>Bite Club Dental</h3>
+        <p>Raw, thick-bordered and blunt — for a clinic that sells itself on straight talk.</p>
+        <div class="loc"><span>Thirukalukundram</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="bold" href="06-lucent-glassmorphism.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">06-lucent-glass.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#6C7CE0,#4FC7C7,#F7B5D0);"><span>Glassmorphism</span></div>
+      <div class="g-body">
+        <div class="g-tag">Trendy & Bold</div>
+        <h3>Lucent Dental</h3>
+        <p>Frosted glass panels over a soft gradient — premium and quietly futuristic.</p>
+        <div class="loc"><span>Chengalpattu</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="tech" href="07-novacare-ai-native.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">07-novacare-ai.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#0B0E14,#8B5CF6,#22D3EE);"><span>AI-Native UI</span></div>
+      <div class="g-body">
+        <div class="g-tag">Futuristic & Tech</div>
+        <h3>NovaCare Dental</h3>
+        <p>A conversational booking widget front and centre — dark, technical, current.</p>
+        <div class="loc"><span>Kanchipuram</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="tech" href="08-halo-spatial-ui.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">08-halo-spatial.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#F2F3F7,#6C7CE0);"><span>Spatial UI</span></div>
+      <div class="g-body">
+        <div class="g-tag">Futuristic & Tech</div>
+        <h3>Halo Dental Implant Center</h3>
+        <p>Floating, layered panels with real depth — built for a digital implant practice.</p>
+        <div class="loc"><span>Guduvancheri</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="tech" href="09-auroracalm-aurora.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">09-auroracalm.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#0B1220,#34D9C9,#8B5CF6);"><span>Aurora</span></div>
+      <div class="g-body">
+        <div class="g-tag">Futuristic & Tech</div>
+        <h3>Aurora Calm Dental</h3>
+        <p>Soft glowing gradients for an anxiety-friendly, sedation-forward practice.</p>
+        <div class="loc"><span>Sriperumbudur</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="tactile" href="10-littlesprout-collage.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">10-littlesprout.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#F6EFE3,#FF8B6B,#E8B93E);"><span>Collage / Hand-Drawn</span></div>
+      <div class="g-body">
+        <div class="g-tag">Artistic & Tactile</div>
+        <h3>Little Sprout Dental</h3>
+        <p>Scrapbook textures and hand-drawn doodles for a kid-first family clinic.</p>
+        <div class="loc"><span>Chengalpattu</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="tactile" href="11-byte-pixelart.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">11-byte-pixel.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#1A1C2C,#FF004D,#29ADFF);"><span>Pixel Art</span></div>
+      <div class="g-body">
+        <div class="g-tag">Artistic & Tactile</div>
+        <h3>Byte Dental</h3>
+        <p>8-bit sprite and retro loading bars for a clinic near a college corridor.</p>
+        <div class="loc"><span>Kanchipuram</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="luxury" href="12-aura-dental-luxury.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">12-aura-luxury.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#141316,#C9A227);"><span>Editorial</span></div>
+      <div class="g-body">
+        <div class="g-tag">Luxury & Premium</div>
+        <h3>Aura Dental Studio</h3>
+        <p>A quiet, high-end studio feel — dark ink palette, serif display, minimal copy.</p>
+        <div class="loc"><span>Adyar, Chennai</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="luxury" href="13-bloom-dental-luxury.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">13-bloom-luxury.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#4A2E35,#7C8B6F);"><span>Spa-Wellness</span></div>
+      <div class="g-body">
+        <div class="g-tag">Luxury & Premium</div>
+        <h3>Bloom Dental & Aesthetics</h3>
+        <p>Wellness-clinic framing for anxious-patient-friendly, cosmetic-forward practices.</p>
+        <div class="loc"><span>Besant Nagar, Chennai</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="modern" href="14-clarity-dental-modern.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">14-clarity-modern.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#14181C,#B8E3D6);"><span>Swiss Grid</span></div>
+      <div class="g-body">
+        <div class="g-tag">Modern & Minimalist</div>
+        <h3>Clarity Dental</h3>
+        <p>Upfront pricing and a clinical, grid-based layout built on transparency.</p>
+        <div class="loc"><span>Thoraipakkam, OMR</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="modern" href="15-northpoint-dental-modern.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">15-northpoint-modern.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#1C2B39,#FF6B57);"><span>Corporate-Family</span></div>
+      <div class="g-body">
+        <div class="g-tag">Modern & Minimalist</div>
+        <h3>NorthPoint Family Dental</h3>
+        <p>Membership-plan pricing and evening-hours messaging for working families.</p>
+        <div class="loc"><span>Velachery, Chennai</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="warm" href="16-sunshine-smiles-warm.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">16-sunshine-warm.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#FFC857,#FF8C69);"><span>Playful Pastel</span></div>
+      <div class="g-body">
+        <div class="g-tag">Warm & Family</div>
+        <h3>Sunshine Smiles Kids & Family</h3>
+        <p>A kid-first, mascot-led design for paediatric-leaning practices.</p>
+        <div class="loc"><span>Guduvancheri</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="warm" href="17-oakwood-family-warm.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">17-oakwood-warm.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#C1613D,#3F5744);"><span>Neighbourhood</span></div>
+      <div class="g-body">
+        <div class="g-tag">Warm & Family</div>
+        <h3>Oakwood Family Dental</h3>
+        <p>A cozy, long-established feel for a multi-generation neighbourhood clinic.</p>
+        <div class="loc"><span>Chengalpattu Town</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="bold" href="18-pulse-dental-bold.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">18-pulse-bold.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#101014,#7C3AED,#22D3EE);"><span>Dark Mode</span></div>
+      <div class="g-body">
+        <div class="g-tag">Trendy & Bold</div>
+        <h3>Pulse Dental Studio</h3>
+        <p>Fast, transparent, evening-hours dentistry — dark UI, diagonal layout cuts.</p>
+        <div class="loc"><span>Sholinganallur, OMR</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+    <a class="g-card" data-cat="bold" href="19-prism-dental-bold.html">
+      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">19-prism-bold.html</div></div>
+      <div class="g-swatch" style="background:linear-gradient(135deg,#1A2A4A,#FF6B35,#FFC93C);"><span>Poster Graphic</span></div>
+      <div class="g-body">
+        <div class="g-tag">Trendy & Bold</div>
+        <h3>Prism Dental Collective</h3>
+        <p>A bold, daylight, print-poster-inspired look for a multi-dentist practice.</p>
+        <div class="loc"><span>Kanchipuram Town</span><span class="go">View demo →</span></div>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<section class="wrap" id="why">
+  <div class="sec-head reveal">
+    <span class="eyebrow">Why NoCap</span>
+    <h2>We build the site before we sell it.</h2>
+    <p>Most web design pitches are a PDF and a promise. Ours is a working page with your clinic's name on it, before you've paid anything.</p>
+  </div>
+  <div class="why-grid reveal">
+    <div class="why-card"><div class="why-num">01</div><h3>See it before you pay</h3><p>We reskin the closest-matching style with your clinic's real name and services, so you're judging a real page, not a mood board.</p></div>
+    <div class="why-card"><div class="why-num">02</div><h3>WhatsApp built in</h3><p>Every template ships with a working WhatsApp button — the channel most patients actually use to book, not a contact form nobody checks.</p></div>
+    <div class="why-card"><div class="why-num">03</div><h3>Low cost to start</h3><p>No large upfront design fee. A small monthly rate covers hosting, uptime and your domain — cancel-friendly, no long lock-in pressure.</p></div>
+    <div class="why-card"><div class="why-num">04</div><h3>Honest, always</h3><p>No fake client counts, no stock testimonials. What you see in these demos is exactly the level of build you'll get.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="process">
+  <div class="process reveal">
+    <span class="eyebrow" style="background:rgba(255,255,255,0.08); border-color:rgba(255,255,255,0.15); color:#B7BAD1;"><span class="dot" style="background:var(--lime);"></span>How It Works</span>
+    <h2 style="color:white; margin-top:16px; font-size:clamp(24px,3vw,34px);">From "which style?" to a live site.</h2>
+    <div class="process-grid">
+      <div class="process-step"><div class="n">01</div><h4>Pick a direction</h4><p>Browse the 11 demos above and tell us which one feels closest to your clinic.</p></div>
+      <div class="process-step"><div class="n">02</div><h4>We reskin it, live</h4><p>Your name, your services, your photos — built into that style within 48 hours.</p></div>
+      <div class="process-step"><div class="n">03</div><h4>You review, we tweak</h4><p>Nothing goes live until you're happy with how it reads and looks.</p></div>
+      <div class="process-step"><div class="n">04</div><h4>We keep it running</h4><p>Hosting, uptime and domain handled monthly — you focus on the clinic.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="cta reveal">
+    <h2>Tell us which style you liked. We'll build your version this week.</h2>
+    <p>No pricing sheet on this page on purpose — every clinic's scope is a little different. Message us and we'll quote it straight.</p>
+    <div class="cta-ctas">
+      <a class="btn-dark" href="https://wa.me/9198XXXXXXXX" target="_blank" rel="noopener">Message on WhatsApp</a>
+      <a class="btn-outline-dark" href="mailto:hello@nocapwebservices.in">Email us instead</a>
+    </div>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 NoCap Webservices. Portfolio demos — clinic names and details are illustrative, not live businesses.</span>
+  <div class="foot-links">
+    <a href="https://wa.me/9198XXXXXXXX">WhatsApp</a>
+    <a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a>
+    <a href="mailto:hello@nocapwebservices.in">hello@nocapwebservices.in</a>
+  </div>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.08});
+  els.forEach(el=>io.observe(el));
+
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('#galleryGrid .g-card');
+  filterBtns.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      filterBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      cards.forEach(c=>{
+        c.style.display = (f === 'all' || c.dataset.cat === f) ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
