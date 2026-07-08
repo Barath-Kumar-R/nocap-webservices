@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Helix Dental Digital Studio — Perungudi, OMR</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070911; --surface:#10131F; --surface2:#171B2B; --text:#F0F1F6; --muted:#8B90A5;
+    --line:rgba(255,255,255,0.08); --lime:#B6FF3D; --cyan:#4CE0E8; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Sora',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:20px;}
+
+  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(7,9,17,0.85); backdrop-filter:blur(10px); z-index:100;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:800; font-size:18px;}
+  .logo .mark{width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--lime),var(--cyan)); display:flex; align-items:center; justify-content:center; color:var(--bg); font-weight:800; font-size:14px;}
+  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
+  .nav-links a{text-decoration:none; color:var(--muted);}
+  .btn-nav{background:var(--lime); color:var(--bg); padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:700; text-decoration:none;}
+
+  /* HERO + WEBGL STAGE */
+  .hero{padding:70px 0 40px;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--lime);}
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 10px var(--lime);}
+  .hero h1{font-size:clamp(32px,4.2vw,50px); line-height:1.12; margin-top:16px;}
+  .hero h1 .u{color:var(--lime);}
+  .hero p{margin-top:20px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:460px;}
+  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .btn-primary{background:var(--white); color:var(--bg); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  .btn-secondary{background:transparent; border:1px solid var(--line); color:var(--text); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+
+  .gl-stage{position:relative; height:420px; border-radius:24px; overflow:hidden; background:radial-gradient(circle at 50% 40%, #101830, #070911 70%); border:1px solid var(--line);}
+  .gl-stage canvas{display:block; width:100%; height:100%;}
+  .gl-badge{position:absolute; top:16px; left:16px; font-family:'Sora',sans-serif; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--lime); background:rgba(182,255,61,0.1); border:1px solid rgba(182,255,61,0.3); padding:6px 12px; border-radius:100px;}
+  .gl-fallback{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; color:var(--muted); font-size:13px; text-align:center; padding:20px;}
+  .gl-fallback svg{width:36px; height:36px; stroke:var(--lime); fill:none; stroke-width:1.2;}
+
+  section{padding:76px 0;}
+  .sec-head{text-align:center; max-width:600px; margin:0 auto 44px;}
+  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:12px;}
+  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px; line-height:1.7;}
+
+  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .svc-card{padding:28px 22px;}
+  .svc-icon{width:44px; height:44px; border-radius:13px; background:var(--surface2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .svc-icon svg{width:20px; height:20px; stroke:var(--lime); fill:none; stroke-width:1.6;}
+  .svc-card h3{font-size:16px; margin-bottom:8px; font-family:'Inter',sans-serif;}
+  .svc-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
+  .about-visual{height:340px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 30% 20%, rgba(76,224,232,0.15), transparent 60%), var(--surface);}
+  .about-visual svg{width:34px; height:34px; stroke:var(--lime); fill:none; stroke-width:1.3;}
+  .about-copy h3{font-size:24px; margin-bottom:14px;}
+  .about-copy p{font-size:14.5px; color:var(--muted); line-height:1.8;}
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px;}
+  .mini-panel{padding:16px;}
+  .mini-panel b{font-family:'Sora',sans-serif; font-size:22px; display:block; color:var(--lime);}
+  .mini-panel span{font-size:11px; color:var(--muted);}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .contact-card{padding:36px;}
+  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{width:100px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--lime); font-weight:700; flex-shrink:0;}
+  .info-row .val{font-size:14px; color:var(--text);}
+  .form{display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:1px solid var(--line); background:var(--surface2); color:var(--text); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
+  .form input::placeholder, .form textarea::placeholder{color:var(--muted);}
+  .form button{background:var(--lime); color:var(--bg); border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
+
+  footer{padding:30px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -8px rgba(37,211,102,0.5); text-decoration:none;}
+  .wa-float svg{width:27px; height:27px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .gl-stage{height:320px;}
+    .svc-grid{grid-template-columns:1fr 1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="mark">H</div>Helix Dental Digital Studio</div>
+    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
+    <a class="btn-nav" href="#contact">Book a scan</a>
+  </div>
+</nav>
+
+<header class="wrap hero reveal">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Perungudi, OMR</span>
+      <h1>Your scan, rendered as a <span class="u">living 3D model.</span></h1>
+      <p>We don't just take an X-ray — we build a rotating digital model of your mouth you can watch spin on screen, so the plan for your treatment is something you can actually see.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#contact">Book a scan</a>
+        <a class="btn-secondary" href="#services">See our tech</a>
+      </div>
+    </div>
+    <div class="gl-stage" id="glStage">
+      <span class="gl-badge">Live 3D render</span>
+      <canvas id="glCanvas"></canvas>
+      <div class="gl-fallback" id="glFallback" style="display:none;">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
+        <span>Interactive 3D model<br>(WebGL unavailable in this browser)</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="services">
+  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Services</span><h2>Digital dentistry, modelled in real time.</h2></div>
+  <div class="svc-grid reveal">
+    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></svg></div><h3>3D Digital Scans</h3><p>A full model of your mouth, ready in minutes.</p></div>
+    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Guided Implants</h3><p>Placement simulated and confirmed before surgery.</p></div>
+    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Smile Simulation</h3><p>See your finished smile, rendered, before treatment starts.</p></div>
+    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div><h3>Digital Aligners</h3><p>A full animated preview of every stage of movement.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="about">
+  <div class="about-grid reveal">
+    <div class="about-visual panel">
+      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">The Studio</span>
+      <h3 style="margin-top:12px;">Every case, modelled before it's treated.</h3>
+      <p>Dr. [Name], BDS, MDS, invested early in full-mouth 3D imaging so patients never have to take a diagnosis on faith — you see the model, you see the plan, you decide.</p>
+      <div class="stat-row">
+        <div class="mini-panel panel"><b>6,000+</b><span>3D models rendered</span></div>
+        <div class="mini-panel panel"><b>12 yrs</b><span>Digital-first practice</span></div>
+        <div class="mini-panel panel"><b>4.9 ★</b><span>Google rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Visit</span><h2>See your scan rendered live.</h2></div>
+  <div class="contact-grid reveal">
+    <div class="contact-card panel">
+      <div class="info-row"><div class="lbl">Address</div><div class="val">Rajiv Gandhi Salai, Perungudi, Chennai 600096</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 8 PM</div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--lime); font-weight:600;">Message the front desk →</a></div></div>
+    </div>
+    <form class="contact-card panel form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=3D Scan Appointment&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nReason for visit: ' + this.reason.value);">
+      <input name="name" type="text" placeholder="Full name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <input name="reason" type="text" placeholder="What brings you in?">
+      <button type="submit">Request an appointment</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Helix Dental Digital Studio, Perungudi.</span>
+  <span>Design portfolio piece · Not a live business</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+</script>
+
+<script type="module">
+  const stage = document.getElementById('glStage');
+  const canvas = document.getElementById('glCanvas');
+  const fallback = document.getElementById('glFallback');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  async function initScene(){
+    let THREE;
+    try{
+      THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js');
+    }catch(err){
+      canvas.style.display = 'none';
+      fallback.style.display = 'flex';
+      return;
+    }
+
+    let renderer;
+    try{
+      renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
+    }catch(err){
+      canvas.style.display = 'none';
+      fallback.style.display = 'flex';
+      return;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
+    camera.position.set(0, 0, 6.2);
+
+    const group = new THREE.Group();
+    scene.add(group);
+
+    const core = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.55, 1),
+      new THREE.MeshBasicMaterial({ color: 0xb6ff3d, wireframe: true, transparent: true, opacity: 0.9 })
+    );
+    group.add(core);
+
+    const shell = new THREE.Mesh(
+      new THREE.IcosahedronGeometry(1.95, 0),
+      new THREE.MeshBasicMaterial({ color: 0x4ce0e8, wireframe: true, transparent: true, opacity: 0.35 })
+    );
+    group.add(shell);
+
+    const particleCount = 140;
+    const positions = new Float32Array(particleCount * 3);
+    for(let i = 0; i < particleCount; i++){
+      const r = 2.6 + Math.random() * 0.8;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.acos((Math.random() * 2) - 1);
+      positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i*3+2] = r * Math.cos(phi);
+    }
+    const particleGeo = new THREE.BufferGeometry();
+    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0xf0f1f6, size: 0.035, transparent: true, opacity: 0.6 }));
+    scene.add(particles);
+
+    function resize(){
+      const w = stage.clientWidth, h = stage.clientHeight;
+      renderer.setSize(w, h, false);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    let targetRotX = 0, targetRotY = 0;
+    stage.addEventListener('mousemove', (e)=>{
+      const r = stage.getBoundingClientRect();
+      targetRotY = ((e.clientX - r.left) / r.width - 0.5) * 0.9;
+      targetRotX = ((e.clientY - r.top) / r.height - 0.5) * -0.9;
+    });
+
+    let running = true;
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ running = e.isIntersecting; });
+    }, { threshold: 0.05 });
+    obs.observe(stage);
+
+    if(reduceMotion){
+      group.rotation.set(0.4, 0.6, 0);
+      particles.rotation.set(0.2, 0.3, 0);
+      renderer.render(scene, camera);
+    } else {
+      const animate = ()=>{
+        requestAnimationFrame(animate);
+        if(!running) return;
+        group.rotation.y += 0.0035 + targetRotY * 0.01;
+        group.rotation.x += targetRotX * 0.01;
+        shell.rotation.x -= 0.0018;
+        particles.rotation.y += 0.0012;
+        renderer.render(scene, camera);
+      };
+      animate();
+    }
+  }
+
+  if(window.WebGLRenderingContext){
+    initScene();
+  } else {
+    canvas.style.display = 'none';
+    fallback.style.display = 'flex';
+  }
+</script>
+</body>
+</html>

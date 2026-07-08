@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NoCap Webservices — Website Planning Questionnaire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAFAF8; --ink:#111114; --muted:#63636D; --line:#E7E5E0; --white:#FFFFFF;
+    --lime:#C8FF3D; --coral:#FF4D2E; --navy:#12163B;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  .wrap{max-width:820px; margin:0 auto; padding:0 24px;}
+
+  nav{padding:20px 0; border-bottom:1px solid var(--line); background:rgba(250,250,248,0.9); backdrop-filter:blur(10px); position:sticky; top:0; z-index:50;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:18px;}
+  .logo .mark{width:28px; height:28px; background:var(--ink); border-radius:8px; display:flex; align-items:center; justify-content:center;}
+  .logo .mark span{color:var(--lime); font-weight:800; font-size:14px;}
+  nav .step-count{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--muted);}
+
+  header{padding:56px 0 20px; text-align:center;}
+  header h1{font-size:clamp(28px,4vw,40px);}
+  header p{color:var(--muted); margin-top:14px; font-size:15px; line-height:1.7; max-width:560px; margin-left:auto; margin-right:auto;}
+
+  .card{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:30px 28px; margin:26px 0;}
+  .card h2{font-size:19px; display:flex; align-items:center; gap:10px;}
+  .card h2 .n{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--coral); font-weight:500;}
+  .card .hint{font-size:13px; color:var(--muted); margin-top:6px; line-height:1.6;}
+
+  label{display:block; font-size:13px; font-weight:600; margin:18px 0 7px;}
+  label .opt{color:var(--muted); font-weight:400;}
+  input[type=text], input[type=tel], input[type=email], textarea, select{
+    width:100%; border:1px solid var(--line); background:var(--paper); border-radius:10px;
+    padding:12px 14px; font-family:'Inter',sans-serif; font-size:14px; color:var(--ink);
+  }
+  textarea{min-height:80px; resize:vertical;}
+  input:focus, textarea:focus, select:focus{outline:2px solid var(--lime); border-color:var(--ink);}
+
+  .chips{display:flex; flex-wrap:wrap; gap:9px; margin-top:8px;}
+  .chip{position:relative;}
+  .chip input{position:absolute; opacity:0; inset:0; cursor:pointer;}
+  .chip span{display:inline-block; border:1px solid var(--line); background:var(--paper); border-radius:100px; padding:9px 16px; font-size:13px; font-weight:500; cursor:pointer; transition:all .12s;}
+  .chip input:checked + span{background:var(--ink); color:var(--lime); border-color:var(--ink);}
+  .chip input:focus-visible + span{outline:2px solid var(--lime);}
+
+  .row2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media (max-width:640px){ .row2{grid-template-columns:1fr;} }
+
+  .actions{margin:36px 0 20px; display:flex; flex-direction:column; gap:12px;}
+  .btn{border:none; cursor:pointer; text-align:center; text-decoration:none; padding:16px 28px; border-radius:100px; font-size:14.5px; font-weight:700; font-family:'Inter',sans-serif;}
+  .btn-primary{background:var(--ink); color:var(--white);}
+  .btn-wa{background:#25D366; color:white; display:none;}
+  .btn-dl{background:var(--white); border:1px solid var(--line); color:var(--ink); display:none;}
+  .btn:disabled{opacity:.5; cursor:not-allowed;}
+
+  .result{display:none; background:var(--navy); color:#DDE0F2; border-radius:18px; padding:26px; margin-bottom:30px;}
+  .result h3{color:white; font-size:16px; margin-bottom:10px;}
+  .result p{font-size:13px; line-height:1.7;}
+  .result pre{background:rgba(255,255,255,0.06); border-radius:10px; padding:14px; font-family:'JetBrains Mono',monospace; font-size:11px; overflow:auto; max-height:220px; margin-top:14px; white-space:pre-wrap; word-break:break-word;}
+
+  .err{color:var(--coral); font-size:13px; font-weight:600; display:none; margin-top:10px;}
+  footer{padding:34px 0 44px; text-align:center; font-size:12.5px; color:var(--muted); border-top:1px solid var(--line); margin-top:30px;}
+</style>
+</head>
+<body>
+
+<nav><div class="wrap nav-inner">
+  <div class="logo"><div class="mark"><span>N</span></div>NoCap Webservices</div>
+  <span class="step-count">9 SECTIONS · ~12 MIN</span>
+</div></nav>
+
+<header class="wrap">
+  <h1>Let's plan your website.</h1>
+  <p>Answer what you can — skip what you're unsure about. When you're done, one tap sends everything to us on WhatsApp, and we'll come back with a working demo of your site. No payment, no commitment at this stage.</p>
+</header>
+
+<main class="wrap">
+<form id="qform" novalidate>
+
+  <div class="card">
+    <h2><span class="n">01</span>Your business</h2>
+    <label>Business / clinic name *</label>
+    <input type="text" name="businessName" required placeholder="e.g. Smile Care Dental Clinic">
+    <div class="row2">
+      <div><label>Type of business *</label>
+        <select name="businessType">
+          <option>Dental clinic</option><option>Medical clinic / hospital</option><option>Salon / spa</option>
+          <option>Restaurant / café</option><option>Boutique / retail shop</option><option>Gym / fitness studio</option>
+          <option>Tuition / coaching centre</option><option>Professional services (CA, lawyer…)</option><option>Other</option>
+        </select></div>
+      <div><label>Years in business</label><input type="text" name="yearsInBusiness" placeholder="e.g. 8 years"></div>
+    </div>
+    <div class="row2">
+      <div><label>Location(s) *</label><input type="text" name="locations" required placeholder="e.g. Chengalpattu; second branch in Guduvancheri"></div>
+      <div><label>WhatsApp number for customer enquiries *</label><input type="tel" name="whatsapp" required placeholder="+91 …"></div>
+    </div>
+    <div class="row2">
+      <div><label>Phone (if different)</label><input type="tel" name="phone"></div>
+      <div><label>Email</label><input type="email" name="email"></div>
+    </div>
+    <label>Do you have a website today?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="currentSite" value="none" checked><span>No website</span></label>
+      <label class="chip"><input type="radio" name="currentSite" value="outdated"><span>Yes, but outdated</span></label>
+      <label class="chip"><input type="radio" name="currentSite" value="happy-ish"><span>Yes — just want better</span></label>
+    </div>
+    <label>If yes, the address <span class="opt">(URL)</span></label>
+    <input type="text" name="currentSiteUrl" placeholder="https://…">
+  </div>
+
+  <div class="card">
+    <h2><span class="n">02</span>What are we building?</h2>
+    <p class="hint">This decides how big the project is — and your monthly price. Not sure? Pick the closest and we'll figure it out together.</p>
+    <label>Kind of website *</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="siteKind" value="brochure" checked><span>Simple site — show my business, get enquiries</span></label>
+      <label class="chip"><input type="radio" name="siteKind" value="booking"><span>Bookings / appointments</span></label>
+      <label class="chip"><input type="radio" name="siteKind" value="store"><span>Online store / catalogue</span></label>
+      <label class="chip"><input type="radio" name="siteKind" value="portal"><span>Customer login / member area</span></label>
+      <label class="chip"><input type="radio" name="siteKind" value="web-app"><span>Custom web application</span></label>
+      <label class="chip"><input type="radio" name="siteKind" value="not-sure"><span>Not sure</span></label>
+    </div>
+    <label>How much content roughly?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="pageScale" value="single" checked><span>One good page</span></label>
+      <label class="chip"><input type="radio" name="pageScale" value="few"><span>A few pages (2–5)</span></label>
+      <label class="chip"><input type="radio" name="pageScale" value="many"><span>Many pages / lots of items</span></label>
+    </div>
+    <label>Will you take payments on the website?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="onlinePayments" value="no" checked><span>No</span></label>
+      <label class="chip"><input type="radio" name="onlinePayments" value="yes"><span>Yes — online payment</span></label>
+      <label class="chip"><input type="radio" name="onlinePayments" value="later"><span>Maybe later</span></label>
+    </div>
+    <label>Will anyone need to log in?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="userAccounts" value="no" checked><span>No logins</span></label>
+      <label class="chip"><input type="radio" name="userAccounts" value="customers"><span>Customers log in</span></label>
+      <label class="chip"><input type="radio" name="userAccounts" value="staff"><span>Only me / my staff (admin)</span></label>
+      <label class="chip"><input type="radio" name="userAccounts" value="both"><span>Both</span></label>
+    </div>
+    <div class="row2">
+      <div><label>If a store: roughly how many products?</label><input type="text" name="productCount" placeholder="e.g. 30"></div>
+      <div><label>Tools it must connect to <span class="opt">(if any)</span></label><input type="text" name="integrations" placeholder="e.g. Google Calendar, WhatsApp, Tally…"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">03</span>What should the website do for you?</h2>
+    <label>Main goal — pick one *</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="primaryGoal" value="whatsapp-enquiries" checked><span>More WhatsApp enquiries</span></label>
+      <label class="chip"><input type="radio" name="primaryGoal" value="phone-calls"><span>More phone calls</span></label>
+      <label class="chip"><input type="radio" name="primaryGoal" value="walk-ins"><span>More walk-in customers</span></label>
+      <label class="chip"><input type="radio" name="primaryGoal" value="bookings"><span>Online appointment bookings</span></label>
+      <label class="chip"><input type="radio" name="primaryGoal" value="credibility"><span>Look credible when people search us</span></label>
+    </div>
+    <label>What does a "win" look like 3 months after launch?</label>
+    <textarea name="successDefinition" placeholder="e.g. 20+ WhatsApp enquiries a month from new patients"></textarea>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">04</span>Your customers</h2>
+    <label>Who are they? *</label>
+    <textarea name="audience" required placeholder="e.g. Families near Chengalpattu bus stand; young IT workers on OMR; parents of school kids…"></textarea>
+    <label>Area you serve</label>
+    <input type="text" name="serviceArea" placeholder="e.g. 10 km around Chengalpattu town">
+    <label>Website language</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="language" value="english" checked><span>English only</span></label>
+      <label class="chip"><input type="radio" name="language" value="tamil-english"><span>Tamil + English</span></label>
+      <label class="chip"><input type="radio" name="language" value="tamil"><span>Tamil only</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">05</span>Look & feel</h2>
+    <p class="hint">You can start from one of our gallery styles, or describe something completely your own — we design from scratch too. Either way, the questions below help us nail it.</p>
+    <label>How should we approach the design?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="designMode" value="nocap-decides" checked><span>Let NoCap decide</span></label>
+      <label class="chip"><input type="radio" name="designMode" value="from-gallery"><span>Start from a gallery style</span></label>
+      <label class="chip"><input type="radio" name="designMode" value="fully-custom"><span>Fully custom — my own idea</span></label>
+    </div>
+    <label>If you have your own idea, describe it <span class="opt">(anything — a sketch in words, a vibe, a site you saw once)</span></label>
+    <textarea name="customDesignIdea" placeholder="e.g. Like a magazine cover — big photo of the food, menu slides in from the side, dark background, gold text…"></textarea>
+    <label>Style direction <span class="opt">(closest family, even for custom ideas)</span></label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="styleChoice" value="nocap-decides" checked><span>Let NoCap decide</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="modern-minimal"><span>Modern & minimal</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="trendy-bold"><span>Trendy & bold</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="futuristic-tech"><span>Futuristic & tech</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="warm-family"><span>Warm & family</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="luxury-premium"><span>Luxury & premium</span></label>
+      <label class="chip"><input type="radio" name="styleChoice" value="immersive-3d"><span>Immersive & 3D</span></label>
+    </div>
+    <label>If you browsed our demos, which one(s) did you like? <span class="opt">(names or numbers)</span></label>
+    <input type="text" name="likedDemos" placeholder="e.g. 14 Clarity, 22 Helix">
+    <label>3 words that should describe your website</label>
+    <input type="text" name="brandAdjectives" placeholder="e.g. clean, trustworthy, friendly">
+    <div class="row2">
+      <div><label>Colours you like</label><input type="text" name="colorsLiked" placeholder="e.g. blue and white"></div>
+      <div><label>Colours to avoid</label><input type="text" name="colorsAvoid" placeholder="e.g. no red"></div>
+    </div>
+    <label>Websites you admire <span class="opt">(any industry — also Instagram pages, apps, brochures)</span></label>
+    <input type="text" name="referenceSites" placeholder="links or names, comma separated">
+    <label>Pictures on the site should mostly be…</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="imageryStyle" value="real-photos" checked><span>Real photos of us</span></label>
+      <label class="chip"><input type="radio" name="imageryStyle" value="illustrations"><span>Illustrations / drawings</span></label>
+      <label class="chip"><input type="radio" name="imageryStyle" value="graphics-3d"><span>Graphics / 3D visuals</span></label>
+      <label class="chip"><input type="radio" name="imageryStyle" value="minimal"><span>Very few images — mostly text & colour</span></label>
+    </div>
+    <label>How much movement / animation?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="animationLevel" value="calm" checked><span>Calm — barely any</span></label>
+      <label class="chip"><input type="radio" name="animationLevel" value="moderate"><span>Some — smooth and subtle</span></label>
+      <label class="chip"><input type="radio" name="animationLevel" value="wow"><span>Impress people — 3D, effects</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">06</span>Pages & sections</h2>
+    <label>Tick everything the site should include</label>
+    <div class="chips">
+      <label class="chip"><input type="checkbox" name="sections" value="services" checked><span>Services list</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="about-team"><span>About / team</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="testimonials"><span>Testimonials</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="gallery"><span>Photo gallery</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="pricing"><span>Pricing</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="faq"><span>FAQ</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="map-directions"><span>Map & directions</span></label>
+      <label class="chip"><input type="checkbox" name="sections" value="blog"><span>Blog / articles</span></label>
+    </div>
+    <label>List your main services / offerings *</label>
+    <textarea name="servicesList" required placeholder="e.g. Root canal, braces & aligners, kids' dentistry, implants…"></textarea>
+    <label>What makes you different from the shop next door?</label>
+    <textarea name="differentiators" placeholder="e.g. 20 years' experience, open till 9pm, lady doctor available, EMI options…"></textarea>
+    <label>Content you already have</label>
+    <div class="chips">
+      <label class="chip"><input type="checkbox" name="contentReady" value="logo"><span>Logo</span></label>
+      <label class="chip"><input type="checkbox" name="contentReady" value="photos"><span>Good photos</span></label>
+      <label class="chip"><input type="checkbox" name="contentReady" value="text"><span>Written text</span></label>
+      <label class="chip"><input type="checkbox" name="contentReady" value="reviews"><span>Google reviews</span></label>
+      <label class="chip"><input type="checkbox" name="contentReady" value="nothing"><span>Nothing yet — help me</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">07</span>Features</h2>
+    <div class="chips">
+      <label class="chip"><input type="checkbox" name="features" value="whatsapp-button" checked><span>WhatsApp chat button</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="click-to-call" checked><span>Click-to-call</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="appointment-form"><span>Appointment / enquiry form</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="google-maps"><span>Google Maps embed</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="reviews-embed"><span>Google reviews display</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="instagram"><span>Instagram link/feed</span></label>
+      <label class="chip"><input type="checkbox" name="features" value="analytics"><span>Visitor analytics</span></label>
+    </div>
+    <label>Anything else the site must do?</label>
+    <textarea name="otherFeatures" placeholder="e.g. show festival offers, downloadable price list…"></textarea>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">08</span>Domain & plan</h2>
+    <label>Do you have a domain name? <span class="opt">(like yourclinic.in)</span></label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="domainStatus" value="have" ><span>Yes, I own one</span></label>
+      <label class="chip"><input type="radio" name="domainStatus" value="need-help" checked><span>No — help me get one</span></label>
+      <label class="chip"><input type="radio" name="domainStatus" value="not-sure"><span>Not sure what that is</span></label>
+    </div>
+    <label>If yes, what is it?</label>
+    <input type="text" name="domainName" placeholder="yourclinic.in">
+    <p class="hint" style="margin-top:16px;">Good to know: the domain is bought in <b>your name</b> — you own it permanently, even if you stop working with us. We handle everything else: design, hosting, updates and security, for a monthly fee <b>starting at ₹999/month</b>. The exact price depends on what we're building (stores, logins and custom apps cost more than a simple site) — we'll confirm it with you after reviewing this form, before any paid work starts. No big upfront cost.</p>
+    <label>When do you want to go live?</label>
+    <div class="chips">
+      <label class="chip"><input type="radio" name="timeline" value="asap" checked><span>As soon as possible</span></label>
+      <label class="chip"><input type="radio" name="timeline" value="month"><span>Within a month</span></label>
+      <label class="chip"><input type="radio" name="timeline" value="exploring"><span>Just exploring</span></label>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span class="n">09</span>Anything else?</h2>
+    <label>Tell us anything we didn't ask</label>
+    <textarea name="notes" placeholder="Competitors you watch, things you hate on other websites, festival deadlines…"></textarea>
+    <label>Your name (person filling this) *</label>
+    <input type="text" name="contactPerson" required placeholder="Your name">
+  </div>
+
+  <p class="err" id="errMsg">Please fill the required fields marked * — business name, locations, WhatsApp number, audience, services and your name.</p>
+
+  <div class="actions">
+    <button type="button" class="btn btn-primary" id="generateBtn">Generate my website brief →</button>
+    <a class="btn btn-wa" id="waBtn" target="_blank" rel="noopener">Send brief to NoCap on WhatsApp</a>
+    <button type="button" class="btn btn-dl" id="dlBtn">Download brief file (for our records)</button>
+  </div>
+
+  <div class="result" id="resultBox">
+    <h3>Brief ready ✓</h3>
+    <p>Tap the green button above to send it to us on WhatsApp — that's all you need to do. The file download is optional (it's the same information in a format our design system reads directly).</p>
+    <pre id="briefPreview"></pre>
+  </div>
+
+</form>
+</main>
+
+<footer class="wrap">© 2026 NoCap Webservices · Your answers go only to us, nowhere else · WhatsApp +91 73959 38220</footer>
+
+<script>
+const form = document.getElementById('qform');
+const REQUIRED = ['businessName','locations','whatsapp','audience','servicesList','contactPerson'];
+const NOCAP_WA = '917395938220';
+let brief = null;
+
+function collect(){
+  const fd = new FormData(form);
+  const multi = (name)=>fd.getAll(name);
+  return {
+    meta:{ source:'nocap-client-questionnaire', version:1, submittedAt:new Date().toISOString() },
+    business:{
+      name:fd.get('businessName').trim(), type:fd.get('businessType'),
+      yearsInBusiness:fd.get('yearsInBusiness').trim(), locations:fd.get('locations').trim(),
+      whatsapp:fd.get('whatsapp').trim(), phone:fd.get('phone').trim(), email:fd.get('email').trim(),
+      currentSite:fd.get('currentSite'), currentSiteUrl:fd.get('currentSiteUrl').trim()
+    },
+    project:{
+      siteKind:fd.get('siteKind'), pageScale:fd.get('pageScale'),
+      onlinePayments:fd.get('onlinePayments'), userAccounts:fd.get('userAccounts'),
+      productCount:fd.get('productCount').trim(), integrations:fd.get('integrations').trim()
+    },
+    goals:{ primaryGoal:fd.get('primaryGoal'), successDefinition:fd.get('successDefinition').trim() },
+    audience:{ description:fd.get('audience').trim(), serviceArea:fd.get('serviceArea').trim(), language:fd.get('language') },
+    design:{
+      designMode:fd.get('designMode'), customDesignIdea:fd.get('customDesignIdea').trim(),
+      styleChoice:fd.get('styleChoice'), likedDemos:fd.get('likedDemos').trim(),
+      brandAdjectives:fd.get('brandAdjectives').trim(), colorsLiked:fd.get('colorsLiked').trim(),
+      colorsAvoid:fd.get('colorsAvoid').trim(), referenceSites:fd.get('referenceSites').trim(),
+      imageryStyle:fd.get('imageryStyle'), animationLevel:fd.get('animationLevel')
+    },
+    content:{
+      sections:multi('sections'), servicesList:fd.get('servicesList').trim(),
+      differentiators:fd.get('differentiators').trim(), contentReady:multi('contentReady')
+    },
+    features:{ selected:multi('features'), other:fd.get('otherFeatures').trim() },
+    commercial:{ domainStatus:fd.get('domainStatus'), domainName:fd.get('domainName').trim(), timeline:fd.get('timeline') },
+    notes:fd.get('notes').trim(), contactPerson:fd.get('contactPerson').trim()
+  };
+}
+
+function slugify(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'') || 'client'; }
+
+document.getElementById('generateBtn').addEventListener('click', ()=>{
+  const fd = new FormData(form);
+  const missing = REQUIRED.filter(k => !String(fd.get(k)||'').trim());
+  const err = document.getElementById('errMsg');
+  if(missing.length){ err.style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); return; }
+  err.style.display='none';
+  brief = collect();
+
+  const b = brief;
+  const waText =
+`NEW WEBSITE BRIEF — ${b.business.name}
+Contact: ${b.contactPerson} (${b.business.whatsapp})
+Type: ${b.business.type} · ${b.business.locations}
+Building: ${b.project.siteKind} · ${b.project.pageScale} · payments: ${b.project.onlinePayments} · logins: ${b.project.userAccounts}
+Goal: ${b.goals.primaryGoal}
+Language: ${b.audience.language}
+Design: ${b.design.designMode} · ${b.design.styleChoice}${b.design.likedDemos ? ' · likes: '+b.design.likedDemos : ''} · ${b.design.animationLevel} motion
+${b.design.customDesignIdea ? 'Custom idea: '+b.design.customDesignIdea : ''}
+Sections: ${b.content.sections.join(', ')}
+Features: ${b.features.selected.join(', ')}
+Services: ${b.content.servicesList}
+Audience: ${b.audience.description}
+Domain: ${b.commercial.domainStatus}${b.commercial.domainName ? ' ('+b.commercial.domainName+')' : ''} · Timeline: ${b.commercial.timeline}
+${b.notes ? 'Notes: '+b.notes : ''}`;
+
+  const waBtn = document.getElementById('waBtn');
+  waBtn.href = 'https://wa.me/' + NOCAP_WA + '?text=' + encodeURIComponent(waText);
+  waBtn.style.display='block';
+  document.getElementById('dlBtn').style.display='block';
+  document.getElementById('briefPreview').textContent = JSON.stringify(brief, null, 2);
+  const box = document.getElementById('resultBox');
+  box.style.display='block';
+  box.scrollIntoView({behavior:'smooth', block:'nearest'});
+});
+
+document.getElementById('dlBtn').addEventListener('click', ()=>{
+  if(!brief) return;
+  const blob = new Blob([JSON.stringify(brief, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = slugify(brief.business.name) + '-brief.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+</script>
+</body>
+</html>

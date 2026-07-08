@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vertex Dental Lab — Porur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0B10; --surface:#14151D; --surface2:#1B1D28; --text:#F2F2F5; --muted:#9396A3;
+    --line:rgba(255,255,255,0.09); --violet:#8B6CFF; --cyan:#3FE8D0; --white:#FFFFFF;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden;}
+  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  /* TILT CARD ENGINE */
+  .tilt-card{position:relative; transform-style:preserve-3d; transition:transform .18s cubic-bezier(.2,.8,.3,1), box-shadow .18s ease; will-change:transform;}
+  .tilt-card::after{content:''; position:absolute; inset:0; border-radius:inherit; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.16), transparent 55%); opacity:0; transition:opacity .25s ease; pointer-events:none;}
+  .tilt-card:hover::after{opacity:1;}
+  @media (prefers-reduced-motion:reduce){ .tilt-card{transition:none !important; transform:none !important;} }
+
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:20px;}
+
+  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(10,11,16,0.85); backdrop-filter:blur(10px); z-index:100;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px;}
+  .logo .mark{width:30px; height:30px; border-radius:9px; background:conic-gradient(from 140deg, var(--violet), var(--cyan), var(--violet)); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--bg);}
+  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
+  .nav-links a{text-decoration:none; color:var(--muted);}
+  .btn-nav{background:linear-gradient(120deg,var(--violet),var(--cyan)); color:var(--bg); padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:700; text-decoration:none;}
+
+  /* HERO */
+  .hero{padding:80px 0 60px; position:relative;}
+  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--cyan);}
+  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
+  .hero h1{font-size:clamp(34px,4.4vw,52px); line-height:1.1; margin-top:16px;}
+  .hero h1 .u{background:linear-gradient(120deg,var(--violet),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .hero p{margin-top:22px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:460px;}
+  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .btn-primary{background:var(--white); color:var(--bg); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  .btn-secondary{background:transparent; border:1px solid var(--line); color:var(--text); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+
+  /* 3D FANNED STACK */
+  .stage{position:relative; height:420px; perspective:1200px;}
+  .orbit-ring{position:absolute; top:50%; left:50%; width:380px; height:380px; margin:-190px 0 0 -190px; border-radius:50%; background:conic-gradient(from 0deg, transparent, rgba(139,108,255,0.35), transparent 40%, rgba(63,232,208,0.3), transparent 80%); transform:rotateX(68deg) rotateZ(0deg); animation:spinring 18s linear infinite; filter:blur(1px);}
+  @keyframes spinring{ to{ transform:rotateX(68deg) rotateZ(360deg); } }
+  @media (prefers-reduced-motion:reduce){ .orbit-ring{animation:none;} }
+  .stack{position:relative; height:100%; transform-style:preserve-3d;}
+  .scard{position:absolute; width:230px; padding:20px; transform-style:preserve-3d;}
+  .scard .k{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cyan); font-weight:700;}
+  .scard h4{font-size:16px; margin-top:8px; font-family:'Inter',sans-serif; font-weight:700;}
+  .scard p{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5;}
+  .sc1{top:20px; left:30px; z-index:1; transform:translateZ(-40px) rotateY(10deg) rotateX(4deg);}
+  .sc2{top:100px; left:150px; z-index:3; transform:translateZ(30px) rotateY(-8deg) rotateX(-2deg);}
+  .sc3{top:220px; left:50px; z-index:2; transform:translateZ(-10px) rotateY(6deg) rotateX(3deg);}
+
+  section{padding:80px 0;}
+  .sec-head{text-align:center; max-width:600px; margin:0 auto 44px;}
+  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:12px;}
+  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px; line-height:1.7;}
+
+  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
+  .svc-card{padding:28px 22px;}
+  .svc-icon{width:44px; height:44px; border-radius:13px; background:var(--surface2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
+  .svc-icon svg{width:20px; height:20px; stroke:var(--cyan); fill:none; stroke-width:1.6;}
+  .svc-card h3{font-size:16px; margin-bottom:8px; font-family:'Inter',sans-serif;}
+  .svc-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+
+  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
+  .about-visual{height:360px; padding:0; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 30% 20%, rgba(139,108,255,0.18), transparent 60%), var(--surface);}
+  .about-visual svg{width:34px; height:34px; stroke:var(--cyan); fill:none; stroke-width:1.3;}
+  .about-copy h3{font-size:24px; margin-bottom:14px;}
+  .about-copy p{font-size:14.5px; color:var(--muted); line-height:1.8;}
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px;}
+  .mini-panel{padding:16px;}
+  .mini-panel b{font-family:'Space Grotesk',sans-serif; font-size:22px; display:block; color:var(--cyan);}
+  .mini-panel span{font-size:11px; color:var(--muted);}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .contact-card{padding:36px;}
+  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{width:100px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cyan); font-weight:700; flex-shrink:0;}
+  .info-row .val{font-size:14px; color:var(--text);}
+  .form{display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:1px solid var(--line); background:var(--surface2); color:var(--text); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
+  .form input::placeholder, .form textarea::placeholder{color:var(--muted);}
+  .form button{background:linear-gradient(120deg,var(--violet),var(--cyan)); color:var(--bg); border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
+
+  footer{padding:30px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -8px rgba(37,211,102,0.5); text-decoration:none;}
+  .wa-float svg{width:27px; height:27px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .hero-grid{grid-template-columns:1fr;}
+    .stage{height:320px;}
+    .svc-grid{grid-template-columns:1fr 1fr;}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .svc-grid{grid-template-columns:1fr;}
+    .stack{display:flex; flex-direction:column; gap:14px; height:auto;}
+    .scard{position:static; width:100% !important; transform:none !important;}
+    .orbit-ring{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="mark">V</div>Vertex Dental Lab</div>
+    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
+    <a class="btn-nav" href="#contact">Book a visit</a>
+  </div>
+</nav>
+
+<header class="wrap hero reveal">
+  <div class="hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>Porur, Chennai</span>
+      <h1>Dentistry rendered in <span class="u">three dimensions.</span></h1>
+      <p>Digital scans, guided planning and a case walkthrough you can actually tilt and turn — so you see your treatment the way our lab sees it.</p>
+      <div class="hero-ctas">
+        <a class="btn-primary" href="#contact">Book a visit</a>
+        <a class="btn-secondary" href="#services">See our process</a>
+      </div>
+    </div>
+    <div class="stage">
+      <div class="orbit-ring"></div>
+      <div class="stack" id="tiltStack">
+        <div class="scard panel tilt-card sc1">
+          <span class="k">Scan</span><h4>Full Arch Capture</h4><p>Intraoral 3D scan in under 4 minutes.</p>
+        </div>
+        <div class="scard panel tilt-card sc2">
+          <span class="k">Plan</span><h4>Digital Smile Design</h4><p>Your new alignment, modelled and shared with you.</p>
+        </div>
+        <div class="scard panel tilt-card sc3">
+          <span class="k">Build</span><h4>In-House Milling</h4><p>Crowns and aligners milled same-week, on site.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="services">
+  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Services</span><h2>Built on a digital workflow, start to finish.</h2></div>
+  <div class="svc-grid reveal">
+    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></svg></div><h3>3D Scanning</h3><p>No putty impressions — a wand and a screen.</p></div>
+    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Clear Aligners</h3><p>Full treatment simulated before you commit.</p></div>
+    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Same-Week Crowns</h3><p>Designed and milled in our own digital lab.</p></div>
+    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div><h3>Implant Planning</h3><p>Placement mapped on your own 3D jaw model.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="about">
+  <div class="about-grid reveal">
+    <div class="about-visual panel tilt-card">
+      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
+    </div>
+    <div class="about-copy">
+      <span class="eyebrow">The Lab</span>
+      <h3 style="margin-top:12px;">A dental studio built around its own scanner.</h3>
+      <p>Dr. [Name], BDS, MDS Prosthodontics, runs Vertex as a fully digital practice — every case is scanned, modelled and reviewed on-screen with the patient before a single tool touches a tooth.</p>
+      <div class="stat-row">
+        <div class="mini-panel panel"><b>4,800+</b><span>Digital scans done</span></div>
+        <div class="mini-panel panel"><b>Same-week</b><span>Crown turnaround</span></div>
+        <div class="mini-panel panel"><b>4.8 ★</b><span>Google rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Visit</span><h2>Come see your case in 3D.</h2></div>
+  <div class="contact-grid reveal">
+    <div class="contact-card panel">
+      <div class="info-row"><div class="lbl">Address</div><div class="val">Mount Poonamallee Road, Porur, Chennai 600116</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 8 PM</div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--cyan); font-weight:600;">Message the front desk →</a></div></div>
+    </div>
+    <form class="contact-card panel form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Scan Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nReason for visit: ' + this.reason.value);">
+      <input name="name" type="text" placeholder="Full name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <input name="reason" type="text" placeholder="What brings you in?">
+      <button type="submit">Request an appointment</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Vertex Dental Lab, Porur.</span>
+  <span>Design portfolio piece · Not a live business</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+
+  // Pointer-tracked 3D tilt for every .tilt-card
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduceMotion){
+    document.querySelectorAll('.tilt-card').forEach(card=>{
+      const baseTransform = card.style.transform || '';
+      card.addEventListener('mousemove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left, y = e.clientY - r.top;
+        const rotY = ((x / r.width) - 0.5) * 16;
+        const rotX = ((y / r.height) - 0.5) * -16;
+        card.style.transform = `${baseTransform} perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
+        card.style.setProperty('--mx', `${(x / r.width) * 100}%`);
+        card.style.setProperty('--my', `${(y / r.height) * 100}%`);
+      });
+      card.addEventListener('mouseleave', ()=>{
+        card.style.transform = baseTransform;
+      });
+    });
+  }
+</script>
+</body>
+</html>

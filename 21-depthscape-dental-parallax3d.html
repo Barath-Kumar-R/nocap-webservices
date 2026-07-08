@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Depthscape Dental Studio — Chengalpattu Bypass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F3F0EA; --ink:#1D2321; --muted:#666F6B; --line:#DEDACF; --white:#FFFFFF;
+    --teal:#2F6B63; --teal-soft:#E4EFEC; --clay:#C97B4A;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; letter-spacing:-0.01em;}
+  a{color:inherit;}
+  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+
+  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(243,240,234,0.9); backdrop-filter:blur(10px); z-index:100;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:19px;}
+  .logo .mark{width:30px; height:30px; border-radius:50%; background:var(--teal); display:flex; align-items:center; justify-content:center; color:white; font-family:'Fraunces',serif; font-size:14px;}
+  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
+  .nav-links a{text-decoration:none; color:var(--muted);}
+  .btn-nav{background:var(--teal); color:white; padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:600; text-decoration:none;}
+
+  /* DEPTH STAGE — layered parallax hero */
+  .stage-wrap{overflow:hidden;}
+  .stage{position:relative; height:560px; perspective:1400px; perspective-origin:50% 30%;}
+  .depth-layer{position:absolute; inset:0; transform-style:preserve-3d; will-change:transform;}
+  .slice{position:absolute; left:50%; top:50%; border-radius:22px; box-shadow:0 30px 60px -20px rgba(29,35,33,0.25);}
+  .slice-1{width:520px; height:340px; margin:-170px 0 0 -260px; background:var(--white); transform:translateZ(0px);}
+  .slice-2{width:420px; height:260px; margin:-260px 0 0 -80px; background:var(--teal-soft); transform:translateZ(90px);}
+  .slice-3{width:220px; height:220px; margin:60px 0 0 -320px; background:var(--clay); opacity:0.9; transform:translateZ(140px);}
+  .slice-label{position:absolute; bottom:16px; left:20px; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--teal);}
+  .slice-3 .slice-label{color:white;}
+
+  header.hero{padding:70px 0 0; position:relative; z-index:2;}
+  .hero-copy{max-width:640px; margin:0 auto; text-align:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--teal); background:var(--white); border:1px solid var(--line); padding:8px 16px; border-radius:100px;}
+  .hero h1{font-size:clamp(32px,4.4vw,52px); line-height:1.12; margin-top:22px;}
+  .hero p{margin-top:20px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:480px; margin-left:auto; margin-right:auto;}
+  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap; justify-content:center;}
+  .btn-primary{background:var(--ink); color:white; padding:15px 28px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  .btn-secondary{background:var(--white); border:1px solid var(--line); color:var(--ink); padding:15px 28px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+
+  section{padding:70px 0;}
+  .sec-head{text-align:center; max-width:600px; margin:0 auto 44px;}
+  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:10px;}
+  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px; line-height:1.7;}
+
+  /* SCROLL-DEPTH SERVICE CARDS */
+  .layer-stack{display:grid; grid-template-columns:repeat(4,1fr); gap:0;}
+  .layer-card{background:var(--white); border:1px solid var(--line); padding:30px 24px; position:relative; transition:transform .5s cubic-bezier(.2,.8,.2,1), box-shadow .5s ease;}
+  .layer-card:not(:last-child){border-right:none;}
+  .layer-card:nth-child(1){border-radius:20px 0 0 20px;}
+  .layer-card:nth-child(4){border-radius:0 20px 20px 0;}
+  .layer-card.in-view{box-shadow:0 26px 50px -22px rgba(29,35,33,0.22);}
+  .layer-card .n{font-family:'Fraunces',serif; font-size:13px; color:var(--clay); font-weight:600;}
+  .layer-card h3{font-size:16.5px; margin:12px 0 8px; font-family:'Inter',sans-serif; font-weight:700;}
+  .layer-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+
+  .about-grid{display:grid; grid-template-columns:0.95fr 1.05fr; gap:0; overflow:hidden; border-radius:24px; border:1px solid var(--line);}
+  .about-photo{min-height:400px; background:var(--teal-soft); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
+  .about-photo svg{width:30px; height:30px; stroke:var(--teal); fill:none; stroke-width:1.3;}
+  .about-photo span{font-size:11px; color:var(--teal); text-transform:uppercase; letter-spacing:0.05em; font-weight:700;}
+  .about-copy{padding:48px; background:var(--white);}
+  .about-copy h3{font-size:24px; margin-bottom:16px;}
+  .about-copy p{font-size:15px; color:var(--muted); line-height:1.8;}
+  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:26px;}
+  .mini-panel{background:var(--paper); border-radius:14px; padding:16px;}
+  .mini-panel b{font-family:'Fraunces',serif; font-size:22px; display:block; color:var(--teal);}
+  .mini-panel span{font-size:11px; color:var(--muted);}
+
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
+  .contact-card{background:var(--white); border:1px solid var(--line); border-radius:20px; padding:36px;}
+  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{width:100px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); font-weight:700; flex-shrink:0;}
+  .info-row .val{font-size:14px;}
+  .form{display:flex; flex-direction:column; gap:14px;}
+  .form input, .form textarea{border:1px solid var(--line); background:var(--paper); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
+  .form button{background:var(--teal); color:white; border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
+
+  footer{padding:30px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -8px rgba(37,211,102,0.5); text-decoration:none;}
+  .wa-float svg{width:27px; height:27px; fill:white;}
+
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;} .depth-layer{transform:none !important;} .layer-card{transform:none !important;}}
+
+  @media (max-width:900px){
+    .nav-links{display:none;}
+    .stage{height:420px;}
+    .slice-1{width:88vw; margin-left:-44vw;}
+    .slice-2{width:64vw; margin-left:-10vw;}
+    .slice-3{width:40vw; height:40vw; margin-left:-40vw;}
+    .layer-stack{grid-template-columns:1fr 1fr;}
+    .layer-card{border-radius:16px !important; border-right:1px solid var(--line) !important; margin-bottom:14px;}
+    .about-grid{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){ .layer-stack{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+
+<nav class="wrap">
+  <div class="nav-inner">
+    <div class="logo"><div class="mark">D</div>Depthscape Dental Studio</div>
+    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
+    <a class="btn-nav" href="#contact">Book a scan</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-copy reveal">
+    <span class="eyebrow">Chengalpattu Bypass</span>
+    <h1>Every visit, seen in layers.</h1>
+    <p>We scan, plan and explain your treatment as a stack of depth — from surface enamel down to the root — so you understand exactly what's happening before we begin.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" href="#contact">Book a scan</a>
+      <a class="btn-secondary" href="#services">See the process</a>
+    </div>
+  </div>
+  <div class="stage-wrap">
+    <div class="wrap stage" id="depthStage">
+      <div class="depth-layer" id="depthLayer">
+        <div class="slice slice-1"><span class="slice-label">Surface · Enamel Check</span></div>
+        <div class="slice slice-2"><span class="slice-label">Mid Layer · 3D Scan Review</span></div>
+        <div class="slice slice-3"><span class="slice-label" style="color:white;">Core · Treatment Plan</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap" id="services">
+  <div class="sec-head reveal"><span class="eyebrow">Services</span><h2>Four layers of care, one clear plan.</h2></div>
+  <div class="layer-stack reveal" id="layerStack">
+    <div class="layer-card"><div class="n">01</div><h3>Diagnostic Scan</h3><p>A full 3D map of your mouth, reviewed together on screen.</p></div>
+    <div class="layer-card"><div class="n">02</div><h3>Depth Consultation</h3><p>We walk through each layer of the plan before you decide anything.</p></div>
+    <div class="layer-card"><div class="n">03</div><h3>Guided Treatment</h3><p>Fillings, root canals and crowns, planned from the scan outward.</p></div>
+    <div class="layer-card"><div class="n">04</div><h3>Aftercare Review</h3><p>A follow-up scan to confirm healing matches the plan.</p></div>
+  </div>
+</section>
+
+<section class="wrap" id="about">
+  <div class="about-grid reveal">
+    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Studio photo</span></div>
+    <div class="about-copy">
+      <span class="eyebrow">The Studio</span>
+      <h3 style="margin-top:12px;">Diagnosis first, treatment second — always in that order.</h3>
+      <p>Dr. [Name], BDS, MDS, built Depthscape around a single idea: patients trust what they can see. Every scan is reviewed layer by layer, out loud, before any work begins.</p>
+      <div class="stat-row">
+        <div class="mini-panel"><b>15 yrs</b><span>In practice</span></div>
+        <div class="mini-panel"><b>3,200+</b><span>3D scans reviewed</span></div>
+        <div class="mini-panel"><b>4.9 ★</b><span>Google rating</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="contact">
+  <div class="sec-head reveal"><span class="eyebrow">Visit</span><h2>Book your depth scan.</h2></div>
+  <div class="contact-grid reveal">
+    <div class="contact-card">
+      <div class="info-row"><div class="lbl">Address</div><div class="val">GST Road, Chengalpattu Bypass 603001</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM – 7 PM</div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--teal); font-weight:600;">Message the front desk →</a></div></div>
+    </div>
+    <form class="contact-card form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Scan Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nConcern: ' + this.concern.value);">
+      <input name="name" type="text" placeholder="Full name" required>
+      <input name="phone" type="tel" placeholder="Phone number" required>
+      <input name="concern" type="text" placeholder="What would you like checked?">
+      <button type="submit">Request my scan</button>
+    </form>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>© 2026 Depthscape Dental Studio, Chengalpattu.</span>
+  <span>Design portfolio piece · Not a live business</span>
+</footer>
+
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.1});
+  els.forEach(el=>io.observe(el));
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const stage = document.getElementById('depthStage');
+  const depthLayer = document.getElementById('depthLayer');
+
+  if(!reduceMotion && stage && depthLayer){
+    // Scroll-driven 3D depth: rotate + separate the slice stack as it enters view
+    const onScroll = ()=>{
+      const rect = stage.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const progress = Math.min(Math.max((vh - rect.top) / (vh + rect.height), 0), 1);
+      const rotX = 18 - progress * 18;
+      const spread = progress * 1;
+      depthLayer.style.transform = `rotateX(${rotX}deg) scale(${0.94 + progress * 0.06})`;
+      depthLayer.querySelectorAll('.slice').forEach((s, i)=>{
+        const extra = i * 26 * spread;
+        s.style.transform = `translateZ(${(i * 45) + extra}px)`;
+      });
+    };
+    window.addEventListener('scroll', onScroll, {passive:true});
+    onScroll();
+
+    // Subtle pointer parallax on the stage
+    stage.addEventListener('mousemove', (e)=>{
+      const r = stage.getBoundingClientRect();
+      const rx = ((e.clientY - r.top) / r.height - 0.5) * -6;
+      const ry = ((e.clientX - r.left) / r.width - 0.5) * 6;
+      depthLayer.style.transform += ` rotateY(${ry}deg) rotateZ(0deg)`;
+      depthLayer.style.transition = 'transform .1s ease-out';
+    });
+    stage.addEventListener('mouseleave', ()=>{ depthLayer.style.transition = 'transform .4s ease'; onScroll(); });
+  }
+
+  // Layer cards lift as they scroll into view
+  const layerCards = document.querySelectorAll('.layer-card');
+  const cardIo = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in-view'); e.target.style.transform = 'translateY(-6px)'; }
+    });
+  }, {threshold:0.4});
+  layerCards.forEach(c=>cardIo.observe(c));
+</script>
+</body>
+</html>
