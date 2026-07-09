@@ -60,9 +60,9 @@
   .bcard .chrome .d{width:8px; height:8px; border-radius:50%; background:#D2D0C8;}
   .bcard .chrome .url{background:var(--white); border-radius:4px; font-family:'JetBrains Mono',monospace; font-size:9.5px; color:var(--muted); padding:3px 8px; margin-left:6px; flex:1;}
   .bcard .swatch{height:170px;}
-  .bc1{top:10px; left:40px; transform:rotate(-6deg); z-index:1;}
-  .bc2{top:70px; left:150px; transform:rotate(4deg); z-index:3;}
-  .bc3{top:170px; left:20px; transform:rotate(-2deg); z-index:2;}
+  .bc1{top:10px; left:40px; transform:rotate(-6deg); z-index:1; --base-rot:-6deg;}
+  .bc2{top:70px; left:150px; transform:rotate(4deg); z-index:3; --base-rot:4deg;}
+  .bc3{top:170px; left:20px; transform:rotate(-2deg); z-index:2; --base-rot:-2deg;}
 
   /* SECTIONS */
   section{padding:80px 0;}
@@ -124,6 +124,41 @@
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
+  /* HERO BLOOM CANVAS */
+  .hero{position:relative; overflow:hidden;}
+  .hero-bloom{position:absolute; inset:-10%; z-index:0; opacity:0.55; pointer-events:none;}
+  .hero .wrap.hero-grid, .hero-grid{position:relative; z-index:1;}
+
+  /* CUSTOM CURSOR */
+  html.has-cursor, html.has-cursor a, html.has-cursor button{cursor:none;}
+  .cursor-dot, .cursor-ring{position:fixed; top:0; left:0; border-radius:50%; pointer-events:none; z-index:9999; transform:translate(-50%,-50%);}
+  .cursor-dot{width:7px; height:7px; background:var(--coral); transition:transform .1s ease;}
+  .cursor-ring{width:34px; height:34px; border:1.5px solid var(--ink); opacity:0.4; transition:width .2s ease, height .2s ease, opacity .2s ease, border-color .2s ease;}
+  html.has-cursor.cursor-hover .cursor-ring{width:54px; height:54px; border-color:var(--coral); opacity:0.7;}
+  @media (hover:none), (pointer:coarse){ .cursor-dot, .cursor-ring{display:none;} }
+
+  /* TILT ON FAN CARDS */
+  .fan{perspective:1000px;}
+  .bcard{transition:transform .25s ease;}
+
+  /* MANIFESTO PINNED SECTION */
+  .manifesto-wrap{height:230vh; position:relative;}
+  .manifesto-pin{position:sticky; top:0; height:100vh; display:flex; align-items:center; justify-content:center; overflow:hidden;}
+  .manifesto-line{max-width:1000px; text-align:center; font-size:clamp(30px,6.4vw,84px); line-height:1.18; padding:0 24px;}
+  .manifesto-line .w{display:inline-block; opacity:0.1; transform:translateY(0.12em); color:var(--ink);}
+  .manifesto-line .w.lit{opacity:1; transform:none; color:var(--coral);}
+  .manifesto-line .w.lit.alt{color:var(--navy);}
+  @media (prefers-reduced-motion:reduce){ .manifesto-line .w{opacity:1; transform:none; color:var(--ink);} }
+  @media (max-width:640px){ .manifesto-wrap{height:180vh;} }
+
+  /* STAT COUNTERS */
+  .hero-stats div b{font-variant-numeric:tabular-nums;}
+
+  /* GALLERY HOVER SHEEN */
+  .g-card{position:relative;}
+  .g-card::after{content:''; position:absolute; inset:0; background:linear-gradient(115deg, transparent 40%, rgba(255,255,255,0.55) 50%, transparent 60%); background-size:250% 250%; background-position:120% 0; opacity:0; transition:opacity .3s ease, background-position .7s ease; pointer-events:none;}
+  .g-card:hover::after{opacity:1; background-position:-20% 0;}
+
   @media (max-width:980px){
     .nav-links{display:none;}
     .hero-grid{grid-template-columns:1fr;}
@@ -157,8 +192,9 @@
   <span>TWENTY-TWO LIVE MOCKUPS —</span><b>BENTO GRID</b><span>·</span><b>MINIMALIST</b><span>·</span><b>FLAT DESIGN</b><span>·</span><b>MAXIMALISM</b><span>·</span><b>NEO-BRUTALISM</b><span>·</span><b>GLASSMORPHISM</b><span>·</span><b>AI-NATIVE</b><span>·</span><b>SPATIAL UI</b><span>·</span><b>AURORA</b><span>·</span><b>COLLAGE</b><span>·</span><b>PIXEL ART</b><span>·</span><b>LUXURY EDITORIAL</b><span>·</span><b>SPA-WELLNESS</b><span>·</span><b>SWISS GRID</b><span>·</span><b>CORPORATE-FAMILY</b><span>·</span><b>PLAYFUL PASTEL</b><span>·</span><b>NEIGHBOURHOOD WARM</b><span>·</span><b>DARK MODE</b><span>·</span><b>POSTER GRAPHIC</b><span>·</span><b>3D TILT</b><span>·</span><b>DEPTH PARALLAX</b><span>·</span><b>WEBGL</b><span>— ALL BUILT, NOT DRAWN —</span><b>BENTO GRID</b><span>·</span><b>MINIMALIST</b><span>·</span><b>FLAT DESIGN</b><span>·</span><b>MAXIMALISM</b><span>·</span><b>NEO-BRUTALISM</b><span>·</span><b>GLASSMORPHISM</b><span>·</span><b>AI-NATIVE</b><span>·</span><b>SPATIAL UI</b><span>·</span><b>AURORA</b><span>·</span><b>COLLAGE</b><span>·</span><b>PIXEL ART</b><span>·</span><b>LUXURY EDITORIAL</b><span>·</span><b>SPA-WELLNESS</b><span>·</span><b>SWISS GRID</b><span>·</span><b>CORPORATE-FAMILY</b><span>·</span><b>PLAYFUL PASTEL</b><span>·</span><b>NEIGHBOURHOOD WARM</b><span>·</span><b>DARK MODE</b><span>·</span><b>POSTER GRAPHIC</b><span>·</span><b>3D TILT</b><span>·</span><b>DEPTH PARALLAX</b><span>·</span><b>WEBGL</b><span>— ALL BUILT, NOT DRAWN —</span>
 </div></div>
 
-<header class="wrap hero reveal">
-  <div class="hero-grid">
+<header class="hero reveal">
+  <canvas class="hero-bloom" id="heroBloom"></canvas>
+  <div class="wrap hero-grid">
     <div>
       <span class="eyebrow"><span class="dot"></span>Chennai · Chengalpattu · Kanchipuram</span>
       <h1>Your clinic's website, in <span class="u">any style</span> you actually like.</h1>
@@ -168,9 +204,9 @@
         <a class="btn-secondary" href="#contact">Talk to us on WhatsApp</a>
       </div>
       <div class="hero-stats">
-        <div><b>22</b><span>WORKING STYLES</span></div>
-        <div><b>0</b><span>UPFRONT BUILD FEE*</span></div>
-        <div><b>48 hrs</b><span>TYPICAL DEMO TURNAROUND</span></div>
+        <div><b data-count="22" data-suffix="">0</b><span>WORKING STYLES</span></div>
+        <div><b data-count="0" data-suffix="">0</b><span>UPFRONT BUILD FEE*</span></div>
+        <div><b data-count="48" data-suffix=" hrs">0</b><span>TYPICAL DEMO TURNAROUND</span></div>
       </div>
     </div>
     <div class="fan">
@@ -189,6 +225,16 @@
     </div>
   </div>
 </header>
+
+<section class="manifesto-wrap">
+  <div class="manifesto-pin">
+    <h2 class="manifesto-line" id="manifestoLine">
+      <span class="w">REAL.</span> <span class="w">NOT</span> <span class="w">A</span> <span class="w">MOCKUP.</span>
+      <span class="w">LIVE.</span> <span class="w">NOT</span> <span class="w">A</span> <span class="w">PROMISE.</span>
+      <span class="w">YOURS,</span> <span class="w">BEFORE</span> <span class="w">YOU</span> <span class="w">PAY.</span>
+    </h2>
+  </div>
+</section>
 
 <section class="wrap" id="gallery">
   <div class="sec-head reveal">
@@ -502,6 +548,9 @@
   </div>
 </footer>
 
+<div class="cursor-dot" id="cursorDot"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
 <a class="wa-float" href="https://wa.me/7395938220" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
@@ -523,6 +572,138 @@
       });
     });
   });
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fineHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  /* HERO BLOOM CANVAS */
+  (function heroBloom(){
+    const canvas = document.getElementById('heroBloom');
+    if(!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const hero = document.querySelector('.hero');
+    let w, h, blobs;
+    const colors = ['200,255,61','255,77,46','18,22,59'];
+
+    function resize(){
+      w = canvas.width = hero.offsetWidth;
+      h = canvas.height = hero.offsetHeight;
+      blobs = colors.map((c,i)=>({
+        color:c,
+        baseX: w*(0.2+i*0.3), baseY: h*(0.3+i*0.2),
+        r: Math.min(w,h)*(0.28+i*0.05),
+        speed: 0.00025 + i*0.00009,
+        phase: i*2.1
+      }));
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    if(reduceMotion){
+      ctx.filter = 'blur(60px)';
+      blobs.forEach(b=>{
+        ctx.fillStyle = `rgba(${b.color},0.35)`;
+        ctx.beginPath(); ctx.arc(b.baseX,b.baseY,b.r,0,Math.PI*2); ctx.fill();
+      });
+      return;
+    }
+
+    function frame(t){
+      ctx.clearRect(0,0,w,h);
+      ctx.filter = 'blur(70px)';
+      blobs.forEach(b=>{
+        const x = b.baseX + Math.sin(t*b.speed + b.phase)*w*0.12;
+        const y = b.baseY + Math.cos(t*b.speed*1.3 + b.phase)*h*0.14;
+        ctx.fillStyle = `rgba(${b.color},0.32)`;
+        ctx.beginPath(); ctx.arc(x,y,b.r,0,Math.PI*2); ctx.fill();
+      });
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  })();
+
+  /* CUSTOM CURSOR + FAN TILT */
+  if(fineHover){
+    document.documentElement.classList.add('has-cursor');
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    const fan = document.querySelector('.fan');
+    const bcards = document.querySelectorAll('.bcard');
+    let mx=innerWidth/2, my=innerHeight/2, rx=mx, ry=my;
+
+    window.addEventListener('mousemove', (e)=>{
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx+'px'; dot.style.top = my+'px';
+
+      if(fan){
+        const rect = fan.getBoundingClientRect();
+        if(e.clientY >= rect.top && e.clientY <= rect.bottom && e.clientX >= rect.left && e.clientX <= rect.right){
+          const px = (e.clientX - rect.left)/rect.width - 0.5;
+          const py = (e.clientY - rect.top)/rect.height - 0.5;
+          bcards.forEach(card=>{
+            const base = getComputedStyle(card).getPropertyValue('--base-rot').trim() || '0deg';
+            card.style.transform = `rotate(${base}) rotateX(${(-py*8).toFixed(2)}deg) rotateY(${(px*10).toFixed(2)}deg)`;
+          });
+        }
+      }
+    });
+
+    document.querySelectorAll('a, button, .g-card').forEach(el=>{
+      el.addEventListener('mouseenter', ()=>document.documentElement.classList.add('cursor-hover'));
+      el.addEventListener('mouseleave', ()=>document.documentElement.classList.remove('cursor-hover'));
+    });
+
+    (function ringLoop(){
+      rx += (mx-rx)*0.18; ry += (my-ry)*0.18;
+      ring.style.left = rx+'px'; ring.style.top = ry+'px';
+      requestAnimationFrame(ringLoop);
+    })();
+  }
+
+  /* MANIFESTO SCROLL REVEAL */
+  (function manifesto(){
+    const section = document.querySelector('.manifesto-wrap');
+    const words = document.querySelectorAll('#manifestoLine .w');
+    if(!section || !words.length) return;
+    words.forEach((w,i)=>{ if(i%3===2) w.classList.add('alt'); });
+
+    function update(){
+      const rect = section.getBoundingClientRect();
+      const total = section.offsetHeight - innerHeight;
+      const progress = Math.min(1, Math.max(0, -rect.top / total));
+      const litCount = Math.round(progress * words.length);
+      words.forEach((w,i)=> w.classList.toggle('lit', i < litCount));
+    }
+    document.addEventListener('scroll', ()=>requestAnimationFrame(update), {passive:true});
+    update();
+  })();
+
+  /* STAT COUNTERS */
+  (function counters(){
+    const stats = document.querySelectorAll('.hero-stats b[data-count]');
+    if(!stats.length) return;
+    const io2 = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          const el = e.target;
+          const target = parseInt(el.dataset.count, 10);
+          const suffix = el.dataset.suffix || '';
+          if(reduceMotion){ el.textContent = target+suffix; io2.unobserve(el); return; }
+          const start = performance.now();
+          const dur = 1100;
+          function step(now){
+            const p = Math.min(1, (now-start)/dur);
+            const eased = 1 - Math.pow(1-p, 3);
+            el.textContent = Math.round(target*eased)+suffix;
+            if(p<1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          io2.unobserve(el);
+        }
+      });
+    }, {threshold:0.5});
+    stats.forEach(el=>io2.observe(el));
+  })();
 </script>
 </body>
 </html>
