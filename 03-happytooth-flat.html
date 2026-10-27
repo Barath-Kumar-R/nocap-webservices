@@ -74,11 +74,13 @@
   .smile-labels{display:flex; justify-content:space-between; margin-bottom:12px;}
   .smile{position:relative; margin:0; aspect-ratio:640/370; border:3px solid var(--navy); border-radius:28px; overflow:hidden; background:#D9F6EB; touch-action:pan-y; -webkit-user-select:none; user-select:none;}
   .smile.is-live{cursor:ew-resize;}
+  /* without JS the picture is a static half-and-half: no handle, no drag hint */
+  .smile-wrap:not(.is-live) .smile-knob, .smile-wrap:not(.is-live) .smile-how{display:none;}
   .smile-layer{position:absolute; inset:0;}
   .smile-layer svg{display:block; width:100%; height:100%;}
   .smile-before{background:#FFE6BF; clip-path:inset(0 calc(100% - var(--pos, 50%)) 0 0);}
   .smile-line{position:absolute; top:0; bottom:0; left:var(--pos, 50%); width:4px; margin-left:-2px; background:var(--navy); pointer-events:none;}
-  .smile-knob{position:absolute; top:50%; left:var(--pos, 50%); width:58px; height:58px; margin:-29px 0 0 -29px; border-radius:50%; background:var(--coral); border:3px solid var(--navy); display:flex; align-items:center; justify-content:center;}
+  .smile-knob{position:absolute; top:50%; left:clamp(36px, var(--pos, 50%), calc(100% - 36px)); width:58px; height:58px; margin:-29px 0 0 -29px; border-radius:50%; background:var(--coral); border:3px solid var(--navy); display:flex; align-items:center; justify-content:center;}
   .smile-knob svg{width:30px; height:30px; fill:none; stroke:var(--navy); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;}
   .smile.is-dragging .smile-knob{background:var(--sun);}
   .smile-hint{margin-top:14px; font-size:15px; font-weight:600; color:var(--soft);}
@@ -102,7 +104,7 @@
   .info-row:last-child{border-bottom:none; padding-bottom:0;}
   .info-row .lbl{font-size:14px; font-weight:800; color:var(--coral-ink); text-transform:uppercase; letter-spacing:.04em;}
   .info-row .val{font-weight:600;}
-  .info-row a{color:var(--coral-ink); font-weight:800;}
+  .info-row a{display:inline-flex; align-items:center; gap:6px; min-height:44px; color:var(--coral-ink); font-weight:800;}
   .form{display:flex; flex-direction:column; gap:6px;}
   .form label{font-weight:800; font-size:15px; margin-top:8px;}
   .form label:first-child{margin-top:0;}
@@ -157,7 +159,7 @@
     .svc-card h3{font-size:20px; margin-bottom:2px;}
     .price{grid-column:2; padding-top:10px;}
     .smile{border-radius:20px;}
-    .smile-knob{width:52px; height:52px; margin:-26px 0 0 -26px;}
+    .smile-knob{width:52px; height:52px; margin:-26px 0 0 -26px; left:clamp(33px, var(--pos, 50%), calc(100% - 33px));}
     .about-flat{padding:20px; border-radius:24px;}
     .card{padding:22px 18px;}
     .info-row{grid-template-columns:1fr; gap:2px;}
@@ -214,7 +216,7 @@
       <div class="dot" style="width:26px; height:26px; background:var(--sun); top:14px; right:14%;"></div>
       <div class="dot" style="width:18px; height:18px; background:var(--coral); bottom:28px; left:12%;"></div>
       <svg class="mascot" viewBox="0 0 200 220" fill="none">
-        <path d="M100 10C55 10 30 45 30 90c0 45 15 95 25 105 8 8 15-25 20-40 5-15 10-15 15 0 5 15 12 48 20 40 10-10 25-60 25-105 0-45-25-80-70-80Z" fill="white" stroke="#1B2B4B" stroke-width="5"/>
+        <path d="M100 10C55 10 30 45 30 90C30 135 45 185 55 195C63 203 70 170 75 155C80 135 120 135 125 155C130 170 137 203 145 195C155 185 170 135 170 90C170 45 145 10 100 10Z" fill="white" stroke="#1B2B4B" stroke-width="5"/>
         <circle cx="78" cy="80" r="9" fill="#1B2B4B"/>
         <circle cx="122" cy="80" r="9" fill="#1B2B4B"/>
         <path d="M78 108c8 10 34 10 44 0" stroke="#1B2B4B" stroke-width="5" stroke-linecap="round" fill="none"/>
@@ -262,7 +264,7 @@
       <p>On the left: tartar along the gum line, and the stains that tea and filter coffee leave behind. On the right: the same teeth after one scale and polish.</p>
       <div class="price"><span>₹899 a visit</span></div>
     </div>
-    <div>
+    <div class="smile-wrap">
       <div class="smile-labels" aria-hidden="true"><span class="badge">Before</span><span class="badge badge-mint">After</span></div>
       <figure class="smile" data-signature="smile-slider" aria-label="Illustration of the same teeth before and after a scale and polish">
         <div class="smile-layer smile-after">
@@ -343,7 +345,7 @@
         <div class="smile-line"></div>
         <div class="smile-knob"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M11 9l-6 6 6 6M19 9l6 6-6 6"/></svg></div>
       </figure>
-      <p class="smile-hint">Drag the line or use the arrow keys. Illustration, not a patient photo.</p>
+      <p class="smile-hint"><span class="smile-how">Drag the line or use the arrow keys. </span>Illustration, not a patient photo.</p>
     </div>
   </div>
 </section>
@@ -442,13 +444,15 @@
     var fig = document.querySelector('[data-signature="smile-slider"]');
     if(!fig) return;
     var knob = fig.querySelector('.smile-knob');
-    var pos = 50, dragging = false, touched = false;
+    var pos = 50, touched = false;
+    var mode = null, grab = 0, startX = 0, startY = 0; // mode: null, 'pending' (touch, direction unknown) or 'drag'
     knob.setAttribute('role', 'slider');
     knob.setAttribute('tabindex', '0');
     knob.setAttribute('aria-label', 'Before and after divider');
     knob.setAttribute('aria-valuemin', '0');
     knob.setAttribute('aria-valuemax', '100');
     fig.classList.add('is-live');
+    if(fig.parentNode.classList.contains('smile-wrap')) fig.parentNode.classList.add('is-live');
     function set(p){
       pos = Math.max(0, Math.min(100, p));
       var r = Math.round(pos);
@@ -458,21 +462,44 @@
     }
     function fromPointer(e){
       var b = fig.getBoundingClientRect();
-      return (e.clientX - b.left) / b.width * 100;
+      return (e.clientX - grab - b.left) / b.width * 100;
     }
+    function begin(e){
+      mode = 'drag';
+      touched = true;
+      try{ fig.setPointerCapture(e.pointerId); }catch(err){}
+      fig.classList.add('is-dragging');
+    }
+    function stop(){ mode = null; fig.classList.remove('is-dragging'); }
     set(50);
     fig.addEventListener('pointerdown', function(e){
       if(e.button > 0) return;
-      touched = dragging = true;
-      try{ fig.setPointerCapture(e.pointerId); }catch(err){}
-      fig.classList.add('is-dragging');
+      var b = fig.getBoundingClientRect();
+      // Grabbing the knob off-centre keeps that offset, so the line does not jump under the cursor or finger.
+      grab = knob.contains(e.target) ? e.clientX - (b.left + b.width * pos / 100) : 0;
+      startX = e.clientX; startY = e.clientY;
+      // A finger landing on the picture may be scrolling the page: decide on the first clear movement.
+      if(e.pointerType === 'touch'){ mode = 'pending'; return; }
+      begin(e);
       set(fromPointer(e));
     });
-    fig.addEventListener('pointermove', function(e){ if(dragging) set(fromPointer(e)); });
-    function stop(){ dragging = false; fig.classList.remove('is-dragging'); }
-    fig.addEventListener('pointerup', stop);
-    fig.addEventListener('pointercancel', stop);
-    fig.addEventListener('lostpointercapture', stop);
+    fig.addEventListener('pointermove', function(e){
+      if(mode === 'pending'){
+        var dx = Math.abs(e.clientX - startX), dy = Math.abs(e.clientY - startY);
+        if(dx < 6 && dy < 6) return;
+        if(dx > dy){ begin(e); set(fromPointer(e)); } else { mode = null; } // sideways drags, up/down scrolls
+        return;
+      }
+      if(mode === 'drag') set(fromPointer(e));
+    });
+    fig.addEventListener('pointerup', function(e){
+      if(mode === 'pending'){ touched = true; set(fromPointer(e)); } // a tap moves the line to the tap
+      stop();
+    });
+    fig.addEventListener('pointercancel', stop); // the browser took the gesture (page scroll)
+    // Only the figure's own capture ending counts: a touch's implicit capture on a child also ends (and bubbles here)
+    // when the figure takes over at the first sideways move.
+    fig.addEventListener('lostpointercapture', function(e){ if(e.target === fig && mode === 'drag') stop(); });
     knob.addEventListener('keydown', function(e){
       var step = e.shiftKey ? 10 : 5, next = null;
       switch(e.key){
