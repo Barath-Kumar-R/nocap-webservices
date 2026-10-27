@@ -80,6 +80,23 @@ function describeError(e) {
   return `${e.type === 'pageerror' ? 'exception' : 'console'}: ${clip(e.text, 70)}${where}`;
 }
 
+// Rendered state of every element matching `selector`, shared by nojs and offline so they agree on "visible":
+// effective opacity (product up the ancestor chain, so a faded wrapper hides its heading), computed
+// visibility, and whether the element has a non-empty box (false for display:none or zero size).
+function renderStates(page, selector) {
+  return page.evaluate((sel) => [...document.querySelectorAll(sel)].map((el) => {
+    let opacity = 1;
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) opacity *= parseFloat(getComputedStyle(n).opacity);
+    const box = el.getBoundingClientRect();
+    return {
+      text: el.textContent.trim().slice(0, 30),
+      opacity: Math.round(opacity * 100) / 100,
+      hidden: getComputedStyle(el).visibility === 'hidden',
+      empty: !el.getClientRects().length || box.width === 0 || box.height === 0,
+    };
+  }), selector);
+}
+
 /* ---------- checks: each returns null (pass) or a short failure reason ---------- */
 
 async function checkConsole(browser, file) {
@@ -104,14 +121,10 @@ async function checkOverflow(browser, file) {
   return bad.length ? bad.join('; ') : null;
 }
 
-// JS off: headings must not depend on script to become visible (effective opacity includes ancestors).
+// JS off: headings must not depend on script to become visible (effective opacity, see renderStates).
 async function checkNoJs(browser, file) {
-  const hidden = await withPage(browser, file, { js: false }, (page) =>
-    page.evaluate(() => [...document.querySelectorAll('h1,h2')].map((el) => {
-      let opacity = 1;
-      for (let n = el; n && n.nodeType === 1; n = n.parentElement) opacity *= parseFloat(getComputedStyle(n).opacity);
-      return { text: el.textContent.trim().slice(0, 30), opacity: Math.round(opacity * 100) / 100 };
-    }).filter((h) => h.opacity < 0.99)));
+  const states = await withPage(browser, file, { js: false }, (page) => renderStates(page, 'h1,h2'));
+  const hidden = states.filter((h) => h.opacity < 0.99);
   if (!hidden.length) return null;
   return `${hidden.length} heading(s) hidden without JS, e.g. "${hidden[0].text}" opacity ${hidden[0].opacity}`;
 }
@@ -173,14 +186,19 @@ async function checkTap(browser, file) {
   return `${small.length} target(s) under 44px: ${small.slice(0, 3).join(', ')}`;
 }
 
-// Distinct nav links (by href, so a repeated mobile menu counts once) excluding the logo link
-// (first link, or class logo/brand) and btn/cta links: at most 6.
+// Distinct nav links (by href plus link text, so a repeated mobile menu counts once but several href="#"
+// placeholders do not collapse) excluding the logo link and btn/cta links: at most 6.
+// A logo is a link with class logo/brand, or the first nav link when it looks like one (href "/", "#" or
+// "#top", or it wraps an svg or a logo/brand element). The first link is otherwise a real item and counts.
 async function checkNav(browser, file) {
   const count = await withPage(browser, file, {}, (page) => page.evaluate(() => {
     const links = [...document.querySelectorAll('nav a')];
     const cls = (a) => a.getAttribute('class') || '';
-    const items = links.filter((a, i) => i > 0 && !/logo|brand/i.test(cls(a)) && !/btn|cta/i.test(cls(a)));
-    return new Set(items.map((a) => a.getAttribute('href') || a.textContent.trim())).size;
+    const looksLikeLogo = (a) => /^(\/|#|#top)?$/.test(a.getAttribute('href') || '')
+      || !!a.querySelector('svg, [class*=logo], [class*=brand]');
+    const items = links.filter((a, i) => !/logo|brand/i.test(cls(a)) && !/btn|cta/i.test(cls(a))
+      && !(i === 0 && looksLikeLogo(a)));
+    return new Set(items.map((a) => `${a.getAttribute('href') || ''}|${a.textContent.trim().replace(/\s+/g, ' ').toLowerCase()}`)).size;
   }));
   return count <= 6 ? null : `${count} distinct nav links (max 6, logo and CTA excluded)`;
 }
@@ -262,13 +280,18 @@ async function checkFocus(browser, file) {
   });
 }
 
-// Every non-file request aborted (fonts, CDNs): no uncaught errors, no script console errors, h1 visible.
+// Every non-file request aborted (fonts, CDNs): no uncaught errors, no script console errors, and the first
+// h1 actually shown (effective opacity >= 0.99, not visibility:hidden, non-empty box).
 // Aborted resource loads are expected here and are not counted.
 async function checkOffline(browser, file) {
   return withPage(browser, file, { offline: true }, async (page, errors) => {
     const real = errors.filter((e) => e.type === 'pageerror' || !/^Failed to load resource/.test(e.text));
     if (real.length) return describeError(real[0]) + (real.length > 1 ? ` (+${real.length - 1} more)` : '');
-    return (await page.locator('h1').first().isVisible()) ? null : 'first h1 not visible';
+    const [h1] = await renderStates(page, 'h1');
+    if (!h1) return 'no h1 element';
+    if (h1.opacity < 0.99) return `first h1 not visible (opacity ${h1.opacity})`;
+    if (h1.hidden) return 'first h1 not visible (visibility hidden)';
+    return h1.empty ? 'first h1 not visible (no box)' : null;
   });
 }
 
