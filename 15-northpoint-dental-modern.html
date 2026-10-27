@@ -22,7 +22,7 @@
   a{color:inherit;}
   .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
   .wrap{max-width:1160px; margin:0 auto; padding:0 28px;}
-  section[id]{scroll-margin-top:84px;}
+  section[id], #bookForm{scroll-margin-top:84px;}
   .eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:14px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-ink);}
   .eyebrow::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--coral);}
   .sec-intro{max-width:620px;}
@@ -183,6 +183,7 @@
     .js .burger{display:inline-flex;}
   }
   @media (min-width:1061px){ .mobile-menu{display:none !important;} }
+  @media (min-width:901px) and (max-width:1100px){ .form-row{grid-template-columns:minmax(0,1fr);} }
   @media (max-width:900px){
     .hero{padding:40px 0 72px;}
     .hero-grid,.svc-grid,.about-grid,.contact-grid{grid-template-columns:minmax(0,1fr);}
@@ -205,12 +206,20 @@
     .tl.is-live .tl-cap{display:none;}
     .plans-grid{grid-template-columns:minmax(0,1fr);}
   }
+  @media (max-width:1279px){
+    /* Below 1280 the float would sit over the content column (it clears it from 1268px). WhatsApp stays in
+       Visit us as a 44px link, and the call/book bar covers phones. */
+    html body .wa-float{display:none;}
+  }
+  @media (min-width:721px) and (max-width:900px){
+    /* The header is still sticky here, so the compact card sticks just below it. */
+    .tl.is-live .tl-visual{top:73px;}
+  }
   @media (max-width:720px){
     .top{position:relative;}
     section[id]{scroll-margin-top:0;}
+    #bookForm{scroll-margin-top:12px;}
     .btn-nav{display:none;}
-    /* The call/book bar covers booking on phones; WhatsApp stays in Visit us. */
-    html body .wa-float{display:none;}
     html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
     html:root{--nc-radius:12px;}
   }
@@ -275,7 +284,7 @@
         <a href="#contact">Contact</a>
       </div>
       <div class="nav-right">
-        <a class="btn-nav" href="#contact">Book a visit</a>
+        <a class="btn-nav" href="#bookForm">Book a visit</a>
         <button class="burger" type="button" aria-expanded="false" aria-controls="mMenu" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="b-open" d="M4 7h16M4 12h16M4 17h16"/><path class="b-close" d="M6 6l12 12M18 6 6 18"/></svg></button>
       </div>
     </div>
@@ -297,7 +306,7 @@
       <h1 id="hero-title"><span>Checkups after school.</span> <span>Fillings after office.</span></h1>
       <p class="lede">NorthPoint is open till 9 PM, Monday to Saturday. One shared record and one yearly plan cover the whole household, so checkups don't take six separate bookings.</p>
       <div class="hero-ctas">
-        <a class="btn" href="#contact">Book an evening slot</a>
+        <a class="btn" href="#bookForm">Book an evening slot</a>
         <a class="link" href="#plans"><span class="u">See family plans</span><span aria-hidden="true">&rarr;</span></a>
       </div>
       <p class="hours-line"><span><b>Mon to Sat</b> 11 AM – 9 PM</span><span><b>Sunday</b> 10 AM – 3 PM</span></p>
@@ -316,7 +325,7 @@
     <ul class="svc-list reveal">
       <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.5" cy="8.5" r="4.6"/><path d="M12.2 11.8 4 20"/></svg></span><div><h3>General checkups</h3><p>Exams and cleaning for every age. Book the family back to back in one evening.</p></div></li>
       <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="12.5" width="8" height="8" rx="1.5"/><rect x="12.5" y="12.5" width="8" height="8" rx="1.5"/><path d="M8 10.5 12 3.5l4 7z"/></svg></span><div><h3>Kids' dentistry</h3><p>A separate play corner and a gentle, unhurried first visit for young patients.</p></div></li>
-      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 3.5c-2.4 0-4 1.9-4 4.6 0 3 1 5 1.7 8 .5 2.1.9 4.4 2.1 4.4s1.5-2.4 2-4.2c.3-1.2.9-1.8 2.6-1.8s2.3.6 2.6 1.8c.5 1.8.8 4.2 2 4.2s1.6-2.3 2.1-4.4c.7-3 1.7-5 1.7-8 0-2.7-1.6-4.6-4-4.6-1.8 0-2.6 1-4.4 1s-2.6-1-4.4-1Z"/><path d="M2.5 10h19"/><rect x="9.6" y="8" width="4.8" height="4" rx=".8"/></svg></span><div><h3>Braces and aligners</h3><p>Metal, ceramic and clear aligner options for teens and adults.</p><a class="link" href="#braces"><span class="u">How braces go, visit by visit</span><span aria-hidden="true">&darr;</span></a></div></li>
+      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 3.5c-2.4 0-4 1.9-4 4.6 0 3 1 5 1.7 8 .5 2.1.9 4.4 2.1 4.4s1.5-2.4 2-4.2c.3-1.2.9-1.8 2.6-1.8s2.3.6 2.6 1.8c.5 1.8.8 4.2 2 4.2s1.6-2.3 2.1-4.4c.7-3 1.7-5 1.7-8 0-2.7-1.6-4.6-4-4.6-1.8 0-2.6 1-4.4 1s-2.6-1-4.4-1Z"/><path d="M2.5 10h19"/><rect x="9.6" y="8" width="4.8" height="4" rx=".8"/></svg></span><div><h3>Braces and aligners</h3><p>Metal, ceramic and clear aligner options for teens and adults.</p><a class="link nw" href="#braces"><span class="u">Braces, visit by visit</span><span aria-hidden="true">&darr;</span></a></div></li>
       <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15.2" r="1.9" fill="currentColor" stroke="none"/></svg></span><div><h3>Emergency slots</h3><p>Same-day emergency appointments are held open every day.</p></div></li>
     </ul>
   </div>
@@ -327,7 +336,7 @@
     <div class="sec-intro reveal">
       <p class="eyebrow">Braces, step by step</p>
       <h2 id="braces-title">Braces for your teen, <span class="nw">visit by visit.</span></h2>
-      <p>Most of these visits fit after school. This is what happens at each one, from the first consultation to the retainer checks.</p>
+      <p>This is what happens at each visit, from the first consultation to the retainer checks.</p>
     </div>
     <div class="tl" data-signature="treatment-timeline">
       <div class="tl-visual" aria-hidden="true">
@@ -344,10 +353,10 @@
       <ol class="tl-list">
         <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 1 · Weekday evening, 30 min</p><h3>Consultation</h3><p>We check the bite and spacing, take photos, and tell you whether braces or aligners make sense now or a little later.</p></li>
         <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 2 · 45 min</p><h3>Records and plan</h3><p>Scans and X-rays. You get a written plan with the type of braces, a rough timeline and the full price. Family plan members get 15% off.</p></li>
-        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 3 · Saturday morning, about 90 min</p><h3>Braces on</h3><p>Brackets go on and the first wire goes in. Teeth can feel sore for a few days, so plan soft food for dinner.</p></li>
-        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Every 4 to 6 weeks · After school, 20 min</p><h3>Adjustments</h3><p>A wire change and a quick check. Book the next one before you leave, and pick any evening that suits.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 3 · Saturday, about 90 min</p><h3>Braces on</h3><p>Brackets go on and the first wire goes in. Teeth can feel sore for a few days, so plan soft food for dinner.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Usually every 4 to 6 weeks · After school, 20 min</p><h3>Adjustments</h3><p>A wire change and a quick check. Book the next one before you leave, and pick an evening that suits.</p></li>
         <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Usually 18 to 24 months in · About 60 min</p><h3>Braces off</h3><p>Brackets come off, the teeth are polished, and the retainer is measured.</p></li>
-        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Follow-up · 3, 6 and 12 months after</p><h3>Retainer checks</h3><p>Short visits to make sure the teeth stay where they moved to.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Follow-up · Usually 3, 6 and 12 months after</p><h3>Retainer checks</h3><p>Short visits to make sure the teeth stay where they moved to.</p></li>
       </ol>
     </div>
   </div>
@@ -372,7 +381,7 @@
         </ul>
         <div class="plan-buy">
           <p class="price">₹4,999<span>a year</span></p>
-          <a class="btn btn-coral" href="#contact">Choose the family plan</a>
+          <a class="btn btn-coral" href="#bookForm">Choose the family plan</a>
         </div>
       </article>
       <div class="plan-side">
@@ -383,7 +392,7 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>2 checkups and cleanings</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>10% off other treatment, priority booking</li>
           </ul>
-          <a class="link" href="#contact"><span class="u">Choose Individual</span><span aria-hidden="true">&rarr;</span></a>
+          <a class="link" href="#bookForm"><span class="u">Choose Individual</span><span aria-hidden="true">&rarr;</span></a>
         </article>
         <article class="plan-mini reveal">
           <h3>Corporate</h3>
@@ -392,7 +401,7 @@
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Volume pricing per employee</li>
             <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>On-site camp option, monthly billing to HR</li>
           </ul>
-          <a class="link" href="#contact"><span class="u">Talk to us about Corporate</span><span aria-hidden="true">&rarr;</span></a>
+          <a class="link" href="#bookForm"><span class="u">Talk to us about Corporate</span><span aria-hidden="true">&rarr;</span></a>
         </article>
       </div>
     </div>
@@ -403,13 +412,13 @@
   <div class="wrap about-grid">
     <div class="about-copy reveal">
       <p class="eyebrow">About NorthPoint</p>
-      <h2 id="about-title">Started as one dentist's evening clinic in 2015.</h2>
-      <p>NorthPoint began as a single evening clinic for Velachery families who couldn't make daytime appointments. It has since grown to two dentists, and the evening and weekend hours never changed.</p>
+      <h2 id="about-title">Started in 2015 with one dentist.</h2>
+      <p>NorthPoint began as a single evening clinic for Velachery families who couldn't make daytime appointments. It has since grown to two dentists and still keeps the same late hours.</p>
     </div>
     <dl class="about-stats reveal">
       <div><dt>Family plan members</dt><dd>600+</dd></div>
       <div><dt>Google rating</dt><dd>4.6<span class="sr"> out of 5</span></dd></div>
-      <div><dt>Dentists, evenings included</dt><dd>2</dd></div>
+      <div><dt>Dentists</dt><dd>2</dd></div>
     </dl>
   </div>
 </section>
@@ -426,7 +435,7 @@
         <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Message the clinic <span aria-hidden="true">&rarr;</span></a></dd></div>
       </dl>
     </div>
-    <form class="form reveal" id="bookForm" action="mailto:?subject=Appointment%20request" method="post" enctype="text/plain">
+    <form class="form" id="bookForm" action="mailto:?subject=Appointment%20request" method="post" enctype="text/plain">
       <div class="form-row">
         <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
         <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="98XXX XXXXX" required></div>
@@ -435,7 +444,7 @@
         <div class="field"><label for="f-who">Who is coming?</label>
           <select id="f-who" name="who"><option>Just me</option><option>Me and my child</option><option>Two or more of us</option><option>Not sure yet</option></select></div>
         <div class="field"><label for="f-when">Best time</label>
-          <select id="f-when" name="when"><option>Weekday evening, 5 to 9 PM</option><option>Saturday</option><option>Sunday morning</option><option>Any time</option></select></div>
+          <select id="f-when" name="when"><option>Weekday evenings</option><option>Saturday</option><option>Sunday morning</option><option>Any time</option></select></div>
       </div>
       <button class="btn" type="submit">Request appointment</button>
       <p class="form-note">Opens your email app with these details. The clinic calls back to confirm.</p>
@@ -558,7 +567,7 @@
 </script>
 <div class="nc-bar" role="group" aria-label="Call or book">
   <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
-  <a class="nc-book" href="#contact">Book</a>
+  <a class="nc-book" href="#bookForm">Book</a>
 </div>
 <script>
 /* nocap:polish v1 */
