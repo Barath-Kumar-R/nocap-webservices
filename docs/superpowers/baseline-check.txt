@@ -1,0 +1,355 @@
+01-meridian-dental-bento.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 442>320; @390 scrollWidth 442>390
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "One clinic, every specialist y" opacity 0
+  reduced   PASS
+  type      FAIL @1280 8 p <14px (min 11.5px); @1280 3 long p <16px (min 14.5px); @390 8 p <14px (min 11.5px); @390 3 long p <16px (min 14.5px)
+  tap       FAIL 1 target(s) under 44px: button 30x60
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     FAIL got [Space Grotesk, Inter], want [Bricolage Grotesque, Figtree]
+  signature FAIL 0 [data-signature] elements (want exactly 1: "bento-spotlight")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+02-still-dental-minimal.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 1 heading(s) hidden without JS, e.g. "Dentistry, practiced quietly." opacity 0
+  reduced   PASS
+  type      FAIL @1280 5 p <14px (min 13.5px); @1280 1 long p <16px (min 15.5px); @390 5 p <14px (min 13.5px); @390 1 long p <16px (min 15.5px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      PASS
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "type-reveal")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+03-happytooth-flat.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 330>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Dentistry your whole family lo" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 13.5px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13.5px); @390 1 long p <16px (min 15px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★ 🦷
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "smile-slider")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+04-candystudio-maximalism.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 359>320; @390 scrollWidth 397>390
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Smiles that get screenshotted." opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px)
+  tap       FAIL 1 target(s) under 44px: a.btn-hot 104x42
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ✨ ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "sticker-marquee")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+05-biteclub-neobrutalism.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 354>320
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "We tell you the price before w" opacity 0
+  reduced   PASS
+  type      FAIL @1280 1 p <14px (min 13px); @1280 2 long p <16px (min 14px); @390 1 p <14px (min 13px); @390 2 long p <16px (min 14px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "brutal-press")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+06-lucent-glassmorphism.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 350>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Precision dentistry, presented" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px)
+  tap       FAIL 1 target(s) under 44px: a.btn-glass 119x38
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "glass-orbs")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+07-novacare-ai-native.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Book a dental slot the way you" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px)
+  tap       FAIL 3 target(s) under 44px: a.btn-ai 104x40, button 38x38, button 268x43
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "chat-booking")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+08-halo-spatial-ui.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 348>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "See your implant plan before i" opacity 0
+  reduced   PASS
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "depth-stack")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+09-auroracalm-aurora.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 323>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "For everyone who's been puttin" opacity 0
+  reduced   PASS
+  type      FAIL @1280 3 p <14px (min 13.5px); @1280 1 long p <16px (min 15px); @390 3 p <14px (min 13.5px); @390 1 long p <16px (min 15px)
+  tap       FAIL 1 target(s) under 44px: a.btn-aurora 116x39
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "aurora-cursor")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+10-littlesprout-collage.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 330>320; @390 scrollWidth 400>390
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Little teeth, big smiles" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★ ✏
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "drag-collage")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+11-byte-pixelart.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Braces & checkups for the camp" opacity 0
+  reduced   PASS
+  type      PASS
+  tap       FAIL 3 target(s) under 44px: a.btn-px 99x37, a.btn-primary 173x43, a.btn-ghost 162x43
+  nav       PASS
+  sections  PASS
+  copy      PASS
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "typewriter-intro")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+12-aura-dental-luxury.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Five disciplines, one unhurrie" opacity 0
+  reduced   PASS
+  type      FAIL @1280 3 p <14px (min 13px); @1280 7 long p <16px (min 14px); @390 3 p <14px (min 13px); @390 7 long p <16px (min 14px)
+  tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-line 156x36
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      PASS
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     FAIL got [Fraunces, General Sans], want [Fraunces, Jost]
+  signature FAIL 0 [data-signature] elements (want exactly 1: "magnetic-cursor")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+13-bloom-dental-luxury.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Care for how your smile feels," opacity 0
+  reduced   PASS
+  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14px); @390 7 p <14px (min 12px); @390 2 long p <16px (min 14px)
+  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "line-draw-intro")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+14-clarity-dental-modern.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 348>320
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "No surprise line items." opacity 0
+  reduced   PASS
+  type      FAIL @1280 14 p <14px (min 12px); @1280 3 long p <16px (min 14px); @390 14 p <14px (min 12px); @390 3 long p <16px (min 14px)
+  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "slot-picker")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+15-northpoint-dental-modern.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Everything one family needs, i" opacity 0
+  reduced   PASS
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
+  tap       FAIL 5 target(s) under 44px: button.burger 20x26, a.btn-fill 188x38, a.plan-btn 272x42
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     FAIL got [Manrope, Inter], want [Outfit, Public Sans]
+  signature FAIL 0 [data-signature] elements (want exactly 1: "treatment-timeline")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+16-sunshine-smiles-warm.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Dentistry for every age at hom" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 4 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
+  tap       FAIL 2 target(s) under 44px: button.burger 22x28, a.btn-fill 131x43
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "smile-quiz")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+17-oakwood-family-warm.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Care for every age in the hous" opacity 0
+  reduced   PASS
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 7 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
+  tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-fill 167x39
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "hand-underline")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+18-pulse-dental-bold.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 321>320; @390 scrollWidth 391>390; @1280 scrollWidth 1281>1280; @1920 scrollWidth 1921>1920
+  nojs      FAIL 4 heading(s) hidden without JS, e.g. "Built for fast, precise visits" opacity 0
+  reduced   PASS
+  type      FAIL @1280 9 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @390 9 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px)
+  tap       FAIL 3 target(s) under 44px: a.btn-fill 121x38, button.burger 20x26, a.btn-fill 121x38
+  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     FAIL got [Space Grotesk, Inter], want [Syne, DM Sans]
+  signature FAIL 0 [data-signature] elements (want exactly 1: "kinetic-type")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+19-prism-dental-bold.html
+  console   PASS
+  overflow  PASS
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Full-servicedental care" opacity 0
+  reduced   PASS
+  type      FAIL @1280 10 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @390 10 p <14px (min 12px); @390 2 long p <16px (min 14.5px)
+  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "prism-split")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+20-vertex-dental-tilt3d.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 342>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Dentistry rendered in three di" opacity 0
+  reduced   PASS
+  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @390 7 p <14px (min 12px); @390 2 long p <16px (min 14.5px)
+  tap       FAIL 1 target(s) under 44px: a.btn-nav 119x38
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "tilt-cards")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+21-depthscape-dental-parallax3d.html
+  console   PASS
+  overflow  FAIL @320 scrollWidth 342>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Every visit, seen in layers." opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     PASS
+  signature FAIL 0 [data-signature] elements (want exactly 1: "layer-parallax")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+22-helix-dental-webgl3d.html
+  console   FAIL console: Failed to load resource: net::ERR_TUNNEL_CONNECTION_FAILED [https://unpkg.com/three@0.160.0/build/three.modul…]
+  overflow  FAIL @320 scrollWidth 342>320
+  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Your scan, rendered as a livin" opacity 0
+  reduced   PASS
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px)
+  tap       PASS
+  nav       PASS
+  sections  PASS
+  copy      FAIL emoji: ★
+  polish    FAIL missing /* nocap:polish v1 */
+  fonts     FAIL got [Sora, Inter], want [Red Hat Display, Red Hat Text]
+  signature FAIL 0 [data-signature] elements (want exactly 1: "webgl-scene")
+  focus     PASS
+  offline   PASS
+  bar       FAIL no .nc-bar element
+
+Failed by check: overflow=13 nojs=22 type=21 tap=15 copy=19 polish=22 fonts=5 signature=22 bar=22 nav=7 console=1
+SUMMARY 22 files, 330 checks: 161 passed, 169 failed
