@@ -1,58 +1,58 @@
 01-meridian-dental-bento.html
   console   PASS
-  overflow  FAIL @320 scrollWidth 442>320; @390 scrollWidth 442>390
-  nojs      FAIL 4 heading(s) hidden without JS, e.g. "One clinic, every specialist y" opacity 0
+  overflow  PASS
+  nojs      PASS
   reduced   PASS
-  type      FAIL @1280 8 p <14px (min 11.5px); @1280 3 long p <16px (min 14.5px); @390 8 p <14px (min 11.5px); @390 3 long p <16px (min 14.5px)
-  tap       FAIL 1 target(s) under 44px: button 30x60
+  type      PASS
+  tap       PASS
   nav       PASS
   sections  PASS
   copy      PASS
-  polish    FAIL missing /* nocap:polish v1 */
-  fonts     FAIL got [Space Grotesk, Inter], want [Bricolage Grotesque, Figtree]
-  signature FAIL 0 [data-signature] elements (want exactly 1: "bento-spotlight")
+  polish    PASS
+  fonts     PASS
+  signature PASS
   focus     PASS
   offline   PASS
-  bar       FAIL no .nc-bar element
+  bar       PASS
 02-still-dental-minimal.html
   console   PASS
   overflow  PASS
-  nojs      FAIL 1 heading(s) hidden without JS, e.g. "Dentistry, practiced quietly." opacity 0
+  nojs      PASS
   reduced   PASS
-  type      FAIL @1280 5 p <14px (min 13.5px); @1280 1 long p <16px (min 15.5px); @390 5 p <14px (min 13.5px); @390 1 long p <16px (min 15.5px)
+  type      PASS
   tap       PASS
   nav       PASS
   sections  PASS
   copy      PASS
-  polish    FAIL missing /* nocap:polish v1 */
+  polish    PASS
   fonts     PASS
-  signature FAIL 0 [data-signature] elements (want exactly 1: "type-reveal")
+  signature PASS
   focus     PASS
   offline   PASS
-  bar       FAIL no .nc-bar element
+  bar       PASS
 03-happytooth-flat.html
   console   PASS
-  overflow  FAIL @320 scrollWidth 330>320
-  nojs      FAIL 3 heading(s) hidden without JS, e.g. "Dentistry your whole family lo" opacity 0
+  overflow  PASS
+  nojs      PASS
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 13.5px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13.5px); @390 1 long p <16px (min 15px)
+  type      PASS
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: 🦷
-  polish    FAIL missing /* nocap:polish v1 */
+  copy      PASS
+  polish    PASS
   fonts     PASS
-  signature FAIL 0 [data-signature] elements (want exactly 1: "smile-slider")
+  signature PASS
   focus     PASS
   offline   PASS
-  bar       FAIL no .nc-bar element
+  bar       PASS
 04-candystudio-maximalism.html
   console   PASS
   overflow  FAIL @320 scrollWidth 359>320; @390 scrollWidth 397>390
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Smiles that get screenshotted." opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px)
-  tap       FAIL 1 target(s) under 44px: a.btn-hot 104x42
+  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @1280 22 text element(s) <14px: span 13px, a.btn-hot 13.5px, span.sticker 12.5px; @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px); @390 22 text element(s) <14px: span 13px, a.btn-hot 13.5px, span.sticker 12.5px
+  tap       FAIL 2 target(s) under 44px: a.btn-hot 103.6x42, a 139.8x38
   nav       PASS
   sections  PASS
   copy      FAIL emoji: ✨
@@ -67,8 +67,8 @@
   overflow  FAIL @320 scrollWidth 354>320
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "We tell you the price before w" opacity 0
   reduced   PASS
-  type      FAIL @1280 1 p <14px (min 13px); @1280 2 long p <16px (min 14px); @390 1 p <14px (min 13px); @390 2 long p <16px (min 14px)
-  tap       PASS
+  type      FAIL @1280 1 p <14px (min 13px); @1280 2 long p <16px (min 14px); @1280 47 text element(s) <14px: a 13px, a.btn-brut 13px, span.tag 12px; @390 1 p <14px (min 13px); @390 2 long p <16px (min 14px); @390 37 text element(s) <14px: a.btn-brut 13px, span.tag 12px, span 10.5px
+  tap       FAIL 1 target(s) under 44px: a 99x20
   nav       PASS
   sections  PASS
   copy      PASS
@@ -83,8 +83,8 @@
   overflow  FAIL @320 scrollWidth 350>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Precision dentistry, presented" opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px)
-  tap       FAIL 1 target(s) under 44px: a.btn-glass 119x38
+  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @1280 21 text element(s) <14px: a.btn-glass 13.5px, span.eyebrow 12px, span 11px; @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px); @390 21 text element(s) <14px: a.btn-glass 13.5px, span.eyebrow 12px, span 11px
+  tap       FAIL 2 target(s) under 44px: a.btn-glass 118.8x38, a 130.9x34
   nav       PASS
   sections  PASS
   copy      PASS
@@ -99,8 +99,8 @@
   overflow  PASS
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Book a dental slot the way you" opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px)
-  tap       FAIL 3 target(s) under 44px: a.btn-ai 104x40, button 38x38, button 268x43
+  type      FAIL @1280 4 p <14px (min 13px); @1280 2 long p <16px (min 15px); @1280 29 text element(s) <14px: a.btn-ai 13.5px, span.eyebrow 12px, b 13.5px; @390 4 p <14px (min 13px); @390 2 long p <16px (min 15px); @390 29 text element(s) <14px: a.btn-ai 13.5px, span.eyebrow 12px, b 13.5px
+  tap       FAIL 4 target(s) under 44px: a.btn-ai 103.6x40, button 38x38, a 153.9x18
   nav       PASS
   sections  PASS
   copy      PASS
@@ -115,8 +115,8 @@
   overflow  FAIL @320 scrollWidth 348>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "See your implant plan before i" opacity 0
   reduced   PASS
-  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
-  tap       PASS
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @1280 26 text element(s) <14px: a.btn-halo 13.5px, span.eyebrow 12px, span.k 11px; @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px); @390 26 text element(s) <14px: a.btn-halo 13.5px, span.eyebrow 12px, span.k 11px
+  tap       FAIL 1 target(s) under 44px: a 127.7x34
   nav       PASS
   sections  PASS
   copy      PASS
@@ -131,8 +131,8 @@
   overflow  FAIL @320 scrollWidth 323>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "For everyone who's been puttin" opacity 0
   reduced   PASS
-  type      FAIL @1280 3 p <14px (min 13.5px); @1280 1 long p <16px (min 15px); @390 3 p <14px (min 13.5px); @390 1 long p <16px (min 15px)
-  tap       FAIL 1 target(s) under 44px: a.btn-aurora 116x39
+  type      FAIL @1280 3 p <14px (min 13.5px); @1280 1 long p <16px (min 15px); @1280 22 text element(s) <14px: a 13.5px, a.btn-aurora 13px, span.eyebrow 12px; @390 3 p <14px (min 13.5px); @390 1 long p <16px (min 15px); @390 19 text element(s) <14px: a.btn-aurora 13px, span.eyebrow 12px, p 13.5px
+  tap       FAIL 2 target(s) under 44px: a.btn-aurora 116.3x39, a 129.7x32
   nav       PASS
   sections  PASS
   copy      PASS
@@ -147,8 +147,8 @@
   overflow  FAIL @320 scrollWidth 330>320; @390 scrollWidth 400>390
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Little teeth, big smiles" opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px)
-  tap       PASS
+  type      FAIL @1280 4 p <14px (min 13px); @1280 1 long p <16px (min 15px); @1280 20 text element(s) <14px: a.btn-doodle 13.5px, span.tape 13px, span 10.5px; @390 4 p <14px (min 13px); @390 1 long p <16px (min 15px); @390 20 text element(s) <14px: a.btn-doodle 13.5px, span.tape 13px, span 10.5px
+  tap       FAIL 1 target(s) under 44px: a 56.6x17
   nav       PASS
   sections  PASS
   copy      FAIL emoji: ✏
@@ -163,8 +163,8 @@
   overflow  PASS
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Braces & checkups for the camp" opacity 0
   reduced   PASS
-  type      PASS
-  tap       FAIL 3 target(s) under 44px: a.btn-px 99x37, a.btn-primary 173x43, a.btn-ghost 162x43
+  type      FAIL @1280 25 text element(s) <14px: div.logo 13px, a.btn-px 10.5px, span.eyebrow 10px; @390 25 text element(s) <14px: div.logo 13px, a.btn-px 10.5px, span.eyebrow 10px
+  tap       FAIL 4 target(s) under 44px: a.btn-px 98.8x37, a.btn-primary 173x43, a.btn-ghost 162x43
   nav       PASS
   sections  PASS
   copy      PASS
@@ -179,8 +179,8 @@
   overflow  PASS
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Five disciplines, one unhurrie" opacity 0
   reduced   PASS
-  type      FAIL @1280 3 p <14px (min 13px); @1280 7 long p <16px (min 14px); @390 3 p <14px (min 13px); @390 7 long p <16px (min 14px)
-  tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-line 156x36
+  type      FAIL @1280 3 p <14px (min 13px); @1280 7 long p <16px (min 14px); @1280 27 text element(s) <14px: a 13px, a.btn-line 12px, div.eyebrow 12px; @390 3 p <14px (min 13px); @390 7 long p <16px (min 14px); @390 22 text element(s) <14px: div.eyebrow 12px, a.btn-solid 13px, a.btn-line 12px
+  tap       FAIL 3 target(s) under 44px: button.burger 19.7x26, a.btn-line 156.1x36, a 181.8x42.5
   nav       PASS
   sections  PASS
   copy      PASS
@@ -195,8 +195,8 @@
   overflow  PASS
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Care for how your smile feels," opacity 0
   reduced   PASS
-  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14px); @390 7 p <14px (min 12px); @390 2 long p <16px (min 14px)
-  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14px); @1280 24 text element(s) <14px: a.btn-ghost 13px, div.eyebrow 12px, a.btn-fill 13px; @390 7 p <14px (min 12px); @390 2 long p <16px (min 14px); @390 22 text element(s) <14px: div.eyebrow 12px, a.btn-fill 13px, span 11px
+  tap       FAIL 2 target(s) under 44px: button.burger 19.7x26, a 174.9x19
   nav       PASS
   sections  PASS
   copy      PASS
@@ -211,8 +211,8 @@
   overflow  FAIL @320 scrollWidth 348>320
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "No surprise line items." opacity 0
   reduced   PASS
-  type      FAIL @1280 14 p <14px (min 12px); @1280 3 long p <16px (min 14px); @390 14 p <14px (min 12px); @390 3 long p <16px (min 14px)
-  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  type      FAIL @1280 14 p <14px (min 12px); @1280 3 long p <16px (min 14px); @1280 50 text element(s) <14px: a.btn-outline 13px, div.eyebrow 12px, a.btn-fill 13px; @390 14 p <14px (min 12px); @390 3 long p <16px (min 14px); @390 48 text element(s) <14px: div.eyebrow 12px, a.btn-fill 13px, span.k 12px
+  tap       FAIL 2 target(s) under 44px: button.burger 19.7x26, a 81.8x38
   nav       PASS
   sections  PASS
   copy      PASS
@@ -227,8 +227,8 @@
   overflow  PASS
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Everything one family needs, i" opacity 0
   reduced   PASS
-  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
-  tap       FAIL 5 target(s) under 44px: button.burger 20x26, a.btn-fill 188x38, a.plan-btn 272x42
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @1280 44 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, a.btn-outline 13.5px; @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px); @390 43 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, div.badge 12.5px
+  tap       FAIL 6 target(s) under 44px: button.burger 19.7x26, a.btn-fill 188.5x38, a.plan-btn 272x42
   nav       PASS
   sections  PASS
   copy      PASS
@@ -243,8 +243,8 @@
   overflow  PASS
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Dentistry for every age at hom" opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 4 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
-  tap       FAIL 2 target(s) under 44px: button.burger 22x28, a.btn-fill 131x43
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @1280 20 text element(s) <14px: div.eyebrow 13px, span 12px, div.stat-pill 13.5px; @390 4 p <14px (min 12.5px); @390 3 long p <16px (min 14px); @390 20 text element(s) <14px: div.eyebrow 13px, span 12px, div.stat-pill 13.5px
+  tap       FAIL 3 target(s) under 44px: button.burger 21.5x28, a.btn-fill 130.5x43, a 107x22
   nav       PASS
   sections  PASS
   copy      PASS
@@ -259,8 +259,8 @@
   overflow  PASS
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Care for every age in the hous" opacity 0
   reduced   PASS
-  type      FAIL @1280 7 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 7 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
-  tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-fill 167x39
+  type      FAIL @1280 7 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @1280 28 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, a.btn-outline 13.5px; @390 7 p <14px (min 12.5px); @390 3 long p <16px (min 14px); @390 27 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, span 11.5px
+  tap       FAIL 3 target(s) under 44px: button.burger 19.7x26, a.btn-fill 166.5x39, a 161.7x19
   nav       PASS
   sections  PASS
   copy      PASS
@@ -275,8 +275,8 @@
   overflow  FAIL @320 scrollWidth 321>320; @390 scrollWidth 391>390; @1280 scrollWidth 1281>1280; @1920 scrollWidth 1921>1920
   nojs      FAIL 4 heading(s) hidden without JS, e.g. "Built for fast, precise visits" opacity 0
   reduced   PASS
-  type      FAIL @1280 9 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @390 9 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px)
-  tap       FAIL 3 target(s) under 44px: a.btn-fill 121x38, button.burger 20x26, a.btn-fill 121x38
+  type      FAIL @1280 9 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @1280 40 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, a.btn-outline 13.5px; @390 9 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px); @390 39 text element(s) <14px: a.btn-fill 13.5px, div.eyebrow 12px, span 11.5px
+  tap       FAIL 4 target(s) under 44px: a.btn-fill 120.9x38, button.burger 19.7x26, a.btn-fill 120.9x38
   nav       PASS
   sections  PASS
   copy      PASS
@@ -291,8 +291,8 @@
   overflow  PASS
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Full-servicedental care" opacity 0
   reduced   PASS
-  type      FAIL @1280 10 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @390 10 p <14px (min 12px); @390 2 long p <16px (min 14.5px)
-  tap       FAIL 1 target(s) under 44px: button.burger 20x26
+  type      FAIL @1280 10 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @1280 26 text element(s) <14px: a.btn-fill 13px, div.eyebrow 12px, a.btn-sun 13.5px; @390 10 p <14px (min 12px); @390 2 long p <16px (min 14.5px); @390 25 text element(s) <14px: div.eyebrow 12px, a.btn-sun 13.5px, a.btn-outline-w 13.5px
+  tap       FAIL 2 target(s) under 44px: button.burger 19.7x26, a 167x19
   nav       PASS
   sections  PASS
   copy      PASS
@@ -307,8 +307,8 @@
   overflow  FAIL @320 scrollWidth 342>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Dentistry rendered in three di" opacity 0
   reduced   PASS
-  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @390 7 p <14px (min 12px); @390 2 long p <16px (min 14.5px)
-  tap       FAIL 1 target(s) under 44px: a.btn-nav 119x38
+  type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14.5px); @1280 26 text element(s) <14px: div.mark 13px, a.btn-nav 13.5px, span.eyebrow 12px; @390 7 p <14px (min 12px); @390 2 long p <16px (min 14.5px); @390 26 text element(s) <14px: div.mark 13px, a.btn-nav 13.5px, span.eyebrow 12px
+  tap       FAIL 2 target(s) under 44px: a.btn-nav 119.5x38, a 123.3x34
   nav       PASS
   sections  PASS
   copy      PASS
@@ -323,8 +323,8 @@
   overflow  FAIL @320 scrollWidth 342>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Every visit, seen in layers." opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
-  tap       PASS
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @1280 27 text element(s) <14px: a.btn-nav 13.5px, span.eyebrow 12.5px, span.slice-label 11px; @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 15px); @390 27 text element(s) <14px: a.btn-nav 13.5px, span.eyebrow 12.5px, span.slice-label 11px
+  tap       FAIL 1 target(s) under 44px: a 123.3x34
   nav       PASS
   sections  PASS
   copy      PASS
@@ -339,8 +339,8 @@
   overflow  FAIL @320 scrollWidth 342>320
   nojs      FAIL 3 heading(s) hidden without JS, e.g. "Your scan, rendered as a livin" opacity 0
   reduced   PASS
-  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px)
-  tap       PASS
+  type      FAIL @1280 4 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @1280 21 text element(s) <14px: a.btn-nav 13.5px, span.eyebrow 12px, span.gl-badge 10.5px; @390 4 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px); @390 21 text element(s) <14px: a.btn-nav 13.5px, span.eyebrow 12px, span.gl-badge 10.5px
+  tap       FAIL 1 target(s) under 44px: a 123.3x34
   nav       PASS
   sections  PASS
   copy      PASS
@@ -351,5 +351,5 @@
   offline   PASS
   bar       FAIL no .nc-bar element
 
-Failed by check: overflow=13 nojs=22 type=21 tap=15 polish=22 fonts=5 signature=22 bar=22 copy=3 console=1
-SUMMARY 22 files, 330 checks: 184 passed, 146 failed
+Failed by check: overflow=11 nojs=19 type=19 tap=19 copy=2 polish=19 signature=19 bar=19 fonts=4 console=1
+SUMMARY 22 files, 330 checks: 198 passed, 132 failed

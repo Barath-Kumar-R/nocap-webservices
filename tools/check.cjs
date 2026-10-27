@@ -139,6 +139,9 @@ async function checkReduced(browser, file) {
 }
 
 // Body >= 16px, every rendered p >= 14px, p over 80 chars >= 16px. Checked on desktop and phone widths.
+// Also any rendered element that directly holds non-empty text must be >= 14px (labels, eyebrows, spans,
+// buttons...). Text in script/style/noscript/svg or under aria-hidden="true" is skipped, and so is text
+// that is not rendered (display:none anywhere up the chain, visibility:hidden).
 async function checkType(browser, file) {
   const bad = [];
   for (const width of [1280, 390]) {
@@ -147,27 +150,52 @@ async function checkType(browser, file) {
       const ps = [...document.querySelectorAll('p')].filter((p) => p.getClientRects().length && p.innerText.trim());
       const tiny = ps.filter((p) => size(p) < 14);
       const longSmall = ps.filter((p) => p.innerText.trim().length > 80 && size(p) >= 14 && size(p) < 16);
+      const smallText = [];
+      const seen = new Set();
+      const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+      for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+        const el = n.parentElement;
+        if (!el || seen.has(el) || !n.nodeValue.trim()) continue;
+        seen.add(el);
+        if (el.closest('script, style, noscript, svg, [aria-hidden="true"]')) continue;
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) continue;
+        if (size(el) < 14) {
+          const cls = (el.getAttribute('class') || '').trim().split(/\s+/)[0];
+          smallText.push(`${el.tagName.toLowerCase()}${cls ? '.' + cls : ''} ${size(el)}px`);
+        }
+      }
       return {
         body: size(document.body),
         tiny: tiny.length, tinyMin: tiny.length ? Math.min(...tiny.map(size)) : 0,
         longSmall: longSmall.length, longMin: longSmall.length ? Math.min(...longSmall.map(size)) : 0,
+        smallText: smallText.length, smallFirst: [...new Set(smallText)].slice(0, 3),
       };
     }));
     if (r.body < 16) bad.push(`@${width} body ${r.body}px`);
     if (r.tiny) bad.push(`@${width} ${r.tiny} p <14px (min ${r.tinyMin}px)`);
     if (r.longSmall) bad.push(`@${width} ${r.longSmall} long p <16px (min ${r.longMin}px)`);
+    if (r.smallText) bad.push(`@${width} ${r.smallText} text element(s) <14px: ${r.smallFirst.join(', ')}`);
   }
   return bad.length ? bad.join('; ') : null;
 }
 
-// At 390: rendered buttons / btn / cta / sticky-bar links are at least 44x44.
+// At 390: rendered buttons / btn / cta / sticky-bar links, phone (tel:) and WhatsApp (wa.me) links, and the
+// nav logo link (first nav link with class logo/brand) are at least 44x44, compared unrounded (43.6 fails).
 // Plain wrappers around a real control (a div.btn-row) and parts inside a control (an icon span in a
 // button) are skipped: the control itself is the tap target and is judged on its own.
 async function checkTap(browser, file) {
   const small = await withPage(browser, file, { width: 390 }, (page) => page.evaluate(() => {
-    const sel = 'button, [class*=btn], [class*=cta], .nc-bar a';
+    const sel = 'button, [class*=btn], [class*=cta], .nc-bar a, a[href^="tel:"], a[href*="wa.me"]';
     const control = 'a[href], button, input, select, textarea, summary, [role=button], [tabindex], [onclick]';
-    return [...document.querySelectorAll(sel)].filter((el) => {
+    const targets = [...document.querySelectorAll(sel)]; // each element once, even if several parts match
+    const logo = [...document.querySelectorAll('nav a')].find((a) => /logo|brand/i.test(a.getAttribute('class') || ''));
+    if (logo && !targets.includes(logo)) {
+      targets.push(logo);
+      targets.sort((a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1));
+    }
+    const px = (v) => +v.toFixed(1);
+    return targets.filter((el) => {
       const isControl = el.matches(control);
       const outer = el.parentElement && el.parentElement.closest(sel);
       if (outer && outer.matches(control)) return false;
@@ -175,11 +203,11 @@ async function checkTap(browser, file) {
       const cs = getComputedStyle(el);
       const r = el.getBoundingClientRect();
       return cs.display !== 'none' && cs.visibility !== 'hidden' && r.width > 0 && r.height > 0
-        && (Math.round(r.width) < 44 || Math.round(r.height) < 44);
+        && (r.width < 44 || r.height < 44);
     }).map((el) => {
       const cls = (el.getAttribute('class') || '').trim().split(/\s+/)[0];
       const r = el.getBoundingClientRect();
-      return `${el.tagName.toLowerCase()}${cls ? '.' + cls : ''} ${Math.round(r.width)}x${Math.round(r.height)}`;
+      return `${el.tagName.toLowerCase()}${cls ? '.' + cls : ''} ${px(r.width)}x${px(r.height)}`;
     });
   }));
   if (!small.length) return null;
