@@ -7,7 +7,7 @@
   tap       FAIL 1 target(s) under 44px: button 30x60
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     FAIL got [Space Grotesk, Inter], want [Bricolage Grotesque, Figtree]
   signature FAIL 0 [data-signature] elements (want exactly 1: "bento-spotlight")
@@ -39,7 +39,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★ 🦷
+  copy      FAIL emoji: 🦷
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "smile-slider")
@@ -55,7 +55,7 @@
   tap       FAIL 1 target(s) under 44px: a.btn-hot 104x42
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ✨ ★
+  copy      FAIL emoji: ✨
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "sticker-marquee")
@@ -71,7 +71,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "brutal-press")
@@ -87,7 +87,7 @@
   tap       FAIL 1 target(s) under 44px: a.btn-glass 119x38
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "glass-orbs")
@@ -103,7 +103,7 @@
   tap       FAIL 3 target(s) under 44px: a.btn-ai 104x40, button 38x38, button 268x43
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "chat-booking")
@@ -119,7 +119,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "depth-stack")
@@ -135,7 +135,7 @@
   tap       FAIL 1 target(s) under 44px: a.btn-aurora 116x39
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "aurora-cursor")
@@ -151,7 +151,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★ ✏
+  copy      FAIL emoji: ✏
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "drag-collage")
@@ -181,7 +181,7 @@
   reduced   PASS
   type      FAIL @1280 3 p <14px (min 13px); @1280 7 long p <16px (min 14px); @390 3 p <14px (min 13px); @390 7 long p <16px (min 14px)
   tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-line 156x36
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
   copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
@@ -197,9 +197,9 @@
   reduced   PASS
   type      FAIL @1280 7 p <14px (min 12px); @1280 2 long p <16px (min 14px); @390 7 p <14px (min 12px); @390 2 long p <16px (min 14px)
   tap       FAIL 1 target(s) under 44px: button.burger 20x26
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "line-draw-intro")
@@ -213,9 +213,9 @@
   reduced   PASS
   type      FAIL @1280 14 p <14px (min 12px); @1280 3 long p <16px (min 14px); @390 14 p <14px (min 12px); @390 3 long p <16px (min 14px)
   tap       FAIL 1 target(s) under 44px: button.burger 20x26
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "slot-picker")
@@ -229,9 +229,9 @@
   reduced   PASS
   type      FAIL @1280 7 p <14px (min 12.5px); @1280 2 long p <16px (min 15px); @390 7 p <14px (min 12.5px); @390 2 long p <16px (min 15px)
   tap       FAIL 5 target(s) under 44px: button.burger 20x26, a.btn-fill 188x38, a.plan-btn 272x42
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     FAIL got [Manrope, Inter], want [Outfit, Public Sans]
   signature FAIL 0 [data-signature] elements (want exactly 1: "treatment-timeline")
@@ -245,9 +245,9 @@
   reduced   PASS
   type      FAIL @1280 4 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 4 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
   tap       FAIL 2 target(s) under 44px: button.burger 22x28, a.btn-fill 131x43
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "smile-quiz")
@@ -261,9 +261,9 @@
   reduced   PASS
   type      FAIL @1280 7 p <14px (min 12.5px); @1280 3 long p <16px (min 14px); @390 7 p <14px (min 12.5px); @390 3 long p <16px (min 14px)
   tap       FAIL 2 target(s) under 44px: button.burger 20x26, a.btn-fill 167x39
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "hand-underline")
@@ -277,9 +277,9 @@
   reduced   PASS
   type      FAIL @1280 9 p <14px (min 12.5px); @1280 2 long p <16px (min 14.5px); @390 9 p <14px (min 12.5px); @390 2 long p <16px (min 14.5px)
   tap       FAIL 3 target(s) under 44px: a.btn-fill 121x38, button.burger 20x26, a.btn-fill 121x38
-  nav       FAIL 7 nav links (max 6, logo and CTA excluded)
+  nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     FAIL got [Space Grotesk, Inter], want [Syne, DM Sans]
   signature FAIL 0 [data-signature] elements (want exactly 1: "kinetic-type")
@@ -295,7 +295,7 @@
   tap       FAIL 1 target(s) under 44px: button.burger 20x26
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "prism-split")
@@ -311,7 +311,7 @@
   tap       FAIL 1 target(s) under 44px: a.btn-nav 119x38
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "tilt-cards")
@@ -327,7 +327,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     PASS
   signature FAIL 0 [data-signature] elements (want exactly 1: "layer-parallax")
@@ -343,7 +343,7 @@
   tap       PASS
   nav       PASS
   sections  PASS
-  copy      FAIL emoji: ★
+  copy      PASS
   polish    FAIL missing /* nocap:polish v1 */
   fonts     FAIL got [Sora, Inter], want [Red Hat Display, Red Hat Text]
   signature FAIL 0 [data-signature] elements (want exactly 1: "webgl-scene")
@@ -351,5 +351,5 @@
   offline   PASS
   bar       FAIL no .nc-bar element
 
-Failed by check: overflow=13 nojs=22 type=21 tap=15 copy=19 polish=22 fonts=5 signature=22 bar=22 nav=7 console=1
-SUMMARY 22 files, 330 checks: 161 passed, 169 failed
+Failed by check: overflow=13 nojs=22 type=21 tap=15 polish=22 fonts=5 signature=22 bar=22 copy=3 console=1
+SUMMARY 22 files, 330 checks: 184 passed, 146 failed

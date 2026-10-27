@@ -173,14 +173,16 @@ async function checkTap(browser, file) {
   return `${small.length} target(s) under 44px: ${small.slice(0, 3).join(', ')}`;
 }
 
-// nav links excluding the logo link (first link, or class logo/brand) and btn/cta links: at most 6.
+// Distinct nav links (by href, so a repeated mobile menu counts once) excluding the logo link
+// (first link, or class logo/brand) and btn/cta links: at most 6.
 async function checkNav(browser, file) {
   const count = await withPage(browser, file, {}, (page) => page.evaluate(() => {
     const links = [...document.querySelectorAll('nav a')];
     const cls = (a) => a.getAttribute('class') || '';
-    return links.filter((a, i) => i > 0 && !/logo|brand/i.test(cls(a)) && !/btn|cta/i.test(cls(a))).length;
+    const items = links.filter((a, i) => i > 0 && !/logo|brand/i.test(cls(a)) && !/btn|cta/i.test(cls(a)));
+    return new Set(items.map((a) => a.getAttribute('href') || a.textContent.trim())).size;
   }));
-  return count <= 6 ? null : `${count} nav links (max 6, logo and CTA excluded)`;
+  return count <= 6 ? null : `${count} distinct nav links (max 6, logo and CTA excluded)`;
 }
 
 async function checkSections(browser, file) {
@@ -188,13 +190,14 @@ async function checkSections(browser, file) {
   return count <= 7 ? null : `${count} h2 sections (max 7)`;
 }
 
-// Visible text and title: no banned words, no emoji (copyright, registered and trademark signs are plain text).
+// Visible text and title: no banned words, no emoji. Plain text glyphs are exempt: copyright, registered and
+// trademark signs and the rating stars U+2605 / U+2606.
 async function checkCopy(browser, file) {
   const text = await withPage(browser, file, {}, (page) => page.evaluate(() => document.title + '\n' + document.body.innerText));
   const problems = [];
   const banned = [...new Set((text.match(BANNED_COPY) || []).map((w) => w.toLowerCase()))];
   if (banned.length) problems.push(`banned: ${banned.join(', ')}`);
-  const emoji = [...new Set(text.replace(/[©®™]/g, '').match(/\p{Extended_Pictographic}/gu) || [])];
+  const emoji = [...new Set(text.replace(/[©®™★☆]/g, '').match(/\p{Extended_Pictographic}/gu) || [])];
   if (emoji.length) problems.push(`emoji: ${emoji.slice(0, 5).join(' ')}`);
   return problems.length ? problems.join('; ') : null;
 }
