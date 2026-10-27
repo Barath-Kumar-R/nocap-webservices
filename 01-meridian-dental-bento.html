@@ -3,219 +3,321 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meridian Dental Group — Maraimalai Nagar</title>
+<title>Meridian Dental Group · Maraimalai Nagar</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#FAF9F6; --ink:#16181D; --teal:#0F8B8D; --teal-deep:#0B6668; --coral:#FF6B5B; --gold:#FFC145; --line:#E7E4DC; --muted:#696D74; --white:#FFFFFF;
+    --paper:#FAF9F6; --ink:#16181D; --teal:#0F8B8D; --teal-deep:#0B6668; --coral:#FF6B5B; --gold:#FFC145; --line:#E7E4DC; --muted:#5F636A; --white:#FFFFFF;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  body{font-family:'Figtree',system-ui,sans-serif; font-size:16px; line-height:1.6; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3,h4{font-family:'Bricolage Grotesque','Figtree',sans-serif; font-weight:700; letter-spacing:-0.02em; line-height:1.08;}
   a{color:inherit;}
+  .sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
   .wrap{max-width:1240px; margin:0 auto; padding:0 24px;}
 
-  nav{padding:22px 0;}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px;}
-  .logo .chip{width:30px; height:30px; border-radius:9px; background:var(--teal); display:flex; align-items:center; justify-content:center;}
-  .logo .chip svg{width:16px; height:16px; stroke:white; fill:none; stroke-width:2;}
-  .nav-links{display:flex; gap:8px; font-size:14px; font-weight:600;}
-  .nav-links a{text-decoration:none; color:var(--ink); padding:9px 16px; border-radius:100px;}
-  .nav-links a:hover{background:var(--white); border:1px solid var(--line);}
-  .btn-book{background:var(--ink); color:var(--white); padding:11px 20px; border-radius:100px; font-size:13.5px; font-weight:600; text-decoration:none;}
+  /* Nav */
+  nav{padding:20px 0 18px;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:20px; letter-spacing:-0.02em;}
+  .logo .chip{width:32px; height:32px; border-radius:10px; background:var(--teal-deep); display:flex; align-items:center; justify-content:center; flex:none;}
+  .logo .chip svg{width:17px; height:17px; stroke:var(--white); fill:none; stroke-width:2;}
+  .nav-links{display:flex; gap:4px; font-size:16px; font-weight:500;}
+  .nav-links a{text-decoration:none; color:var(--ink); padding:10px 16px; border-radius:100px; border:1px solid transparent;}
+  .nav-links a:hover{background:var(--white); border-color:var(--line);}
+  .btn-book{display:inline-flex; align-items:center; min-height:44px; border:1.5px solid var(--ink); color:var(--ink); padding:0 20px; border-radius:100px; font-size:16px; font-weight:600; text-decoration:none; white-space:nowrap;}
+  .btn-book:hover{background:var(--ink); color:var(--white);}
 
-  .bento{display:grid; grid-template-columns:repeat(12,1fr); grid-auto-rows:minmax(64px,auto); gap:14px; padding:14px 0 90px;}
-  .cell{border-radius:22px; border:1px solid var(--line); padding:28px; position:relative; overflow:hidden;}
+  /* Bento grid: one continuous grid for the whole page */
+  .bento{display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:14px; padding:6px 0 80px;}
+  .cell{position:relative; isolation:isolate; border-radius:22px; border:1px solid var(--line); padding:28px; overflow:hidden; display:flex; flex-direction:column; gap:12px;
+    --glow:rgba(15,139,141,.12); transition:opacity .5s ease, transform .25s ease, box-shadow .25s ease;}
   .cell-white{background:var(--white);}
-  .cell-teal{background:var(--teal); color:white; border-color:var(--teal-deep);}
-  .cell-coral{background:var(--coral); color:white; border-color:#E85142;}
-  .cell-gold{background:var(--gold); color:var(--ink); border-color:#E8A82C;}
-  .cell-ink{background:var(--ink); color:white; border-color:#000;}
-  .eyebrow{font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; opacity:0.75;}
+  .cell-teal{background:var(--teal-deep); color:var(--white); border-color:#08504F; --glow:rgba(255,255,255,.16);}
+  .cell-coral{background:var(--coral); color:var(--ink); border-color:#E85142; --glow:rgba(255,255,255,.34);}
+  .cell-gold{background:var(--gold); color:var(--ink); border-color:#E8A82C; --glow:rgba(255,255,255,.4);}
+  .cell-ink{background:var(--ink); color:var(--white); border-color:#000; --glow:rgba(255,255,255,.13);}
+  .eyebrow{font-size:13px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700;}
+  .cell-white .eyebrow, .c-label .eyebrow{color:var(--teal-deep);}
+
+  /* Signature: bento-spotlight. A soft light under the pointer, drawn behind each tile's content. */
+  .cell::before{content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit; pointer-events:none; opacity:0; transition:opacity .3s ease;
+    background:radial-gradient(340px circle at var(--x,50%) var(--y,50%), var(--glow), transparent 70%);}
+  .bento.is-lit .cell::before{opacity:1;}
+  .c-label::before{display:none;}
+  @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+    .bento .cell:not(.c-label):hover{transform:translateY(-4px); box-shadow:0 18px 30px -22px rgba(22,24,29,.45);}
+  }
 
   /* Hero row */
-  .c-hero{grid-column:span 8; grid-row:span 4; display:flex; flex-direction:column; justify-content:center; gap:18px;}
-  .c-hero h1{font-size:clamp(32px,4vw,50px); line-height:1.05;}
-  .c-hero p{font-size:15.5px; color:var(--muted); max-width:460px; line-height:1.65;}
-  .hero-ctas{display:flex; gap:10px; margin-top:6px;}
-  .hero-ctas a{text-decoration:none; font-size:13.5px; font-weight:700; padding:13px 22px; border-radius:100px;}
-  .cta-fill{background:var(--ink); color:white;}
-  .cta-line{border:1.5px solid var(--ink); color:var(--ink);}
+  .c-hero{grid-column:span 8; grid-row:span 2; justify-content:center; gap:22px; padding:44px 44px 40px;}
+  .c-hero h1{font-size:clamp(38px,5.1vw,64px); line-height:1.0; letter-spacing:-0.03em; max-width:13.5em;}
+  .c-hero p{font-size:18px; color:var(--muted); max-width:500px;}
+  .hero-ctas{display:flex; align-items:center; gap:24px; flex-wrap:wrap; margin-top:4px;}
+  .cta-fill{display:inline-flex; align-items:center; min-height:50px; padding:0 26px; border-radius:100px; background:var(--ink); color:var(--white); font-weight:600; font-size:17px; text-decoration:none;}
+  .cta-fill:hover{background:#2A2D35;}
+  .text-link{display:inline-flex; align-items:center; gap:6px; min-height:44px; font-weight:600; text-decoration:none; border-bottom:1.5px solid var(--line);}
+  .text-link:hover{border-bottom-color:var(--ink);}
 
-  .c-stat1{grid-column:span 4; grid-row:span 2; display:flex; flex-direction:column; justify-content:space-between;}
-  .c-stat1 h3{font-size:36px;}
-  .c-stat2{grid-column:span 4; grid-row:span 2; display:flex; flex-direction:column; justify-content:space-between;}
-  .c-stat2 h3{font-size:36px;}
+  .c-hours, .c-rating{grid-column:span 4; justify-content:space-between;}
+  .big-figure{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(30px,3vw,40px); letter-spacing:-0.03em; line-height:1;}
+  .c-hours p, .c-rating p{font-size:16px;}
+  .c-hours .status{display:flex; align-items:center; gap:8px; font-weight:600;}
+  .c-hours .status[hidden]{display:none;}
+  .status::before{content:""; width:9px; height:9px; border-radius:50%; background:#9FE3D2; flex:none;}
+  .status.is-closed::before{background:var(--gold);}
+  .stars{display:flex; gap:3px; margin-top:-4px;}
+  .stars svg{width:18px; height:18px; fill:var(--ink);}
+
+  /* Section labels sit on the paper, not in a tile */
+  .c-label{grid-column:span 12; background:none; border:none; padding:44px 4px 4px; gap:10px;}
+  .c-label h2{font-size:clamp(28px,3.4vw,42px);}
+  .c-label p{color:var(--muted); font-size:17px; max-width:520px;}
 
   /* Services */
-  .c-label{grid-column:span 12; padding:8px 4px 2px; border:none;}
-  .c-label h2{font-size:clamp(24px,3vw,34px);}
-  .c-label p{color:var(--muted); font-size:14.5px; margin-top:8px; max-width:480px;}
+  .icon{width:46px; height:46px; border-radius:13px; display:flex; align-items:center; justify-content:center; background:var(--paper); color:var(--teal-deep); flex:none;}
+  .cell-ink .icon{background:rgba(255,255,255,.12); color:var(--white);}
+  .cell-coral .icon, .cell-gold .icon{background:rgba(255,255,255,.45); color:var(--ink);}
+  .icon svg{width:24px; height:24px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+  .svc{justify-content:space-between; min-height:250px;}
+  .svc h3{font-size:22px; font-weight:600; letter-spacing:-0.015em;}
+  .svc p{margin-top:8px;}
+  .cell-white.svc p{color:var(--muted);}
+  .cell-ink.svc p{color:rgba(255,255,255,.82);}
+  .c-general{grid-column:span 6;}
+  .c-ortho,.c-implant,.c-cosmetic,.c-emergency{grid-column:span 3;}
+  .c-kids{grid-column:span 3; grid-row:span 2;}
+  .c-kids .price{margin-top:auto; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(48px,5vw,64px); letter-spacing:-0.04em; line-height:.95;}
+  .c-kids .price small{display:block; font-family:'Figtree',sans-serif; font-size:16px; font-weight:600; letter-spacing:0; margin-top:10px;}
 
-  .c-svc-lg{grid-column:span 6; grid-row:span 3; display:flex; flex-direction:column; justify-content:space-between;}
-  .c-svc-lg .icon{width:44px; height:44px; border-radius:12px; background:rgba(255,255,255,0.2); display:flex; align-items:center; justify-content:center;}
-  .cell-white .c-svc-lg .icon, .c-svc-md.cell-white .icon{background:var(--paper);}
-  .c-svc-lg h3, .c-svc-md h3{font-size:19px; margin-top:16px;}
-  .c-svc-lg p, .c-svc-md p{font-size:13.5px; opacity:0.85; margin-top:8px; line-height:1.6;}
-  .icon svg{width:22px; height:22px; stroke:currentColor; fill:none; stroke-width:1.6;}
+  /* Team */
+  .c-team{grid-column:span 5; grid-row:span 2; gap:0; padding:28px 28px 16px;}
+  .c-team .eyebrow{margin-bottom:10px;}
+  .who{list-style:none; counter-reset:who;}
+  .who li{counter-increment:who; display:grid; grid-template-columns:34px 1fr; column-gap:10px; padding:15px 0; border-top:1px solid var(--line);}
+  .who li::before{content:"0" counter(who); grid-row:span 2; font-family:'Bricolage Grotesque',sans-serif; font-weight:600; color:var(--teal-deep); font-size:15px; padding-top:2px;}
+  .who b{font-weight:600; font-size:17px;}
+  .who span{color:var(--muted);}
+  .c-about{grid-column:span 7; justify-content:center; padding:36px;}
+  .c-about h3{font-size:clamp(24px,2.4vw,30px); font-weight:600;}
+  .c-about p{color:var(--muted); font-size:17px; max-width:560px;}
+  .c-stats{grid-column:span 7; display:grid; grid-template-columns:1fr 1fr; gap:14px; transition:opacity .5s ease, transform .5s ease;}
+  .mini-stat{justify-content:flex-end; gap:4px; min-height:150px; padding:24px;}
+  .mini-stat h4{font-size:clamp(32px,3.4vw,44px); letter-spacing:-0.035em; line-height:1;}
+  .mini-stat p{color:var(--muted);}
 
-  .c-svc-md{grid-column:span 3; grid-row:span 3; display:flex; flex-direction:column; justify-content:space-between;}
-  .c-svc-tall{grid-column:span 3; grid-row:span 6; display:flex; flex-direction:column; justify-content:space-between;}
-  .c-svc-tall .price-tag{font-family:'Space Grotesk',sans-serif; font-size:26px; margin-top:auto;}
-  .c-svc-tall .price-tag span{font-size:11.5px; display:block; font-weight:500; opacity:0.7; font-family:'Inter',sans-serif;}
+  /* Visit */
+  .c-info{grid-column:span 5; gap:0; padding:12px 28px;}
+  .info-row{border-bottom:1px solid rgba(255,255,255,0.2); padding:16px 0;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .lbl{font-size:13px; text-transform:uppercase; letter-spacing:0.08em; font-weight:700; color:#BFE6E2;}
+  .info-row .val{font-size:17px; margin-top:2px; font-weight:500;}
+  .info-row a{color:var(--white); text-underline-offset:3px; display:inline-flex; align-items:center; min-height:44px;}
+  .c-form{grid-column:span 7; gap:16px; padding:32px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:15px; font-weight:600;}
+  .c-form input, .c-form select{width:100%; min-height:50px; border:1px solid #D9D5CB; background:var(--paper); border-radius:12px; padding:0 16px; font:inherit; font-size:16px; color:var(--ink);}
+  .c-form select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2316181D' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:18px;}
+  .c-form input:hover, .c-form select:hover{border-color:#B9B4A8;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .c-form button{min-height:52px; background:var(--ink); color:var(--white); border:none; border-radius:100px; font:inherit; font-size:17px; font-weight:600; cursor:pointer; margin-top:4px;}
+  .c-form button:hover{background:#2A2D35;}
+  .c-form .note{font-size:14px; color:var(--muted);}
 
-  .c-svc-sm{grid-column:span 3; grid-row:span 3; display:flex; flex-direction:column; justify-content:space-between;}
-
-  /* About */
-  .c-about-photo{grid-column:span 5; grid-row:span 6; background:repeating-linear-gradient(135deg,#EEECE4,#EEECE4 12px,#E4E1D7 12px,#E4E1D7 13px); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .c-about-photo svg{width:30px; height:30px; stroke:#8B8E85; fill:none; stroke-width:1.4;}
-  .c-about-photo span{font-size:11px; color:#8B8E85; text-transform:uppercase; letter-spacing:0.06em; font-weight:600;}
-  .c-about-copy{grid-column:span 7; grid-row:span 3; display:flex; flex-direction:column; justify-content:center; gap:12px;}
-  .c-about-copy h3{font-size:22px;}
-  .c-about-copy p{font-size:14.5px; color:var(--muted); line-height:1.7;}
-  .c-about-stats{grid-column:span 7; grid-row:span 3; display:grid; grid-template-columns:repeat(3,1fr); gap:14px;}
-  .mini-stat{background:var(--white); border:1px solid var(--line); border-radius:18px; padding:18px; display:flex; flex-direction:column; justify-content:center;}
-  .mini-stat h4{font-family:'Space Grotesk',sans-serif; font-size:24px;}
-  .mini-stat p{font-size:11.5px; color:var(--muted); margin-top:4px;}
-
-  /* Contact */
-  .c-contact-info{grid-column:span 5; grid-row:span 5; display:flex; flex-direction:column; gap:16px;}
-  .info-row{border-bottom:1px solid rgba(255,255,255,0.18); padding-bottom:14px;}
-  .info-row .lbl{font-size:11px; text-transform:uppercase; letter-spacing:0.07em; opacity:0.65; font-weight:700;}
-  .info-row .val{font-size:15px; margin-top:4px; font-weight:500;}
-  .c-form{grid-column:span 7; grid-row:span 5; display:flex; flex-direction:column; gap:12px; justify-content:center;}
-  .c-form input, .c-form textarea{border:1px solid var(--line); background:var(--paper); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
-  .c-form button{background:var(--coral); color:white; border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
-
-  footer{padding:30px 0; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  footer{padding:28px 24px 36px; font-size:14px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px;}
 
   .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:18px; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(0,0,0,0.18); text-decoration:none;}
   .wa-float svg{width:27px; height:27px; fill:white;}
 
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .reveal{opacity:0; transform:translateY(14px);}
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
   @media (max-width:900px){
     .nav-links{display:none;}
-    .bento{grid-template-columns:repeat(6,1fr);}
-    .c-hero{grid-column:span 6; grid-row:span 4;}
-    .c-stat1,.c-stat2{grid-column:span 3; grid-row:span 2;}
-    .c-svc-lg{grid-column:span 6; grid-row:span 3;}
-    .c-svc-md,.c-svc-sm{grid-column:span 3; grid-row:span 3;}
-    .c-svc-tall{grid-column:span 6; grid-row:span 3;}
-    .c-about-photo{grid-column:span 6; grid-row:span 4;}
-    .c-about-copy,.c-about-stats{grid-column:span 6; grid-row:span 3;}
-    .c-contact-info,.c-form{grid-column:span 6; grid-row:span 4;}
+    .bento{grid-template-columns:repeat(6,minmax(0,1fr));}
+    .c-hero,.c-label,.c-general,.c-team,.c-about,.c-stats,.c-info,.c-form{grid-column:span 6;}
+    .c-hero{grid-row:auto; padding:36px 32px;}
+    .c-hours,.c-rating,.c-ortho,.c-kids,.c-implant,.c-cosmetic,.c-emergency{grid-column:span 3;}
+    .c-team{grid-row:auto;}
+  }
+  @media (max-width:720px){
+    /* The call/book bar covers booking on phones; the WhatsApp link lives in the Visit tile. */
+    html body .wa-float{display:none;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    html:root{--nc-radius:100px;}
   }
   @media (max-width:560px){
-    .bento{grid-template-columns:repeat(2,1fr);}
-    .c-hero,.c-stat1,.c-stat2,.c-svc-lg,.c-svc-md,.c-svc-tall,.c-svc-sm,.c-about-photo,.c-about-copy,.c-about-stats,.c-contact-info,.c-form{grid-column:span 2;}
+    .wrap{padding:0 16px;}
+    nav{padding:14px 0;}
+    .logo{font-size:18px;}
+    .btn-book{display:none;}
+    .bento{grid-template-columns:repeat(2,minmax(0,1fr)); grid-auto-flow:row dense; gap:10px; padding-bottom:40px;}
+    .big-figure{font-size:27px;}
+    .cell{padding:22px 20px; border-radius:18px;}
+    .c-hero{padding:30px 22px 26px; gap:18px;}
+    .c-hero p{font-size:17px;}
+    .c-hero,.c-label,.c-general,.c-kids,.c-team,.c-about,.c-stats,.c-info,.c-form{grid-column:span 2;}
+    .c-hours,.c-rating,.c-ortho,.c-implant,.c-cosmetic,.c-emergency{grid-column:span 1;}
+    .c-kids{grid-row:auto;}
+    .c-label{padding:30px 2px 0;}
+    .svc{min-height:0; gap:24px; justify-content:flex-start;}
+    .svc h3{font-size:19px;}
+    .c-kids .price{margin-top:12px;}
+    .c-about{padding:24px 20px;}
+    .mini-stat{min-height:0; padding:20px;}
+    .form-row{grid-template-columns:1fr;}
+    .c-form{padding:24px 20px;}
+    .c-info{padding:6px 20px;}
+    footer{padding:20px 16px 28px;}
   }
+/* nocap:polish v1 */
+:root{--nc-bg:#FAF9F6;--nc-fg:#16181D;--nc-accent:#16181D;--nc-on-accent:#FAF9F6;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
+<nav class="wrap" aria-label="Main">
   <div class="nav-inner">
-    <div class="logo"><div class="chip"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Meridian Dental Group</div>
+    <div class="logo"><div class="chip"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Meridian Dental Group</div>
     <div class="nav-links">
-      <a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a>
+      <a href="#services">Services</a><a href="#team">Team</a><a href="#contact">Visit</a>
     </div>
     <a class="btn-book" href="#contact">Book a slot</a>
   </div>
 </nav>
 
 <main class="wrap">
-  <div class="bento">
+  <div class="bento" data-signature="bento-spotlight">
 
     <div class="cell cell-white c-hero reveal">
-      <div class="eyebrow" style="color:var(--teal-deep);">Multi-Specialty Dental · Maraimalai Nagar</div>
+      <div class="eyebrow">Multi-specialty · Maraimalai Nagar</div>
       <h1>One clinic, every specialist your family actually needs.</h1>
-      <p>General dentistry, orthodontics, paediatric and implants — under one roof, one shared patient chart, one phone number to remember.</p>
-      <div class="hero-ctas"><a class="cta-fill" href="#contact">Book appointment</a><a class="cta-line" href="#services">See services</a></div>
+      <p>General dentistry, braces, children's care and implants under one roof. One patient chart, one phone number to remember.</p>
+      <div class="hero-ctas"><a class="cta-fill" href="#contact">Book a slot</a><a class="text-link" href="#services">See services <span aria-hidden="true">&rarr;</span></a></div>
     </div>
-    <div class="cell cell-teal c-stat1 reveal">
-      <div class="eyebrow">Specialists on staff</div>
-      <h3>5</h3>
-      <p style="font-size:13px; opacity:0.9;">General, ortho, pedo, endo & implants</p>
+    <div class="cell cell-teal c-hours reveal">
+      <div class="eyebrow">Hours</div>
+      <div>
+        <div class="big-figure">9 AM – 8:30 PM</div>
+        <p>Monday to Saturday</p>
+      </div>
+      <p class="status" id="open-status" hidden></p>
     </div>
-    <div class="cell cell-gold c-stat2 reveal">
+    <div class="cell cell-gold c-rating reveal">
       <div class="eyebrow">Google rating</div>
-      <h3>4.8 ★</h3>
-      <p style="font-size:13px; opacity:0.8;">Across 340+ reviews</p>
+      <div>
+        <div class="big-figure">4.8<span class="sr-only"> out of 5</span></div>
+      </div>
+      <div>
+        <div class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8Z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8Z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8Z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8Z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2.8 2.8 5.9 6.4.8-4.7 4.4 1.2 6.4L12 17.2l-5.7 3.1 1.2-6.4-4.7-4.4 6.4-.8Z"/></svg></div>
+        <p>From 340+ reviews</p>
+      </div>
     </div>
 
-    <div class="cell c-label reveal">
-      <div class="eyebrow" style="color:var(--teal-deep);">Services</div>
+    <div class="cell c-label reveal" id="services">
+      <div class="eyebrow">Services</div>
       <h2>Everything under one chart.</h2>
-      <p>Referrals between our own specialists happen same-day — your file never has to travel.</p>
+      <p>Our specialists refer to each other the same day, so your file never has to travel.</p>
     </div>
 
-    <div class="cell cell-ink c-svc-lg reveal">
-      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>
-      <div><h3>General & Restorative</h3><p>Cleanings, fillings, root canals and crowns — the everyday care every plan starts with.</p></div>
+    <div class="cell cell-ink svc c-general reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>
+      <div><h3>General and restorative</h3><p>Cleanings, fillings, root canals and crowns. The everyday care every plan starts with.</p></div>
     </div>
-    <div class="cell cell-white c-svc-md reveal">
-      <div class="icon"><svg viewBox="0 0 24 24" stroke="var(--teal-deep)"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
-      <div><h3 style="color:var(--ink);">Orthodontics</h3><p style="color:var(--muted);">Braces & clear aligners for teens and adults.</p></div>
+    <div class="cell cell-white svc c-ortho reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6.5" width="5.4" height="11" rx="2"/><rect x="9.3" y="6.5" width="5.4" height="11" rx="2"/><rect x="16.1" y="6.5" width="5.4" height="11" rx="2"/><path d="M1.5 12h21" stroke-width="2.2"/></svg></div>
+      <div><h3>Orthodontics</h3><p>Braces and clear aligners for teens and adults.</p></div>
     </div>
-    <div class="cell cell-coral c-svc-tall reveal">
-      <div class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
-      <div><h3>Paediatric Dentistry</h3><p>A dedicated kids' room, gentle-first approach, parents welcome chairside.</p></div>
-      <div class="price-tag">₹399<span>first visit + check-up</span></div>
+    <div class="cell cell-coral svc c-kids reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.2c1.9 2 5.1 2 7 0"/><path d="M9 9.6h.01M15 9.6h.01" stroke-width="2.6"/></svg></div>
+      <div><h3>Children's dentistry</h3><p>A separate kids' room, a gentle first visit, and parents welcome chairside.</p></div>
+      <div class="price">₹399<small>First visit and check-up</small></div>
     </div>
-    <div class="cell cell-white c-svc-md reveal">
-      <div class="icon"><svg viewBox="0 0 24 24" stroke="var(--teal-deep)"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div>
-      <div><h3 style="color:var(--ink);">Implants</h3><p style="color:var(--muted);">Digitally guided, single-visit planning.</p></div>
+    <div class="cell cell-white svc c-implant reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.5 3h13l-2 4.5h-9z"/><path d="M8.5 7.5V17l3.5 4.5 3.5-4.5V7.5"/><path d="M8.5 11h7M8.5 14.5h7"/></svg></div>
+      <div><h3>Implants</h3><p>Digitally guided placement, planned in a single visit.</p></div>
     </div>
-    <div class="cell cell-gold c-svc-sm reveal">
-      <div class="icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div>
-      <div><h3 style="color:var(--ink);">Cosmetic</h3><p style="color:var(--ink); opacity:0.75;">Whitening & veneers.</p></div>
+    <div class="cell cell-gold svc c-cosmetic reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.1 6 5.9 3-5.9 3L12 21l-2.1-6L4 12l5.9-3z"/></svg></div>
+      <div><h3>Cosmetic</h3><p>Whitening and veneers.</p></div>
     </div>
-    <div class="cell cell-white c-svc-sm reveal">
-      <div class="icon"><svg viewBox="0 0 24 24" stroke="var(--teal-deep)"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 5 6.5 5c2 0 3.5 1.2 5.5 4 2-2.8 3.5-4 5.5-4C21 5 23.5 8.5 21.5 12.5 19 16.65 12 21 12 21Z"/></svg></div>
-      <div><h3 style="color:var(--ink);">Emergency Care</h3><p style="color:var(--muted);">Same-day slots held daily.</p></div>
+    <div class="cell cell-white svc c-emergency reveal">
+      <div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></div>
+      <div><h3>Emergency care</h3><p>Same-day slots kept free every day.</p></div>
     </div>
 
-    <div class="cell c-label reveal" style="padding-top:24px;">
-      <div class="eyebrow" style="color:var(--teal-deep);">Our Team</div>
+    <div class="cell c-label reveal" id="team">
+      <div class="eyebrow">Our team</div>
       <h2>Five specialists, one shared record.</h2>
     </div>
-    <div class="cell cell-white c-about-photo reveal">
-      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Team portrait photo</span>
+    <div class="cell cell-white c-team reveal">
+      <div class="eyebrow">Who you'll see</div>
+      <ol class="who">
+        <li><b>General dentist</b><span>Check-ups, fillings and crowns</span></li>
+        <li><b>Orthodontist</b><span>Braces and clear aligners</span></li>
+        <li><b>Paediatric dentist</b><span>Children's visits, in the kids' room</span></li>
+        <li><b>Endodontist</b><span>Root canal treatment</span></li>
+        <li><b>Implantologist</b><span>Implants, planned digitally</span></li>
+      </ol>
     </div>
-    <div class="cell cell-white c-about-copy reveal">
-      <div class="eyebrow" style="color:var(--teal-deep);">Why we built it this way</div>
-      <h3>No more "let me refer you elsewhere."</h3>
-      <p>When general dentistry, ortho and paediatric care sit under one roof, your scans, history and treatment plan travel with you automatically — nothing gets re-explained at a new front desk.</p>
+    <div class="cell cell-white c-about reveal">
+      <div class="eyebrow">Why we built it this way</div>
+      <h3>No more “let me refer you elsewhere.”</h3>
+      <p>With general dentistry, braces and children's care under one roof, your scans, history and treatment plan stay in one file. Nothing gets explained twice at a new front desk.</p>
     </div>
-    <div class="cell c-about-stats reveal">
-      <div class="mini-stat"><h4>14 yrs</h4><p>Serving Maraimalai Nagar</p></div>
-      <div class="mini-stat"><h4>9,000+</h4><p>Patients on shared record</p></div>
-      <div class="mini-stat"><h4>5</h4><p>In-house specialists</p></div>
+    <div class="c-stats reveal">
+      <div class="cell cell-white mini-stat"><h4>14 yrs</h4><p>In Maraimalai Nagar</p></div>
+      <div class="cell cell-white mini-stat"><h4>9,000+</h4><p>Patients on one shared record</p></div>
     </div>
 
-    <div class="cell c-label reveal" style="padding-top:24px;">
-      <div class="eyebrow" style="color:var(--teal-deep);">Visit Us</div>
-      <h2 id="contact">Book your slot.</h2>
+    <div class="cell c-label reveal" id="contact">
+      <div class="eyebrow">Visit us</div>
+      <h2>Book your slot.</h2>
     </div>
-    <div class="cell cell-teal c-contact-info reveal">
+    <div class="cell cell-teal c-info reveal">
       <div class="info-row"><div class="lbl">Address</div><div class="val">GST Road, Maraimalai Nagar, Chengalpattu Dt. 603209</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val"><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></div></div>
       <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM – 8:30 PM</div></div>
-      <div class="info-row" style="border-bottom:none;"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:white; text-decoration:underline;">Message the front desk →</a></div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX">Message the front desk <span aria-hidden="true">&nbsp;&rarr;</span></a></div></div>
     </div>
-    <form class="cell cell-white c-form reveal" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nDepartment: ' + this.dept.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="dept" type="text" placeholder="Which specialist? (e.g. Ortho, Pedo)">
+    <form class="cell cell-white c-form reveal" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nSpecialist: ' + this.dept.value);">
+      <div class="form-row">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="98XXX XXXXX" required></div>
+      </div>
+      <div class="field"><label for="f-dept">Who would you like to see?</label>
+        <select id="f-dept" name="dept">
+          <option>Not sure yet</option>
+          <option>General check-up</option>
+          <option>Braces or aligners</option>
+          <option>A child's visit</option>
+          <option>Root canal</option>
+          <option>Implants</option>
+        </select>
+      </div>
       <button type="submit">Request appointment</button>
+      <p class="note">Opens your email app with these details filled in.</p>
     </form>
 
   </div>
@@ -226,14 +328,97 @@
   <span>Design portfolio piece · Not a live business</span>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal (content is visible without JS; see the noscript rule).
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Open-now line on the hours tile, from the clinic's hours in India time.
+  (function(){
+    var el = document.getElementById('open-status');
+    if(!el || !window.Intl) return;
+    try{
+      var parts = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata', weekday:'short', hour:'numeric', minute:'numeric', hourCycle:'h23'}).formatToParts(new Date());
+      var get = function(t){ for(var i=0;i<parts.length;i++){ if(parts[i].type===t) return parts[i].value; } return ''; };
+      var day = get('weekday'), mins = (+get('hour'))*60 + (+get('minute'));
+      var open = day !== 'Sun' && mins >= 540 && mins < 1230;
+      var text;
+      if(open) text = 'Open now';
+      else if(day === 'Sun' || (day === 'Sat' && mins >= 1230)) text = 'Closed. Opens Monday 9 AM';
+      else if(mins < 540) text = 'Closed. Opens 9 AM today';
+      else text = 'Closed. Opens 9 AM tomorrow';
+      el.textContent = text;
+      if(!open) el.classList.add('is-closed');
+      el.hidden = false;
+    }catch(e){}
+  })();
+
+  // Signature: bento-spotlight. The light follows a mouse pointer across the tiles, and moves to whatever
+  // element has keyboard focus inside the grid. Off for touch and for prefers-reduced-motion.
+  (function(){
+    var grid = document.querySelector('[data-signature="bento-spotlight"]');
+    if(!grid || !window.matchMedia) return;
+    var fine = matchMedia('(hover: hover) and (pointer: fine)');
+    var calm = matchMedia('(prefers-reduced-motion: reduce)');
+    var cells = grid.querySelectorAll('.cell:not(.c-label)');
+    var px = 0, py = 0, frame = 0;
+    function paint(){
+      frame = 0;
+      for(var i=0;i<cells.length;i++){
+        var r = cells[i].getBoundingClientRect();
+        cells[i].style.setProperty('--x', (px - r.left) + 'px');
+        cells[i].style.setProperty('--y', (py - r.top) + 'px');
+      }
+    }
+    function light(x, y){
+      px = x; py = y;
+      grid.classList.add('is-lit');
+      if(!frame) frame = requestAnimationFrame(paint);
+    }
+    function dark(){ grid.classList.remove('is-lit'); }
+    grid.addEventListener('pointermove', function(e){
+      if(e.pointerType !== 'mouse' || !fine.matches || calm.matches) return;
+      light(e.clientX, e.clientY);
+    });
+    grid.addEventListener('pointerleave', dark);
+    addEventListener('scroll', function(){ if(grid.classList.contains('is-lit') && !frame) frame = requestAnimationFrame(paint); }, {passive:true});
+    grid.addEventListener('focusin', function(e){
+      if(calm.matches || !e.target.matches(':focus-visible')) return;
+      var r = e.target.getBoundingClientRect();
+      light(r.left + r.width/2, r.top + r.height/2);
+    });
+    grid.addEventListener('focusout', function(e){ if(!grid.contains(e.relatedTarget)) dark(); });
+    calm.addEventListener && calm.addEventListener('change', function(){ if(calm.matches) dark(); });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#contact">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
