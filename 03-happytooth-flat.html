@@ -3,80 +3,115 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Happy Tooth Family Dental — Thiruporur</title>
+<title>Happy Tooth Family Dental · Thiruporur</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
-  :root{ --sky:#4C9AFF; --coral:#FF6F61; --sun:#FFD23F; --cream:#FFF8ED; --navy:#1B2B4B; --mint:#4FD1A5; --white:#FFFFFF; }
+  :root{ --sky:#4C9AFF; --coral:#FF6F61; --coral-ink:#C73E33; --sun:#FFD23F; --cream:#FFF8ED; --navy:#1B2B4B; --mint:#4FD1A5; --white:#FFFFFF; --slate:#3E4C6B; --soft:#5B6785; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Nunito Sans',sans-serif; background:var(--cream); color:var(--navy); -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Baloo 2',sans-serif; font-weight:700;}
+  body{font-family:'Nunito Sans',sans-serif; font-size:17px; line-height:1.65; background:var(--cream); color:var(--navy); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Baloo 2',sans-serif; font-weight:700; line-height:1.12;}
+  h1,h2{text-wrap:balance;}
+  p{text-wrap:pretty;}
   a{color:inherit;}
   .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
-  .shadow-none{box-shadow:none !important;}
 
-  nav{padding:22px 0; background:var(--cream);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{display:flex; align-items:center; gap:10px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:20px;}
-  .logo-badge{width:38px; height:38px; border-radius:50%; background:var(--sky); display:flex; align-items:center; justify-content:center;}
+  /* Nav */
+  nav{padding:20px 0;}
+  .nav-inner{display:flex; align-items:center; justify-content:space-between; gap:16px;}
+  .logo{display:flex; align-items:center; gap:10px; font-family:'Baloo 2',sans-serif; font-weight:800; font-size:21px; line-height:1.1;}
+  .logo-badge{width:42px; height:42px; border-radius:50%; background:var(--sky); border:3px solid var(--navy); display:flex; align-items:center; justify-content:center; flex:none;}
   .logo-badge svg{width:20px; height:20px;}
-  .nav-links{display:flex; gap:28px; font-size:15px; font-weight:700;}
-  .nav-links a{text-decoration:none; color:var(--navy);}
-  .btn-flat{background:var(--coral); color:white; padding:12px 24px; border-radius:100px; font-size:14px; font-weight:800; text-decoration:none; border:3px solid var(--navy);}
+  .nav-links{display:flex; gap:6px; font-size:16px; font-weight:700;}
+  .nav-links a{text-decoration:none; padding:10px 14px; border-radius:100px;}
+  .nav-links a:hover{background:var(--white);}
 
-  .hero{padding:40px 0 90px; position:relative;}
-  .hero-inner{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;}
-  .badge-eyebrow{display:inline-block; background:var(--sun); border:3px solid var(--navy); border-radius:100px; padding:8px 18px; font-size:13px; font-weight:800; margin-bottom:22px;}
-  .hero h1{font-size:clamp(34px,4.6vw,54px); line-height:1.12;}
-  .hero p{margin-top:20px; font-size:16.5px; line-height:1.7; max-width:440px; font-weight:600; color:#3E4C6B;}
-  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-  .btn-primary{background:var(--sky); color:white; border:3px solid var(--navy); border-radius:100px; padding:15px 26px; font-size:15px; font-weight:800; text-decoration:none;}
-  .btn-ghost{background:var(--white); color:var(--navy); border:3px solid var(--navy); border-radius:100px; padding:15px 26px; font-size:15px; font-weight:800; text-decoration:none;}
+  /* Buttons: flat fills, navy outline, no shadow */
+  .btn{display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 26px; border:3px solid var(--navy); border-radius:100px; font-family:inherit; font-size:16px; font-weight:800; line-height:1.2; text-decoration:none; color:var(--navy); cursor:pointer; white-space:nowrap;}
+  .btn-main{background:var(--coral);}
+  .btn-main:hover{background:#FF8577;}
+  .btn-ghost{background:var(--white);}
+  .btn-ghost:hover{background:#EAF3FF;}
+  .btn-nav{min-height:46px; padding:0 22px; font-size:15px;}
 
-  .mascot-wrap{position:relative; display:flex; align-items:center; justify-content:center;}
-  .mascot-bg{position:absolute; width:340px; height:340px; background:var(--mint); border-radius:50%; z-index:0;}
-  .mascot{position:relative; z-index:1; width:280px; height:auto;}
-  .float-dot{position:absolute; border-radius:50%; z-index:2;}
+  .badge{display:inline-block; background:var(--sun); border:3px solid var(--navy); border-radius:100px; padding:5px 16px; font-size:14px; font-weight:800; line-height:1.4;}
+  .badge-coral{background:var(--coral);}
+  .badge-mint{background:var(--mint);}
 
-  section{padding:70px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 46px;}
-  .sec-head .badge-eyebrow{background:var(--coral); color:white;}
-  .sec-head h2{font-size:clamp(26px,3.4vw,38px); margin-top:14px;}
+  /* Hero */
+  .hero{padding-top:32px; padding-bottom:48px;}
+  .hero-inner{display:grid; grid-template-columns:1.15fr .85fr; gap:40px; align-items:center;}
+  .hero h1{font-size:clamp(36px,4.6vw,58px); margin-top:20px;}
+  .hero p{margin-top:20px; font-size:18px; max-width:480px; font-weight:600; color:var(--slate);}
+  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
+  .mascot-wrap{position:relative; display:flex; align-items:center; justify-content:center; min-height:380px;}
+  .mascot-bg{position:absolute; width:340px; height:340px; background:var(--mint); border:3px solid var(--navy); border-radius:50%;}
+  .mascot{position:relative; width:250px; height:auto;}
+  .dot{position:absolute; border-radius:50%; border:3px solid var(--navy);}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
-  .svc-card{background:var(--white); border:3px solid var(--navy); border-radius:24px; padding:28px 24px;}
-  .svc-icon{width:56px; height:56px; border-radius:16px; display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
+  /* Sections */
+  section.wrap{padding-top:72px; padding-bottom:72px;}
+  .sec-head{max-width:620px; margin-bottom:36px;}
+  .sec-head h2{font-size:clamp(28px,3.4vw,40px); margin-top:14px;}
+
+  /* Services */
+  .svc-grid{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:20px;}
+  .svc-card{background:var(--white); border:3px solid var(--navy); border-radius:24px; padding:26px 22px; display:flex; flex-direction:column; align-items:flex-start;}
+  .svc-icon{width:58px; height:58px; border-radius:18px; border:3px solid var(--navy); display:flex; align-items:center; justify-content:center; margin-bottom:18px; flex:none;}
   .svc-icon svg{width:28px; height:28px;}
-  .svc-card h3{font-size:18px; margin-bottom:8px;}
-  .svc-card p{font-size:13.5px; color:#5B6785; line-height:1.6; font-weight:600;}
-  .svc-card .price{margin-top:14px; font-family:'Baloo 2',sans-serif; font-size:17px; color:var(--navy); background:var(--sun); display:inline-block; padding:4px 14px; border-radius:100px; border:2px solid var(--navy);}
+  .svc-card h3{font-size:21px; margin-bottom:6px;}
+  .svc-card p{font-size:16px; color:var(--soft); font-weight:600; line-height:1.55;}
+  .price{margin-top:auto; padding-top:18px;}
+  .price span{display:inline-block; font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; background:var(--sun); padding:3px 14px; border-radius:100px; border:2px solid var(--navy);}
 
-  .about-flat{display:grid; grid-template-columns:1fr 1fr; gap:50px; align-items:center; background:var(--sky); border:3px solid var(--navy); border-radius:32px; padding:50px;}
-  .about-photo{height:320px; background:var(--white); border:3px solid var(--navy); border-radius:24px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .about-photo svg{width:30px; height:30px; stroke:var(--navy); fill:none; stroke-width:1.6;}
-  .about-photo span{font-size:11px; color:var(--navy); text-transform:uppercase; letter-spacing:0.05em; font-weight:800;}
-  .about-copy{color:white;}
-  .about-copy .badge-eyebrow{background:var(--sun); color:var(--navy);}
-  .about-copy h3{font-size:26px; margin:16px 0 14px;}
-  .about-copy p{font-size:15px; line-height:1.8; font-weight:600; opacity:0.95;}
-  .stat-strip{display:flex; gap:16px; margin-top:26px; flex-wrap:wrap;}
-  .stat-pill{background:var(--white); color:var(--navy); border:2px solid var(--navy); border-radius:16px; padding:12px 18px;}
-  .stat-pill b{font-family:'Baloo 2',sans-serif; font-size:20px; display:block;}
-  .stat-pill span{font-size:11px; font-weight:700;}
+  /* Signature: smile-slider */
+  .clean{display:grid; grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr); gap:56px; align-items:center;}
+  .clean-copy h2{font-size:clamp(28px,3.4vw,40px); margin-top:14px;}
+  .clean-copy p{margin-top:14px; color:var(--slate); font-weight:600;}
+  .clean-copy .price{padding-top:22px;}
+  .smile-labels{display:flex; justify-content:space-between; margin-bottom:12px;}
+  .smile{position:relative; margin:0; aspect-ratio:640/370; border:3px solid var(--navy); border-radius:28px; overflow:hidden; background:#D9F6EB; touch-action:pan-y; -webkit-user-select:none; user-select:none;}
+  .smile.is-live{cursor:ew-resize;}
+  .smile-layer{position:absolute; inset:0;}
+  .smile-layer svg{display:block; width:100%; height:100%;}
+  .smile-before{background:#FFE6BF; clip-path:inset(0 calc(100% - var(--pos, 50%)) 0 0);}
+  .smile-line{position:absolute; top:0; bottom:0; left:var(--pos, 50%); width:4px; margin-left:-2px; background:var(--navy); pointer-events:none;}
+  .smile-knob{position:absolute; top:50%; left:var(--pos, 50%); width:58px; height:58px; margin:-29px 0 0 -29px; border-radius:50%; background:var(--coral); border:3px solid var(--navy); display:flex; align-items:center; justify-content:center;}
+  .smile-knob svg{width:30px; height:30px; fill:none; stroke:var(--navy); stroke-width:3; stroke-linecap:round; stroke-linejoin:round;}
+  .smile.is-dragging .smile-knob{background:var(--sun);}
+  .smile-hint{margin-top:14px; font-size:15px; font-weight:600; color:var(--soft);}
 
-  .contact-flat{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
-  .contact-card{background:var(--white); border:3px solid var(--navy); border-radius:24px; padding:36px;}
-  .info-row{display:flex; gap:14px; padding:14px 0; border-bottom:2px dashed #D9D2C2;}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-size:12px; font-weight:800; color:var(--coral); flex-shrink:0; text-transform:uppercase;}
-  .info-row .val{font-size:14.5px; font-weight:600;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:2.5px solid var(--navy); border-radius:14px; padding:14px 16px; font-family:'Nunito Sans',sans-serif; font-size:14.5px; font-weight:600;}
-  .form button{background:var(--coral); color:white; border:3px solid var(--navy); border-radius:100px; padding:15px; font-size:14.5px; font-weight:800; cursor:pointer;}
+  /* About */
+  .about-flat{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:center; background:var(--sky); border:3px solid var(--navy); border-radius:32px; padding:48px;}
+  .about-art{background:var(--cream); border:3px solid var(--navy); border-radius:24px; overflow:hidden;}
+  .about-art svg{display:block; width:100%; height:auto;}
+  .about-copy h2{font-size:clamp(26px,3vw,36px); margin:16px 0 12px;}
+  .about-copy p{font-weight:600;}
+  .stat-strip{display:flex; gap:12px; margin-top:26px; flex-wrap:wrap;}
+  .stat-pill{background:var(--white); border:3px solid var(--navy); border-radius:16px; padding:10px 16px; line-height:1.3;}
+  .stat-pill b{font-family:'Baloo 2',sans-serif; font-size:24px; display:block;}
+  .stat-pill span{font-size:14px; font-weight:700;}
 
-  footer{padding:32px 0; font-size:13.5px; font-weight:700; color:#5B6785; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  /* Visit */
+  .contact-flat{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:24px; align-items:start;}
+  .card{background:var(--white); border:3px solid var(--navy); border-radius:24px; padding:30px;}
+  .info-row{display:grid; grid-template-columns:110px minmax(0,1fr); gap:12px; padding:14px 0; border-bottom:2px dashed #D9D2C2; align-items:baseline;}
+  .info-row:first-child{padding-top:0;}
+  .info-row:last-child{border-bottom:none; padding-bottom:0;}
+  .info-row .lbl{font-size:14px; font-weight:800; color:var(--coral-ink); text-transform:uppercase; letter-spacing:.04em;}
+  .info-row .val{font-weight:600;}
+  .info-row a{color:var(--coral-ink); font-weight:800;}
+  .form{display:flex; flex-direction:column; gap:6px;}
+  .form label{font-weight:800; font-size:15px; margin-top:8px;}
+  .form label:first-child{margin-top:0;}
+  .form input{border:3px solid var(--navy); border-radius:14px; min-height:52px; padding:0 16px; font:inherit; font-size:17px; font-weight:600; color:var(--navy); background:var(--cream);}
+  .form .btn{margin-top:18px;}
+  .form .note{font-size:15px; color:var(--soft); font-weight:600; margin-top:4px;}
+
+  footer{padding:24px 0 36px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:14px; font-weight:700; color:var(--soft);}
 
   .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:3px solid var(--navy); display:flex; align-items:center; justify-content:center; text-decoration:none;}
   .wa-float svg{width:28px; height:28px; fill:white;}
@@ -85,16 +120,53 @@
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
-  @media (max-width:900px){
+  @media (max-width:980px){
     .nav-links{display:none;}
-    .hero-inner{grid-template-columns:1fr; text-align:center;}
-    .hero p{margin-left:auto; margin-right:auto;}
-    .hero-ctas{justify-content:center;}
+    .hero-inner{grid-template-columns:1fr; gap:28px;}
+    .mascot-wrap{min-height:300px;}
+    .mascot-bg{width:270px; height:270px;}
+    .mascot{width:200px;}
     .svc-grid{grid-template-columns:1fr 1fr;}
-    .about-flat{grid-template-columns:1fr; padding:32px;}
+    .clean{grid-template-columns:1fr; gap:32px;}
+    .about-flat{grid-template-columns:1fr; padding:32px; gap:32px;}
     .contact-flat{grid-template-columns:1fr;}
   }
-  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+  @media (max-width:720px){
+    .btn-nav{display:none;}
+    /* The call/book bar takes over on phones; WhatsApp stays in the Visit card. */
+    html body .wa-float{display:none;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    html:root{--nc-radius:100px;}
+    html .nc-bar a{border-width:3px; font-weight:800;}
+    html .nc-bar a.nc-book{border-color:var(--navy);}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px;}
+    nav{padding:14px 0;}
+    .logo{font-size:19px;}
+    .hero{padding-top:16px; padding-bottom:56px;}
+    .hero h1{font-size:34px;}
+    .hero p{font-size:17px;}
+    .mascot-wrap{min-height:240px;}
+    .mascot-bg{width:216px; height:216px;}
+    .mascot{width:156px;}
+    section.wrap{padding-top:52px; padding-bottom:52px;}
+    .svc-grid{grid-template-columns:1fr; gap:14px;}
+    .svc-card{display:grid; grid-template-columns:58px minmax(0,1fr); column-gap:16px; padding:20px 18px;}
+    .svc-icon{grid-row:span 3; margin-bottom:0;}
+    .svc-card h3{font-size:20px; margin-bottom:2px;}
+    .price{grid-column:2; padding-top:10px;}
+    .smile{border-radius:20px;}
+    .smile-knob{width:52px; height:52px; margin:-26px 0 0 -26px;}
+    .about-flat{padding:20px; border-radius:24px;}
+    .card{padding:22px 18px;}
+    .info-row{grid-template-columns:1fr; gap:2px;}
+    .smile{aspect-ratio:4/3;}
+    .stat-strip{display:block; background:var(--white); border:3px solid var(--navy); border-radius:16px; padding:2px 16px;}
+    .stat-pill{display:flex; align-items:baseline; gap:12px; border:none; border-bottom:2px dashed #D9D2C2; border-radius:0; padding:10px 0;}
+    .stat-pill:last-child{border-bottom:none;}
+    .stat-pill b{min-width:84px;}
+  }
 /* nocap:polish v1 */
 :root{--nc-bg:#FFF8ED;--nc-fg:#1B2B4B;--nc-accent:#FF6F61;--nc-on-accent:#1B2B4B;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
 :focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
@@ -118,29 +190,29 @@
 </head>
 <body>
 
-<nav class="wrap">
+<nav class="wrap" aria-label="Main">
   <div class="nav-inner">
-    <div class="logo"><div class="logo-badge"><svg viewBox="0 0 24 24" fill="white"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Happy Tooth Family Dental</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-flat" href="#contact">Book now</a>
+    <div class="logo"><div class="logo-badge"><svg viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Happy Tooth Family Dental</div>
+    <div class="nav-links"><a href="#services">Services</a><a href="#cleaning">Cleaning</a><a href="#about">About</a><a href="#contact">Visit</a></div>
+    <a class="btn btn-ghost btn-nav" href="#contact">Book now</a>
   </div>
 </nav>
 
-<header class="wrap hero reveal">
+<header class="wrap hero">
   <div class="hero-inner">
     <div>
-      <span class="badge-eyebrow">Thiruporur · Family Clinic</span>
-      <h1>Dentistry your whole family looks forward to.</h1>
-      <p>Bright rooms, friendly faces, and a kids' corner that keeps little ones calm — from first tooth to grandparents.</p>
+      <span class="badge">Thiruporur · Mon–Sat, 9:30 AM – 7:30 PM</span>
+      <h1>Family dentistry in Thiruporur, from first tooth to grandparents.</h1>
+      <p>Bright rooms, a kids' corner that keeps little ones calm, and the same two dentists at every visit.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="#contact">Book appointment</a>
-        <a class="btn-ghost" href="#services">Our services</a>
+        <a class="btn btn-main" href="#contact">Book appointment</a>
+        <a class="btn btn-ghost" href="#services">See prices</a>
       </div>
     </div>
-    <div class="mascot-wrap">
+    <div class="mascot-wrap" aria-hidden="true">
       <div class="mascot-bg"></div>
-      <div class="float-dot" style="width:26px; height:26px; background:var(--sun); border:3px solid var(--navy); top:10px; right:30px;"></div>
-      <div class="float-dot" style="width:18px; height:18px; background:var(--coral); border:3px solid var(--navy); bottom:20px; left:10px;"></div>
+      <div class="dot" style="width:26px; height:26px; background:var(--sun); top:14px; right:14%;"></div>
+      <div class="dot" style="width:18px; height:18px; background:var(--coral); bottom:28px; left:12%;"></div>
       <svg class="mascot" viewBox="0 0 200 220" fill="none">
         <path d="M100 10C55 10 30 45 30 90c0 45 15 95 25 105 8 8 15-25 20-40 5-15 10-15 15 0 5 15 12 48 20 40 10-10 25-60 25-105 0-45-25-80-70-80Z" fill="white" stroke="#1B2B4B" stroke-width="5"/>
         <circle cx="78" cy="80" r="9" fill="#1B2B4B"/>
@@ -155,44 +227,165 @@
 
 <section class="wrap" id="services">
   <div class="sec-head reveal">
-    <span class="badge-eyebrow">Services</span>
+    <span class="badge badge-coral">Services</span>
     <h2>Care for every age at the table.</h2>
   </div>
   <div class="svc-grid reveal">
     <div class="svc-card">
-      <div class="svc-icon" style="background:var(--sky);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><circle cx="12" cy="8" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
-      <h3>Kids' Dentistry</h3><p>Gentle first visits, sticker chart, zero drama.</p>
-      <div class="price">₹299 first visit</div>
+      <div class="svc-icon" style="background:var(--sky);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="8" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div>
+      <h3>Kids' dentistry</h3><p>Gentle first visits, a sticker chart, zero drama.</p>
+      <div class="price"><span>₹299 first visit</span></div>
     </div>
     <div class="svc-card">
-      <div class="svc-icon" style="background:var(--coral);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>
-      <h3>Cleaning & Checkup</h3><p>Twice-yearly scale & polish for everyone.</p>
-      <div class="price">₹899</div>
+      <div class="svc-icon" style="background:var(--coral);"><svg viewBox="0 0 24 24" fill="none" stroke="#1B2B4B" stroke-width="2" aria-hidden="true"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>
+      <h3>Cleaning and check-up</h3><p>A scale and polish twice a year, for everyone.</p>
+      <div class="price"><span>₹899</span></div>
     </div>
     <div class="svc-card">
-      <div class="svc-icon" style="background:var(--mint);"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 12h8M12 8v8"/></svg></div>
-      <h3>Fillings</h3><p>Tooth-coloured, same-day in most cases.</p>
-      <div class="price">from ₹1,300</div>
+      <div class="svc-icon" style="background:var(--mint);"><svg viewBox="0 0 24 24" fill="none" stroke="#1B2B4B" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div>
+      <h3>Fillings</h3><p>Tooth-coloured, and done the same day in most cases.</p>
+      <div class="price"><span>from ₹1,300</span></div>
     </div>
     <div class="svc-card">
-      <div class="svc-icon" style="background:var(--sun);"><svg viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div>
-      <h3>Braces & Aligners</h3><p>For teens and adults, flexible EMI available.</p>
-      <div class="price">from ₹28,000</div>
+      <div class="svc-icon" style="background:var(--sun);"><svg viewBox="0 0 24 24" fill="none" stroke="#1B2B4B" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l2.4 6.6L21 12l-6.6 2.9L12 21.5l-2.4-6.6L3 12l6.6-2.9Z"/></svg></div>
+      <h3>Braces and aligners</h3><p>For teens and adults, with EMI if you need it.</p>
+      <div class="price"><span>from ₹28,000</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap" id="cleaning">
+  <div class="clean">
+    <div class="clean-copy reveal">
+      <span class="badge badge-mint">Scale and polish</span>
+      <h2>See what one cleaning does.</h2>
+      <p>On the left: tartar along the gum line, and the stains that tea and filter coffee leave behind. On the right: the same teeth after one scale and polish.</p>
+      <div class="price"><span>₹899 a visit</span></div>
+    </div>
+    <div>
+      <div class="smile-labels" aria-hidden="true"><span class="badge">Before</span><span class="badge badge-mint">After</span></div>
+      <figure class="smile" data-signature="smile-slider" aria-label="Illustration of the same teeth before and after a scale and polish">
+        <div class="smile-layer smile-after">
+          <svg viewBox="0 -10 640 370" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <g stroke="#1B2B4B" stroke-width="4" stroke-linejoin="round">
+              <g fill="#FFFFFF">
+                <path d="M87 104V196Q87 222 113 222H127Q153 222 153 196V104Z"/>
+                <path d="M159 104V206Q159 232 185 232H203Q229 232 229 206V104Z"/>
+                <path d="M235 104V220Q235 246 261 246H291Q317 246 317 220V104Z"/>
+                <path d="M323 104V220Q323 246 349 246H379Q405 246 405 220V104Z"/>
+                <path d="M411 104V206Q411 232 437 232H455Q481 232 481 206V104Z"/>
+                <path d="M487 104V196Q487 222 513 222H527Q553 222 553 196V104Z"/>
+                <path d="M131 336V276Q131 254 153 254H165Q187 254 187 276V336Z"/>
+                <path d="M193 336V278Q193 256 215 256H229Q251 256 251 278V336Z"/>
+                <path d="M257 336V280Q257 258 279 258H295Q317 258 317 280V336Z"/>
+                <path d="M323 336V280Q323 258 345 258H361Q383 258 383 280V336Z"/>
+                <path d="M389 336V278Q389 256 411 256H425Q447 256 447 278V336Z"/>
+                <path d="M453 336V276Q453 254 475 254H487Q509 254 509 276V336Z"/>
+              </g>
+              <g fill="#FF9A92">
+                <path d="M56 132V88Q56 56 88 56H552Q584 56 584 88V132L556 146Q520 108 484 146Q446 108 408 146Q364 104 320 146Q276 104 232 146Q194 108 156 146Q120 108 84 146Z"/>
+                <path d="M100 300L128 290Q159 326 190 290Q222 326 254 290Q287 326 320 290Q353 326 386 290Q418 326 450 290Q481 326 512 290L540 300V318Q540 344 514 344H126Q100 344 100 318Z"/>
+              </g>
+            </g>
+            <g stroke="#D6E8FF" stroke-width="9" stroke-linecap="round" fill="none">
+              <path d="M254 156Q251 182 255 210"/><path d="M342 156Q339 182 343 210"/><path d="M176 152Q174 172 177 194"/>
+            </g>
+            <g fill="#FFD23F" stroke="#1B2B4B" stroke-width="3" stroke-linejoin="round">
+              <path d="M600 92Q600 112 618 112Q600 112 600 132Q600 112 582 112Q600 112 600 92Z"/>
+              <path d="M40 240Q40 254 54 254Q40 254 40 268Q40 254 26 254Q40 254 40 240Z"/>
+              <path d="M590 270Q590 280 600 280Q590 280 590 290Q590 280 580 280Q590 280 590 270Z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="smile-layer smile-before" aria-hidden="true">
+          <svg viewBox="0 -10 640 370" preserveAspectRatio="xMidYMid slice">
+            <g stroke="#1B2B4B" stroke-width="4" stroke-linejoin="round">
+              <g fill="#F2D98A">
+                <path d="M87 104V196Q87 222 113 222H127Q153 222 153 196V104Z"/>
+                <path d="M159 104V206Q159 232 185 232H203Q229 232 229 206V104Z"/>
+                <path d="M235 104V220Q235 246 261 246H291Q317 246 317 220V104Z"/>
+                <path d="M323 104V220Q323 246 349 246H379Q405 246 405 220V104Z"/>
+                <path d="M411 104V206Q411 232 437 232H455Q481 232 481 206V104Z"/>
+                <path d="M487 104V196Q487 222 513 222H527Q553 222 553 196V104Z"/>
+              </g>
+              <g fill="#EBCB72">
+                <path d="M131 336V276Q131 254 153 254H165Q187 254 187 276V336Z"/>
+                <path d="M193 336V278Q193 256 215 256H229Q251 256 251 278V336Z"/>
+                <path d="M257 336V280Q257 258 279 258H295Q317 258 317 280V336Z"/>
+                <path d="M323 336V280Q323 258 345 258H361Q383 258 383 280V336Z"/>
+                <path d="M389 336V278Q389 256 411 256H425Q447 256 447 278V336Z"/>
+                <path d="M453 336V276Q453 254 475 254H487Q509 254 509 276V336Z"/>
+              </g>
+              <g fill="#FF9A92">
+                <path d="M56 132V88Q56 56 88 56H552Q584 56 584 88V132L556 146Q520 108 484 146Q446 108 408 146Q364 104 320 146Q276 104 232 146Q194 108 156 146Q120 108 84 146Z"/>
+                <path d="M100 300L128 290Q159 326 190 290Q222 326 254 290Q287 326 320 290Q353 326 386 290Q418 326 450 290Q481 326 512 290L540 300V318Q540 344 514 344H126Q100 344 100 318Z"/>
+              </g>
+            </g>
+            <g fill="#B98236">
+              <path d="M140 300q6-14 20-12q14-4 20 10q-2 12-20 12q-18 2-20-10Z"/>
+              <path d="M202 302q6-15 22-12q14-3 20 12q-4 11-21 11q-17 1-21-11Z"/>
+              <path d="M266 304q7-16 24-13q15-3 21 13q-4 12-22 12q-19 0-23-12Z"/>
+              <path d="M332 304q7-16 24-13q15-3 21 13q-4 12-22 12q-19 0-23-12Z"/>
+              <path d="M396 302q6-15 22-12q14-3 20 12q-4 11-21 11q-17 1-21-11Z"/>
+              <path d="M460 300q6-14 20-12q14-4 20 10q-2 12-20 12q-18 2-20-10Z"/>
+              <path d="M180 140q8-8 18-4q10-2 14 6q-4 8-16 7q-12 1-16-9Z"/>
+              <path d="M262 136q10-9 22-4q12-3 16 6q-5 9-19 8q-14 1-19-10Z"/>
+              <path d="M350 136q10-9 22-4q12-3 16 6q-5 9-19 8q-14 1-19-10Z"/>
+              <path d="M432 140q8-8 18-4q10-2 14 6q-4 8-16 7q-12 1-16-9Z"/>
+            </g>
+            <g fill="#9C6A2C">
+              <circle cx="122" cy="186" r="6"/><circle cx="198" cy="204" r="5"/><circle cx="270" cy="196" r="7"/>
+              <circle cx="300" cy="226" r="5"/><circle cx="372" cy="180" r="6"/><circle cx="446" cy="200" r="7"/>
+              <circle cx="520" cy="182" r="5"/><circle cx="226" cy="272" r="5"/><circle cx="356" cy="276" r="6"/>
+            </g>
+          </svg>
+        </div>
+        <div class="smile-line"></div>
+        <div class="smile-knob"><svg viewBox="0 0 30 30" aria-hidden="true"><path d="M11 9l-6 6 6 6M19 9l6 6-6 6"/></svg></div>
+      </figure>
+      <p class="smile-hint">Drag the line or use the arrow keys. Illustration, not a patient photo.</p>
     </div>
   </div>
 </section>
 
 <section class="wrap" id="about">
   <div class="about-flat reveal">
-    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Family & team photo</span></div>
+    <div class="about-art">
+      <svg viewBox="0 0 400 280" aria-hidden="true">
+        <g stroke="#1B2B4B" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+          <circle cx="352" cy="44" r="22" fill="#FFD23F"/>
+          <rect x="56" y="98" width="288" height="152" fill="#FFFFFF"/>
+          <rect x="44" y="78" width="312" height="28" rx="8" fill="#4FD1A5"/>
+          <rect x="112" y="34" width="176" height="44" rx="22" fill="#FF6F61"/>
+          <path fill="#FF6F61" d="M56 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FFFFFF" d="M92 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FF6F61" d="M128 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FFFFFF" d="M164 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FF6F61" d="M200 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FFFFFF" d="M236 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FF6F61" d="M272 112h36v24a18 18 0 0 1-36 0z"/>
+          <path fill="#FFFFFF" d="M308 112h36v24a18 18 0 0 1-36 0z"/>
+          <rect x="172" y="170" width="56" height="80" rx="6" fill="#4C9AFF"/>
+          <rect x="182" y="180" width="36" height="26" rx="5" fill="#D9F6EB" stroke-width="3"/>
+          <rect x="78" y="172" width="72" height="54" rx="8" fill="#D9F6EB"/>
+          <rect x="250" y="172" width="72" height="54" rx="8" fill="#D9F6EB"/>
+          <path d="M114 172v54M78 199h72M286 172v54M250 199h72" stroke-width="3"/>
+          <path d="M360 218h26l-4 32h-18z" fill="#FF6F61" stroke-width="3"/>
+          <path d="M373 218c-12-8-14-22-6-30 6 6 8 18 6 30zM373 218c10-10 22-12 28-6-6 8-16 10-28 6z" fill="#4FD1A5" stroke-width="3"/>
+          <path d="M16 250h368"/>
+        </g>
+        <circle cx="219" cy="216" r="4" fill="#1B2B4B"/>
+        <text x="200" y="63" text-anchor="middle" font-family="'Baloo 2', sans-serif" font-weight="800" font-size="21" fill="#1B2B4B">HAPPY TOOTH</text>
+      </svg>
+    </div>
     <div class="about-copy">
-      <span class="badge-eyebrow">Meet the clinic</span>
-      <h3>Run by a husband-and-wife dentist duo.</h3>
-      <p>Dr. [Name] handles kids and family dentistry, Dr. [Name] leads orthodontics and cosmetic work — so every visit, whoever's chair you're in, is genuinely looked forward to.</p>
+      <span class="badge">Meet the clinic</span>
+      <h2>Run by a husband-and-wife dentist duo.</h2>
+      <p>Dr. Priya Karthik sees the children and looks after family check-ups. Dr. Karthik Sundar does the braces, aligners and cosmetic work. Whichever chair you are in, it is one of them.</p>
       <div class="stat-strip">
-        <div class="stat-pill"><b>9 yrs</b><span>IN THIRUPORUR</span></div>
-        <div class="stat-pill"><b>3,400+</b><span>HAPPY FAMILIES</span></div>
-        <div class="stat-pill"><b>4.9 ★</b><span>GOOGLE RATING</span></div>
+        <div class="stat-pill"><b>9 yrs</b><span>In Thiruporur</span></div>
+        <div class="stat-pill"><b>3,400+</b><span>Families on our books</span></div>
+        <div class="stat-pill"><b>4.9 ★</b><span>Google rating</span></div>
       </div>
     </div>
   </div>
@@ -200,38 +393,123 @@
 
 <section class="wrap" id="contact">
   <div class="sec-head reveal">
-    <span class="badge-eyebrow">Visit Us</span>
+    <span class="badge badge-coral">Visit us</span>
     <h2>Bring the whole family in.</h2>
   </div>
   <div class="contact-flat reveal">
-    <div class="contact-card">
+    <div class="card">
       <div class="info-row"><div class="lbl">Address</div><div class="val">Main Bazaar Road, Thiruporur 603110</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
+      <div class="info-row"><div class="lbl">Phone</div><div class="val"><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></div></div>
       <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9:30 AM – 7:30 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--coral); font-weight:800;">Chat with us →</a></div></div>
+      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX">Chat with us <span aria-hidden="true">&rarr;</span></a></div></div>
     </div>
-    <form class="contact-card form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nWho is visiting: ' + this.who.value);">
-      <input name="name" type="text" placeholder="Parent / patient name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="who" type="text" placeholder="Who's visiting? (e.g. myself + 2 kids)">
-      <button type="submit">Book our slot 🦷</button>
+    <form class="card form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nWho is visiting: ' + this.who.value);">
+      <label for="f-name">Parent or patient name</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required>
+      <label for="f-phone">Phone number</label>
+      <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+      <label for="f-who">Who's coming in?</label>
+      <input id="f-who" name="who" type="text" placeholder="e.g. me and two kids">
+      <button class="btn btn-main" type="submit">Request a slot</button>
+      <p class="note">Opens your email app with these details filled in.</p>
     </form>
   </div>
 </section>
 
-<footer class="wrap">
-  <span>© 2026 Happy Tooth Family Dental, Thiruporur.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap">
+    <span>© 2026 Happy Tooth Family Dental, Thiruporur.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal (content is visible without JS; see the noscript rule).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Signature: smile-slider. Drag anywhere on the picture (mouse, pen or a sideways swipe) or focus the round
+  // handle and use the arrow keys. Without JS it stays a static half-and-half picture. One small nudge the first
+  // time it scrolls into view shows that it moves; the nudge is skipped under reduced motion.
+  (function(){
+    var fig = document.querySelector('[data-signature="smile-slider"]');
+    if(!fig) return;
+    var knob = fig.querySelector('.smile-knob');
+    var pos = 50, dragging = false, touched = false;
+    knob.setAttribute('role', 'slider');
+    knob.setAttribute('tabindex', '0');
+    knob.setAttribute('aria-label', 'Before and after divider');
+    knob.setAttribute('aria-valuemin', '0');
+    knob.setAttribute('aria-valuemax', '100');
+    fig.classList.add('is-live');
+    function set(p){
+      pos = Math.max(0, Math.min(100, p));
+      var r = Math.round(pos);
+      fig.style.setProperty('--pos', pos + '%');
+      knob.setAttribute('aria-valuenow', r);
+      knob.setAttribute('aria-valuetext', r + '% before, ' + (100 - r) + '% after');
+    }
+    function fromPointer(e){
+      var b = fig.getBoundingClientRect();
+      return (e.clientX - b.left) / b.width * 100;
+    }
+    set(50);
+    fig.addEventListener('pointerdown', function(e){
+      if(e.button > 0) return;
+      touched = dragging = true;
+      try{ fig.setPointerCapture(e.pointerId); }catch(err){}
+      fig.classList.add('is-dragging');
+      set(fromPointer(e));
+    });
+    fig.addEventListener('pointermove', function(e){ if(dragging) set(fromPointer(e)); });
+    function stop(){ dragging = false; fig.classList.remove('is-dragging'); }
+    fig.addEventListener('pointerup', stop);
+    fig.addEventListener('pointercancel', stop);
+    fig.addEventListener('lostpointercapture', stop);
+    knob.addEventListener('keydown', function(e){
+      var step = e.shiftKey ? 10 : 5, next = null;
+      switch(e.key){
+        case 'ArrowLeft': case 'ArrowDown': next = pos - step; break;
+        case 'ArrowRight': case 'ArrowUp': next = pos + step; break;
+        case 'PageDown': next = pos - 20; break;
+        case 'PageUp': next = pos + 20; break;
+        case 'Home': next = 0; break;
+        case 'End': next = 100; break;
+      }
+      if(next === null) return;
+      e.preventDefault();
+      touched = true;
+      set(next);
+    });
+
+    var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)');
+    if(calm && calm.matches) return;
+    if(!('IntersectionObserver' in window) || !window.requestAnimationFrame) return;
+    var seen = new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      seen.disconnect();
+      setTimeout(nudge, 300);
+    }, {threshold:0.6});
+    seen.observe(fig);
+    function nudge(){
+      if(touched || calm.matches) return;
+      var start = null, length = 600;
+      requestAnimationFrame(function step(now){
+        if(touched) return;
+        if(start === null) start = now;
+        var t = Math.min(1, (now - start) / length);
+        set(50 + 14 * Math.sin(t * Math.PI));
+        if(t < 1) requestAnimationFrame(step); else set(50);
+      });
+    }
+  })();
 </script>
 <div class="nc-bar" role="group" aria-label="Call or book">
   <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
