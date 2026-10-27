@@ -30,14 +30,14 @@
   /* Nav */
   nav{padding:36px 0 0;}
   .nav-inner{display:flex; justify-content:space-between; align-items:center;}
-  .logo{font-family:'Instrument Serif',serif; font-size:24px; letter-spacing:0.01em; text-decoration:none;}
+  .logo{display:inline-flex; align-items:center; min-height:44px; font-family:'Instrument Serif',serif; font-size:24px; letter-spacing:0.01em; text-decoration:none;}
   .nav-links{display:flex; gap:12px;}
   .nav-links a{text-decoration:none; color:var(--muted); font-size:16px; padding:10px 12px;}
   .nav-links a:hover{color:var(--ink);}
 
   /* Editorial grid: a narrow label rail on the left, content on the right */
   .row{display:grid; grid-template-columns:200px minmax(0,1fr); column-gap:56px;}
-  .rail{font-size:13px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); font-weight:500; padding-top:14px;}
+  .rail{font-size:14px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-weight:500; padding-top:14px;}
 
   /* Hero */
   .hero{padding:120px 0 128px;}
@@ -84,7 +84,7 @@
 
   /* Dentist */
   .years{font-family:'Instrument Serif',serif; font-size:clamp(120px,14vw,190px); line-height:.82; color:var(--ink); letter-spacing:-0.02em; margin-top:18px; text-transform:none;}
-  .years-cap{display:block; margin-top:14px; font-size:13px; letter-spacing:0.14em; color:var(--muted); line-height:1.6;}
+  .years-cap{display:block; margin-top:14px; font-size:14px; letter-spacing:0.12em; color:var(--muted); line-height:1.6;}
   .dentist p{margin-top:22px; color:var(--muted); max-width:580px;}
   .sig{margin-top:36px; font-family:'Instrument Serif',serif; font-style:italic; font-size:24px; color:var(--ink);}
   .sig span{display:block; font-family:'Karla',sans-serif; font-style:normal; font-size:15px; color:var(--muted); margin-top:4px;}
@@ -92,10 +92,10 @@
   /* Visit */
   .visit-grid{margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:64px;}
   .info{list-style:none; border-top:1px solid var(--line);}
-  .info li{padding:18px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; gap:20px; font-size:16px;}
+  .info li{padding:9px 0; min-height:64px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:20px; font-size:16px;}
   .info .k{color:var(--muted);}
   .info span:last-child{text-align:right;}
-  .info a{text-decoration:none; border-bottom:1px solid var(--ink);}
+  .info a{display:inline-flex; align-items:center; min-height:44px; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px;}
   .form{display:flex; flex-direction:column; gap:10px;}
   .form label{font-size:15px; color:var(--muted); margin-top:8px;}
   .form input, .form textarea{width:calc(100% + 24px); margin:0 -12px; border:none; border-bottom:1px solid var(--line); background:transparent; padding:12px 12px; font-family:'Karla',sans-serif; font-size:17px; color:var(--ink); resize:vertical;}
@@ -140,7 +140,7 @@
     .visit-grid{grid-template-columns:1fr; gap:44px;}
     .svc li{grid-template-columns:minmax(0,1fr) auto; gap:4px 16px;}
     .svc .num{display:none;}
-    .info li{flex-direction:column; gap:2px;}
+    .info li{flex-direction:column; align-items:flex-start; gap:0; padding:12px 0;}
     .info span:last-child{text-align:left;}
     /* Phones get the call/book bar; WhatsApp stays in the Visit list. */
     html body .wa-float{display:none;}
@@ -223,7 +223,7 @@
   <div class="wrap row">
     <div class="rail">Services &amp; prices</div>
     <div>
-      <h2>A short list, <em>done well.</em></h2>
+      <h2>A short list, done well.</h2>
       <ol class="svc">
         <li><span class="num">01</span><div><h3>Consultation</h3><p>Full exam and a written plan, with no obligation to go ahead.</p></div><span class="price">₹400</span></li>
         <li><span class="num">02</span><div><h3>Cleaning</h3><p>Ultrasonic scaling, polish, and a review of how you brush.</p></div><span class="price">₹1,000</span></li>
@@ -244,8 +244,8 @@
       <span class="years-cap">Years in<br>Sriperumbudur</span>
     </div>
     <div class="dentist">
-      <h2>Dr. Anitha Raman, BDS. <em>One patient at a time, for eight years.</em></h2>
-      <p>Trained in general and cosmetic dentistry, she chose to run a single-chair studio rather than grow into a bigger clinic. Appointments are spaced out so nothing feels rushed, and you will see her at every visit.</p>
+      <h2>Dr. Anitha Raman, BDS</h2>
+      <p>Eight years in Sriperumbudur, one patient at a time. Trained in general and cosmetic dentistry, she chose to run a single-chair studio rather than grow into a bigger clinic. Appointments are spaced out so nothing feels rushed, and you will see her at every visit.</p>
       <p class="sig">A quieter kind of care.<span>Dr. Anitha Raman</span></p>
     </div>
   </div>
@@ -257,7 +257,7 @@
   <div class="wrap row">
     <div class="rail">Visit</div>
     <div>
-      <h2>Book a slot. <em>We'll hold it for you.</em></h2>
+      <h2>Book a slot. We'll hold it for you.</h2>
       <div class="visit-grid">
         <ul class="info">
           <li><span class="k">Address</span><span>Kancheepuram Road, Sriperumbudur 602105</span></li>
