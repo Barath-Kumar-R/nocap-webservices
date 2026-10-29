@@ -57,17 +57,16 @@
   .stage{position:relative; perspective:1400px; perspective-origin:50% 35%;}
   .stack{--s:1; --ch:150px; --gap:22px; --dx:22px; --dz:90px; position:relative; list-style:none; height:calc(var(--ch) * 3 + var(--gap) * 2); border-radius:24px; transform-style:preserve-3d; transform:rotateX(calc(18deg * (1 - var(--s)))) rotateY(calc(-24deg * (1 - var(--s))));}
   .layer{position:absolute; top:0; left:0; right:calc(var(--dx) * 2); height:var(--ch); display:grid; grid-template-columns:76px minmax(0,1fr); gap:18px; align-items:center; padding:18px 22px; overflow:hidden; background:var(--white); border-radius:22px;
-    box-shadow:0 1px 2px rgba(26,26,46,.06), 0 calc(14px + 16px * var(--s)) calc(30px + 26px * var(--s)) -18px rgba(26,26,46,calc(.22 + .14 * var(--s)));
+    box-shadow:0 1px 2px rgba(26,26,46,.05), 0 calc(14px + 16px * var(--s)) calc(30px + 26px * var(--s)) -18px rgba(26,26,46,calc(.14 + .12 * var(--s)));
     transform:translate3d(calc(var(--i) * var(--dx) * var(--s)), calc(var(--c) + (var(--p) - var(--c)) * var(--s)), calc(var(--i) * (-1px - var(--dz) * (1 - var(--s)))));}
   .l-crown{--i:0; --p:0px; --c:0px; z-index:3;}
   .l-implant{--i:1; --p:calc(var(--ch) + var(--gap)); --c:0px; z-index:2;}
   .l-scan{--i:2; --p:calc((var(--ch) + var(--gap)) * 2); --c:0px; z-index:1;}
-  .layer > *{opacity:calc(1 - min(var(--i), 1) * (1 - var(--s)));}
-  .ds-live .layer > *{transition:opacity .4s ease;}
   .layer-art{width:76px; height:76px;}
-  .layer-k{font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--indigo);}
+  .layer-k{font-size:14px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--indigo-dk);}
   .layer h3{font-size:19px; margin-top:2px;}
-  .layer p:not(.layer-k){font-size:15px; line-height:1.45; color:var(--muted); margin-top:3px;}
+  /* layer text is a shade darker than elsewhere: a card above can cast its shadow on it mid-separation */
+  .layer p:not(.layer-k){font-size:15px; line-height:1.45; color:#46475C; margin-top:3px;}
   .ds-live, .ds-live .layer{transition:transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;}
   /* art */
   .art-bone{fill:#E4E6F0; stroke:var(--ctl); stroke-width:1.4;}
@@ -77,6 +76,8 @@
   .art-gum{fill:var(--gum); stroke:#D9A9B4; stroke-width:1.2;}
   .art-ti{fill:#D7DBF6; stroke:var(--indigo); stroke-width:1.5; stroke-linejoin:round;}
   .art-crown{fill:var(--white); stroke:var(--indigo); stroke-width:1.6; stroke-linejoin:round;}
+  .art-arch{fill:none; stroke:#E4E6F0; stroke-width:9; stroke-linecap:round; stroke-linejoin:round;}
+  .art-tooth{fill:#fff; stroke:var(--ctl); stroke-width:1;}
   .art-dash{fill:none; stroke:var(--ctl); stroke-width:1.2; stroke-dasharray:3 3;}
 
   /* Sections */
@@ -238,7 +239,7 @@
     <div class="hero-copy">
       <p class="eyebrow">Guduvancheri · Implants only</p>
       <h1>Every layer of your implant, planned first.</h1>
-      <p class="lede">We scan the jaw in 3D, plan the implant on that scan, and show you the crown on screen before anything is placed.</p>
+      <p class="lede">Single implants, full arches and bone grafting. Start with a scan review: it is free, with no obligation to go ahead.</p>
       <div class="hero-ctas">
         <a class="btn" href="#book">Book a consult</a>
         <a class="text-link" href="#services">See procedures <span aria-hidden="true">↓</span></a>
@@ -247,7 +248,7 @@
     </div>
 
     <div class="stage">
-      <ol class="stack" reversed data-signature="depth-stack" tabindex="0" aria-label="An implant plan in three layers">
+      <ol class="stack" reversed data-signature="depth-stack" aria-label="An implant plan in three layers">
         <li class="layer l-crown">
           <svg class="layer-art" viewBox="0 0 80 80" aria-hidden="true"><path class="art-dash" d="M40 66v10"/><path class="art-crown" d="M14 33c0-10 6-17 14-17 4 0 7 2.4 12 2.4s8-2.4 12-2.4c8 0 14 7 14 17 0 9-4 15-6 23-1 4-4 6-8 6H28c-4 0-7-2-8-6-2-8-6-14-6-23Z"/><path class="art-ind" d="M25 28c5 4.5 10 4.5 15 0 5 4.5 10 4.5 15 0"/><path class="art-dash" d="M22 62h36"/></svg>
           <div><p class="layer-k">03 · Crown</p><h3>See the crown first</h3><p>Shape and shade, checked with you before it is made.</p></div>
@@ -257,7 +258,7 @@
           <div><p class="layer-k">02 · Implant</p><h3>Guided placement</h3><p>Angle and depth planned on your scan before surgery day.</p></div>
         </li>
         <li class="layer l-scan">
-          <svg class="layer-art" viewBox="0 0 80 80" aria-hidden="true"><path class="art-bone" d="M38 7c13 0 20 11 20 28 0 20-7 38-20 38S18 55 18 35C18 18 25 7 38 7Z"/><path class="art-marrow" d="M38 15c8 0 12 8.5 12 20 0 14-4.5 28-12 28s-12-14-12-28c0-11.5 4-20 12-20Z"/><circle class="art-dot" cx="33" cy="30" r="1.6"/><circle class="art-dot" cx="43" cy="38" r="1.6"/><circle class="art-dot" cx="35" cy="45" r="1.6"/><circle class="art-ind" cx="38" cy="56" r="3.6"/><path class="art-ind" d="M68 8v64M64 8h8M64 72h8"/></svg>
+          <svg class="layer-art" viewBox="0 0 80 80" aria-hidden="true"><g transform="translate(0 9)"><path class="art-arch" d="M14.9 52.9 L15.4 49.5 L15.9 46.1 L16.6 42.8 L17.3 39.6 L18.2 36.5 L19.1 33.6 L20.1 30.8 L21.1 28.1 L22.3 25.7 L23.5 23.4 L24.8 21.3 L26.1 19.4 L27.5 17.7 L28.9 16.2 L30.3 14.9 L31.8 13.9 L33.4 13.1 L34.9 12.5 L36.4 12.1 L38.0 12.0 L39.6 12.1 L41.1 12.5 L42.6 13.1 L44.2 13.9 L45.7 14.9 L47.1 16.2 L48.5 17.7 L49.9 19.4 L51.2 21.3 L52.5 23.4 L53.7 25.7 L54.9 28.1 L55.9 30.8 L56.9 33.6 L57.8 36.5 L58.7 39.6 L59.4 42.8 L60.1 46.1 L60.6 49.5 L61.1 52.9"/><rect class="art-tooth" x="-3.5" y="-2.9" width="7.0" height="5.7" rx="1.7" transform="translate(41.8 12.7) rotate(20.3)"/><rect class="art-tooth" x="-2.7" y="-2.5" width="5.3" height="4.9" rx="1.5" transform="translate(47.4 16.5) rotate(44.8)"/><rect class="art-tooth" x="-3.1" y="-3.3" width="6.1" height="6.6" rx="1.8" transform="translate(51.4 21.5) rotate(57.5)"/><rect class="art-tooth" x="-2.9" y="-3.7" width="5.7" height="7.4" rx="1.7" transform="translate(54.5 27.4) rotate(65.7)"/><rect class="art-tooth" x="-2.7" y="-3.7" width="5.3" height="7.4" rx="1.6" transform="translate(56.8 33.2) rotate(71.2)"/><rect class="art-tooth" x="-4.1" y="-4.5" width="8.2" height="9.0" rx="2.5" transform="translate(58.9 40.3) rotate(76.3)"/><rect class="art-tooth" x="-3.7" y="-4.3" width="7.4" height="8.6" rx="2.2" transform="translate(60.5 48.7) rotate(81.0)"/><rect class="art-tooth" x="-3.5" y="-2.9" width="7.0" height="5.7" rx="1.7" transform="translate(34.2 12.7) rotate(159.7)"/><rect class="art-tooth" x="-2.7" y="-2.5" width="5.3" height="4.9" rx="1.5" transform="translate(28.6 16.5) rotate(135.2)"/><rect class="art-tooth" x="-3.1" y="-3.3" width="6.1" height="6.6" rx="1.8" transform="translate(24.6 21.5) rotate(122.5)"/><rect class="art-tooth" x="-2.9" y="-3.7" width="5.7" height="7.4" rx="1.7" transform="translate(21.5 27.4) rotate(114.3)"/><rect class="art-tooth" x="-2.7" y="-3.7" width="5.3" height="7.4" rx="1.6" transform="translate(19.2 33.2) rotate(108.8)"/><rect class="art-tooth" x="-4.1" y="-4.5" width="8.2" height="9.0" rx="2.5" transform="translate(17.1 40.3) rotate(103.7)"/><rect class="art-tooth" x="-3.7" y="-4.3" width="7.4" height="8.6" rx="2.2" transform="translate(15.5 48.7) rotate(99.0)"/></g><path class="art-ind" d="M8 47h58" stroke-dasharray="3 3"/><path class="art-ind" d="M71 15v53M67.5 15h7M67.5 68h7"/></svg>
           <div><p class="layer-k">01 · 3D scan</p><h3>Jaw model</h3><p>Bone height and width, reviewed with you chairside.</p></div>
         </li>
       </ol>
@@ -286,7 +287,7 @@
       </div>
       <div class="proc">
         <span class="proc-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 6.5C4 5.1 5.1 4 6.5 4h11C18.9 4 20 5.1 20 6.5v8c0 1.4-1.1 2.5-2.5 2.5H11l-4.5 3.5V17h0C5.1 17 4 15.9 4 14.5Z"/><path d="M8.5 9h7M8.5 12.5h4.5"/></svg></span>
-        <div><p class="proc-no">04</p><h3>Implant consult</h3><p>A free scan review. We go through it together, with no obligation.</p></div>
+        <div><p class="proc-no">04</p><h3>Implant consult</h3><p>The scan review. Bring your questions about cost, healing time and the steps.</p></div>
       </div>
     </div>
   </div>
@@ -320,8 +321,8 @@
     <div class="win practice-copy reveal">
       <div class="win-body">
         <p class="eyebrow">The practice</p>
-        <h2 id="practice-title">Implants only, planned on screen.</h2>
-        <p>Dr. Harini Sekar, MDS (Oral Implantology), plans every case on a 3D model before surgery. She walks you through it angle by angle, so you know what will happen on the day.</p>
+        <h2 id="practice-title">Implant work only, with a digital lab.</h2>
+        <p>Dr. Harini Sekar, MDS (Oral Implantology), leads the practice. Scans, implant work and crowns are all handled in one place.</p>
         <dl class="stats">
           <div><dt>Implants placed</dt><dd>2,100+</dd></div>
           <div><dt>Google rating</dt><dd>4.9 ★</dd></div>
@@ -383,7 +384,7 @@
 
   // Signature: depth-stack. --s on the stack runs from 0 (layers stacked behind the crown) to 1 (an exploded
   // view). Scroll sets it over 40% of a screen height from where the stack starts; hovering with a mouse or pen,
-  // or keyboard focus on the stack, separates it fully. Touch only scrolls (no touch handlers). Work happens in
+  // or keyboard focus on the stack (tabindex is added only while the effect runs), separates it fully. Touch only scrolls (no touch handlers). Work happens in
   // one rAF per scroll or hover change, and only while the stack is on screen. Reduced motion: static, separated.
   (function(){
     var stack = document.querySelector('[data-signature="depth-stack"]');
@@ -408,8 +409,9 @@
 
     function start(){
       if(calm && calm.matches){
-        live = false; stack.classList.remove('ds-live'); stack.style.removeProperty('--s'); return;
+        live = false; stack.classList.remove('ds-live'); stack.style.removeProperty('--s'); stack.removeAttribute('tabindex'); focused = false; return;
       }
+      stack.tabIndex = 0;                // a keyboard path to the effect, only while it is live
       live = true; layout(); read(); shown = -1; apply();
       void stack.offsetWidth;            // place the layers before transitions are switched on
       stack.classList.add('ds-live');
@@ -419,7 +421,8 @@
     addEventListener('resize', function(){ if(live){ layout(); read(); queue(); } });
     stack.addEventListener('pointerenter', function(e){ if(e.pointerType !== 'touch'){ hover = true; queue(); } });
     stack.addEventListener('pointerleave', function(e){ if(e.pointerType !== 'touch'){ hover = false; queue(); } });
-    stack.addEventListener('focus', function(){ focused = true; queue(); });
+    // Only keyboard focus separates the deck; a mouse click or a tap must not pin it open.
+    stack.addEventListener('focus', function(){ var kb = true; try{ kb = stack.matches(':focus-visible'); }catch(e){} if(kb){ focused = true; queue(); } });
     stack.addEventListener('blur', function(){ focused = false; queue(); });
     if('IntersectionObserver' in window){
       new IntersectionObserver(function(es){ onScreen = es[0].isIntersecting; if(onScreen && live){ read(); queue(); } }).observe(stack);
