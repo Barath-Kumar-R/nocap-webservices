@@ -14,14 +14,18 @@
   if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.className += ' ld-on';
 </script>
 <style>
+  /* Local stand-ins sized to the web fonts' widths, so text wraps the same before and after they load */
+  @font-face{font-family:'Work Sans fallback'; src:local('Arial'), local('ArialMT'), local('Helvetica'), local('Liberation Sans'); font-weight:100 500; size-adjust:112%;}
+  @font-face{font-family:'Work Sans fallback'; src:local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'), local('Liberation Sans Bold'); font-weight:600 900; size-adjust:106%;}
+  @font-face{font-family:'Cormorant fallback'; src:local('Times New Roman'), local('TimesNewRomanPSMT'), local('Times'), local('Liberation Serif'); size-adjust:96.5%;}
   :root{
     --ivory:#FBF8F3; --cream:#F3ECE1; --paper:#FFFDF9;
     --sage:#7C8B6F; --sage-deep:#5C6B50; --sage-tint:#EDF0E7;
     --blush:#E8C4C0; --blush-tint:#F6E8E4; --plum:#4A2E35; --plum-text:#E9DCD9;
     --ink:#2C2422; --muted:#5E554F; --gold:#A07A3C; --field-line:#8C8378;
     --line:rgba(74,46,53,.14);
-    --serif:'Cormorant','Cormorant Garamond',Garamond,'Times New Roman',serif;
-    --sans:'Work Sans','Segoe UI',Helvetica,Arial,sans-serif;
+    --serif:'Cormorant','Cormorant fallback','Times New Roman',serif;
+    --sans:'Work Sans','Work Sans fallback',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
