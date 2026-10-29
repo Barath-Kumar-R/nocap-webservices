@@ -239,7 +239,7 @@
   /* demo tuning of the shared polish block (bar, focus ring) */
   html:root{--nc-radius:999px;}
   html :focus-visible{outline-color:#3B2414!important; box-shadow:0 0 0 2px #FFFDF7!important;}
-  html .quiz .q-title:focus-visible{outline:none!important; box-shadow:none!important;}
+  html .quiz .q-title:focus-visible{outline:2px dashed var(--line)!important; outline-offset:6px; border-radius:6px; box-shadow:none!important;}
   html .nc-bar{font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:18px; border-top:2px solid #E2A93A;}
   html .nc-bar a.nc-book{box-shadow:0 3px 0 #C2570B;}
   @media (max-width:720px){
@@ -376,7 +376,7 @@
 <section id="services" aria-labelledby="svc-h">
   <div class="wrap">
     <div class="sec-head reveal">
-      <h2 id="svc-h">Kids first. Grown-ups welcome too.</h2>
+      <h2 id="svc-h">Kids first. <span class="nw">Grown-ups</span> welcome too.</h2>
       <p class="intro">Sunshine Smiles treats the whole family. Here is what each age usually comes in for.</p>
     </div>
     <div class="shelf reveal">
@@ -557,6 +557,7 @@
   }
 
   var state = { step: 0, a: {} };
+  var lastInserted = '';
   function label(list, v) { for (var i = 0; i < list.length; i++) if (list[i].v === v) return list[i].t; return ''; }
   function lc(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
   function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
@@ -597,7 +598,12 @@
     var useForm = el('button', k.call ? 'tlink' : 'btn', k.call ? 'Use the booking form' : 'Put this in the booking form');
     useForm.type = 'button';
     useForm.addEventListener('click', function () {
-      note.value = msg;
+      // Keep whatever the visitor already typed: replace only our own earlier insert, otherwise append below it.
+      var cur = note.value;
+      if (lastInserted && cur.indexOf(lastInserted) !== -1) note.value = cur.replace(lastInserted, msg);
+      else if (cur.trim()) note.value = cur.replace(/\s+$/, '') + '\n\n' + msg;
+      else note.value = msg;
+      lastInserted = msg;
       var name = document.getElementById('f-name');
       document.getElementById('book').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
       name.focus({ preventScroll: true });
@@ -620,8 +626,9 @@
     count.textContent = s < 3 ? 'Question ' + (s + 1) + ' of 3' : 'Our suggestion';
     for (var i = 0; i < pips.length; i++) pips[i].className = i <= s ? 'on' : '';
     foot.hidden = s === 0;
-    live.textContent = s < 3 ? 'Question ' + (s + 1) + ' of 3.' : 'Suggestion ready.';
-    if (!reduce.matches) { body.classList.remove('q-in'); void body.offsetWidth; body.classList.add('q-in'); }
+    // Announce and animate only after the visitor acts, never on page load.
+    live.textContent = !focus ? '' : s < 3 ? 'Question ' + (s + 1) + ' of 3.' : 'Suggestion ready.';
+    if (focus && !reduce.matches) { body.classList.remove('q-in'); void body.offsetWidth; body.classList.add('q-in'); }
     if (focus) { var t = document.getElementById('qTitle'); if (t) t.focus(); }
   }
 
