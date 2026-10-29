@@ -183,9 +183,13 @@
     .info-row a{margin:-4px 0;}
     .form{padding:24px 20px 26px;}
   }
-  /* the evening band is 4/11 of the column: below 420px only "Evening" fits */
+  /* small phones: the time and the price no longer share a line (they collided below about 393px) */
   @media (max-width:420px){
-    .track .eve-s{display:none;}
+    .row{grid-template-columns:40px minmax(0,1fr); grid-template-areas:"name name" "ico time" "price price" "desc desc"; gap:10px 14px;}
+    .r-price{text-align:left;}
+    .r-price b, .r-price span{display:inline;}
+    .r-price b + span{margin:0 0 0 10px;}
+    .r-price .ask{padding-top:0;}
   }
 /* nocap:polish v1 */
 :root{--nc-bg:#17171D;--nc-fg:#F5F4F8;--nc-accent:#22D3EE;--nc-on-accent:#17171D;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
@@ -213,7 +217,7 @@
 <header class="top">
   <nav class="wrap nav" aria-label="Main">
     <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 34 34" focusable="false"><path d="M5 18h6l2.4-6 4.2 12 3.2-9 1.8 3H29" fill="none" stroke="#101014" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Pulse <small>Dental Studio</small></a>
-    <div class="nav-links"><a href="#chair">Chair times</a><a href="#dentist">Dentist</a><a href="#visit">Visit</a></div>
+    <div class="nav-links"><a href="#chair">Times and prices</a><a href="#dentist">Dentist</a><a href="#visit">Visit</a></div>
     <a class="btn" href="#bookForm">Book a slot</a>
   </nav>
 </header>
@@ -223,15 +227,15 @@
   <p class="eyebrow">Sholinganallur · <span class="nowrap">OMR IT corridor</span></p>
   <h1 class="kt"><span class="ln">Your day runs late.</span> <span class="ln ln-2">So do we.</span></h1>
   <div class="hero-row">
-    <p class="lede">A dental studio on OMR, open till 10 PM from Monday to Saturday. Book on WhatsApp and come in after work. A checkup and clean usually takes about 25 minutes.</p>
+    <p class="lede">A dental studio on OMR, open till 10 PM from Monday to Saturday, so you can come in after work. A checkup and clean usually takes about 25 minutes.</p>
     <div class="hero-actions">
-      <a class="btn" href="#bookForm">Book an evening slot</a>
+      <a class="btn" href="#bookForm">Book a slot</a>
       <a class="text-link" href="#chair">Chair times and prices</a>
     </div>
   </div>
-  <div class="hours" role="img" aria-label="Open 11 AM to 10 PM, Monday to Saturday. Evening slots from 6 PM. Sunday by appointment.">
+  <div class="hours" role="img" aria-label="Open 11 AM to 10 PM, Monday to Saturday, with the hours after 6 PM highlighted. Sunday by appointment.">
     <div class="hours-cap" aria-hidden="true"><span><b>Mon–Sat</b> · one cell is one hour</span><span class="sun">Sunday by appointment</span></div>
-    <div class="track" aria-hidden="true"><span class="eve"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="#101014"/></svg><span>Evening<span class="eve-s"> slots</span></span></span></div>
+    <div class="track" aria-hidden="true"><span class="eve"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="#101014"/></svg>After work</span></div>
     <div class="ticks" aria-hidden="true"><span style="left:0">11 AM</span><span class="t2" style="left:calc(300% / 11)">2 PM</span><span style="left:calc(700% / 11)">6 PM</span><span style="left:100%">10 PM</span></div>
   </div>
 </section>
@@ -240,7 +244,7 @@
   <div class="wrap">
     <div class="chair-head reveal">
       <div><p class="eyebrow">Chair time</p><h2>Plan it around your meetings.</h2></div>
-      <p>Each treatment shows its usual time in the chair and its price. A + means the final figure depends on the tooth, and you get that figure before you book.</p>
+      <p>Each treatment shows its usual time in the chair and its price. A + means the final figure depends on your case, and you get that figure before you book.</p>
     </div>
     <ol class="menu">
       <li class="row">
@@ -264,7 +268,7 @@
       <li class="row">
         <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="3" y="13" width="9" height="14" rx="2" fill="#C4A5FA"/><rect x="15.5" y="13" width="9" height="14" rx="2" fill="#C4A5FA"/><rect x="29" y="14" width="7" height="12" rx="2" fill="none" stroke="#C4A5FA" stroke-width="2" stroke-dasharray="3 2.4"/></svg></span>
         <span class="r-time">2–3 visits</span>
-        <div class="r-what"><h3>Root canal</h3><p>Rotary instruments, with the visits split across evening slots so you don't lose a workday.</p></div>
+        <div class="r-what"><h3>Root canal</h3><p>Rotary instruments, with the visits booked around your working day.</p></div>
         <div class="r-price"><span class="ask">Quoted on WhatsApp</span></div>
       </li>
       <li class="row">
@@ -363,10 +367,10 @@
         <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
         <div class="field"><label for="f-when">When suits you?</label>
           <select id="f-when" name="when">
-            <option>Weekday evening, 6 to 10 PM</option>
-            <option>Weekday, 11 AM to 6 PM</option>
+            <option>Weekday evening</option>
+            <option>Weekday daytime</option>
             <option>Saturday</option>
-            <option>Sunday, by appointment</option>
+            <option>Sunday</option>
           </select>
         </div>
         <div class="field"><label for="f-note">What do you need? (optional)</label><textarea id="f-note" name="note" rows="3" placeholder="A checkup, a filling, a sore tooth"></textarea></div>
