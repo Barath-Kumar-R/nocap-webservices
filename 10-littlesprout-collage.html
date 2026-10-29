@@ -3,188 +3,631 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Little Sprout Dental — Chengalpattu</title>
+<title>Little Sprout Dental, Chengalpattu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  :root{ --paper:#F6EFE3; --ink:#3A2E26; --coral:#FF8B6B; --mustard:#E8B93E; --sky:#6FB8D9; --muted:#7A6F62; --white:#FFFDF8; }
+  :root{
+    --paper:#F6EFE3; --ink:#3A2E26; --soft:#5E5145; --coral:#FF8B6B; --brick:#B5452A; --mustard:#E8B93E;
+    --sky:#6FB8D9; --board:#C5E2EC; --kraft:#E6CFA6; --leaf:#5E9A4F; --white:#FFFDF8; --rule:#BFD8E4;
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Quicksand',sans-serif; background:var(--paper); color:var(--ink); -webkit-font-smoothing:antialiased;}
-  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  body{
+    font-family:'Quicksand',system-ui,sans-serif; font-weight:500; font-size:17px; line-height:1.6; color:var(--ink);
+    background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23 0 0 0 0 .18 0 0 0 0 .15 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+    -webkit-font-smoothing:antialiased;
+  }
   a{color:inherit;}
-  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  svg{display:block;}
+  .wrap{max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 1px 1px); white-space:nowrap;}
 
-  .washi{position:absolute; width:70px; height:22px; background:rgba(111,184,217,0.55); top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);}
+  /* tape label: a strip of coloured tape with a hand-written word on it */
+  .tape{display:inline-block; padding:4px 16px 5px; font-family:'Caveat',cursive; font-weight:700; font-size:23px; line-height:1.15; color:var(--ink); background:var(--mustard); transform:rotate(-2deg); clip-path:polygon(0 8%,3% 0,97% 4%,100% 0,98% 52%,100% 100%,4% 96%,0 100%,2% 48%);}
+  .tape.t-sky{background:#A9D5E8; transform:rotate(1.5deg);}
+  .tape.t-coral{background:#FFB59F; transform:rotate(-1deg);}
 
-  nav{padding:22px 0;}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{font-family:'Caveat',cursive; font-weight:700; font-size:28px; display:flex; align-items:center; gap:10px;}
-  .logo svg{width:30px; height:30px;}
-  .nav-links{display:flex; gap:28px; font-size:15px; font-weight:600;}
-  .nav-links a{text-decoration:none; color:var(--ink);}
-  .btn-doodle{background:var(--coral); color:white; padding:11px 22px; border-radius:100px 100px 100px 4px; font-size:13.5px; font-weight:700; text-decoration:none; border:2px solid var(--ink);}
+  /* nav */
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:16px; padding-top:18px; padding-bottom:10px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-family:'Caveat',cursive; font-weight:700; font-size:31px; line-height:1; text-decoration:none; color:var(--ink);}
+  .logo svg{width:34px; height:34px; flex:none;}
+  .nav-links{display:flex; gap:6px; font-size:17px; font-weight:600;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 12px; text-decoration:none; border-radius:4px;}
+  .nav-links a:hover{text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:5px; text-decoration-color:var(--coral);}
 
-  .hero{padding:40px 0 100px; position:relative;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:40px; align-items:center;}
-  .tape{display:inline-block; background:var(--mustard); padding:6px 16px; font-size:13px; font-weight:700; transform:rotate(-2deg); border:1.5px dashed var(--ink);}
-  .hero h1{font-family:'Caveat',cursive; font-weight:700; font-size:clamp(40px,6vw,66px); line-height:1.1; margin-top:20px;}
-  .underline{position:relative; display:inline-block;}
-  .underline svg{position:absolute; bottom:-8px; left:0; width:100%; height:12px;}
-  .hero p{margin-top:20px; font-size:16px; line-height:1.7; max-width:420px; color:var(--muted); font-weight:500;}
-  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
-  .btn-primary{background:var(--ink); color:var(--paper); padding:15px 26px; border-radius:100px 4px 100px 100px; font-size:14px; font-weight:700; text-decoration:none;}
-  .btn-ghost{background:var(--white); color:var(--ink); border:2px solid var(--ink); padding:15px 26px; border-radius:4px 100px 100px 100px; font-size:14px; font-weight:700; text-decoration:none;}
+  /* buttons: cut paper with a pencil outline */
+  .btn{display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 26px; font-family:inherit; font-size:17px; font-weight:700; line-height:1.2; text-decoration:none; color:var(--ink); background:var(--coral); border:2px solid var(--ink); border-radius:14px 26px 12px 22px / 22px 12px 26px 14px; box-shadow:3px 4px 0 rgba(58,46,38,.85); cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
+  .btn:hover{transform:translate(-1px,-1px) rotate(-1deg); box-shadow:4px 6px 0 rgba(58,46,38,.85);}
+  .btn:active{transform:translate(2px,3px); box-shadow:1px 1px 0 rgba(58,46,38,.85);}
+  .btn-nav{min-height:46px; padding:0 20px; font-size:16px;}
+  .text-link{display:inline-flex; align-items:center; min-height:44px; font-weight:700; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:6px; text-decoration-color:var(--sky);}
+  .text-link:hover{text-decoration-color:var(--coral);}
 
-  .polaroid{background:var(--white); border:1.5px solid var(--ink); padding:14px 14px 44px; transform:rotate(3deg); box-shadow:5px 8px 0 rgba(58,46,38,0.12); position:relative;}
-  .polaroid .photo-ph{height:280px; background:repeating-linear-gradient(135deg,#EFE7D8,#EFE7D8 12px,#E5DBC7 12px,#E5DBC7 13px); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:8px;}
-  .polaroid .photo-ph svg{width:26px; height:26px; stroke:#A79A85; fill:none; stroke-width:1.4;}
-  .polaroid .photo-ph span{font-size:10.5px; color:#A79A85; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;}
-  .polaroid .caption{font-family:'Caveat',cursive; font-size:20px; text-align:center; margin-top:10px; color:var(--ink);}
+  /* hero */
+  .hero{padding-top:28px; padding-bottom:72px;}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); gap:48px; align-items:center;}
+  .hero h1{font-family:'Caveat',cursive; font-weight:700; font-size:clamp(50px,6.6vw,86px); line-height:.98; margin-top:22px; letter-spacing:-.5px;}
+  .scribble{position:relative; display:inline-block; white-space:nowrap;}
+  .scribble svg{position:absolute; left:-2%; bottom:-.12em; width:104%; height:.26em; overflow:visible;}
+  .lede{margin-top:22px; font-size:19px; line-height:1.65; max-width:470px; color:var(--soft);}
+  .hero-ctas{display:flex; align-items:center; gap:10px 26px; margin-top:30px; flex-wrap:wrap;}
 
-  section{padding:70px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 46px;}
-  .sec-head .tape{background:var(--sky); color:white;}
-  .sec-head h2{font-family:'Caveat',cursive; font-weight:700; font-size:clamp(32px,4.2vw,46px); margin-top:14px;}
+  /* signature: drag-collage board */
+  .board-col{position:relative;}
+  .board{position:relative; aspect-ratio:10/9; container-type:inline-size; -webkit-user-select:none; user-select:none;}
+  .board-paper{position:absolute; inset:0; background:var(--board); clip-path:polygon(0% 1.9px,2.5% 0.9px,5% 3.9px,7.5% 0.4px,10% 3.2px,12.5% 2.2px,15% 0.3px,17.5% 3px,20% 0.2px,22.5% 2.6px,25% 0.4px,27.5% 0.5px,30% 2.5px,32.5% 5px,35% 0.7px,37.5% 1.3px,40% 3.8px,42.5% 5.7px,45% 3.5px,47.5% 2.4px,50% 5.9px,52.5% 0.3px,55% 5.2px,57.5% 1.7px,60% 0.9px,62.5% 0.7px,65% 1.9px,67.5% 4.9px,70% 1.1px,72.5% 3.5px,75% 3.8px,77.5% 2.2px,80% 3.3px,82.5% 0.4px,85% 0.4px,87.5% 1.2px,90% 4.1px,92.5% 2.6px,95% 1.9px,97.5% 3.5px,100% 2.7px,calc(100% - 1.8px) 5%,calc(100% - 4.8px) 10%,calc(100% - 4.2px) 15%,calc(100% - 1.5px) 20%,calc(100% - 3.4px) 25%,calc(100% - 3.2px) 30%,calc(100% - 5.3px) 35%,calc(100% - 4.4px) 40%,calc(100% - 1.7px) 45%,calc(100% - 5.9px) 50%,calc(100% - 0.7px) 55%,calc(100% - 2.5px) 60%,calc(100% - 4.5px) 65%,calc(100% - 0.9px) 70%,calc(100% - 2.9px) 75%,calc(100% - 0.2px) 80%,calc(100% - 4px) 85%,calc(100% - 4.6px) 90%,calc(100% - 3.4px) 95%,100% calc(100% - 5.3px),97.5% calc(100% - 1.9px),95% calc(100% - 4.2px),92.5% calc(100% - 3.6px),90% calc(100% - 3.5px),87.5% calc(100% - 2.7px),85% calc(100% - 5px),82.5% calc(100% - 5.7px),80% calc(100% - 2.8px),77.5% calc(100% - 4px),75% calc(100% - 0.4px),72.5% calc(100% - 4.2px),70% calc(100% - 3.9px),67.5% calc(100% - 6px),65% calc(100% - 4.9px),62.5% calc(100% - 1.7px),60% calc(100% - 2.3px),57.5% calc(100% - 4px),55% calc(100% - 0.1px),52.5% calc(100% - 2.8px),50% calc(100% - 1px),47.5% calc(100% - 0.7px),45% calc(100% - 0.4px),42.5% calc(100% - 4.6px),40% calc(100% - 0.8px),37.5% calc(100% - 1.5px),35% calc(100% - 2.3px),32.5% calc(100% - 5.2px),30% calc(100% - 0.5px),27.5% calc(100% - 2.7px),25% calc(100% - 3.3px),22.5% calc(100% - 5.3px),20% calc(100% - 4.9px),17.5% calc(100% - 5.2px),15% calc(100% - 1.7px),12.5% calc(100% - 2.5px),10% calc(100% - 2.2px),7.5% calc(100% - 5.3px),5% calc(100% - 5.7px),2.5% calc(100% - 0.9px),0% calc(100% - 1.1px),1.4px 95%,1.4px 90%,2.9px 85%,3.5px 80%,1.6px 75%,0px 70%,2.5px 65%,2.2px 60%,3.4px 55%,5.7px 50%,4.1px 45%,3.1px 40%,3.7px 35%,4.1px 30%,0.3px 25%,5.4px 20%,4.7px 15%,5.2px 10%,4.8px 5%);}
+  .board-paper::after{content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 30% 20%, rgba(255,255,255,.35), transparent 60%), repeating-linear-gradient(115deg, rgba(58,46,38,.025) 0 2px, transparent 2px 7px);}
+  .washi{position:absolute; z-index:1; width:21%; height:7.5%; pointer-events:none; clip-path:polygon(0 0,100% 0,96% 25%,100% 50%,96% 75%,100% 100%,0 100%,4% 75%,0 50%,4% 25%);}
+  .washi-a{left:-2.5%; top:3%; transform:rotate(-38deg); background:repeating-linear-gradient(90deg, rgba(255,139,107,.72) 0 9px, rgba(255,181,159,.72) 9px 18px);}
+  .washi-b{right:-2.5%; bottom:4%; transform:rotate(-34deg); background:rgba(232,185,62,.7) radial-gradient(circle, rgba(255,253,248,.7) 2px, transparent 2.5px) 0 0/12px 12px;}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:24px;}
-  .svc-card{background:var(--white); border:1.5px solid var(--ink); border-radius:16px; padding:26px 22px; position:relative;}
-  .svc-card:nth-child(odd){transform:rotate(-1.5deg);}
-  .svc-card:nth-child(even){transform:rotate(1.5deg);}
-  .svc-icon{width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:14px; border:1.5px dashed var(--ink);}
-  .svc-icon svg{width:24px; height:24px; stroke:var(--ink); fill:none; stroke-width:1.6;}
-  .svc-card h3{font-family:'Caveat',cursive; font-weight:700; font-size:22px; margin-bottom:6px;}
-  .svc-card p{font-size:13px; color:var(--muted); line-height:1.6; font-weight:500;}
+  .piece{position:absolute; z-index:2; left:var(--l); top:var(--t); width:var(--w); transform:translate(var(--x,0px),var(--y,0px)) rotate(var(--r,0deg)); transform-origin:50% 50%; -webkit-touch-callout:none;}
+  .piece .art{filter:drop-shadow(2px 3px 0 rgba(58,46,38,.2)); transition:transform .16s ease, filter .16s ease;}
+  .piece svg{width:100%; height:auto;}
+  .board.is-live .piece{cursor:grab; touch-action:pan-y pinch-zoom;}
+  .board.is-live .piece:focus-visible{outline-offset:4px;}
+  .piece.is-lifted{cursor:grabbing; will-change:transform;}
+  .piece.is-lifted .art{transform:scale(1.05); filter:drop-shadow(7px 11px 4px rgba(58,46,38,.24));}
+  .piece.is-settling{transition:transform .38s cubic-bezier(.3,1.55,.55,1);}
 
-  .about-collage{display:grid; grid-template-columns:0.85fr 1.15fr; gap:50px; align-items:center;}
-  .about-copy .tape{background:var(--coral); color:white;}
-  .about-copy h3{font-family:'Caveat',cursive; font-weight:700; font-size:32px; margin:16px 0 14px;}
-  .about-copy p{font-size:15px; color:var(--muted); line-height:1.8; font-weight:500;}
-  .stat-strip{display:flex; gap:14px; margin-top:26px; flex-wrap:wrap;}
-  .stat-badge{background:var(--white); border:1.5px dashed var(--ink); border-radius:50%; width:100px; height:100px; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; transform:rotate(-3deg);}
-  .stat-badge:nth-child(2){transform:rotate(2deg);}
-  .stat-badge:nth-child(3){transform:rotate(-2deg);}
-  .stat-badge b{font-family:'Caveat',cursive; font-size:22px;}
-  .stat-badge span{font-size:9.5px; font-weight:600; color:var(--muted);}
+  .p-star{--l:5%; --t:5%; --w:21%; --r:-12deg;}
+  .p-brush{--l:38%; --t:8%; --w:56%; --r:9deg;}
+  .p-tooth{--l:26%; --t:20%; --w:33%; --r:-5deg;}
+  .p-sun{--l:58%; --t:46%; --w:36%; --r:6deg;}
+  .p-note{--l:5%; --t:62%; --w:43%; --r:-4deg; min-width:136px;}
 
-  .contact-collage{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
-  .contact-card{background:var(--white); border:1.5px solid var(--ink); border-radius:20px; padding:36px;}
-  .info-row{display:flex; gap:14px; padding:14px 0; border-bottom:1.5px dashed var(--ink);}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-family:'Caveat',cursive; font-weight:700; font-size:17px; color:var(--coral); flex-shrink:0;}
-  .info-row .val{font-size:13.5px; font-weight:500;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:1.5px solid var(--ink); border-radius:14px; padding:14px 16px; font-family:'Quicksand',sans-serif; font-size:14px; background:var(--paper);}
-  .form button{background:var(--mustard); color:var(--ink); border:1.5px solid var(--ink); border-radius:100px; padding:15px; font-family:'Caveat',cursive; font-weight:700; font-size:18px; cursor:pointer;}
+  .note-paper{position:relative; padding:11% 8% 8% 15%; white-space:nowrap; background:var(--white) linear-gradient(90deg, transparent 10%, rgba(255,139,107,.55) 10%, rgba(255,139,107,.55) calc(10% + 2px), transparent calc(10% + 2px)); background-image:linear-gradient(90deg, transparent 10%, rgba(229,120,95,.55) 10%, rgba(229,120,95,.55) calc(10% + 2px), transparent calc(10% + 2px)), repeating-linear-gradient(180deg, transparent 0, transparent calc(1.15em - 1px), var(--rule) calc(1.15em - 1px), var(--rule) 1.15em); background-position:0 0, 0 .52em; clip-path:polygon(0% 1.2px,7.1% 2.7px,14.3% 1.8px,21.4% 3px,28.6% 3.1px,35.7% 0.3px,42.9% 0.1px,50% 4.2px,57.1% 1.3px,64.3% 1.2px,71.4% 5px,78.6% 2.4px,85.7% 4.2px,92.9% 2.4px,100% 3.2px,100% 100%,0% 100%); font-family:'Caveat',cursive; font-weight:700; font-size:20px; font-size:clamp(18px,5.3cqw,29px); line-height:1.15; color:var(--ink);}
+  .note-paper b{display:block; font-weight:700;}
+  .p-note .note-tape{position:absolute; z-index:1; left:34%; top:-7%; width:36%; height:20%; transform:rotate(4deg); background:rgba(169,213,232,.78); clip-path:polygon(0 0,100% 0,97% 50%,100% 100%,0 100%,3% 50%);}
 
-  footer{padding:32px 0; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-weight:600;}
+  .board-cap{display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:4px 16px; min-height:52px; margin-top:12px; font-family:'Caveat',cursive; font-weight:700; font-size:23px; line-height:1.2; color:var(--soft);}
+  .board-cap[hidden]{display:none;}
+  .board-hint{flex:1 1 220px; display:flex; align-items:center; gap:8px;}
+  .board-hint svg{width:30px; height:20px; flex:none;}
+  .tidy{display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 16px; font-family:'Quicksand',sans-serif; font-weight:700; font-size:16px; color:var(--ink); background:var(--white); border:2px solid var(--ink); border-radius:22px 14px 20px 12px; cursor:pointer;}
+  .tidy[hidden]{display:none;}
+  .tidy:hover{background:#FFF3D6;}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:2px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:4px 5px 0 rgba(58,46,38,0.2); text-decoration:none;}
-  .wa-float svg{width:28px; height:28px; fill:white;}
+  /* sections */
+  .sec{padding-top:72px; padding-bottom:72px;}
+  .sec-head{max-width:640px; margin-bottom:40px;}
+  .sec-head h2, .about h2, .visit h2{font-family:'Caveat',cursive; font-weight:700; font-size:clamp(40px,5vw,58px); line-height:1.02; margin-top:14px;}
+  .sec-head p{margin-top:12px; color:var(--soft); max-width:520px;}
+
+  /* services: four pinned scraps, each a different paper */
+  .scraps{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:30px; align-items:start; padding-top:14px;}
+  .scrap{position:relative; padding:30px 22px 26px; color:var(--ink);}
+  .scrap h3{font-family:'Caveat',cursive; font-weight:700; font-size:31px; line-height:1.05; margin:14px 0 8px;}
+  .scrap p{font-size:16px; line-height:1.6;}
+  .scrap .ico{width:56px; height:56px;}
+  .s1{background:var(--white); background-image:repeating-linear-gradient(180deg, transparent 0 25px, var(--rule) 25px 26px); transform:rotate(-1.6deg); box-shadow:2px 4px 0 rgba(58,46,38,.12); clip-path:polygon(0% 2.5px,6.2% 3px,12.5% 3.2px,18.8% 3.8px,25% 3px,31.2% 3.7px,37.5% 0.1px,43.8% 1.9px,50% 3.8px,56.2% 2.6px,62.5% 3.6px,68.8% 0.5px,75% 1.9px,81.2% 1px,87.5% 2.2px,93.8% 2.3px,100% 0.1px,100% 100%,0% 100%);}
+  .s2{background:#FBFAF4; background-image:linear-gradient(rgba(111,184,217,.22) 1px, transparent 1px), linear-gradient(90deg, rgba(111,184,217,.22) 1px, transparent 1px); background-size:14px 14px; transform:rotate(1.2deg) translateY(26px); box-shadow:3px 5px 0 rgba(58,46,38,.12); border-radius:3px;}
+  .s3{background:var(--kraft); transform:rotate(-.8deg) translateY(6px); box-shadow:2px 4px 0 rgba(58,46,38,.14); clip-path:polygon(0% 0px,100% 0px,100% calc(100% - 1.9px),93.8% calc(100% - 1.5px),87.5% calc(100% - 0.6px),81.2% calc(100% - 3.5px),75% calc(100% - 0px),68.8% calc(100% - 2px),62.5% calc(100% - 3.6px),56.2% calc(100% - 0.3px),50% calc(100% - 2.2px),43.8% calc(100% - 2.5px),37.5% calc(100% - 0.2px),31.2% calc(100% - 1.5px),25% calc(100% - 2.8px),18.8% calc(100% - 1.8px),12.5% calc(100% - 2.9px),6.2% calc(100% - 0.6px),0% calc(100% - 1px));}
+  .s4{background:#F6D47A; transform:rotate(2deg) translateY(34px); box-shadow:3px 5px 0 rgba(58,46,38,.13); border-radius:2px 10px 2px 4px;}
+  .fasten{position:absolute; pointer-events:none;}
+  .f-tape{left:50%; top:-10px; width:84px; height:24px; margin-left:-42px; transform:rotate(-4deg); background:rgba(169,213,232,.8); clip-path:polygon(0 0,100% 0,97% 50%,100% 100%,0 100%,3% 50%);}
+  .f-clip{right:26px; top:-18px; width:22px; height:56px;}
+  .f-staple{top:10px; width:22px; height:4px; background:#8E8A84; border-radius:2px; box-shadow:0 1px 0 rgba(255,255,255,.5);}
+  .f-staple.a{left:18px; transform:rotate(-8deg);} .f-staple.b{right:18px; transform:rotate(6deg);}
+  .f-dot{right:16px; top:12px; width:26px; height:26px; border-radius:50%; background:var(--coral); box-shadow:inset -3px -3px 0 rgba(0,0,0,.08);}
+  .s1 .f-tape{top:4px;}
+  .scrap-wrap{position:relative; padding-top:12px;}
+  .scrap-wrap.w2{padding-top:0;}
+  .pointer{display:flex; align-items:flex-end; gap:6px; margin:0 0 -6px 12px; font-family:'Caveat',cursive; font-weight:700; font-size:22px; line-height:1; color:var(--soft);}
+  .pointer svg{width:44px; height:34px;}
+
+  /* about: on a torn sheet of kraft paper */
+  .about{position:relative; margin-top:40px; padding-top:92px; padding-bottom:92px;}
+  .about::before{content:""; position:absolute; inset:0; z-index:-1; background:var(--kraft); background-image:repeating-linear-gradient(100deg, rgba(58,46,38,.03) 0 3px, transparent 3px 9px); clip-path:polygon(0% 4.1px,1.7% 5px,3.3% 8.3px,5% 4.2px,6.7% 4.6px,8.3% 5.3px,10% 1.7px,11.7% 4.6px,13.3% 5.7px,15% 7.1px,16.7% 0.8px,18.3% 2.7px,20% 0.8px,21.7% 7.3px,23.3% 6.2px,25% 0.4px,26.7% 8.8px,28.3% 8.7px,30% 5.9px,31.7% 5.5px,33.3% 1.4px,35% 0.1px,36.7% 4.8px,38.3% 0.5px,40% 1.7px,41.7% 2.2px,43.3% 0.3px,45% 4.2px,46.7% 4px,48.3% 7.6px,50% 4.7px,51.7% 5.8px,53.3% 4.5px,55% 6px,56.7% 4.1px,58.3% 2.5px,60% 9px,61.7% 9px,63.3% 7.6px,65% 6.4px,66.7% 2.8px,68.3% 2.1px,70% 2.6px,71.7% 0.6px,73.3% 6.9px,75% 3.6px,76.7% 7.6px,78.3% 3.5px,80% 8.6px,81.7% 7.6px,83.3% 0px,85% 1.9px,86.7% 8.2px,88.3% 4.2px,90% 8.8px,91.7% 3.6px,93.3% 0.7px,95% 5.7px,96.7% 7px,98.3% 2.4px,100% 0.8px,100% calc(100% - 3px),98.3% calc(100% - 8.7px),96.7% calc(100% - 6.8px),95% calc(100% - 1.1px),93.3% calc(100% - 2.2px),91.7% calc(100% - 0.9px),90% calc(100% - 0.5px),88.3% calc(100% - 7.2px),86.7% calc(100% - 1.6px),85% calc(100% - 5px),83.3% calc(100% - 4px),81.7% calc(100% - 1.7px),80% calc(100% - 6.6px),78.3% calc(100% - 1.2px),76.7% calc(100% - 5.8px),75% calc(100% - 1px),73.3% calc(100% - 3.8px),71.7% calc(100% - 1.9px),70% calc(100% - 2.4px),68.3% calc(100% - 8.7px),66.7% calc(100% - 7.2px),65% calc(100% - 2.7px),63.3% calc(100% - 8px),61.7% calc(100% - 1.9px),60% calc(100% - 3.5px),58.3% calc(100% - 7.7px),56.7% calc(100% - 5.8px),55% calc(100% - 0.9px),53.3% calc(100% - 8.9px),51.7% calc(100% - 1.9px),50% calc(100% - 2.3px),48.3% calc(100% - 7px),46.7% calc(100% - 3px),45% calc(100% - 2.7px),43.3% calc(100% - 0.7px),41.7% calc(100% - 0.8px),40% calc(100% - 5.2px),38.3% calc(100% - 2.2px),36.7% calc(100% - 5.4px),35% calc(100% - 3.3px),33.3% calc(100% - 4.1px),31.7% calc(100% - 8.6px),30% calc(100% - 4.4px),28.3% calc(100% - 5.2px),26.7% calc(100% - 7.8px),25% calc(100% - 1.6px),23.3% calc(100% - 1.4px),21.7% calc(100% - 8.2px),20% calc(100% - 7.4px),18.3% calc(100% - 2.2px),16.7% calc(100% - 1.7px),15% calc(100% - 6.7px),13.3% calc(100% - 8.5px),11.7% calc(100% - 1.8px),10% calc(100% - 8.6px),8.3% calc(100% - 7.9px),6.7% calc(100% - 5.4px),5% calc(100% - 3.8px),3.3% calc(100% - 0.9px),1.7% calc(100% - 0.3px),0% calc(100% - 8.7px));}
+  .about{isolation:isolate;}
+  .about-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); gap:56px; align-items:center;}
+  .drawing{position:relative; margin:0; background:#FFFEFA; padding:18px 18px 14px; rotate:-2.2deg; margin-left:10px; margin-right:10px; box-shadow:3px 6px 0 rgba(58,46,38,.16);}
+  .drawing svg{width:100%; height:auto;}
+  .drawing figcaption{margin-top:6px; text-align:center; font-family:'Caveat',cursive; font-weight:700; font-size:26px; line-height:1.2;}
+  .drawing .f-tape{top:-12px;}
+  .drawing .f-tape.b{left:auto; right:-14px; top:auto; bottom:22px; margin:0; transform:rotate(58deg); background:rgba(255,181,159,.8);}
+  .about-copy p{margin-top:16px; max-width:520px;}
+  .sticky{position:relative; display:inline-block; margin-top:28px; margin-left:4px; padding:18px 26px 18px 22px; background:#FFE79A; transform:rotate(1.4deg); box-shadow:2px 6px 0 rgba(58,46,38,.14); font-family:'Caveat',cursive; font-weight:700; font-size:26px; line-height:1.3;}
+  .sticky li{list-style:none; display:flex; align-items:center; gap:8px;}
+  .sticky svg{width:20px; height:20px; flex:none;}
+
+  /* visit */
+  .visit-grid{display:grid; grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:44px; align-items:start;}
+  .tag{position:relative; background:#F3E2BB; padding:44px 30px 26px; rotate:-1deg; margin-left:6px; margin-right:6px; box-shadow:3px 5px 0 rgba(58,46,38,.14); clip-path:polygon(9% 0,91% 0,100% 7%,100% 100%,0 100%,0 7%);}
+  .tag::before{content:""; position:absolute; left:50%; top:16px; width:16px; height:16px; margin-left:-8px; border-radius:50%; background:var(--paper); box-shadow:inset 0 0 0 3px #D6BE8C;}
+  .info-row{display:grid; grid-template-columns:104px minmax(0,1fr); gap:12px; padding:12px 0; border-bottom:2px dashed rgba(58,46,38,.35);}
+  .info-row:last-child{border-bottom:0;}
+  .info-row dt{font-family:'Caveat',cursive; font-weight:700; font-size:25px; line-height:1.2; padding-top:8px;}
+  .info-row dd{font-size:17px; padding-top:9px;}
+  .info-row dd a{display:inline-flex; align-items:center; min-height:44px; margin-top:-9px; font-weight:700; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:5px; text-decoration-color:var(--brick);}
+  .notebook{position:relative; background:var(--white); padding:46px 32px 30px; box-shadow:3px 6px 0 rgba(58,46,38,.12); rotate:.6deg; scroll-margin-top:16px; background-image:radial-gradient(circle at 50% 50%, var(--paper) 6px, rgba(58,46,38,.25) 6.5px, transparent 7.5px), repeating-linear-gradient(180deg, transparent 0 31px, var(--rule) 31px 32px); background-size:34px 34px, 100% 32px; background-repeat:repeat-x, repeat; background-position:8px 6px, 0 12px; clip-path:polygon(0% 1.3px,3.3% 3.4px,6.7% 3.4px,10% 4.2px,13.3% 0.9px,16.7% 1.2px,20% 0.7px,23.3% 1.1px,26.7% 3.7px,30% 0.7px,33.3% 2.7px,36.7% 1.1px,40% 1.5px,43.3% 2.2px,46.7% 4.2px,50% 3px,53.3% 0.1px,56.7% 1.4px,60% 0.7px,63.3% 4.4px,66.7% 4px,70% 4px,73.3% 4.1px,76.7% 3.7px,80% 4.7px,83.3% 4px,86.7% 1.3px,90% 4.2px,93.3% 2.4px,96.7% 3.8px,100% 2.8px,100% 100%,0% 100%);}
+  .notebook h3{font-family:'Caveat',cursive; font-weight:700; font-size:34px; line-height:1.1;}
+  .field{display:flex; flex-direction:column; gap:4px; margin-top:14px;}
+  .field label{font-family:'Caveat',cursive; font-weight:700; font-size:24px; line-height:1.2;}
+  .field input{min-height:50px; padding:10px 14px; font-family:'Quicksand',sans-serif; font-weight:600; font-size:17px; color:var(--ink); background:#FFFFFF; border:2px solid var(--ink); border-radius:10px 14px 9px 12px;}
+  .notebook .btn{margin-top:22px; width:100%; background:var(--mustard);}
+  .form-note{margin-top:14px; font-size:16px; color:var(--soft);}
+  .form-note a{font-weight:700;}
+
+  footer{padding-top:30px; padding-bottom:34px;}
+  .foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:15px; font-weight:600; color:var(--soft); border-top:2px dashed rgba(58,46,38,.3); padding-top:20px;}
+
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:2px solid var(--ink); display:none; align-items:center; justify-content:center; box-shadow:3px 4px 0 rgba(58,46,38,.3); text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:#fff;}
+  @media (min-width:1340px){ .wa-float{display:flex;} }
+  /* The float is hidden on phones here, so the polish block's extra room for it is not needed. */
+  @media (max-width:720px){ html body:has(.wa-float){padding-bottom:var(--nc-bar-h);} }
 
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
   .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} .btn, .piece .art{transition:none;} }
 
+  @media (max-width:1100px){
+    .scraps{grid-template-columns:repeat(2,minmax(0,1fr)); gap:44px 34px;}
+    .s2{transform:rotate(1.2deg) translateY(18px);}
+    .s4{transform:rotate(2deg) translateY(18px);}
+  }
   @media (max-width:900px){
     .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr 1fr;}
-    .about-collage{grid-template-columns:1fr;}
-    .contact-collage{grid-template-columns:1fr;}
+    .about-grid{grid-template-columns:minmax(0,1fr); gap:40px;}
+    .drawing{max-width:460px;}
+    .visit-grid{grid-template-columns:minmax(0,1fr); gap:40px;}
   }
-  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+  @media (max-width:720px){
+    .btn-nav{display:none;}
+    .hero{padding-top:12px; padding-bottom:56px;}
+    .hero-grid{grid-template-columns:minmax(0,1fr); gap:36px;}
+    .board-col{max-width:520px;}
+    .sec{padding-top:56px; padding-bottom:56px;}
+    .about{padding-top:72px; padding-bottom:72px;}
+  }
+  @media (max-width:560px){
+    .scraps{grid-template-columns:minmax(0,1fr); gap:34px;}
+    .s2, .s3, .s4{transform:rotate(1deg);}
+    .s1{transform:rotate(-1.2deg);}
+    .s3{transform:rotate(-.8deg);}
+    .pointer{margin-bottom:-2px;}
+    .drawing{rotate:-1.2deg; margin-left:8px; margin-right:8px;}
+    .tag{rotate:0deg;}
+  }
+  @media (max-width:480px){
+    .wrap{padding-left:16px; padding-right:16px;}
+    .lede{font-size:18px;}
+    .tag{padding:42px 20px 22px;}
+    .notebook{padding:44px 20px 26px;}
+    .info-row{grid-template-columns:100px minmax(0,1fr); gap:8px;}
+    .info-row dt{font-size:24px;}
+    .hero-ctas .btn{flex:1 1 auto;}
+  }
+  @media (max-width:360px){
+    .info-row{grid-template-columns:minmax(0,1fr); gap:0;}
+    .info-row dt{padding-top:0;}
+    .info-row dd{padding-top:0;}
+    .info-row dd a{margin-top:0;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#FFFDF8;--nc-fg:#3A2E26;--nc-accent:#FF8B6B;--nc-on-accent:#3A2E26;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#3A2E26" stroke-width="1.8"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg>Little Sprout Dental</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-doodle" href="#contact">Book a visit</a>
-  </div>
+<nav class="wrap nav" aria-label="Main">
+  <a class="logo" href="#top"><svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><path d="M20 36V20" stroke="#3A2E26" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M20 22C19 13 13 8 5 8c0 9 6 14 15 14Z" fill="#7FB069" stroke="#3A2E26" stroke-width="2" stroke-linejoin="round"/><path d="M20 19c1-7 6-11 13-11 0 7-5 11-13 11Z" fill="#A6D18F" stroke="#3A2E26" stroke-width="2" stroke-linejoin="round"/><path d="M12 36h16" stroke="#B5452A" stroke-width="2.6" stroke-linecap="round"/></svg>Little Sprout Dental</a>
+  <div class="nav-links"><a href="#services">What we do</a><a href="#about">The dentists</a><a href="#contact">Visit</a></div>
+  <a class="btn btn-nav" href="#book">Book a visit</a>
 </nav>
 
-<header class="wrap hero reveal">
-  <div class="hero-grid">
-    <div>
-      <span class="tape">Chengalpattu · Family & Kids</span>
-      <h1>Little teeth, <span class="underline">big smiles<svg viewBox="0 0 200 12"><path d="M2 8c30-10 60-10 90 0s70 8 106-2" stroke="#FF8B6B" stroke-width="4" fill="none" stroke-linecap="round"/></svg></span></h1>
-      <p>A dental clinic that actually feels like a craft table — stickers, drawings on the wall, and a dentist who talks to kids like people, not patients.</p>
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="tape">Chengalpattu · kids and families</span>
+      <h1>Small teeth, taken <span class="scribble">seriously.<svg viewBox="0 0 200 20" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M3 13C40 4 84 4 118 10s58 6 79-3" stroke="#FF8B6B" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M14 17c40-6 98-7 150-2" stroke="#FF8B6B" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/></svg></span></h1>
+      <p class="lede">A family dental clinic near Chengalpattu Bus Stand. Children's drawings on the walls, a sticker after each visit, and a dentist who talks to your child, not over them.</p>
       <div class="hero-ctas">
-        <a class="btn-primary" href="#contact">Book a visit</a>
-        <a class="btn-ghost" href="#services">Our services</a>
+        <a class="btn" href="#book">Book a visit</a>
+        <a class="text-link" href="#services">What we do</a>
       </div>
     </div>
-    <div class="polaroid">
-      <div class="photo-ph"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Clinic photo</span></div>
-      <div class="caption">our little waiting room :)</div>
+
+    <div class="board-col">
+      <div class="board" data-signature="drag-collage" role="group" aria-label="Paper cut-outs on blue paper">
+        <span class="board-paper" aria-hidden="true"></span>
+        <span class="washi washi-a" aria-hidden="true"></span>
+        <span class="washi washi-b" aria-hidden="true"></span>
+
+        <div class="piece p-star" role="img" aria-label="Gold paper star">
+          <div class="art"><svg viewBox="0 0 100 100" aria-hidden="true" focusable="false"><path d="M50 8L61.2 36.6 91.8 38.4 68.1 57.9 75.9 87.6 50 71 24.1 87.6 31.9 57.9 8.2 38.4 38.8 36.6Z" fill="#F2C14E" stroke="#C99A2E" stroke-width="3" stroke-linejoin="round"/><path d="M36 33l4-7" stroke="#FFFDF8" stroke-width="3.2" stroke-linecap="round" opacity=".85"/><circle cx="43.5" cy="52" r="2.6" fill="#3A2E26"/><circle cx="56.5" cy="52" r="2.6" fill="#3A2E26"/><path d="M44.5 59.5Q50 64.5 55.5 59.5" stroke="#3A2E26" stroke-width="2.4" fill="none" stroke-linecap="round"/></svg></div>
+        </div>
+
+        <div class="piece p-brush" role="img" aria-label="Paper toothbrush">
+          <div class="art"><svg viewBox="0 0 220 70" aria-hidden="true" focusable="false"><path d="M167 15c2-8 10-7 13-4 3-6 13-5 15 0 5-3 13-1 12 6Z" fill="#E7F5EC" stroke="#8FC7A4" stroke-width="2" stroke-linejoin="round"/><g stroke="#3A2E26" stroke-width="1.2"><rect x="170" y="15" width="7" height="19" rx="2.5" fill="#6FB8D9"/><rect x="178.5" y="15" width="7" height="19" rx="2.5" fill="#FFFDF8"/><rect x="187" y="15" width="7" height="19" rx="2.5" fill="#6FB8D9"/><rect x="195.5" y="15" width="7" height="19" rx="2.5" fill="#FFFDF8"/><rect x="204" y="15" width="7" height="19" rx="2.5" fill="#6FB8D9"/></g><path d="M9 45c0-6 5-9 12-9l100 1c18 0 28-4 46-4h40c5 0 7 3 7 7v3c0 4-2 7-7 7h-40c-18 0-28-3-46-3l-100 6c-7 0-12-3-12-8Z" fill="#FF8B6B" stroke="#3A2E26" stroke-width="1.8" stroke-linejoin="round"/><path d="M28 41h52" stroke="#FFC9B8" stroke-width="5" stroke-linecap="round"/><path d="M32 47h40" stroke="#E86F50" stroke-width="2.5" stroke-linecap="round"/></svg></div>
+        </div>
+
+        <div class="piece p-tooth" role="img" aria-label="Smiling paper tooth">
+          <div class="art"><svg viewBox="0 0 120 140" aria-hidden="true" focusable="false"><path d="M60 13C44 4 18 6 14 30c-4 22 8 36 12 54 4 20 4 44 16 46 10 2 10-26 18-30 8 4 8 32 18 30 12-2 12-26 16-46 4-18 16-32 12-54C102 6 76 4 60 13Z" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4" stroke-linejoin="round"/><path d="M26 34c2-9 8-14 15-15" stroke="#9BCDE3" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="36" cy="66" r="7" fill="#FF8B6B" opacity=".45"/><circle cx="84" cy="66" r="7" fill="#FF8B6B" opacity=".45"/><circle cx="45" cy="53" r="4.4" fill="#3A2E26"/><circle cx="75" cy="53" r="4.4" fill="#3A2E26"/><circle cx="46.4" cy="51.6" r="1.3" fill="#FFFDF8"/><circle cx="76.4" cy="51.6" r="1.3" fill="#FFFDF8"/><path d="M47 68q13 12 26 0" stroke="#3A2E26" stroke-width="3" fill="none" stroke-linecap="round"/></svg></div>
+        </div>
+
+        <div class="piece p-sun" role="img" aria-label="Crayon drawing of a smiling sun and a flower">
+          <div class="art"><svg viewBox="0 0 160 130" aria-hidden="true" focusable="false"><path d="M4 7l64-3 88 1 1 60-2 61-86-2-63 2L3 66Z" fill="#FFFEFA"/><g stroke="#E3A21A" stroke-width="3.6" stroke-linecap="round"><path d="M58 12v9M58 79v9M23 50h9M85 50h9M33 25l6 6M77 69l6 6M33 75l6-6M77 31l6-6"/></g><circle cx="58" cy="50" r="21" fill="#F7C948" stroke="#E3A21A" stroke-width="3.2"/><circle cx="59" cy="51" r="19" fill="none" stroke="#F2B630" stroke-width="2" opacity=".5"/><circle cx="51" cy="47" r="2.6" fill="#3A2E26"/><circle cx="65" cy="47" r="2.6" fill="#3A2E26"/><path d="M50 56q8 7 16 0" stroke="#3A2E26" stroke-width="2.6" fill="none" stroke-linecap="round"/><path d="M122 117V88" stroke="#5E9A4F" stroke-width="3.2" stroke-linecap="round"/><path d="M122 104c-7-6-12-4-14 0 5 3 10 3 14 0Z" fill="#7FB069"/><g fill="#FF8B6B"><circle cx="122" cy="73" r="6"/><circle cx="131" cy="80" r="6"/><circle cx="128" cy="91" r="6"/><circle cx="116" cy="91" r="6"/><circle cx="113" cy="80" r="6"/></g><circle cx="122" cy="83" r="5" fill="#F7C948"/><path d="M8 120c5-9 8-9 10 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 9 0 3-9 6-9 10 0" stroke="#6BAA5C" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+
+        <div class="piece p-note" role="img" aria-label="Note: Open Mon–Sat, 10 AM – 7 PM">
+          <div class="art"><span class="note-tape" aria-hidden="true"></span><div class="note-paper"><b>Open Mon–Sat</b><b>10 AM – 7 PM</b></div></div>
+        </div>
+      </div>
+      <p class="board-cap" hidden><span class="board-hint"><svg viewBox="0 0 30 20" aria-hidden="true" focusable="false"><path d="M27 18C25 9 18 4.5 7 4" stroke="#5E5145" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M12 0L6.5 4l5 5" stroke="#5E5145" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="hint-text"></span></span><button type="button" class="tidy" hidden>Tidy up</button></p>
+      <p id="board-keys" hidden>Arrow keys move it. Escape or Home puts it back.</p>
     </div>
   </div>
 </header>
 
-<section class="wrap" id="services">
-  <div class="sec-head reveal"><span class="tape">What We Do</span><h2>A little bit of everything, gently.</h2></div>
-  <div class="svc-grid reveal">
-    <div class="svc-card"><div class="svc-icon" style="background:rgba(111,184,217,0.25);"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3"/><path d="M6 21c0-3.3 2.7-6 6-6s6 2.7 6 6"/></svg></div><h3>First Visits</h3><p>No drills, just a look-and-count and a sticker.</p></div>
-    <div class="svc-card"><div class="svc-icon" style="background:rgba(255,139,107,0.25);"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div><h3>Cleanings</h3><p>Bubblegum-flavoured polish, twice a year.</p></div>
-    <div class="svc-card"><div class="svc-icon" style="background:rgba(232,185,62,0.3);"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div><h3>Fillings</h3><p>Coloured to match, explained in kid-terms.</p></div>
-    <div class="svc-card"><div class="svc-icon" style="background:rgba(111,184,217,0.25);"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Family Checkups</h3><p>Book the whole family in one afternoon.</p></div>
-  </div>
-</section>
-
-<section class="wrap" id="about">
-  <div class="about-collage reveal">
-    <div class="polaroid" style="transform:rotate(-2deg);">
-      <div class="photo-ph"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Dentist photo</span></div>
-      <div class="caption">Dr. [Name] :)</div>
+<main>
+<section class="sec" id="services">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tape t-sky">What we do</span>
+      <h2>Mostly checkups. Sometimes fillings. Always a sticker.</h2>
     </div>
-    <div class="about-copy">
-      <span class="tape">Meet the Dentist</span>
-      <h3>Hi, we're a mum-and-daughter dental team!</h3>
-      <p>Dr. [Name] (mum) handles the grown-ups and Dr. [Name] (daughter) specialises in kids — trained specifically to make first visits feel more like playtime than a procedure.</p>
-      <div class="stat-strip">
-        <div class="stat-badge"><b>11 yrs</b><span>in Chengalpattu</span></div>
-        <div class="stat-badge"><b>2,800+</b><span>little patients</span></div>
-        <div class="stat-badge"><b>4.9★</b><span>on Google</span></div>
+    <div class="scraps reveal">
+      <div class="scrap-wrap">
+        <p class="pointer"><span>start here</span><svg viewBox="0 0 44 34" aria-hidden="true" focusable="false"><path d="M3 6c14-2 26 4 30 22" stroke="#5E5145" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M26 23l7 7 5-9" stroke="#5E5145" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></p>
+        <article class="scrap s1">
+          <span class="fasten f-tape" aria-hidden="true"></span>
+          <svg class="ico" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><circle cx="23" cy="22" r="15" fill="#C5E2EC"/><circle cx="22" cy="21" r="12" fill="none" stroke="#3A2E26" stroke-width="2.6"/><path d="M15 17c2-4 5-5 8-5" stroke="#3A2E26" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M31 30l15 15" stroke="#3A2E26" stroke-width="4.5" stroke-linecap="round"/></svg>
+          <h3>First visits</h3>
+          <p>No drills. A look and a count, so the chair feels familiar next time.</p>
+        </article>
+      </div>
+      <div class="scrap-wrap w2">
+        <article class="scrap s2">
+          <svg class="fasten f-clip" viewBox="0 0 22 56" aria-hidden="true" focusable="false"><path d="M7 50V12a5 5 0 0 1 10 0v33a7.5 7.5 0 0 1-15 0V17" fill="none" stroke="#7D8288" stroke-width="2.4" stroke-linecap="round"/></svg>
+          <svg class="ico" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><circle cx="30" cy="32" r="16" fill="#FFD6C9"/><path d="M8 38h26" stroke="#E86F50" stroke-width="5.5" stroke-linecap="round"/><path d="M34 38h14" stroke="#3A2E26" stroke-width="5.5" stroke-linecap="round"/><path d="M36 33v-9M41 33v-9M46 33v-9" stroke="#3A2E26" stroke-width="2.6" stroke-linecap="round"/><circle cx="16" cy="20" r="4.5" fill="none" stroke="#6FB8D9" stroke-width="2.2"/><circle cx="25" cy="12" r="3" fill="none" stroke="#6FB8D9" stroke-width="2.2"/><circle cx="10" cy="10" r="2.4" fill="none" stroke="#6FB8D9" stroke-width="2"/></svg>
+          <h3>Cleanings</h3>
+          <p>Bubblegum-flavoured polish, and a look at how they brush at home.</p>
+        </article>
+      </div>
+      <div class="scrap-wrap">
+        <article class="scrap s3">
+          <span class="fasten f-staple a" aria-hidden="true"></span><span class="fasten f-staple b" aria-hidden="true"></span>
+          <svg class="ico" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><circle cx="30" cy="27" r="17" fill="#F6D47A"/><path d="M28 9c-7-4-19-3-21 9-2 10 4 17 6 25 2 9 2 9 7 9 4 0 4-8 8-10 4 2 4 10 8 10 5 0 5 0 7-9 2-8 8-15 6-25-2-12-14-13-21-9Z" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4" stroke-linejoin="round"/><circle cx="33" cy="20" r="5" fill="none" stroke="#3A2E26" stroke-width="2" stroke-dasharray="3 2.4"/></svg>
+          <h3>Fillings</h3>
+          <p>Tooth-coloured, and explained in kid words before we start.</p>
+        </article>
+      </div>
+      <div class="scrap-wrap w2">
+        <article class="scrap s4">
+          <span class="fasten f-dot" aria-hidden="true"></span>
+          <svg class="ico" viewBox="0 0 56 56" aria-hidden="true" focusable="false"><circle cx="17" cy="16" r="7" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4"/><path d="M5 46c0-9 5-16 12-16s12 7 12 16" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4" stroke-linejoin="round"/><circle cx="37" cy="18" r="6" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4"/><path d="M27 46c0-8 4-14 10-14s10 6 10 14" fill="#FFFDF8" stroke="#3A2E26" stroke-width="2.4" stroke-linejoin="round"/><circle cx="48" cy="31" r="4" fill="#FF8B6B" stroke="#3A2E26" stroke-width="2"/><path d="M42 47c0-5 3-9 6-9s6 4 6 9" fill="#FF8B6B" stroke="#3A2E26" stroke-width="2" stroke-linejoin="round"/></svg>
+          <h3>Family checkups</h3>
+          <p>Bring everyone. We fit the whole family into one afternoon.</p>
+        </article>
       </div>
     </div>
   </div>
 </section>
 
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><span class="tape">Come Visit</span><h2>We'll save you a chair.</h2></div>
-  <div class="contact-collage reveal">
-    <div class="contact-card">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">Near Chengalpattu Bus Stand, Chengalpattu 603001</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 7 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--coral); font-weight:700;">Say hi →</a></div></div>
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <figure class="drawing reveal">
+      <span class="fasten f-tape" aria-hidden="true"></span>
+      <span class="fasten f-tape b" aria-hidden="true"></span>
+      <svg viewBox="0 0 320 250" role="img" aria-label="Crayon drawing of the two dentists, mother and daughter, holding a big toothbrush">
+        <circle cx="40" cy="40" r="15" fill="#F7C948" stroke="#E3A21A" stroke-width="3"/>
+        <path d="M40 13v7M40 60v7M13 40h7M60 40h7M21 21l5 5M54 54l5 5M21 59l5-5M54 26l5-5" stroke="#E3A21A" stroke-width="3" stroke-linecap="round"/>
+        <path d="M12 228c28-5 58 4 88-1s68 5 100-1 70 5 108-2" stroke="#6BAA5C" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <path d="M95 198v26M115 198v26" stroke="#3A2E26" stroke-width="4" stroke-linecap="round"/>
+        <path d="M81 126l46 0 14 74-74 0Z" fill="#FFFFFF" stroke="#3A2E26" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M96 126l9 18 8-18" stroke="#6FB8D9" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <path d="M83 134l-22 36M125 134l20 30" stroke="#3A2E26" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="60" cy="172" r="5.5" fill="#A56A43"/><circle cx="146" cy="166" r="5.5" fill="#A56A43"/>
+        <circle cx="104" cy="56" r="11" fill="#2B211B"/>
+        <circle cx="104" cy="92" r="26" fill="#A56A43" stroke="#3A2E26" stroke-width="3"/>
+        <path d="M78 90c0-22 14-30 26-30s26 8 26 30c-7-12-16-17-26-17s-19 5-26 17Z" fill="#2B211B"/>
+        <circle cx="104" cy="82" r="2.2" fill="#D9412E"/>
+        <circle cx="95" cy="94" r="2.6" fill="#2B211B"/><circle cx="113" cy="94" r="2.6" fill="#2B211B"/>
+        <path d="M95 104q9 8 18 0" stroke="#2B211B" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+        <path d="M160 128c-6-10-21-6-19 5 2 8 19 17 19 17s17-9 19-17c2-11-13-15-19-5Z" fill="#FF8B6B" stroke="#E86F50" stroke-width="2"/>
+        <path d="M205 204v20M223 204v20" stroke="#3A2E26" stroke-width="4" stroke-linecap="round"/>
+        <path d="M193 136l42 0 12 68-66 0Z" fill="#FFFFFF" stroke="#3A2E26" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M207 136l7 15 7-15" stroke="#FF8B6B" stroke-width="3" fill="none" stroke-linejoin="round"/>
+        <path d="M195 144l-18 30M233 146l29-24" stroke="#3A2E26" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="176" cy="176" r="5" fill="#B77A50"/>
+        <path d="M261 126l28-49" stroke="#3A2E26" stroke-width="9" stroke-linecap="round"/>
+        <path d="M261 126l28-49" stroke="#6FB8D9" stroke-width="5" stroke-linecap="round"/>
+        <path d="M290 74l10-17" stroke="#3A2E26" stroke-width="10" stroke-linecap="round"/>
+        <path d="M290 74l10-17" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
+        <path d="M293 71l9 5M296 66l9 5M299 61l9 5" stroke="#6FB8D9" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="264" cy="121" r="5" fill="#B77A50"/>
+        <path d="M236 98c10 2 16 10 14 22-4-6-9-9-14-10Z" fill="#2B211B"/>
+        <circle cx="214" cy="104" r="23" fill="#B77A50" stroke="#3A2E26" stroke-width="3"/>
+        <path d="M191 102c0-20 12-27 23-27s23 7 23 27c-6-10-14-14-23-14s-17 4-23 14Z" fill="#2B211B"/>
+        <circle cx="206" cy="106" r="2.5" fill="#2B211B"/><circle cx="222" cy="106" r="2.5" fill="#2B211B"/>
+        <path d="M206 115q8 7 16 0" stroke="#2B211B" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="199" cy="112" r="4" fill="#FF8B6B" opacity=".45"/><circle cx="229" cy="112" r="4" fill="#FF8B6B" opacity=".45"/>
+      </svg>
+      <figcaption>Dr. Revathi &amp; Dr. Nila</figcaption>
+    </figure>
+    <div class="about-copy reveal">
+      <span class="tape t-coral">The dentists</span>
+      <h2>A mum-and-daughter team.</h2>
+      <p>Dr. Revathi Sekar looks after the grown-ups. Her daughter, Dr. Nila Sekar, sees the children, and she would rather explain a step twice than rush it once.</p>
+      <p>Parents are welcome to stay in the room. If the big chair feels like too much, a lap usually works just as well.</p>
+      <ul class="sticky">
+        <li>11 years in Chengalpattu</li>
+        <li>2,800+ little patients</li>
+        <li>4.9 <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M10 1.5l2.5 5.6 6 .5-4.6 4 1.4 6-5.3-3.2-5.3 3.2 1.4-6-4.6-4 6-.5Z" fill="#E8B93E" stroke="#B5452A" stroke-width="1.2" stroke-linejoin="round"/></svg> on Google</li>
+      </ul>
     </div>
-    <form class="contact-card form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Parent name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nKid(s) age: ' + this.age.value);">
-      <input name="name" type="text" placeholder="Parent's name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="age" type="text" placeholder="Kid's age (if visiting)">
-      <button type="submit">Book us! ✏️</button>
-    </form>
   </div>
 </section>
 
-<footer class="wrap">
-  <span>© 2026 Little Sprout Dental, Chengalpattu.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<section class="sec visit" id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="tape">Come and see us</span>
+      <h2>We'll save you a chair.</h2>
+    </div>
+    <div class="visit-grid">
+      <div class="tag reveal">
+        <dl>
+          <div class="info-row"><dt>Address</dt><dd>Near Chengalpattu Bus Stand, Chengalpattu 603001</dd></div>
+          <div class="info-row"><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></dd></div>
+          <div class="info-row"><dt>Hours</dt><dd>Mon–Sat, 10 AM – 7 PM</dd></div>
+          <div class="info-row"><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Send us a message</a></dd></div>
+        </dl>
+      </div>
+      <form class="notebook" id="book" action="mailto:?subject=Visit%20request%20for%20Little%20Sprout%20Dental" method="post" enctype="text/plain">
+        <h3>Ask for a visit</h3>
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="parent" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
+        <div class="field"><label for="f-age">Child's age, if they're coming</label><input id="f-age" name="child_age" type="text"></div>
+        <button class="btn" type="submit">Write the email</button>
+        <p class="form-note">Your email app opens with this filled in. Sending it asks for a visit; it doesn't fix a time.</p>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Little Sprout Dental, Chengalpattu.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal for sections below the hero (content is visible without JS and under reduced motion).
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){ el.classList.add('in'); }); return; }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1});
+    els.forEach(function(el){ io.observe(el); });
+  })();
+
+  // Signature: drag-collage. Each cut-out on the blue paper can be picked up and dropped somewhere else on it.
+  // Mouse and pen drag at once. A finger picks a piece up by sliding sideways or by holding still for a moment,
+  // so an up-or-down swipe that starts on a piece still scrolls the page. Keyboard: Tab to a piece, arrow keys
+  // move it, Escape or Home puts it back. Pieces stay inside the paper (and away from its edges, so the focus
+  // ring shows) and settle at a small new angle when dropped. Nothing runs while nobody is touching the board.
+  (function(){
+    var board = document.querySelector('[data-signature="drag-collage"]');
+    if(!board || !board.querySelectorAll) return;
+    var pieces = Array.prototype.slice.call(board.querySelectorAll('.piece'));
+    var cap = document.querySelector('.board-cap');
+    var hintText = cap.querySelector('.hint-text');
+    var tidy = cap.querySelector('.tidy');
+    var mq = function(q){ return window.matchMedia ? window.matchMedia(q) : { matches:false }; };
+    var calm = mq('(prefers-reduced-motion: reduce)');
+    var coarse = mq('(pointer: coarse)').matches && !mq('(pointer: fine)').matches;
+    var PAD = 10, HOLD = 280, SLOP = 7;
+    var top = 10, drag = null, holdTimer = 0, settleTimer = 0;
+    var hints = {
+      idle: coarse ? 'Everything on the blue paper moves. Hold a piece, or slide it sideways.' : 'Everything on the blue paper moves. Drag a piece somewhere new.',
+      keys: 'Arrow keys move this piece. Esc puts it back.'
+    };
+
+    pieces.forEach(function(p){
+      var r = parseFloat(getComputedStyle(p).getPropertyValue('--r')) || 0;
+      p._s = { x:0, y:0, r:r, home:r };
+      p.setAttribute('tabindex', '0');
+      p.setAttribute('aria-roledescription', 'movable cut-out');
+      p.setAttribute('aria-describedby', 'board-keys');
+    });
+    board.classList.add('is-live');
+    hintText.textContent = hints.idle;
+    cap.hidden = false;
+
+    function paint(p){
+      var s = p._s;
+      p.style.setProperty('--x', s.x.toFixed(1) + 'px');
+      p.style.setProperty('--y', s.y.toFixed(1) + 'px');
+      p.style.setProperty('--r', s.r.toFixed(2) + 'deg');
+    }
+    // Keep the whole rotated piece inside the paper, PAD px in from every edge.
+    function clamp(p){
+      var s = p._s, W = board.clientWidth, H = board.clientHeight;
+      var w = p.offsetWidth, h = p.offsetHeight, a = s.r * Math.PI / 180;
+      var bw = Math.abs(w * Math.cos(a)) + Math.abs(h * Math.sin(a));
+      var bh = Math.abs(w * Math.sin(a)) + Math.abs(h * Math.cos(a));
+      var cx = p.offsetLeft + w / 2 + s.x, cy = p.offsetTop + h / 2 + s.y;
+      var lo = PAD + bw / 2, hi = W - PAD - bw / 2;
+      cx = hi < lo ? W / 2 : Math.min(hi, Math.max(lo, cx));
+      lo = PAD + bh / 2; hi = H - PAD - bh / 2;
+      cy = hi < lo ? H / 2 : Math.min(hi, Math.max(lo, cy));
+      s.x = cx - p.offsetLeft - w / 2;
+      s.y = cy - p.offsetTop - h / 2;
+    }
+    function toFront(p){ top += 1; p.style.zIndex = top; }
+    function moved(){ if(tidy.hidden) tidy.hidden = false; }
+    function settle(p, glide){
+      var s = p._s, turn = (Math.random() * 7 + 2) * (Math.random() < .5 ? -1 : 1);
+      s.r = Math.max(-11, Math.min(11, s.home + turn));
+      clamp(p);
+      glideTo(p, glide);
+    }
+    function glideTo(p, glide){
+      if(glide && !calm.matches){
+        p.classList.add('is-settling');
+        clearTimeout(p._t);
+        p._t = setTimeout(function(){ p.classList.remove('is-settling'); }, 420);
+      }
+      paint(p);
+    }
+    function putBack(p){
+      var s = p._s;
+      clearTimeout(settleTimer);
+      s.x = 0; s.y = 0; s.r = s.home;
+      glideTo(p, true);
+    }
+
+    function lift(p, e){
+      clearTimeout(holdTimer);
+      drag.mode = 'drag';
+      try{ p.setPointerCapture(drag.id); }catch(err){}
+      p.classList.add('is-lifted');
+      board.classList.add('is-dragging');
+      if(e) follow(p, e);
+    }
+    function follow(p, e){
+      var s = p._s;
+      s.x = drag.sx + (e.clientX - drag.px);
+      s.y = drag.sy + (e.clientY - drag.py);
+      clamp(p);
+      paint(p);
+    }
+    function drop(p){
+      if(!drag) return;
+      var wasDrag = drag.mode === 'drag', far = drag.far;
+      clearTimeout(holdTimer);
+      drag = null;
+      p.classList.remove('is-lifted');
+      board.classList.remove('is-dragging');
+      if(wasDrag && far){ settle(p, true); moved(); }
+    }
+
+    pieces.forEach(function(p){
+      p.addEventListener('pointerdown', function(e){
+        if(drag || (e.pointerType === 'mouse' && e.button !== 0)) return;
+        toFront(p);
+        drag = { p:p, id:e.pointerId, px:e.clientX, py:e.clientY, sx:p._s.x, sy:p._s.y, mode:'pending', far:false };
+        if(e.pointerType === 'touch'){
+          // Wait: a finger may be starting a page scroll. Holding still for a moment picks the piece up.
+          holdTimer = setTimeout(function(){ if(drag && drag.p === p && drag.mode === 'pending') lift(p); }, HOLD);
+          return;
+        }
+        e.preventDefault();
+        lift(p);
+      });
+      p.addEventListener('pointermove', function(e){
+        if(!drag || drag.p !== p || e.pointerId !== drag.id) return;
+        var dx = e.clientX - drag.px, dy = e.clientY - drag.py;
+        if(Math.abs(dx) > 3 || Math.abs(dy) > 3) drag.far = true;
+        if(drag.mode === 'pending'){
+          if(Math.abs(dx) < SLOP && Math.abs(dy) < SLOP) return;
+          if(Math.abs(dx) > Math.abs(dy)){ lift(p, e); return; }
+          clearTimeout(holdTimer); // mostly up or down: that is a scroll, leave it to the browser
+          drag = null;
+          return;
+        }
+        follow(p, e);
+      });
+      p.addEventListener('pointerup', function(){ if(drag && drag.p === p) drop(p); });
+      p.addEventListener('pointercancel', function(){ if(drag && drag.p === p) drop(p); });
+      // Only the piece's own capture ending counts: a finger's implicit capture on the drawing inside it also ends
+      // (and bubbles up here) the moment the piece takes the pointer over.
+      p.addEventListener('lostpointercapture', function(e){ if(e.target === p && drag && drag.p === p && drag.mode === 'drag') drop(p); });
+
+      p.addEventListener('focus', function(){
+        toFront(p);
+        var kb = false;
+        try{ kb = p.matches(':focus-visible'); }catch(err){}
+        if(kb) hintText.textContent = hints.keys;
+      });
+      p.addEventListener('blur', function(){ hintText.textContent = hints.idle; });
+      p.addEventListener('keydown', function(e){
+        var s = p._s, step = e.shiftKey ? 32 : 8, dx = 0, dy = 0;
+        switch(e.key){
+          case 'ArrowLeft': dx = -step; break;
+          case 'ArrowRight': dx = step; break;
+          case 'ArrowUp': dy = -step; break;
+          case 'ArrowDown': dy = step; break;
+          case 'Escape': case 'Esc': case 'Home':
+            if(s.x || s.y || s.r !== s.home){ e.preventDefault(); putBack(p); }
+            return;
+          default: return;
+        }
+        e.preventDefault();
+        s.x += dx; s.y += dy;
+        clamp(p); paint(p); moved();
+        // Settle at a new small angle once the keys stop.
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(function(){ settle(p, true); }, 350);
+      });
+    });
+
+    // A finger that has picked a piece up should move the piece, not the page.
+    board.addEventListener('touchmove', function(e){ if(drag && drag.mode === 'drag') e.preventDefault(); }, { passive:false });
+    board.addEventListener('contextmenu', function(e){ if(drag) e.preventDefault(); });
+
+    tidy.addEventListener('click', function(){ pieces.forEach(putBack); });
+
+    // The paper changes size with the window: keep moved pieces on it.
+    var queued = false;
+    window.addEventListener('resize', function(){
+      if(queued) return;
+      queued = true;
+      requestAnimationFrame(function(){
+        queued = false;
+        pieces.forEach(function(p){ if(p._s.x || p._s.y || p._s.r !== p._s.home){ clamp(p); paint(p); } });
+      });
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
