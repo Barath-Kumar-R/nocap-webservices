@@ -3,235 +3,475 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bloom Dental & Aesthetics — Besant Nagar, Chennai</title>
+<title>Bloom Dental &amp; Aesthetics · Besant Nagar, Chennai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  // line-draw-intro: the vine under the hero heading draws itself only when JS runs and motion is allowed.
+  // Without this class (JS off, reduced motion) the line is simply there, complete.
+  document.documentElement.className += ' js';
+  if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.className += ' ld-on';
+</script>
 <style>
   :root{
-    --ivory:#FBF8F3; --sage:#7C8B6F; --sage-deep:#5C6B50; --blush:#E8C4C0; --plum:#4A2E35; --ink:#2C2422; --muted:#8A7F76;
+    --ivory:#FBF8F3; --cream:#F3ECE1; --paper:#FFFDF9;
+    --sage:#7C8B6F; --sage-deep:#5C6B50; --sage-tint:#EDF0E7;
+    --blush:#E8C4C0; --blush-tint:#F6E8E4; --plum:#4A2E35; --plum-text:#E9DCD9;
+    --ink:#2C2422; --muted:#5E554F; --gold:#A07A3C; --field-line:#8C8378;
+    --line:rgba(74,46,53,.14);
+    --serif:'Cormorant','Cormorant Garamond',Garamond,'Times New Roman',serif;
+    --sans:'Work Sans','Segoe UI',Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',sans-serif; background:var(--ivory); color:var(--ink);}
-  h1,h2,h3{font-family:'Cormorant',serif; font-weight:500; color:var(--plum);}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
-  .eyebrow{font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--sage-deep); font-weight:500;}
+  body{font-family:var(--sans); font-size:17px; line-height:1.7; background:var(--ivory); color:var(--ink);}
+  h1,h2,h3{font-family:var(--serif); font-weight:500; color:var(--plum); line-height:1.08;}
+  h2{font-size:clamp(36px,4vw,54px); text-wrap:balance;}
+  p{text-wrap:pretty;}
   a{color:inherit;}
+  section[id], form[id]{scroll-margin-top:16px;}
+  .wrap{max-width:1180px; margin:0 auto; padding-left:40px; padding-right:40px;}
+  .label{font-size:14px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--sage-deep); line-height:1.5;}
+  html :focus-visible{outline-color:var(--plum) !important;}
+  html .visiting :focus-visible{outline-color:var(--blush) !important; box-shadow:0 0 0 2px var(--plum) !important;}
 
-  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,248,243,0.92); backdrop-filter:blur(8px); border-bottom:1px solid rgba(74,46,53,0.08);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:20px 28px; max-width:1180px; margin:0 auto;}
-  .logo{font-family:'Cormorant',serif; font-size:24px; font-weight:600; color:var(--plum); display:flex; align-items:center; gap:8px;}
-  .logo svg{width:20px; height:20px;}
-  .nav-links{display:flex; gap:34px; font-size:14px; color:var(--ink);}
-  .nav-links a{text-decoration:none; transition:color .2s;}
-  .nav-links a:hover{color:var(--sage-deep);}
-  .btn-ghost{border:1px solid var(--sage); color:var(--sage-deep); padding:10px 22px; font-size:13px; text-decoration:none; border-radius:24px;}
-  .burger{display:none; background:none; border:none; font-size:22px; color:var(--plum); cursor:pointer;}
-  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:20px 28px 26px; border-top:1px solid rgba(74,46,53,0.08);}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{text-decoration:none; color:var(--plum); font-size:15px;}
+  /* Header (scrolls away with the page) */
+  .top{padding:16px 0; border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; gap:28px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; color:var(--plum);}
+  .logo svg{width:26px; height:26px; flex:none;}
+  .logo-name{display:flex; flex-direction:column; line-height:1;}
+  .logo-name b{font-family:var(--serif); font-weight:600; font-size:30px; letter-spacing:0.01em;}
+  .logo-name small{margin-top:4px; font-size:14px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted);}
+  .links{display:flex; gap:4px; margin-left:auto;}
+  .links a{display:inline-flex; align-items:center; min-height:44px; padding:0 12px; font-size:16px; text-decoration:none; color:var(--ink);}
+  .links a:hover{color:var(--sage-deep); text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px;}
+  .nav-cta{display:inline-flex; align-items:center; min-height:44px; padding:0 22px; border:1px solid var(--sage-deep); border-radius:999px; color:var(--sage-deep); font-size:16px; font-weight:500; text-decoration:none; white-space:nowrap; transition:background-color .2s, color .2s;}
+  .nav-cta:hover{background:var(--sage-deep); color:var(--ivory);}
 
-  .hero{padding:150px 0 100px; position:relative; overflow:hidden;}
-  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;}
-  .branch{position:absolute; top:60px; right:-40px; width:340px; opacity:0.5; z-index:0;}
-  .hero h1{font-size:clamp(38px,5.6vw,68px); line-height:1.05; margin-bottom:24px; position:relative; z-index:1;}
+  /* Hero */
+  .hero{padding:80px 0 112px;}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:72px; align-items:center;}
+  .hero .label{margin-bottom:26px;}
+  .title{width:fit-content; max-width:100%;}
+  .hero h1{font-size:clamp(44px,5.6vw,80px); line-height:1.02; letter-spacing:-0.005em;}
+  .hero h1 span{display:block;}
   .hero h1 i{font-style:italic; color:var(--sage-deep);}
-  .hero p{font-size:17px; line-height:1.8; color:#5C534D; max-width:420px; margin-bottom:34px; font-weight:300;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-fill{background:var(--plum); color:var(--ivory); padding:15px 30px; text-decoration:none; font-size:13px; letter-spacing:0.04em; border-radius:24px; font-weight:500;}
-  .photo-ph{border-radius:16px; background:linear-gradient(160deg,#EFE7DB,#E3D9CB); border:1px solid rgba(74,46,53,0.1); height:480px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px;}
-  .photo-ph svg{width:34px; height:34px; opacity:0.45; stroke:var(--sage-deep);}
-  .photo-ph span{font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted);}
+  .vine{display:block; width:100%; height:auto; margin-top:14px;}
+  .vine path{fill:none; stroke:var(--gold); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;}
+  .lede{margin-top:26px; font-size:18px; color:var(--muted); max-width:31em;}
+  .actions{margin-top:36px; display:flex; flex-wrap:wrap; align-items:center; gap:12px 30px;}
+  .btn-plum{display:inline-flex; align-items:center; justify-content:center; min-height:54px; padding:0 32px; border-radius:999px; background:var(--plum); color:var(--ivory); font-size:16px; font-weight:500; letter-spacing:0.02em; text-decoration:none; border:none; cursor:pointer; font-family:var(--sans); transition:background-color .2s;}
+  .btn-plum:hover{background:#5E3B44;}
+  .text-link{display:inline-flex; align-items:center; min-height:44px; color:var(--plum); text-decoration:underline; text-decoration-color:var(--sage); text-decoration-thickness:1px; text-underline-offset:6px;}
+  .text-link:hover{color:var(--sage-deep);}
+  .hero-note{margin-top:28px; font-size:15px; color:var(--muted);}
 
-  section{padding:110px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 60px;}
-  .sec-head h2{font-size:clamp(28px,3.6vw,44px); margin-top:12px;}
-  .sec-head p{color:#6B6058; font-size:15px; margin-top:16px; line-height:1.7; font-weight:300;}
+  /* Herbarium sheet */
+  .sheet{margin:0; background:var(--paper); border:1px solid var(--line); border-radius:4px; padding:26px 26px 20px; box-shadow:0 30px 60px -40px rgba(74,46,53,.45);}
+  .sheet svg{display:block; width:100%; height:auto;}
+  .sheet figcaption{display:flex; justify-content:space-between; align-items:baseline; flex-wrap:wrap; gap:4px 16px; margin-top:12px; padding-top:12px; border-top:1px dashed rgba(74,46,53,.25);}
+  .sheet figcaption i{font-family:var(--serif); font-size:23px; font-weight:500; color:var(--plum);}
+  .sheet figcaption span{font-size:14px; color:var(--muted);}
 
-  .services{background:#F3ECE1;}
-  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
-  .svc-card{background:var(--ivory); padding:40px 32px; border-radius:18px; text-align:center; box-shadow:0 1px 3px rgba(74,46,53,0.05);}
-  .svc-icon{width:52px; height:52px; border-radius:50%; background:var(--blush); display:flex; align-items:center; justify-content:center; margin:0 auto 22px;}
-  .svc-icon svg{width:22px; height:22px; stroke:var(--plum);}
-  .svc-card h3{font-size:21px; margin-bottom:12px;}
-  .svc-card p{font-size:14px; color:#6B6058; line-height:1.7; font-weight:300;}
+  section{padding:120px 0;}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:60px; align-items:center;}
-  .about-photo{height:540px; border-radius:20px; background:linear-gradient(160deg,#EFE7DB,#E3D9CB); border:1px solid rgba(74,46,53,0.1);}
-  .quote-bio{font-family:'Cormorant',serif; font-style:italic; font-size:22px; color:var(--plum); line-height:1.6; margin:26px 0;}
-  .stat-row{display:flex; gap:40px; padding-top:30px; border-top:1px solid rgba(74,46,53,0.12);}
-  .stat-row h4{font-family:'Cormorant',serif; font-size:30px; color:var(--sage-deep);}
-  .stat-row p{font-size:12px; color:var(--muted); margin-top:4px;}
+  /* Treatments, grouped by reason */
+  .treat{background:var(--cream);}
+  .treat-head{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:72px; align-items:end;}
+  .treat-head h2{margin-top:16px;}
+  .treat-head p:not(.label){color:var(--muted); max-width:30em;}
+  .reasons{margin-top:72px; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:56px; align-items:start;}
+  .reason h3{font-style:italic; font-size:31px; line-height:1.15; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .reason dl{margin-top:6px;}
+  .reason dt{margin-top:22px; font-weight:600; font-size:17px; color:var(--plum);}
+  .reason dd{margin-top:4px; color:var(--muted);}
+  .reason.nervous{background:var(--blush-tint); border-radius:22px; padding:32px 30px 34px; margin-top:-32px;}
+  .reason.nervous h3{border-bottom-color:rgba(74,46,53,.2);}
 
-  .ritual{background:var(--plum); color:var(--ivory);}
-  .ritual h2{color:var(--ivory);}
-  .ritual .eyebrow{color:var(--blush);}
-  .ritual-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:rgba(251,248,243,0.15); margin-top:50px; border-radius:16px; overflow:hidden;}
-  .ritual-step{background:var(--plum); padding:34px 26px;}
-  .ritual-step .k{font-family:'Cormorant',serif; font-style:italic; color:var(--blush); font-size:15px; display:block; margin-bottom:14px;}
-  .ritual-step h4{font-size:17px; color:var(--ivory); margin-bottom:8px; font-weight:500; font-family:'Work Sans',sans-serif;}
-  .ritual-step p{font-size:13px; color:#D9C9C7; line-height:1.6; font-weight:300;}
+  /* First visit, on plum */
+  .visiting{background:var(--plum); color:var(--plum-text);}
+  .visit-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,7fr); gap:80px; align-items:start;}
+  .visiting .label{color:var(--blush);}
+  .visiting h2{color:var(--ivory); margin-top:16px;}
+  .cup{margin-top:48px; width:min(240px,70%);}
+  .cup svg{display:block; width:100%; height:auto;}
+  .steps{list-style:none; border-top:1px solid rgba(232,196,192,.3);}
+  .steps li{display:grid; grid-template-columns:96px minmax(0,1fr); gap:20px; padding:26px 0 28px; border-bottom:1px solid rgba(232,196,192,.3);}
+  .steps .k{font-family:var(--serif); font-style:italic; font-weight:500; font-size:26px; line-height:1.2; color:var(--blush);}
+  .steps h3{font-family:var(--sans); font-size:19px; font-weight:500; line-height:1.4; color:var(--ivory);}
+  .steps p{margin-top:6px;}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:60px;}
-  .info-row{display:flex; gap:18px; padding:20px 0; border-bottom:1px solid rgba(74,46,53,0.1);}
-  .info-row .lbl{width:110px; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:var(--muted); flex-shrink:0;}
-  .form{display:flex; flex-direction:column; gap:16px;}
-  .form input, .form textarea{background:#F3ECE1; border:1px solid rgba(74,46,53,0.12); border-radius:12px; padding:15px; font-family:'Work Sans',sans-serif; font-size:14px; color:var(--ink);}
-  .form button{background:var(--sage-deep); color:var(--ivory); border:none; padding:16px; font-size:13px; letter-spacing:0.04em; border-radius:24px; font-weight:500; cursor:pointer;}
+  /* Dentist, as a short interview */
+  .doc{text-align:center;}
+  .doc .inner{max-width:820px; margin:0 auto;}
+  .doc h2{margin-top:14px; font-size:clamp(32px,3.2vw,42px);}
+  .doc blockquote{margin:40px auto 0; max-width:30em; font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(28px,3vw,40px); line-height:1.3; color:var(--plum);}
+  .doc blockquote::before{content:""; display:block; width:56px; height:1px; margin:0 auto 34px; background:var(--gold);}
+  .stats{margin:56px auto 0; display:flex; justify-content:center; flex-wrap:wrap;}
+  .stats div{padding:0 36px; border-left:1px solid var(--line);}
+  .stats div:first-child{border-left:none;}
+  .stats dt{font-size:15px; color:var(--muted);}
+  .stats dd{font-family:var(--serif); font-weight:600; font-size:36px; line-height:1.1; color:var(--sage-deep);}
+  .stats{flex-direction:row;}
+  .stats div{display:flex; flex-direction:column-reverse;}
 
-  footer{padding:36px 0; border-top:1px solid rgba(74,46,53,0.1); font-size:13px; color:var(--muted);}
-  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px;}
+  /* Visit */
+  .find{background:var(--sage-tint);}
+  .find-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:80px; align-items:start;}
+  .find h2{margin-top:16px;}
+  .facts{margin-top:44px; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:30px 32px;}
+  .facts dt{font-size:14px; font-weight:500; letter-spacing:0.14em; text-transform:uppercase; color:var(--sage-deep);}
+  .facts dd{margin-top:6px;}
+  .facts dd span{display:block;}
+  .facts a{display:inline-flex; align-items:center; min-height:44px; margin:-8px 0; color:var(--plum); text-decoration:underline; text-decoration-color:var(--sage); text-decoration-thickness:1px; text-underline-offset:5px;}
+  .facts a:hover{color:var(--sage-deep);}
+  .form{background:var(--paper); border:1px solid var(--line); border-radius:24px; padding:40px 40px 36px; display:flex; flex-direction:column; gap:8px;}
+  .form-title{font-family:var(--serif); font-size:34px; font-weight:500; line-height:1.15; color:var(--plum); margin-bottom:10px;}
+  .form label{margin-top:10px; font-size:15px; font-weight:500; color:var(--ink);}
+  .form .opt{font-weight:400; color:var(--muted);}
+  .form input[type=text], .form input[type=tel], .form textarea{width:100%; min-height:50px; padding:12px 16px; font-family:var(--sans); font-size:17px; color:var(--ink); background:var(--ivory); border:1px solid var(--field-line); border-radius:12px;}
+  .form textarea{resize:vertical;}
+  .check{display:flex; align-items:flex-start; gap:12px; margin-top:16px; min-height:44px; padding:10px 0; cursor:pointer;}
+  .check input{flex:none; width:22px; height:22px; margin-top:2px; accent-color:var(--plum);}
+  .check span{font-size:16px; font-weight:400; color:var(--ink); line-height:1.5;}
+  .check small{display:block; font-size:15px; color:var(--muted);}
+  .form .btn-plum{margin-top:22px; align-self:flex-start;}
+  .form-note{margin-top:12px; font-size:16px; line-height:1.55; color:var(--muted);}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(74,46,53,0.25); text-decoration:none;}
-  .wa-float svg{width:28px; height:28px; fill:white;}
+  footer{padding:34px 0 40px; border-top:1px solid var(--line);}
+  .foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:15px; color:var(--muted);}
 
-  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  .wa-float{position:fixed; right:24px; bottom:24px; z-index:90; width:54px; height:54px; border-radius:50%; background:var(--sage-deep); display:none; align-items:center; justify-content:center; text-decoration:none; box-shadow:0 10px 24px -10px rgba(74,46,53,.5);}
+  .wa-float svg{width:24px; height:24px; fill:var(--ivory);}
+  @media (min-width:1340px){ .wa-float{display:flex;} }
 
-  @media (max-width:900px){
-    .nav-links,.btn-ghost{display:none;}
-    .burger{display:block;}
-    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr;}
-    .ritual-grid{grid-template-columns:1fr 1fr;}
-    .stat-row{flex-wrap:wrap; gap:24px;}
-    section{padding:76px 0;}
-    .branch{display:none;}
+  /* Reveals: hidden only when JS runs and motion is allowed */
+  @media (prefers-reduced-motion:no-preference){
+    .js .reveal{opacity:0; transform:translateY(12px); transition:opacity .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);}
+    .js .reveal.in{opacity:1; transform:none;}
+    .js .soft-reveal{opacity:0; filter:blur(6px); transform:scale(.97); transition:opacity .6s ease, filter .6s ease, transform .6s cubic-bezier(.2,.7,.2,1);}
+    .js .soft-reveal.in{opacity:1; filter:none; transform:none;}
+    /* the signature: stem first, then the leaves, then the flower; each stroke at most .6s, about 1.1s in all */
+    .ld-on .vine path{stroke-dasharray:1 2; animation:ld-draw .6s cubic-bezier(.5,0,.25,1) both;}
+    .ld-on .vine .lf{animation-duration:.34s;}
+    .ld-on .vine .lf1{animation-delay:.16s;} .ld-on .vine .lf2{animation-delay:.24s;} .ld-on .vine .lf3{animation-delay:.33s;}
+    .ld-on .vine .lf4{animation-delay:.42s;} .ld-on .vine .lf5{animation-delay:.5s;}
+    .ld-on .vine .fl{animation-duration:.4s; animation-delay:.62s;}
   }
+  @keyframes ld-draw{from{stroke-dashoffset:1.02;} to{stroke-dashoffset:0;}}
+
+  @media (min-width:961px){
+    .sheet{rotate:-1.2deg; margin-right:8px;}
+  }
+  @media (max-width:1080px){
+    section{padding:100px 0;}
+    .reasons{grid-template-columns:repeat(2,minmax(0,1fr)); gap:48px 44px;}
+    .reason.nervous{margin-top:0; grid-column:1 / -1; max-width:620px;}
+    .visit-grid, .find-grid{gap:56px;}
+  }
+  @media (max-width:960px){
+    .hero{padding:64px 0 96px;}
+    .hero-grid{grid-template-columns:minmax(0,1fr); gap:56px;}
+    .sheet{max-width:440px;}
+    .treat-head{grid-template-columns:minmax(0,1fr); gap:20px;}
+    .visit-grid, .find-grid{grid-template-columns:minmax(0,1fr);}
+    .cup{margin-top:36px; width:200px;}
+    .form{max-width:600px;}
+    .links a{padding:0 9px;}
+    .nav{gap:16px;}
+  }
+  @media (max-width:840px){
+    .nav-cta{display:none;}
+  }
+  @media (max-width:720px){
+    .links{display:none;}
+    .wrap{padding-left:20px; padding-right:20px;}
+    .top{padding:12px 0;}
+    section{padding:76px 0;}
+    .hero{padding:44px 0 76px;}
+    .hero .label{margin-bottom:18px;}
+    .lede{font-size:17px; margin-top:22px;}
+    .actions{margin-top:30px;}
+    .reasons{grid-template-columns:minmax(0,1fr); gap:44px; margin-top:52px;}
+    .reason.nervous{padding:26px 22px 28px;}
+    .steps li{grid-template-columns:minmax(0,1fr); gap:4px;}
+    .stats{flex-direction:column; align-items:center; gap:22px;}
+    .stats div{padding:0; border-left:none;}
+    .facts{grid-template-columns:minmax(0,1fr); gap:24px;}
+    .form{padding:28px 20px 26px; border-radius:20px;}
+    .form-title{font-size:30px;}
+    .form .btn-plum{align-self:stretch;}
+    html:root{--nc-radius:999px;}
+    html .nc-bar{font-family:var(--sans); font-weight:500;}
+    html .nc-bar a{border-width:1px;}
+  }
+  @media (max-width:380px){
+    .hero h1{font-size:40px;}
+  }
+  @media (max-width:720px){
+    /* the WhatsApp float only shows from 1340px, so phones need room for the bar alone */
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#FBF8F3;--nc-fg:#4A2E35;--nc-accent:#4A2E35;--nc-on-accent:#FBF8F3;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="#7C8B6F" stroke-width="1.5"><path d="M12 3c-3 3-3 7 0 10 3-3 3-7 0-10z"/><path d="M12 13v8"/></svg>Bloom Dental & Aesthetics</div>
-    <div class="nav-links">
-      <a href="#services">Treatments</a>
-      <a href="#about">Our Dentist</a>
-      <a href="#ritual">The Visit</a>
-      <a href="#contact">Book</a>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 26 26" aria-hidden="true" focusable="false"><path d="M13 24V12" fill="none" stroke="#5C6B50" stroke-width="1.4" stroke-linecap="round"/><path d="M13 17C9.5 17 7 15 6.5 11.5C10 11.5 12.5 13.5 13 17Z" fill="#DCE3D1" stroke="#5C6B50" stroke-width="1.2"/><path d="M13 12C10.6 9.6 10.8 5.4 13 2.5C15.2 5.4 15.4 9.6 13 12Z" fill="#FFFDF9" stroke="#4A2E35" stroke-width="1.2"/></svg>
+      <span class="logo-name"><b>Bloom</b> <small>Dental &amp; Aesthetics</small></span>
+    </a>
+    <div class="links">
+      <a href="#treatments">Treatments</a>
+      <a href="#first-visit">First visit</a>
+      <a href="#dentist">Dentist</a>
+      <a href="#visit">Visit</a>
     </div>
-    <a class="btn-ghost" href="#contact">Book a Visit</a>
-    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
-  </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#services">Treatments</a>
-    <a href="#about">Our Dentist</a>
-    <a href="#ritual">The Visit</a>
-    <a href="#contact">Book</a>
-  </div>
-</nav>
+    <a class="nav-cta" href="#book">Book a visit</a>
+  </nav>
+</header>
 
-<section class="hero wrap">
-  <svg class="branch" viewBox="0 0 300 500" fill="none" stroke="#7C8B6F" stroke-width="1">
-    <path d="M280 20 Q 180 140 220 260 Q 250 340 190 460"/>
-    <path d="M220 100 Q 190 110 175 90"/>
-    <path d="M235 190 Q 205 195 195 170"/>
-    <path d="M210 320 Q 180 325 168 300"/>
-  </svg>
-  <div class="hero-grid">
+<main id="top">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Besant Nagar, Chennai</div>
-      <h1>Dentistry that feels<br>like a <i>wellness ritual.</i></h1>
-      <p>Bloom pairs cosmetic and general dentistry with the pacing of a spa visit — soft lighting, unhurried appointments, and care that considers the whole face, not just the tooth.</p>
-      <div class="hero-ctas">
-        <a class="btn-fill" href="#contact">Book Your Visit</a>
-        <a class="btn-ghost" href="#services">See Treatments</a>
+      <p class="label">Besant Nagar, Chennai</p>
+      <div class="title">
+        <h1 id="hero-title"><span>First, a cup of <i>tea.</i></span> <span>Then, your teeth.</span></h1>
+        <svg class="vine" data-signature="line-draw-intro" viewBox="0 0 480 40" aria-hidden="true" focusable="false">
+          <path pathLength="1" d="M2 26C48 20 92 32 138 26S226 18 270 24S356 32 398 24S444 13 455 17"/>
+          <path class="lf lf1" pathLength="1" d="M70 25C74 16 84 11 96 11C90 19 82 24 70 25Z"/>
+          <path class="lf lf2" pathLength="1" d="M150 25C157 32 167 35 178 34C171 28 162 25 150 25Z"/>
+          <path class="lf lf3" pathLength="1" d="M226 21C231 13 241 8 252 9C246 16 238 20 226 21Z"/>
+          <path class="lf lf4" pathLength="1" d="M306 27C313 34 323 37 334 35C327 30 318 27 306 27Z"/>
+          <path class="lf lf5" pathLength="1" d="M384 26C388 17 397 12 408 12C402 20 394 25 384 26Z"/>
+          <path class="fl" pathLength="1" d="M463 19C460.1 7.5 472.1 11.4 463 19C473.1 12.7 473.1 25.3 463 19C472.1 26.6 460.1 30.5 463 19C458.6 30 451.2 19.8 463 19C451.2 18.2 458.6 8 463 19"/>
+        </svg>
+      </div>
+      <p class="lede">Bloom is a dental and aesthetics practice on 2nd Main Road, Besant Nagar: cleanings, fillings and root canals, whitening, aligners and smile design, with time set aside for your questions.</p>
+      <div class="actions">
+        <a class="btn-plum" href="#book">Book a first visit</a>
+        <a class="text-link" href="#treatments">See treatments</a>
+      </div>
+      <p class="hero-note">Monday to Saturday, 10 AM to 7 PM</p>
+    </div>
+    <figure class="sheet">
+      <svg viewBox="0 0 360 440" aria-hidden="true" focusable="false">
+        <defs>
+          <g id="j-leaf"><path d="M0 0C20-10 26-46 0-84C-26-46-20-10 0 0Z" fill="#DFE5D5" stroke="#5C6B50" stroke-width="1.1" stroke-linejoin="round"/><path d="M0-3C2-30 2-55 0-78" fill="none" stroke="#5C6B50" stroke-width=".9"/><path d="M1-20l10-8M1-38l11-9M1-55l8-8M-1-28l-10-8M-1-46l-9-8" fill="none" stroke="#5C6B50" stroke-width=".7" stroke-opacity=".7"/></g>
+          <g id="j-petal"><path d="M0 0C9-6 11-22 0-31C-11-22-9-6 0 0Z" fill="#FFFFFF" stroke="#7A5A60" stroke-width="1" stroke-linejoin="round"/></g>
+          <g id="j-flower"><use href="#j-petal"/><use href="#j-petal" transform="rotate(60)"/><use href="#j-petal" transform="rotate(120)"/><use href="#j-petal" transform="rotate(180)"/><use href="#j-petal" transform="rotate(240)"/><use href="#j-petal" transform="rotate(300)"/><circle r="4.5" fill="#EBE2B8" stroke="#7A5A60" stroke-width=".8"/></g>
+          <g id="j-bud"><path d="M0 0C6-7 7-20 0-30C-7-20-6-7 0 0Z" fill="#FFFDF8" stroke="#7A5A60" stroke-width="1" stroke-linejoin="round"/><path d="M-4-1L0 6L4-1" fill="none" stroke="#5C6B50" stroke-width="1" stroke-linejoin="round"/></g>
+        </defs>
+        <path d="M182 428C172 370 196 316 188 252C181 196 200 150 196 104" fill="none" stroke="#5C6B50" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M196 116C182 104 168 96 150 92M195 108C210 94 226 84 244 80M196 104C196 92 197 80 198 70M190 170C174 166 162 164 146 168" fill="none" stroke="#5C6B50" stroke-width="1.6" stroke-linecap="round"/>
+        <use href="#j-leaf" transform="translate(184 384) rotate(-60)"/>
+        <use href="#j-leaf" transform="translate(185 372) rotate(54) scale(.95)"/>
+        <use href="#j-leaf" transform="translate(190 306) rotate(-64) scale(.95)"/>
+        <use href="#j-leaf" transform="translate(190 294) rotate(58)"/>
+        <use href="#j-leaf" transform="translate(186 236) rotate(-56) scale(.84)"/>
+        <use href="#j-leaf" transform="translate(187 226) rotate(56) scale(.86)"/>
+        <use href="#j-leaf" transform="translate(193 160) rotate(52) scale(.66)"/>
+        <use href="#j-flower" transform="translate(146 90) scale(1.22)"/>
+        <use href="#j-flower" transform="translate(248 78) rotate(18) scale(1.05)"/>
+        <use href="#j-bud" transform="translate(198 72)"/>
+        <use href="#j-bud" transform="translate(146 168) rotate(-72) scale(.9)"/>
+        <rect x="160" y="404" width="46" height="13" rx="1.5" fill="#F4EEE3" stroke="#D8CDBD" transform="rotate(-5 183 410)"/>
+        <rect x="166" y="262" width="44" height="13" rx="1.5" fill="#F4EEE3" stroke="#D8CDBD" transform="rotate(4 188 268)"/>
+      </svg>
+      <figcaption><i>Jasminum sambac</i><span>Malli. Illustration.</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="treat" id="treatments" aria-labelledby="treat-title">
+  <div class="wrap">
+    <div class="treat-head reveal">
+      <div>
+        <p class="label">Treatments</p>
+        <h2 id="treat-title">Three reasons people come in.</h2>
+      </div>
+      <p>Every plan starts with a talk about how you want to feel afterwards: comfortable, confident, or simply not thinking about your teeth.</p>
+    </div>
+    <div class="reasons">
+      <div class="reason reveal">
+        <h3>To keep things healthy</h3>
+        <dl>
+          <dt>Gentle cleanings</dt>
+          <dd>Ultrasonic cleaning, with numbing gel offered every time.</dd>
+          <dt>Fillings and root canals</dt>
+          <dd>Tooth-coloured composite fillings matched to the teeth around them, and root canal treatment when a tooth needs it.</dd>
+        </dl>
+      </div>
+      <div class="reason reveal">
+        <h3>To change how your smile looks</h3>
+        <dl>
+          <dt>Smile design</dt>
+          <dd>A consult that looks at your whole face before any veneer or bonding work is planned.</dd>
+          <dt>Whitening</dt>
+          <dd>In-chair whitening. The shade guide comes out first, so you agree on where to stop.</dd>
+          <dt>Clear aligners</dt>
+          <dd>Progress photos every month, with reviews here in the clinic.</dd>
+        </dl>
+      </div>
+      <div class="reason nervous reveal">
+        <h3>If the dentist makes you nervous</h3>
+        <dl>
+          <dt>Anxiety-aware care</dt>
+          <dd>For people who have stayed away for years. You can ask for a break at any point, and sedation options are talked through before anything is decided.</dd>
+        </dl>
       </div>
     </div>
-    <div class="photo-ph">
-      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Treatment room photo</span>
-    </div>
   </div>
 </section>
 
-<section class="services" id="services">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">Treatments</div>
-      <h2>Care for how your smile feels, too.</h2>
-      <p>Every plan starts with a conversation about how you actually want to feel afterward — confident, comfortable, unremarked-upon.</p>
-    </div>
-    <div class="svc-grid">
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M9 18l3-3 3 3M12 15V4M6 8l6-4 6 4"/></svg></div><h3>Smile Design</h3><p>A full facial-aesthetic consult before any veneer or bonding work begins.</p></div>
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Gentle Cleanings</h3><p>Ultrasonic cleanings paced for comfort, with numbing gel offered as standard.</p></div>
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M4 12h16M4 12a8 8 0 0116 0"/></svg></div><h3>Teeth Whitening</h3><p>In-chair whitening with a shade guide consult, kept believable and reversible.</p></div>
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Invisible Aligners</h3><p>Clear aligner therapy with monthly progress photos and in-studio reviews.</p></div>
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M12 21c-4-3-8-6-8-11a5 5 0 0110-1 5 5 0 0110 1c0 5-4 8-8 11z"/></svg></div><h3>Anxiety-Aware Care</h3><p>Sedation options and unhurried pacing for patients who've avoided the dentist for years.</p></div>
-      <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M5 13l4 4L19 7"/></svg></div><h3>Root Canal & Fillings</h3><p>Composite fillings shade-matched to blend, and pain-focused endodontic care.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="about-photo">
-      <div class="photo-ph" style="height:100%; border-radius:20px;">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#5C6B50" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-        <span>Doctor portrait photo</span>
+<section class="visiting" id="first-visit" aria-labelledby="visit-title">
+  <div class="wrap visit-grid">
+    <div class="reveal">
+      <p class="label">What to expect</p>
+      <h2 id="visit-title">Your first visit, start to finish.</h2>
+      <div class="cup soft-reveal">
+        <svg viewBox="0 0 220 170" aria-hidden="true" focusable="false">
+          <g fill="none" stroke="#E8C4C0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M88 70C80 60 94 52 86 40C80 31 90 24 86 14"/>
+            <path d="M106 66C98 55 112 47 104 34C98 25 108 18 104 8" stroke-opacity=".75"/>
+            <path d="M124 70C116 60 130 52 122 40" stroke-opacity=".55"/>
+            <ellipse cx="104" cy="150" rx="88" ry="12"/>
+            <ellipse cx="104" cy="148" rx="42" ry="5" stroke-opacity=".6"/>
+            <path d="M160 102C182 96 190 122 164 128"/>
+            <path d="M46 92C46 124 68 144 104 144C140 144 162 124 162 92Z" fill="#4A2E35"/>
+            <ellipse cx="104" cy="92" rx="58" ry="9" fill="#4A2E35"/>
+          </g>
+          <ellipse cx="104" cy="93" rx="50" ry="5.5" fill="#E8C4C0" fill-opacity=".22"/>
+        </svg>
       </div>
     </div>
-    <div>
-      <div class="eyebrow">Founder</div>
-      <h2 style="margin-top:12px; font-size:clamp(26px,3vw,38px);">Dr. [Full Name], BDS</h2>
-      <p class="quote-bio">"Most people's dental anxiety comes from feeling rushed. I built Bloom so no one has to watch the clock during their own appointment."</p>
-      <div class="stat-row">
-        <div><h4>9 yrs</h4><p>In practice</p></div>
-        <div><h4>1,800+</h4><p>Smiles treated</p></div>
-        <div><h4>4.8 ★</h4><p>Patient rating</p></div>
-      </div>
+    <ol class="steps reveal">
+      <li><span class="k">One</span><div><h3>Arrive and have some tea</h3><p>Fifteen minutes to settle in. The forms come to you beforehand, so there is nothing to fill in at the desk.</p></div></li>
+      <li><span class="k">Two</span><div><h3>Talk, then a scan</h3><p>You say what has been bothering you. The scan comes after, and the dentist explains what it shows.</p></div></li>
+      <li><span class="k">Three</span><div><h3>Treatment, at your pace</h3><p>Breaks are offered along the way. Nothing is hurried to make room for the next appointment.</p></div></li>
+      <li><span class="k">Four</span><div><h3>A note to take home</h3><p>A written care plan, and a WhatsApp number for questions afterwards.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="doc" id="dentist" aria-labelledby="doc-title">
+  <div class="wrap">
+    <div class="inner reveal">
+      <p class="label">Founder</p>
+      <h2 id="doc-title">Dr. Sana Rahman, BDS</h2>
+      <blockquote><p>“Most people’s dental anxiety comes from feeling rushed. I built Bloom so no one has to watch the clock during their own appointment.”</p></blockquote>
+      <dl class="stats">
+        <div><dt>In practice</dt><dd>9 years</dd></div>
+        <div><dt>Patients treated</dt><dd>1,800+</dd></div>
+        <div><dt>Patient rating</dt><dd>4.8 / 5</dd></div>
+      </dl>
     </div>
   </div>
 </section>
 
-<section class="ritual" id="ritual">
-  <div class="wrap reveal">
-    <div class="eyebrow">What To Expect</div>
-    <h2 style="margin-top:12px; font-size:clamp(26px,3.4vw,40px); max-width:520px;">Your first visit, start to finish.</h2>
-    <div class="ritual-grid">
-      <div class="ritual-step"><span class="k">One</span><h4>Arrival & Tea</h4><p>Fifteen minutes to settle in — paperwork is digital, done before you arrive.</p></div>
-      <div class="ritual-step"><span class="k">Two</span><h4>Consult & Scan</h4><p>A full scan and conversation about what's bothering you, and why.</p></div>
-      <div class="ritual-step"><span class="k">Three</span><h4>Treatment</h4><p>Paced procedures with breaks offered, never rushed to the next slot.</p></div>
-      <div class="ritual-step"><span class="k">Four</span><h4>Aftercare Note</h4><p>A written care plan and a direct WhatsApp line for questions after.</p></div>
+<section class="find" id="visit" aria-labelledby="find-title">
+  <div class="wrap find-grid">
+    <div class="reveal">
+      <p class="label">Visit</p>
+      <h2 id="find-title">Find us on 2nd Main Road.</h2>
+      <dl class="facts">
+        <div><dt>Address</dt><dd>18, 2nd Main Road, Besant Nagar, Chennai 600090</dd></div>
+        <div><dt>Hours</dt><dd><span>Mon–Sat, 10 AM – 7 PM</span><span>Closed on Sundays</span></dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></dd></div>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Message us</a></dd></div>
+      </dl>
     </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap contact-grid reveal">
-    <div>
-      <div class="eyebrow">Visit Us</div>
-      <h2 style="margin:12px 0 36px; font-size:clamp(26px,3vw,38px);">Book a consultation.</h2>
-      <div class="info-row"><div class="lbl">Address</div><div>18 2nd Main Rd, Besant Nagar, Chennai 600090</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div>+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div>Mon–Sat, 10 AM – 7 PM · Closed Sunday</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--sage-deep);">Message us directly →</a></div></div>
-    </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Booking Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="4" placeholder="What brings you in?"></textarea>
-      <button type="submit">Request Booking</button>
+    <form class="form" id="book" action="mailto:?subject=First%20visit%20request%20for%20Bloom%20Dental" method="post" enctype="text/plain">
+      <p class="form-title">Ask for a first visit</p>
+      <label for="f-name">Your name</label>
+      <input id="f-name" name="name" type="text" autocomplete="name" required>
+      <label for="f-phone">Phone</label>
+      <input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required>
+      <label for="f-note">What brings you in? <span class="opt">(optional)</span></label>
+      <textarea id="f-note" name="note" rows="3"></textarea>
+      <label class="check" for="f-nervous"><input id="f-nervous" name="nervous" type="checkbox" value="yes"><span>I get nervous at the dentist<small>Saying so lets the first visit be planned around it.</small></span></label>
+      <button class="btn-plum" type="submit">Send request</button>
+      <p class="form-note">Sending opens a drafted email in your own mail app. It asks for a visit; no time is held yet.</p>
     </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap foot-inner">
-  <span>© 2026 Bloom Dental & Aesthetics.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Bloom Dental &amp; Aesthetics, Besant Nagar.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="WhatsApp Bloom"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveals (visible without JS or with reduced motion).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal, .soft-reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // First-visit request: a tidy email body when JS is on; without JS the form still posts as mailto.
+  (function(){
+    var f = document.getElementById('book');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var body = 'Name: ' + f.elements.name.value + '\nPhone: ' + f.elements.phone.value
+        + (f.elements.nervous.checked ? '\nI get nervous at the dentist.' : '')
+        + (f.elements.note.value ? '\nNote: ' + f.elements.note.value : '');
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('First visit request for Bloom Dental') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
