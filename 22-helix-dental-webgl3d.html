@@ -3,301 +3,874 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Helix Dental Digital Studio — Perungudi, OMR</title>
+<title>Helix Dental Digital Studio, Perungudi (OMR)</title>
+<meta name="description" content="Digital dental studio on Rajiv Gandhi Salai, Perungudi. 3D scans, guided implants, smile simulation and aligners. Mon–Sat, 10 AM – 8 PM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700&family=Red+Hat+Text:wght@400;500;700&display=swap" rel="stylesheet">
+<script>document.documentElement.className += ' js';</script>
 <style>
+  /* metric-matched local fallbacks (measured widths), so the page reads the same if Google Fonts never arrive */
+  @font-face{font-family:'Red Hat Display Fallback'; font-weight:400 600; src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'); size-adjust:99.3%; ascent-override:103%; descent-override:31%; line-gap-override:0%;}
+  @font-face{font-family:'Red Hat Display Fallback'; font-weight:700 800; src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'); size-adjust:96.2%; ascent-override:106%; descent-override:32%; line-gap-override:0%;}
+  @font-face{font-family:'Red Hat Text Fallback'; font-weight:400 600; src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'); size-adjust:99.5%; ascent-override:103%; descent-override:31%; line-gap-override:0%;}
+  @font-face{font-family:'Red Hat Text Fallback'; font-weight:700 800; src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'); size-adjust:102.1%; ascent-override:100%; descent-override:30%; line-gap-override:0%;}
+
   :root{
-    --bg:#070911; --surface:#10131F; --surface2:#171B2B; --text:#F0F1F6; --muted:#8B90A5;
-    --line:rgba(255,255,255,0.08); --lime:#B6FF3D; --cyan:#4CE0E8; --white:#FFFFFF;
+    --paper:#F1F0EB; --plate:#FAF9F5; --ink:#1E2638; --ink-2:#2E3850; --muted:#525969; --rule:#D3D0C6; --rule-ink:#9C988C; --ctl:#7C786D;
+    --gold:#D18A16; --gold-soft:#F3DDB0; --rose:#B2506A; --on-ink:#ECEAE3; --on-ink-muted:#B9BCC6; --gold-on-ink:#E8A83A;
+    --display:'Red Hat Display','Red Hat Display Fallback',Arial,sans-serif; --text:'Red Hat Text','Red Hat Text Fallback',Arial,sans-serif;
+    --hdr-h:0px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Sora',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  body{font-family:var(--text); font-size:17px; line-height:1.62; color:var(--ink); background:var(--paper); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:var(--display); font-weight:700; letter-spacing:-0.015em; line-height:1.08; text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
-  .panel{background:var(--surface); border:1px solid var(--line); border-radius:20px;}
+  .wrap{max-width:1200px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  .nw{white-space:nowrap;}
 
-  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(7,9,17,0.85); backdrop-filter:blur(10px); z-index:100;}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{display:flex; align-items:center; gap:10px; font-family:'Sora',sans-serif; font-weight:800; font-size:18px;}
-  .logo .mark{width:30px; height:30px; border-radius:9px; background:linear-gradient(135deg,var(--lime),var(--cyan)); display:flex; align-items:center; justify-content:center; color:var(--bg); font-weight:800; font-size:14px;}
-  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
-  .nav-links a{text-decoration:none; color:var(--muted);}
-  .btn-nav{background:var(--lime); color:var(--bg); padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:700; text-decoration:none;}
+  /* header: static on phones, sticky from 721px (height fixed, so --hdr-h is exact) */
+  .top{background:var(--paper); border-bottom:1px solid var(--rule); position:relative; z-index:100;}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:64px;}
+  .logo{display:inline-flex; align-items:center; gap:11px; min-height:44px; text-decoration:none; line-height:1.15;}
+  .logo svg{width:34px; height:34px; flex:none;}
+  .logo-name{font-family:var(--display); font-weight:700; font-size:20px; letter-spacing:-0.01em;}
+  .logo-name span{font-weight:500; color:var(--muted);}
+  .nav-links{display:none; gap:30px; font-size:16px; font-weight:500;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; text-decoration:none; color:var(--muted);}
+  .nav-links a:hover{color:var(--ink); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:6px;}
+  .nav .btn{display:none;}
 
-  /* HERO + WEBGL STAGE */
-  .hero{padding:70px 0 40px;}
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:40px; align-items:center;}
-  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--lime);}
-  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--lime); box-shadow:0 0 10px var(--lime);}
-  .hero h1{font-size:clamp(32px,4.2vw,50px); line-height:1.12; margin-top:16px;}
-  .hero h1 .u{color:var(--lime);}
-  .hero p{margin-top:20px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:460px;}
-  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
-  .btn-primary{background:var(--white); color:var(--bg); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
-  .btn-secondary{background:transparent; border:1px solid var(--line); color:var(--text); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:50px; padding:0 24px; border-radius:6px; font-family:var(--text); font-weight:700; font-size:17px; text-decoration:none; background:var(--ink); color:var(--plate); border:2px solid var(--ink); cursor:pointer; transition:background-color .15s ease, border-color .15s ease;}
+  .btn:hover{background:var(--ink-2); border-color:var(--ink-2);}
+  .btn svg{width:18px; height:18px; flex:none;}
+  .text-link{display:inline-flex; align-items:center; min-height:44px; font-weight:700; color:var(--ink); text-decoration:underline; text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:6px;}
+  .text-link:hover{text-decoration-color:var(--ink);}
 
-  .gl-stage{position:relative; height:420px; border-radius:24px; overflow:hidden; background:radial-gradient(circle at 50% 40%, #101830, #070911 70%); border:1px solid var(--line);}
-  .gl-stage canvas{display:block; width:100%; height:100%;}
-  .gl-badge{position:absolute; top:16px; left:16px; font-family:'Sora',sans-serif; font-size:10.5px; letter-spacing:0.06em; text-transform:uppercase; font-weight:700; color:var(--lime); background:rgba(182,255,61,0.1); border:1px solid rgba(182,255,61,0.3); padding:6px 12px; border-radius:100px;}
-  .gl-fallback{position:absolute; inset:0; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; color:var(--muted); font-size:13px; text-align:center; padding:20px;}
-  .gl-fallback svg{width:36px; height:36px; stroke:var(--lime); fill:none; stroke-width:1.2;}
+  /* hero: the plate leads on wide screens; on phones the words come first */
+  .hero{padding:30px 0 60px;}
+  .hero-grid{display:grid; gap:34px; align-items:center;}
+  .eyebrow{font-size:16px; font-weight:500; color:var(--muted); display:flex; align-items:center; gap:10px;}
+  .eyebrow svg{width:18px; height:18px; flex:none;}
+  .hero h1{font-size:clamp(40px, 5.2vw, 68px); line-height:1.02; letter-spacing:-0.025em; margin-top:16px; max-width:8.6em;}
+  .lede{margin-top:20px; font-size:18px; color:var(--muted); max-width:28em;}
+  .hero-ctas{display:flex; flex-wrap:wrap; align-items:center; gap:12px 26px; margin-top:28px;}
 
-  section{padding:76px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 44px;}
-  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:12px;}
-  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px; line-height:1.7;}
+  /* webgl-scene: an engraving-style plate, drawn live with WebGL; the same drawing is in the HTML as SVG */
+  .plate{margin:0; display:grid; grid-template-columns:minmax(0,1fr); gap:14px 20px; align-items:start;}
+  .stage{position:relative; aspect-ratio:3 / 2; background:var(--plate); border:1px solid var(--ink); box-shadow:0 0 0 6px var(--paper), 0 0 0 7px var(--rule-ink); overflow:hidden;}
+  .stage > svg, .stage > canvas{position:absolute; inset:0; width:100%; height:100%; display:block;}
+  .stage > canvas{opacity:0;}
+  .plate.is-live .stage > canvas{opacity:1;}
+  .plate.is-live .stage > svg{visibility:hidden;}
+  .stage{grid-row:1; margin-bottom:2px;}
+  .plate figcaption{grid-row:2; font-size:15px; color:var(--muted); line-height:1.5;}
+  .stage-ctl{grid-row:3;} /* phones: under the caption; from 600px: beside it (the caption stays the figure's last child) */
+  .plate figcaption b{font-family:var(--display); font-weight:700; color:var(--ink); margin-right:2px;}
+  .stage-ctl{display:flex; gap:8px; visibility:hidden;} /* space kept, so nothing moves when the live plate starts */
+  .plate.is-live .stage-ctl{visibility:visible;}
+  .plate.is-still [data-act="pause"]{visibility:hidden;} /* reduced motion: nothing to pause */
+  .stage-ctl button{display:inline-flex; align-items:center; justify-content:center; gap:8px; min-width:44px; min-height:44px; padding:0 12px; border:1.5px solid var(--ctl); border-radius:6px; background:var(--plate); color:var(--ink); font:500 15px/1 var(--text); cursor:pointer;}
+  .stage-ctl button:hover{border-color:var(--ink);}
+  .stage-ctl button svg{width:18px; height:18px; flex:none;}
+  .stage-ctl .ctl-turn{padding:0;}
+  .stage-ctl [data-act="pause"]{min-width:96px;} /* Pause and Play take the same room */
 
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .svc-card{padding:28px 22px;}
-  .svc-icon{width:44px; height:44px; border-radius:13px; background:var(--surface2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
-  .svc-icon svg{width:20px; height:20px; stroke:var(--lime); fill:none; stroke-width:1.6;}
-  .svc-card h3{font-size:16px; margin-bottom:8px; font-family:'Inter',sans-serif;}
-  .svc-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+  /* sections */
+  main > section{padding:72px 0;}
+  main > section#treatments{padding-top:28px;} /* the hero's own bottom padding already makes the gap */
+  h2{font-size:clamp(30px, 3.8vw, 46px);}
 
-  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
-  .about-visual{height:340px; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 30% 20%, rgba(76,224,232,0.15), transparent 60%), var(--surface);}
-  .about-visual svg{width:34px; height:34px; stroke:var(--lime); fill:none; stroke-width:1.3;}
-  .about-copy h3{font-size:24px; margin-bottom:14px;}
-  .about-copy p{font-size:14.5px; color:var(--muted); line-height:1.8;}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px;}
-  .mini-panel{padding:16px;}
-  .mini-panel b{font-family:'Sora',sans-serif; font-size:22px; display:block; color:var(--lime);}
-  .mini-panel span{font-size:11px; color:var(--muted);}
+  /* treatments: a legend, hairline rules, no cards */
+  .treat-head{display:grid; gap:14px 56px;}
+  .treat-head p{color:var(--muted); max-width:30em;}
+  .treat-list{list-style:none; display:grid; gap:0 56px; margin-top:38px; border-bottom:1px solid var(--rule);}
+  .treat-list li{display:grid; grid-template-columns:44px minmax(0,1fr); align-content:start; gap:4px 18px; padding:24px 0; border-top:1px solid var(--rule);}
+  .treat-list svg{width:44px; height:44px; grid-row:span 2;}
+  .treat-list h3{font-size:22px; letter-spacing:-0.01em;}
+  .treat-list p{color:var(--muted);}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
-  .contact-card{padding:36px;}
-  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--lime); font-weight:700; flex-shrink:0;}
-  .info-row .val{font-size:14px; color:var(--text);}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:1px solid var(--line); background:var(--surface2); color:var(--text); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
-  .form input::placeholder, .form textarea::placeholder{color:var(--muted);}
-  .form button{background:var(--lime); color:var(--bg); border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  /* studio: the one dark band */
+  .studio{background:var(--ink); color:var(--on-ink);}
+  .studio-grid{display:grid; gap:34px;}
+  .studio h2{color:#FFFFFF; max-width:12em;}
+  .studio p{margin-top:18px; color:var(--on-ink-muted); max-width:33em;}
+  .studio p strong{color:var(--on-ink); font-weight:700;}
+  .tally{list-style:none; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); border-top:1px solid rgba(236,234,227,.28); align-self:end;}
+  .tally li{padding:18px 10px 0 0;}
+  .tally li + li{padding-left:16px; border-left:1px solid rgba(236,234,227,.28);}
+  .tally b{display:block; font-family:var(--display); font-weight:700; font-size:clamp(28px, 3.4vw, 42px); line-height:1.1; color:var(--gold-on-ink); white-space:nowrap;}
+  .tally span{display:block; margin-top:4px; font-size:15px; line-height:1.4; color:var(--on-ink-muted);}
 
-  footer{padding:30px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  /* visit */
+  .visit-grid{display:grid; gap:34px; align-items:start;}
+  .info{margin-top:26px; border-top:1px solid var(--rule);}
+  .info div{display:grid; grid-template-columns:minmax(0,1fr); gap:2px 18px; padding:14px 0; border-bottom:1px solid var(--rule);}
+  .info dt{font-size:15px; font-weight:700; color:var(--muted);}
+  .info a{font-weight:700; color:var(--ink); text-decoration-color:var(--gold); text-decoration-thickness:2px; text-underline-offset:5px; display:inline-block; padding:10px 0; margin:-10px 0;}
+  .form{background:var(--plate); border:1px solid var(--ink); border-radius:4px; padding:24px 20px; box-shadow:6px 6px 0 var(--rule); scroll-margin-top:16px;}
+  .form h3{font-size:24px; margin-bottom:18px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-weight:700; font-size:16px; margin-bottom:6px;}
+  .field label span{font-weight:400; color:var(--muted);}
+  .field input{width:100%; border:1.5px solid var(--ctl); border-radius:4px; padding:11px 13px; font-family:var(--text); font-size:17px; color:var(--ink); background:#FFFFFF;}
+  .field input:hover{border-color:var(--ink);}
+  .form .btn{width:100%; margin-top:4px;}
+  .form-note{margin-top:12px; font-size:16px; color:var(--muted);}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -8px rgba(37,211,102,0.5); text-decoration:none;}
-  .wa-float svg{width:27px; height:27px; fill:white;}
+  footer{border-top:1px solid var(--rule); padding:26px 0 30px;}
+  .foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 24px; font-size:15px; color:var(--muted);}
 
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  .wa-float{display:none;}
 
-  @media (max-width:900px){
-    .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr;}
-    .gl-stage{height:320px;}
-    .svc-grid{grid-template-columns:1fr 1fr;}
-    .about-grid{grid-template-columns:1fr;}
-    .contact-grid{grid-template-columns:1fr;}
+  .js .reveal{opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
+
+  @media (min-width:600px){
+    .plate{grid-template-columns:minmax(0,1fr) auto;}
+    .stage{grid-column:1 / -1;}
+    .plate figcaption{grid-column:1;}
+    .stage-ctl{grid-column:2; grid-row:2;}
+    .info div{grid-template-columns:110px minmax(0,1fr); align-items:baseline;}
+    .form{padding:30px 28px;}
   }
-  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+  @media (min-width:721px){
+    :root{--hdr-h:69px;} /* the header box: 68px row + 1px rule */
+    html{scroll-padding-top:calc(var(--hdr-h) + 8px);} /* in-page links and focus land below the sticky header */
+    .form{scroll-margin-top:8px;}
+    .top{position:sticky; top:0;}
+    .nav{height:calc(var(--hdr-h) - 1px); min-height:0;}
+    .nav .btn{display:inline-flex; min-height:46px; font-size:16px; padding:0 20px;}
+    .hero{padding:48px 0 80px;}
+    main > section{padding:96px 0;}
+    main > section#treatments{padding-top:40px;}
+    .treat-list{grid-template-columns:repeat(2, minmax(0,1fr));}
+    .treat-list li:nth-child(2){border-top:1px solid var(--rule);}
+  }
+  @media (min-width:900px){
+    .nav-links{display:flex;}
+    .treat-head{grid-template-columns:minmax(0,1fr) minmax(0,1fr); align-items:end;}
+  }
+  @media (min-width:961px){
+    .hero-grid{grid-template-columns:minmax(0,1.22fr) minmax(0,1fr); gap:60px; align-items:start;}
+    .plate{grid-column:1; grid-row:1;}
+    .hero-copy{grid-column:2; grid-row:1; padding-top:14px;}
+    .plate figcaption{min-height:4.5em;} /* three lines kept, so a font swap never changes the plate's height */
+    .studio-grid{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr); gap:72px; align-items:end;}
+    .visit-grid{grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr); gap:60px;}
+  }
+  @media (min-width:1440px){
+    .wa-float{display:flex; position:fixed; right:26px; bottom:26px; z-index:90; width:56px; height:56px; border-radius:50%; align-items:center; justify-content:center; background:var(--ink); border:2px solid var(--plate); box-shadow:0 10px 20px -10px rgba(30,38,56,.6);}
+    .wa-float svg{width:26px; height:26px; fill:#FFFFFF;}
+  }
+  @media (max-width:720px){
+    .wrap{padding-left:20px; padding-right:20px;}
+  }
+  @media (max-width:420px){
+    .wrap{padding-left:16px; padding-right:16px;}
+    .logo-name{font-size:18px;}
+    .tally li{padding-right:6px;}
+    .tally li + li{padding-left:10px;}
+  }
+
+  /* demo tuning of the shared polish block (bar, focus ring) */
+  html:root{--nc-radius:6px;}
+  html .nc-bar{font-family:var(--text); border-top:1px solid var(--rule);}
+  @media (max-width:720px){
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#F1F0EB;--nc-fg:#1E2638;--nc-accent:#1E2638;--nc-on-accent:#F1F0EB;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><div class="mark">H</div>Helix Dental Digital Studio</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-nav" href="#contact">Book a scan</a>
-  </div>
-</nav>
-
-<header class="wrap hero reveal">
-  <div class="hero-grid">
-    <div>
-      <span class="eyebrow"><span class="dot"></span>Perungudi, OMR</span>
-      <h1>Your scan, rendered as a <span class="u">living 3D model.</span></h1>
-      <p>We don't just take an X-ray — we build a rotating digital model of your mouth you can watch spin on screen, so the plan for your treatment is something you can actually see.</p>
-      <div class="hero-ctas">
-        <a class="btn-primary" href="#contact">Book a scan</a>
-        <a class="btn-secondary" href="#services">See our tech</a>
-      </div>
-    </div>
-    <div class="gl-stage" id="glStage">
-      <span class="gl-badge">Live 3D render</span>
-      <canvas id="glCanvas"></canvas>
-      <div class="gl-fallback" id="glFallback" style="display:none;">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 3v18M3 12h18"/></svg>
-        <span>Interactive 3D model<br>(WebGL unavailable in this browser)</span>
-      </div>
-    </div>
+<header class="top" id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Helix Dental Digital Studio, home">
+      <svg viewBox="0 0 34 34" aria-hidden="true" focusable="false"><rect width="34" height="34" rx="6" fill="#1E2638"/><path d="M6 17c3.7-7.3 7.3-7.3 11 0s7.3 7.3 11 0" fill="none" stroke="#E8A83A" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="0 4.4"/><path d="M6 17c3.7 7.3 7.3 7.3 11 0s7.3-7.3 11 0" fill="none" stroke="#ECEAE3" stroke-width="2.2" stroke-linecap="round" stroke-dasharray="0 4.4"/></svg>
+      <span class="logo-name">Helix <span>Dental Digital Studio</span></span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#treatments">Treatments</a>
+      <a href="#studio">The studio</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a class="btn" href="#book">Book a scan</a>
   </div>
 </header>
 
-<section class="wrap" id="services">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Services</span><h2>Digital dentistry, modelled in real time.</h2></div>
-  <div class="svc-grid reveal">
-    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></svg></div><h3>3D Digital Scans</h3><p>A full model of your mouth, ready in minutes.</p></div>
-    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Guided Implants</h3><p>Placement simulated and confirmed before surgery.</p></div>
-    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Smile Simulation</h3><p>See your finished smile, rendered, before treatment starts.</p></div>
-    <div class="svc-card panel"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div><h3>Digital Aligners</h3><p>A full animated preview of every stage of movement.</p></div>
-  </div>
-</section>
-
-<section class="wrap" id="about">
-  <div class="about-grid reveal">
-    <div class="about-visual panel">
-      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-    </div>
-    <div class="about-copy">
-      <span class="eyebrow">The Studio</span>
-      <h3 style="margin-top:12px;">Every case, modelled before it's treated.</h3>
-      <p>Dr. [Name], BDS, MDS, invested early in full-mouth 3D imaging so patients never have to take a diagnosis on faith — you see the model, you see the plan, you decide.</p>
-      <div class="stat-row">
-        <div class="mini-panel panel"><b>6,000+</b><span>3D models rendered</span></div>
-        <div class="mini-panel panel"><b>12 yrs</b><span>Digital-first practice</span></div>
-        <div class="mini-panel panel"><b>4.9 ★</b><span>Google rating</span></div>
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow"><svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M9 16.5s5.5-5.2 5.5-9.3A5.5 5.5 0 0 0 3.5 7.2c0 4.1 5.5 9.3 5.5 9.3Z" fill="none" stroke="#1E2638" stroke-width="1.6"/><circle cx="9" cy="7.2" r="1.9" fill="#D18A16"/></svg>Perungudi, on OMR</p>
+        <h1 id="hero-title">Your mouth, mapped point by point.</h1>
+        <p class="lede">Helix is a digital dental studio on Rajiv&nbsp;Gandhi&nbsp;Salai. Before anything is planned, we make a 3D&nbsp;model of your mouth and put it on screen, so the plan is something you can see.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#book">Book a scan</a>
+          <a class="text-link" href="#treatments">Treatments we plan</a>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
 
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Visit</span><h2>See your scan rendered live.</h2></div>
-  <div class="contact-grid reveal">
-    <div class="contact-card panel">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">Rajiv Gandhi Salai, Perungudi, Chennai 600096</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 8 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--lime); font-weight:600;">Message the front desk →</a></div></div>
+      <figure class="plate">
+        <div class="stage" data-signature="webgl-scene" role="img" aria-label="Illustration: a lower dental arch of fourteen teeth on a model base, drawn in dots, with a spiral line wound along it.">
+<svg viewBox="0 0 1500 1000" data-fallback aria-hidden="true" focusable="false"><g fill="none" stroke-linecap="round"><path stroke="#6B707A" stroke-width="6" d="M414 688h0m0 24h0"/><path stroke="#6B707A" stroke-width="6.5" d="M601 804h0m-51-24h0m70 10h0m44-2h0m13 29h0m-139-89h0m10-8h0m132 46h0m29 11h0m-145 3h0m-37-46h0m162 43h0m-144-32h0m89 55h0m-54-1h0m18-36h0m24-23h0m-33 31h0m119 18h0m15 5h0m-103 14h0m0-36h0m67 29h0m-50-42h0m32 17h0m-254-107h0m115 110h0m67-37h0m10 11h0m-73 1h0m23 6h0m162 1h0m-63 40h0m71 15h0m-158-47h0m87-7h0m-10 23h0m42-35h0m-282-75h0m160 117h0m11-31h0m82-16h0m42 17h0m-99 23h0m-51-51h0m163 76h0m-78-36h0"/><path stroke="#6B707A" stroke-width="7" d="M486 735h0m-90-79h0m4 32h0m582 84h0m-221 0h0m-345-113h0m66 38h0m30 13h0m-93-6h0m68 54h0m265 0h0m32 10h0m-362-43h0m76 21h0m-20-28h0m4 25h0m492 5h0m-203 4h0m-318-61h0m337 91h0m-345-66h0m12 25h0m280 25h0m251-34h0m-199 63h0m-50 10h0m40 8h0m-304-66h0m276 73h0m-308-86h0m1-36h0m81 67h0m201-16h0m34 35h0m-246-49h0m0 31h0m462-4h0"/><path stroke="#6B707A" stroke-width="7.5" d="M400 712h0m66 17h0m35-2h0m-61-49h0m22 28h0m357 44h0m-390-70h0m-9 5h0m48 10h0m-1 55h0m-42-86h0m5 32h0m378 95h0m-371-70h0m379 44h0m13 10h0m-323-3h0m317 40h0m-13 8h0"/><path stroke="#6B707A" stroke-width="8" d="M288 536h0m580 212h0m-1 17h0m-479-96h0m-48-40h0m533 178h0m-497-123h0m537 118h0m-80-47h0m88 23h0m-529-87h0m-18 1h0m1-45h0m496 139h0m-487-89h0m-10-64h0m7 44h0m476 122h0m-485-138h0m-86-152h0m544 290h0"/><path stroke="#6B707A" stroke-width="8.5" d="M329 603h0m511 204h0m7-32h0m-487-155h0m533 161h0m68 4h0m-65 8h0m34-46h0m-26-16h0m0 12h0m29 43h0m-570-106h0m591 73h0m-623-130h0m662 123h0m-30 25h0m-599-125h0m-5 7h0m632 130h0m-103-22h0m58 6h0m11-35h0m-106 18h0m87 4h0m-31 18h0m-23-28h0m62-2h0m-36 15h0"/><path stroke="#6B707A" stroke-width="9" d="M1011 756h0m-662-118h0m8-5h0m746 82h0m-1-17h0m-757-56h0m-66-155h0m823 190h0m0 61h0m-98 33h0m-662-166h0m14 72h0m-3-15h0m-9-40h0m9-6h0m-5 45h0m1-33h0"/><path stroke="#6B707A" stroke-width="9.5" d="M1026 756h0m8-28h0m7-19h0m-719-119h0m718 150h0m210-129h0m-222 100h0m-697-75h0m680 87h0m-683-80h0m918-1h0m-228 127h0"/><path stroke="#6B707A" stroke-width="10" d="M324 627h0m736 122h0m15 3h0m-5-45h0m-12 15h0m1-17h0m-12 14h0m-729-141h0m-4-5h0m752 156h0m-749-130h0m739 141h0m-733-128h0m767 120h0m-45 34h0m-727-153h0"/><path stroke="#6B707A" stroke-width="10.5" d="M310 581h0m803 148h0m-807-173h0m5 48h0m776 86h0m-786-145h0m13 59h0m-4-32h0m-6 12h0m776 152h0m-763-111h0m-17-73h0m6 48h0m776 110h0m3 12h0"/><path stroke="#6B707A" stroke-width="11" d="M502 360h0m760 222h0m-20 47h0m-735-243h0m624 319h0m10 8h0m-836-129h0m825 134h0m-628-316h0m642 272h0m-840-111h0m-12-16h0m844 124h0m-827-68h0m-14-42h0m2-32h0m823 165h0m-619-350h0m-194 237h0m-7-18h0m825 118h0m-9 59h0m-612-382h0m2 17h0m-3 1h0m628 353h0m11-37h0"/><path stroke="#6B707A" stroke-width="11.5" d="M1154 683h0m-871-158h0m214-174h0m3 50h0m-204 157h0m-5-45h0m3 14h0m206-171h0m-5 53h0m668 259h0m-4 43h0m-664-315h0m-202 158h0m205-166h0m664 306h0m-873-177h0m2 3h0m8 48h0m2 8h0m-6-51h0m-2 20h0m5 26h0m198-150h0m-199 136h0m852 154h0m-649-335h0m-3 27h0m-207 117h0m11 65h0m-13-80h0m9 36h0m-3 0h0m200-172h0m-197 180h0m884 147h0m-684-324h0m691 285h0m-35-3h0m-658-271h0m689 290h0"/><path stroke="#6B707A" stroke-width="12" d="M490 396h0m3 23h0m703 243h0m-2-19h0m39-40h0m-10 1h0m4 36h0m-3-21h0m-735-207h0m755 180h0m-11 49h0m7-19h0m17 9h0m-767-206h0m688 239h0m7-26h0m24-17h0m-20 58h0m11-35h0m-35 4h0m69-31h0m-59 74h0m27-26h0m18-34h0m-727-237h0m720 244h0m27-30h0m-74 93h0m96-108h0m-43 51h0m-727-261h0m734 278h0m-945-156h0m946 121h0m-50 29h0m83-46h0m-88 74h0m39-15h0m7-11h0"/><path stroke="#6B707A" stroke-width="12.5" d="M487 442h0m1-39h0m788 175h0m-9 13h0m-3 33h0m-777-193h0m-1-20h0m788 196h0m-786-220h0m797 197h0m-795-141h0m-4-59h0m800 188h0m-13 48h0m-12-3h0m7-39h0m-779-143h0m791 147h0m8-24h0m-804-153h0m795 207h0m-793-186h0m782 180h0m16-48h0m-798-162h0m792 163h0"/><path stroke="#6B707A" stroke-width="13" d="M1304 550h0m-15 43h0m-803-140h0m847-15h0m-849 1h0m842 44h0m-5 22h0m6-32h0m-26 90h0m-8-18h0m41-119h0m-848 1h0m845 18h0m-7 52h0m-840-55h0m0-39h0m848 38h0m-28 82h0m-10 44h0m12-7h0m17-60h0m-25 82h0m30-107h0m4-31h0m1-10h0m-14 87h0m8-40h0m-6 30h0m-836-58h0m846 1h0m-37 98h0m6-1h0m29-95h0m-844-17h0m-2-17h0m846 41h0m0 1h0m-845-45h0m819 113h0m-8 51h0m5-46h0m-813-80h0m838 31h0m4-21h0m-844-10h0m847-14h0m-847-10h0m839 66h0"/><path stroke="#6B707A" stroke-width="13.5" d="M1311 522h0m-8 46h0m11-63h0m7-4h0m5-28h0m-15 67h0m6-35h0m-1-13h0m2 30h0m3-37h0m-5 44h0m2-23h0m5-30h0m5-17h0m-22 86h0m5-35h0m-3 41h0m9-32h0m-7 14h0m4-16h0m1-10h0m0 13h0m6-41h0m6-16h0m-24 99h0"/><path stroke="#6B707A" stroke-width="14" d="M1306 544h0m2-16h0m2-14h0m-2 13h0"/><path stroke="#B2506A" stroke-width="2" d="M1075 595h0m-561 55h0m-86-66h0m201 88h0m318-34h0m-117 39h0m-454-100h0m697 5h0m-624 3h0m250 91h0m-277-73h0m189 54h0m219-18h0m-374-27h0m213 27h0m-201-18h0m48 6h0m430-9h0m346-176h0m-861 125h0m118 80h0m-16-7h0m141 46h0m222-22h0m-171 19h0m-376-145h0m56 58h0m216 66h0m-56 7h0m176 9h0m-169-25h0m-28-14h0m616-99h0m-571 129h0m191 16h0m-471-273h0m502 247h0m-136 13h0m604-233h0m-456 211h0m105 3h0m-490-57h0m-63-73h0m795 32h0m-96 58h0m-422 50h0m63 11h0m-375-142h0m141 94h0m359 33h0m-331-21h0m-125-59h0m-74-96h0m168 131h0m-176-194h0m204 199h0m-91-35h0m136 78h0m267 7h0m156-34h0m111-32h0m-639-41h0m515 92h0m-593-143h0m852 0h0m-63 49h0m-636 80h0m17 18h0m39 11h0m634-178h0m-858 31h0m383 171h0m-239-68h0m588-38h0m-497 68h0m473-78h0m-83 70h0m-359 38h0m667-251h0m-727 216h0m-237-187h0m204 155h0m695-117h0"/><path stroke="#B2506A" stroke-width="2.5" d="M298 413h0m152-67h0m-57 238h0m406 82h0m-141-20h0m-311-95h0m146 88h0m-38-41h0m183 60h0m-268-101h0m100 49h0m459 61h0m-168 2h0m-329-57h0m-106-132h0m908 40h0m-778-236h0m-4 292h0m643 34h0m-444 77h0"/><path stroke="#B2506A" stroke-width="3" d="M872 671h0m166-35h0m186-143h0m-687 131h0m530 0h0m-83 34h0m-680-227h0m-11 2h0m399 260h0m370-82h0m-764-262h0m943 164h0m-67 55h0m-808-23h0m8-12h0m79 91h0"/><path stroke="#B2506A" stroke-width="3.5" d="M1040 626h0m-486 7h0m-241-132h0m371 157h0m634-274h0m-262 241h0m252-261h0m-448 301h0m35 10h0m-573-169h0m53 44h0m-59-62h0m277 158h0m31 5h0m-220-75h0m374 86h0m-490-245h0m629 254h0m181-73h0"/><path stroke="#B2506A" stroke-width="4" d="M1229 527h0m-599 162h0m-248-136h0m512 96h0m-498-79h0m755 1h0m-827-74h0m211 111h0m44 31h0m572-275h0m-850 112h0m12-44h0m-20 14h0m720 182h0m-19 25h0m292-202h0m-545 210h0m18-1h0m-446-198h0m778 158h0m-87 27h0m-613-90h0m634 70h0m-217 14h0m434-137h0"/><path stroke="#B2506A" stroke-width="4.5" d="M672 629h0m-185-24h0m366 75h0m449-227h0m-934 127h0m126 34h0m-165-98h0m-32-61h0m170 180h0m237 23h0m548-143h0m-143 93h0m-63 7h0m-723-86h0m270 154h0m243-53h0m314-41h0m-387 109h0m-460-251h0m3-9h0m146-82h0m-39 249h0m-80-99h0m65 55h0"/><path stroke="#B2506A" stroke-width="5" d="M1184 555h0m-882-98h0m-21-62h0m7 50h0m45 99h0m322 97h0m569-106h0m-757-228h0m859 74h0m-1041 5h0m842 218h0m-840-240h0m897 203h0m-505 132h0m154-8h0m107-19h0m-372 12h0m601-101h0m150-214h0m-104 168h0m-83 41h0m-550 109h0m-289-301h0m588 262h0m-600-218h0m33 14h0m690 190h0m-713-267h0m171-11h0m748 173h0m-709 84h0m704-70h0"/><path stroke="#B2506A" stroke-width="5.5" d="M1285 469h0m-1002-58h0m996 71h0m-1000-74h0m166 222h0m-168-208h0m1013 38h0m-993-59h0m367 301h0m-20 2h0m68-1h0m452-355h0m-670 302h0m493 22h0m-550-47h0m244 15h0m584-150h0m-458 208h0m-303-41h0m-165-107h0m389 153h0m-200-31h0m591-85h0m192-196h0m-562 312h0m-157-9h0m-117-414h0m303 423h0m-492-328h0m-2 5h0m177-101h0m809 220h0m-977-123h0m395 274h0"/><path stroke="#B2506A" stroke-width="6" d="M463 323h0m852 78h0m-445 251h0m174-3h0m-523-51h0m100 119h0m-30-12h0m360-34h0m-646-206h0m237 216h0m75 19h0m680-267h0m-841 204h0m129 76h0m701-234h0m-629 231h0m647-357h0m-333 317h0m149-59h0m-636 42h0m-20-338h0m140 402h0m25-15h0m52 10h0m-78 17h0m273-42h0m-225 46h0m-191-403h0m177 393h0m-343-254h0m67 36h0m-59-173h0m-14 23h0m110 264h0m156 70h0m149 22h0m-92-3h0m36 7h0m217-27h0m446-281h0m-922 192h0m228 130h0m604-183h0m-153 94h0m-609-232h0m137 312h0m-184-88h0m894-190h0m-900 196h0m175 82h0m578-376h0m-868 116h0m286 243h0"/><path stroke="#B2506A" stroke-width="6.5" d="M536 694h0m218 46h0m-398-165h0m62 45h0m91 47h0m57 52h0m405-97h0m144-2h0m-141 65h0m-458-3h0m803-274h0m-851-56h0m51 353h0m35 0h0m-21-22h0m223 30h0m452-157h0m-753-156h0m16-113h0m268 443h0m-14-13h0m-265-351h0m265 362h0m-40 5h0m316-68h0m-311 57h0m635-327h0m-620 345h0m16-3h0m313-83h0m-750-220h0m187-113h0m-174 150h0m9-148h0m29 193h0m-18-217h0m435 426h0m547-258h0m-773 221h0m-27-81h0m800-185h0m-768 290h0m-5-11h0m290 3h0m260-67h0m-648-8h0m858-138h0m-607 251h0m-394-300h0m260 259h0m167 19h0"/><path stroke="#B2506A" stroke-width="7" d="M383 603h0m407 110h0m-319-385h0m-97 269h0m597 103h0m-465-15h0m347 10h0m134-61h0m-526-244h0m28 297h0m795-189h0m36-137h0m-859 13h0m-115 190h0m-31-36h0m488 216h0m184-44h0m-551-53h0m-29-78h0m-13 66h0m533 47h0m-418 15h0m301 37h0m-392-90h0m27 0h0m669-50h0m-651 68h0m-182-288h0m82 211h0m551 100h0m-432-16h0m-201-229h0m712 189h0m-532 48h0m868-286h0m-862-30h0m-167 135h0m138 163h0m29-3h0m510 58h0m-528-43h0m342 69h0m-2-11h0m-8-6h0m-329-59h0m366 61h0m-338-48h0m12 1h0m824-254h0m-817 270h0m350-54h0m-422 6h0m45 27h0m835-314h0m-809 315h0m-76-43h0m32 23h0m-177-264h0m168 263h0"/><path stroke="#B2506A" stroke-width="7.5" d="M382 621h0m793-81h0m-704-206h0m616 301h0m-254 94h0m-450-97h0m515 61h0m-415-382h0m716 247h0m-823 59h0m490 102h0m409-209h0m-948 49h0m61 56h0m-87-113h0m849-152h0m-856-2h0m2-9h0m0 3h0m76 265h0m960-242h0m-848-67h0m375 408h0m-528-126h0m47 30h0m-59-73h0m788 59h0m-226 101h0m-596-283h0m12-8h0m644 280h0m353-202h0m14-54h0m-46 98h0m-797-157h0m-142 175h0m691 118h0m-186 48h0"/><path stroke="#B2506A" stroke-width="8" d="M881 732h0m125-59h0m244-176h0m-299 194h0m-73 26h0m-384-425h0m773 227h0m-371 192h0m262-110h0m-7-246h0m-123 309h0m-694-98h0m18 15h0m563 131h0m-26-9h0m-525-100h0m568 91h0m65-13h0m-719-230h0m1 17h0m184-66h0m868-34h0m-972 228h0m541 126h0m-565-145h0m659 134h0m-42-10h0m-484-313h0m832 91h0m18-47h0m-1008 90h0m653 90h0m-34 97h0m266-138h0m132-167h0m-1032 84h0m854 118h0m-286 125h0m-12-13h0m-487-104h0m488 123h0m249-104h0m-819-173h0m56 102h0m29 62h0m544 76h0m-545-104h0m477 111h0"/><path stroke="#B2506A" stroke-width="8.5" d="M346 580h0m0-69h0m-51-103h0m63 199h0m-11-99h0m-42 9h0m19 44h0m857 24h0m-856-11h0m780 72h0m-755-51h0m-10-20h0m172 27h0m440 111h0m46-17h0m-703-352h0m668 373h0m228-164h0m-907-82h0"/><path stroke="#B2506A" stroke-width="9" d="M289 470h0m723 222h0m23-2h0m-692-95h0m-51-110h0m1024-47h0m-1004 95h0m921 14h0m-217 133h0m-696-130h0m686 160h0m28-32h0m-617-114h0m626 105h0m-19 27h0m-685-110h0m782 42h0m-95 46h0m-723-162h0m948 62h0m-147 93h0"/><path stroke="#B2506A" stroke-width="9.5" d="M1187 543h0m-900-76h0m862-112h0m-876 59h0m206-79h0m-165 121h0m0 92h0m10 33h0m-21-176h0m746 271h0m90-56h0m-853-158h0m806 184h0m73-46h0m-847-35h0m748 102h0m7-14h0m71-291h0m-678 35h0m795 168h0m-113-214h0m-52 308h0m-778-106h0m973-128h0m-27 120h0m62-174h0m-277 318h0m-728-122h0m991-113h0m-18 39h0m-204 88h0"/><path stroke="#B2506A" stroke-width="10" d="M1118 652h0m-810-119h0m157-194h0m816 173h0m-962-58h0m134-60h0m11-53h0m610 337h0m-596-390h0m-45 268h0m-122 1h0m1001-93h0m-1002 81h0m-20-64h0m184-100h0m617 289h0m-817-241h0m9-66h0m23 168h0m1008-87h0m-839-77h0m7-40h0m7-29h0m573 393h0m-581-400h0m-9 106h0m-188 62h0m931 106h0m-129 93h0m-616-246h0m-162 133h0"/><path stroke="#B2506A" stroke-width="10.5" d="M475 375h0m-186 107h0m211-169h0m632 348h0m-639-346h0m7-14h0m-199 226h0m1033-149h0m-209 257h0m-843-184h0m855 182h0m6 7h0m-842-107h0m-2-19h0m203-185h0m-30 15h0m831 88h0m-799-98h0m-29 84h0m29-105h0m596 274h0m46 40h0m-848-103h0m189-200h0m840 99h0m-1024 121h0m195-236h0m694 282h0m8-10h0m-895-41h0m1024-168h0m-149 226h0m-677-291h0m616 362h0m-846-258h0m19 84h0m5 17h0m197-204h0m747 239h0m-946-39h0m62-2h0"/><path stroke="#B2506A" stroke-width="11" d="M288 489h0m181-68h0m782 135h0m-86 58h0m-671-291h0m-16 24h0m-192 128h0m4 18h0m944 65h0m-960-158h0m15 95h0m933 67h0m-732-234h0m663 314h0m-864-152h0m-14-39h0m17 51h0m-8-36h0m-10-28h0m0-7h0m11 38h0m-11-61h0m225-75h0m-2-12h0m-5 14h0m4 3h0m-17 93h0m15-84h0m777 180h0m-983-48h0m2 12h0m938 69h0m-936-51h0m184-122h0m203 204h0m657-201h0m-1059-4h0m209-51h0m-192 180h0m200-183h0m3-2h0"/><path stroke="#B2506A" stroke-width="11.5" d="M1249 550h0m-51 50h0m78-75h0m-803-176h0m13-4h0m5 15h0m-25-77h0m766 303h0m-91-216h0m-833 34h0m174-57h0m10 4h0m-4 15h0m701 252h0m-712-225h0m760 179h0m6-18h0m-754-196h0m-215 81h0m1013 72h0m-90 98h0m-25 9h0m11-16h0m-910-182h0m205-67h0m0 12h0m685-17h0m169 61h0m-155 213h0m-688-282h0m-199 160h0m921 78h0m-47 56h0m-691-230h0m10-57h0m701 268h0m-694-268h0m692 279h0m-11 7h0m61-64h0m13-7h0m19 8h0m-776-220h0"/><path stroke="#B2506A" stroke-width="12" d="M1245 581h0m-36 11h0m15-7h0m65-66h0m29-68h0m-100 142h0m-733-242h0m782 208h0m5-2h0m-801-128h0m859-13h0m-115 170h0m-728-227h0m831 6h0m-76 131h0m1 78h0m45-44h0m-72 47h0m-731-206h0m727 230h0m71-69h0m-799-170h0m804 179h0m46-136h0m-26 72h0m-163-117h0m58 256h0m-741-219h0m760 179h0m74-69h0m-120 31h0m125-47h0"/><path stroke="#B2506A" stroke-width="12.5" d="M483 396h0m-1-18h0m1-9h0m856 19h0m-41 124h0m38-98h0m-44 120h0m-809-129h0m-2-36h0m0-5h0m816 166h0m-618 60h0m-196-175h0m-1-7h0m2-21h0m-2 1h0m-2-9h0m2-5h0m857 19h0m-3 11h0m-35 118h0m36-116h0m-855-23h0m854 28h0m4-33h0m-857 18h0m855 0h0m-30 98h0m27-71h0m-853-24h0m1 31h0m-1-26h0m2-26h0m841 64h0m-21 58h0m-822-88h0m856-13h0m-859-39h0m821 155h0m4-6h0m-822-125h0m830 91h0m16-40h0m-847-59h0m1 20h0m0 2h0m-1-10h0m828 95h0"/><path stroke="#B2506A" stroke-width="13" d="M1318 464h0m13-31h0m-2-2h0m-849-16h0m835 72h0m19-59h0m-853-23h0m1 31h0m840 25h0m-12 39h0m-828-66h0m843 21h0m-842-27h0m840 38h0m9-44h0m-9 35h0m-845-47h0m842 68h0m-12 34h0m-826-81h0m838 41h0m-840-70h0m852 36h0m-4 6h0m8-30h0m-855 11h0m853-10h0m-859 20h0m4-33h0m842 57h0m-14 42h0m22-57h0m1-11h0m2-3h0m6-38h0m-863 39h0m855 11h0m2-7h0m-6 26h0m-15 25h0m-831-96h0m856 23h0m-853 37h0m-1-34h0m841 36h0m-5 29h0m-837-61h0m856-17h0m-862 30h0m842 40h0m-844-51h0m839 65h0m-832-69h0"/><path stroke="#B2506A" stroke-width="13.5" d="M1315 481h0m-2 7h0m3-24h0m-4 41h0m3-30h0"/><path stroke="#B2506A" stroke-width="15" d="M828 590h0"/><path stroke="#1E2638" stroke-width="2" d="M613 492h0m-41-7h0m55 17h0m-40-9h0m34 2h0m-56-5h0m-9-6h0m-78-16h0m38 16h0m0 12h0m-104-110h0m-7 12h0m9 5h0m-7 4h0m-58 15h0m16-4h0m-4-28h0m-12 18h0m11 4h0m10-18h0m-12 43h0m2-36h0m1 27h0m22-12h0m-11-8h0m3 24h0m11-58h0m-52 2h0m64-24h0m-46 32h0m15-13h0m-13-1h0m-19 23h0m3-37h0m-11 16h0m49 4h0m-43-10h0m58-2h0m-47 17h0m-22-33h0m62-21h0m-5 6h0m-23-4h0m38 10h0m-80 19h0m67-59h0m-47 46h0m38-15h0m-46 7h0m66-12h0m3-10h0m-60 15h0m-16 8h0m-3-5h0m57-10h0m-25 2h0m2 7h0m47-11h0m-57-2h0m-1 19h0m-14-10h0m77-63h0m7 3h0m-76 12h0m53-13h0m11 16h0m-8-27h0m-1-5h0m399 259h0m-54-5h0m21 4h0m-41 5h0m10-9h0m140 19h0m-18-1h0m144-32h0m5-17h0m-2-17h0m22 5h0m-6 23h0m-7-31h0m-3 44h0m12-50h0m0 23h0m64 26h0m23 7h0m-52-44h0m62 34h0m-16 17h0m11-42h0m-32 17h0m-13 9h0m-8-19h0m15 23h0m-11-39h0m6-9h0m6 28h0m27 14h0m-5-10h0m14-25h0m-36 9h0m12 0h0m-28 18h0m36 19h0m39-56h0m-22-13h0m3 11h0m18-18h0m52 16h0m-18 30h0m-44-27h0m26 25h0m15-10h0m-17 2h0m12 9h0m-13-37h0m-25-5h0m30 16h0m25 7h0m-36 2h0m35-19h0m-70-2h0m52 3h0m27 25h0m-44-31h0m20 15h0m-42-27h0m97-16h0m-42-16h0m45 45h0m-56-47h0m20 20h0m51 17h0m-18 17h0m19-36h0m-51-6h0m26 29h0m7-10h0m-23 2h0m21-45h0m-10 32h0m-11 5h0m32 38h0m-75-43h0m42-13h0m6 8h0m45 9h0m-38 5h0m11-18h0m-48 4h0m64 43h0m-74-50h0m80 39h0m33-56h0m6-6h0m-28-41h0m-55 20h0m32-1h0m37 15h0m-27-10h0m-18-1h0m6-16h0m26-12h0m1-6h0m-49 28h0m37-7h0m13 22h0m10-18h0m8 8h0m-53-6h0m-9 8h0m37-11h0m13 10h0m-13 0h0"/><path stroke="#1E2638" stroke-width="2.5" d="M631 512h0m-58-16h0m27-10h0m-41 8h0m-162-93h0m2 40h0m12 1h0m-63-1h0m7 8h0m-5-48h0m-3 29h0m-22-42h0m6 17h0m56-48h0m-77-13h0m95-3h0m-13-48h0m-18 2h0m31 37h0m9-57h0m0 9h0m-10-37h0m-12-1h0m6 1h0m325 272h0m283-25h0m-17 8h0m88 17h0m33-34h0m-73-26h0m79-44h0m41 68h0m10-59h0m11-60h0m17 30h0m0-14h0m-7-18h0m20 7h0m28 61h0m-41-61h0m32-51h0m15 22h0"/><path stroke="#1E2638" stroke-width="3" d="M580 501h0m-111-33h0m41 11h0m-98-17h0m-13-71h0m-4 42h0m-33 24h0m6-11h0m-16-52h0m-26 15h0m-4-10h0m86-27h0m-2-17h0m-53-1h0m-38 20h0m30-78h0m-17 21h0m8-18h0m19 20h0m39-19h0m-60-26h0m36-27h0m9 4h0m-52 40h0m17-27h0m56-13h0m289 269h0m19 3h0m273-47h0m-5 32h0m8-46h0m-1 70h0m-6-37h0m1 24h0m22 4h0m-24-40h0m12 39h0m-7-33h0m104 35h0m-36-19h0m56 5h0m-17-49h0m-46-10h0m70 14h0m-52 44h0m53-34h0m-24-35h0m80 41h0m12-24h0m58-40h0m-62-30h0m54 61h0m-34-85h0m12 14h0m22 23h0m1-25h0m44-1h0m-57-56h0m-38 25h0m75-5h0m15 7h0m1 40h0"/><path stroke="#1E2638" stroke-width="3.5" d="M609 486h0m-41 20h0m-20-11h0m32 21h0m43 13h0m-17-14h0m9 16h0m25-10h0m-42-40h0m-103 6h0m10 8h0m-84-51h0m-17 31h0m9 6h0m6-27h0m-21 7h0m-43 4h0m-12-39h0m31 26h0m-30-34h0m35-59h0m15-14h0m-48 2h0m33 1h0m-48 7h0m23-55h0m26-8h0m-62 32h0m42-26h0m-53 60h0m80-55h0m-27-54h0m62 39h0m-60-45h0m-23 24h0m69-16h0m311 279h0m-20 0h0m177-8h0m-21 12h0m31-26h0m89-34h0m14 68h0m-20-22h0m2-17h0m-1-19h0m-2 27h0m21 41h0m-13-9h0m34-104h0m44 75h0m13 5h0m15 17h0m-9-10h0m29 0h0m38-96h0m-46-2h0m84 49h0m-17 19h0m-10-4h0m32-43h0m57-77h0m-17 88h0m9-81h0m-15-4h0m57-50h0m-2 69h0m8-32h0m-16-38h0m-65 6h0"/><path stroke="#1E2638" stroke-width="4" d="M596 554h0m10-21h0m9 23h0m-40-23h0m47 8h0m-53-16h0m23 37h0m-8 12h0m43-4h0m-47-46h0m-1 17h0m70-15h0m-47 36h0m9 14h0m22-43h0m-42 38h0m-20-16h0m4 9h0m-25-60h0m64 62h0m-15 6h0m-13-33h0m-4 18h0m-24-47h0m56 36h0m12 13h0m-33-30h0m-20-10h0m-87-37h0m32 32h0m-15-9h0m-27-27h0m39 45h0m-20-53h0m-70 2h0m-33-51h0m22 84h0m8 1h0m-17-6h0m17-104h0m-1 93h0m-2 9h0m-16-13h0m4 23h0m-15-58h0m-37 23h0m-14-36h0m4 12h0m29 14h0m-31-51h0m3 46h0m67-96h0m-49-55h0m-32-12h0m-5 9h0m-22 46h0m112-99h0m-3-8h0m-37 21h0m345 282h0m77-29h0m-85 61h0m39-53h0m21-8h0m-62 19h0m21-2h0m33-11h0m-57 43h0m-5-20h0m40-45h0m-21 66h0m19-38h0m-12 15h0m169-31h0m-24-2h0m-34 26h0m156 11h0m-18 18h0m-20-25h0m13 27h0m-15-51h0m63-44h0m-2-29h0m-51 95h0m36-3h0m-38 11h0m1-54h0m-8 35h0m117-81h0m15 100h0m-33-19h0m39 7h0m-13-87h0m99-16h0m-33 77h0m-12-93h0m25 90h0m11-9h0m43-129h0m20 86h0m-102-60h0m67-10h0m44 44h0m-7 17h0m-35-130h0m17 19h0m27-19h0"/><path stroke="#1E2638" stroke-width="4.5" d="M614 585h0m-62-71h0m87 44h0m-80-19h0m30 43h0m42 2h0m15-42h0m-81 31h0m-4-17h0m-75-31h0m2-21h0m3-7h0m14-30h0m-26 34h0m34 36h0m-12 7h0m-30-66h0m20 42h0m-16-32h0m26 65h0m0-17h0m4-6h0m-10-24h0m-103-45h0m-2-20h0m40 15h0m-3 43h0m-32-28h0m1 22h0m8 21h0m-34-34h0m-10 4h0m11-12h0m-22-81h0m54-11h0m-54 95h0m20-117h0m-46 9h0m2 63h0m-6-40h0m17-43h0m-16 76h0m59-80h0m-58 34h0m76-89h0m-90 49h0m100-22h0m-101 57h0m75-58h0m-25-21h0m7 24h0m55 25h0m-94-26h0m48-74h0m49 6h0m-66-4h0m70 33h0m-96 0h0m66-21h0m326 344h0m44-13h0m-78-44h0m52 24h0m16 24h0m-14 0h0m33-63h0m-71 67h0m30-10h0m-18-82h0m31 40h0m21 22h0m-9-17h0m13-1h0m-48 35h0m12-25h0m-22 33h0m-15-14h0m77-17h0m-24 5h0m29-22h0m-81 16h0m31 39h0m36-23h0m-75-11h0m91-39h0m12 2h0m58 20h0m12-7h0m-8 14h0m-13 5h0m24-48h0m-16 53h0m-11-15h0m14 29h0m109-2h0m49-56h0m-54 40h0m2-63h0m64-39h0m-74 98h0m64-46h0m-57-3h0m-4 30h0m12-54h0m25 98h0m-16 1h0m92-44h0m-13-2h0m61-29h0m-33 47h0m23-15h0m14-54h0m-52 61h0m114-52h0m-79-74h0m85 48h0m-28 49h0m-30-105h0m117 29h0m-79-74h0m66 97h0m-106-60h0m81-39h0m36 46h0m-20-30h0m9-68h0m52 71h0m-79-65h0m57-1h0m19 36h0m-74-42h0"/><path stroke="#1E2638" stroke-width="5" d="M627 490h0m-60 99h0m34 18h0m45-41h0m-96-16h0m44 79h0m-43-67h0m37 45h0m-46-98h0m71 125h0m14-40h0m-42-112h0m64 18h0m-27 125h0m-48-3h0m38-6h0m-65-80h0m33 57h0m22-1h0m-28 5h0m78-40h0m-96 13h0m100-35h0m-41 73h0m-40 25h0m4-29h0m-7 5h0m69-18h0m-20 24h0m-13-14h0m-9 21h0m8 17h0m7 5h0m30-66h0m-27 18h0m8 40h0m-41-24h0m-39-88h0m43 69h0m-76-13h0m-34-38h0m27 27h0m-34-55h0m8 5h0m26 79h0m-9-32h0m-1 32h0m-9-51h0m5 7h0m33-26h0m-5 30h0m-49-63h0m5 34h0m-5 0h0m-80-118h0m37 112h0m6-100h0m3 59h0m-21 56h0m7-2h0m16-32h0m-28 24h0m-14-26h0m42-41h0m-45-60h0m0 84h0m-7-90h0m38-12h0m-81 81h0m-2-59h0m-3 23h0m75-50h0m-22 6h0m-35 2h0m14-37h0m-58-23h0m6-9h0m8-7h0m69 0h0m-80 8h0m1-9h0m65-1h0m-64 3h0m59-54h0m-15-3h0m53 7h0m-69-8h0m78 17h0m-75-21h0m81 48h0m352 292h0m-44 56h0m-1-11h0m39-56h0m-54 39h0m-16-12h0m12 20h0m77-69h0m-76 83h0m-28-67h0m61 28h0m-27 30h0m64-49h0m-64 68h0m73-115h0m-14 39h0m-99-45h0m86 72h0m-39 12h0m-23 6h0m8 30h0m21-43h0m-27 28h0m2-23h0m159-24h0m0-29h0m3 9h0m-20 24h0m14 4h0m-7-23h0m-11 30h0m24-66h0m-12 50h0m63-73h0m-33 13h0m86 77h0m-1-140h0m-24 50h0m51 45h0m-31 35h0m-12-4h0m5-4h0m-21-25h0m36 32h0m-29-20h0m131-117h0m30 1h0m6 43h0m3-29h0m-20 88h0m-45-117h0m1 114h0m23 9h0m34-45h0m-48-61h0m112-35h0m-32-10h0m100-39h0m-16 102h0m-68-112h0m65 30h0m-89-8h0m112 7h0m4-7h0m-95-8h0m88 38h0m38-40h0m-14-35h0m6 68h0m-84-79h0m17-1h0m11-3h0m26 4h0"/><path stroke="#1E2638" stroke-width="5.5" d="M559 583h0m75 59h0m20-70h0m-95 25h0m1 9h0m66 39h0m10-33h0m-7 9h0m-64 3h0m-84-29h0m12-8h0m-2-11h0m-26-58h0m23 49h0m-26-82h0m-3-10h0m55 123h0m-51-102h0m55 77h0m12-76h0m-54 68h0m-8-23h0m46 46h0m-34-1h0m5-10h0m-2-22h0m1 29h0m-77-47h0m32-123h0m-5 119h0m-48-83h0m61 18h0m-4-19h0m-17 99h0m-30-32h0m-9-35h0m58-5h0m-12-71h0m-22 142h0m-24-123h0m44 131h0m14-115h0m-58 22h0m-25 34h0m-20-25h0m28 31h0m-34-67h0m19 68h0m-17-57h0m-21-40h0m71-63h0m34 30h0m-26-31h0m-15 11h0m42-5h0m-14-48h0m-102 30h0m6-13h0m13-4h0m18-1h0m69-57h0m-69 2h0m87 32h0m-89-28h0m-19 33h0m46-32h0m32-6h0m-2 4h0m-52 0h0m394 367h0m11 28h0m18-20h0m-63 7h0m0 10h0m46-28h0m39-29h0m-44 19h0m11 20h0m10-10h0m7-7h0m-73 6h0m101-80h0m-39 107h0m-15-6h0m25-35h0m7-8h0m-24 10h0m-16 42h0m28-152h0m34 51h0m83-18h0m-26 85h0m25-50h0m-8-20h0m11 6h0m-34 81h0m56-116h0m-58 92h0m33-33h0m-22 47h0m13-52h0m-17 28h0m11 15h0m74-48h0m4 11h0m53 5h0m14-46h0m-24 59h0m-8 16h0m-19-7h0m8 4h0m141-79h0m-43 32h0m53-74h0m28-72h0m38 28h0m-17 77h0m-38-100h0m53 53h0m52-6h0m6-14h0m-20-88h0m-51 13h0m7-46h0m72-21h0m27 18h0m-82-19h0m-4 5h0m94 48h0m-81-44h0m15-13h0m16 27h0"/><path stroke="#1E2638" stroke-width="6" d="M641 633h0m5-24h0m-87 4h0m-15-56h0m3 9h0m2 10h0m6 45h0m-4-30h0m-76 2h0m-1-19h0m0-18h0m55-11h0m-70-31h0m-8 4h0m-15 28h0m-34-5h0m43-116h0m8 55h0m1-18h0m-13 91h0m2-23h0m-1 8h0m-45-11h0m10 25h0m46-101h0m-65 46h0m1 13h0m-53-92h0m11 75h0m-20-138h0m-9 79h0m97-79h0m-99 63h0m8 30h0m-3-82h0m-14-39h0m110-6h0m-5-26h0m-79 16h0m-27 78h0m14-87h0m103 31h0m-84-26h0m30 8h0m60-59h0m-78 1h0m51-16h0m-61 14h0m-8 13h0m51-26h0m38 16h0m1-13h0m-63 13h0m430 358h0m-96 12h0m99-22h0m0-102h0m9 72h0m-114 12h0m130-69h0m-30 111h0m-7 23h0m4-7h0m14-62h0m-102 54h0m120-110h0m-36 109h0m97-8h0m15-40h0m10-8h0m8-2h0m-15-18h0m11-9h0m-12 23h0m7-36h0m-64 48h0m38 23h0m7-17h0m26-61h0m-69 64h0m-4-35h0m78-15h0m-24-45h0m10 66h0m-20 52h0m75-17h0m-10-15h0m83-92h0m-6 20h0m-16 77h0m-63-16h0m9-74h0m63 67h0m78-114h0m3 123h0m0-8h0m32-87h0m-63-45h0m58 67h0m-50-51h0m37 98h0m-28-111h0m42 22h0m60 42h0m3-15h0m3-29h0m-11 55h0m11-79h0m-58-48h0m103 4h0m11 10h0m-15-17h0m-43-6h0m66 38h0m-34-29h0m-45-33h0m70 40h0m17-66h0m18 7h0m9 49h0m-3 13h0m-97-71h0m93 18h0m-87-22h0m-22 20h0m-6 11h0m65-19h0"/><path stroke="#1E2638" stroke-width="6.5" d="M552 599h0m103-12h0m-6 34h0m-109-87h0m105 107h0m-184-99h0m-2-14h0m5-71h0m-7 36h0m69 73h0m-61-13h0m-73-24h0m6 22h0m-7-31h0m-9-62h0m2 40h0m-1-56h0m70-6h0m-5 110h0m-65-61h0m-49-59h0m58-32h0m-55 75h0m3 13h0m-5-30h0m45-62h0m-45 52h0m1-33h0m27-57h0m-48 45h0m3-22h0m29-68h0m-36 94h0m-8-63h0m86-31h0m-88 41h0m123-21h0m-117-4h0m48-15h0m73 32h0m-59-29h0m60 44h0m3-101h0m-5 12h0m10 41h0m-94-55h0m-19 31h0m96-23h0m377 365h0m-13-125h0m-34-4h0m-67 82h0m-2-27h0m133-44h0m-123 107h0m109-16h0m-9 56h0m134-117h0m3-16h0m-33 107h0m-7-19h0m15-19h0m3-86h0m-15 114h0m23-64h0m-29 71h0m35-95h0m-30 71h0m10 20h0m103-3h0m8-35h0m17-63h0m-70-35h0m-11 27h0m16-36h0m-19 44h0m59 90h0m121-96h0m-48-55h0m56-51h0m59-20h0m66 22h0m-24 76h0m-57-111h0m14-19h0m10 3h0m-36 1h0m24-37h0m88 14h0m9 8h0m3 7h0m2 41h0m-89-68h0m68 9h0"/><path stroke="#1E2638" stroke-width="7" d="M654 602h0m-116-84h0m72-37h0m-32-2h0m-32 106h0m116-26h0m-132 27h0m-67-21h0m-7-89h0m77 57h0m-152-57h0m4 40h0m25-140h0m-76 85h0m-19-75h0m28-44h0m36-31h0m18-4h0m6-1h0m13 0h0m2-2h0m-34-16h0m-77 32h0m-7 39h0m118-59h0m-116 37h0m138-44h0m-7-24h0m4 15h0m-6-20h0m-104 12h0m71-18h0m-48-13h0m84 29h0m380 288h0m-10 56h0m10-33h0m4-41h0m-131-33h0m112 136h0m-62-149h0m173 125h0m-4 15h0m17-86h0m14-37h0m-19 69h0m-84-10h0m91-14h0m-87 61h0m70-16h0m3 8h0m9-22h0m103-35h0m-48-96h0m44 119h0m-10 24h0m24-126h0m45-20h0m55 21h0m-26 99h0m26-89h0m-15 63h0m-10 17h0m4-7h0m31-136h0m52 45h0m-102-47h0m83 114h0m31-148h0m-60-12h0m119 20h0m-111-31h0m-4 5h0m104 77h0m9-40h0m-108-33h0m43 14h0m54 71h0m-115-77h0m121 40h0m32-83h0m-61-10h0m-18-4h0m79 20h0m-115-10h0m115 65h0m-70-74h0m70 7h0"/><path stroke="#1E2638" stroke-width="7.5" d="M666 540h0m-11 93h0m-121-76h0m-14-79h0m-57 102h0m-76-49h0m79-84h0m-134 3h0m35-69h0m-25 112h0m-7-21h0m57-81h0m-21-48h0m-1 10h0m-8-6h0m-48 68h0m5-49h0m-6 36h0m11-44h0m38-68h0m49 1h0m-112 82h0m135-30h0m-1 18h0m-100-69h0m-33 90h0m1-37h0m43-35h0m-23-16h0m12-30h0m104-2h0m-71-4h0m-42 24h0m64-21h0m-59 11h0m47-11h0m67 52h0m360 321h0m6-30h0m8-27h0m2-9h0m-6 26h0m9-61h0m-135 90h0m230-23h0m-3 31h0m18-85h0m-9-44h0m11 27h0m98 14h0m4-25h0m-16 68h0m-9 30h0m16-45h0m109-67h0m-87-63h0m146-6h0m-24-17h0m28 33h0m-17 79h0m-31-107h0m-66 9h0m87-56h0m-48 21h0m137-13h0m-107-11h0m32 12h0m-7-6h0m47 8h0m32 51h0m-9 37h0m46-89h0m-71-55h0m70 29h0m-111-34h0m94-8h0m-23 13h0"/><path stroke="#1E2638" stroke-width="8" d="M659 619h0m-111-11h0m-6-33h0m24-98h0m27 2h0m72 105h0m-126-91h0m-11-7h0m-74-67h0m-66 121h0m-9-55h0m84-51h0m-73 115h0m-11-164h0m-48 40h0m-18-32h0m116-19h0m-20-30h0m15-38h0m-64 5h0m-58 23h0m66-21h0m-63 86h0m121-79h0m-107-18h0m118 70h0m-13-59h0m-72-24h0m-53 63h0m132-19h0m-59-21h0m73-6h0m-1 20h0m-1-39h0m-9-36h0m-55 9h0m60 16h0m-64-36h0m65 28h0m245 345h0m245-40h0m-99-11h0m2-18h0m100 13h0m98-98h0m-12 155h0m-49-150h0m47 142h0m22-98h0m84 46h0m-33-100h0m38 81h0m12-37h0m-47-53h0m-58 4h0m94 93h0m67-50h0m-10 32h0m11-44h0m3-13h0m66-47h0m1-27h0m-127-14h0m122 52h0m-55-46h0m-64-10h0m46 8h0m65 84h0m-9 16h0m51-106h0m-47-44h0m-86 25h0m73-24h0m48-11h0m8 84h0m-123-62h0m64-12h0m-60 5h0m89-24h0"/><path stroke="#1E2638" stroke-width="8.5" d="M538 548h0m127 44h0m1-78h0m-123 71h0m-88-77h0m-76-41h0m2 50h0m1-84h0m90 17h0m-86 93h0m-49-59h0m-8-47h0m50-54h0m8 4h0m-48 105h0m16-108h0m6-42h0m-47 40h0m38-40h0m-40 72h0m-1-101h0m130 69h0m-143-17h0m141-18h0m-104-86h0m108 1h0m4 22h0m3 32h0m-1-12h0m-128-14h0m127 5h0m1 37h0m-125-50h0m116-25h0m369 380h0m-126-118h0m241 102h0m-94-26h0m97 6h0m-95 9h0m204-34h0m-10 41h0m15-89h0m0 9h0m-1 10h0m-93-44h0m93 55h0m-9 35h0m88-27h0m16-40h0m-5 23h0m-10-143h0m71 112h0m-45-96h0m10-8h0m103 46h0m2-9h0m10-39h0m-71-25h0m-52-17h0m70 16h0m80-25h0m0-7h0m-109-36h0m-8 7h0m-7 10h0m-9 16h0m124 63h0m9-65h0m-56-17h0"/><path stroke="#1E2638" stroke-width="9" d="M547 613h0m-92-89h0m43-64h0m-41 88h0m30-88h0m53 109h0m-86-88h0m-5-74h0m-68 115h0m-47-42h0m89-103h0m-94 74h0m5-39h0m4 81h0m-26-99h0m1 30h0m2 13h0m14-86h0m-29 35h0m3-57h0m-3 11h0m144 21h0m9-60h0m-1-10h0m-132 10h0m1-9h0m38-51h0m31 0h0m57 35h0m5 31h0m-4-35h0m232 258h0m-1 11h0m135 80h0m126-89h0m-1 9h0m41-88h0m51 165h0m-1-17h0m96-42h0m18-52h0m-9 33h0m-18 36h0m84-133h0m5 17h0m-19 75h0m13-37h0m4-19h0m-1 9h0m46-3h0m16-44h0m6-19h0m-3 14h0m-134-53h0m95-18h0m67-27h0m4 9h0m-29-32h0m-28-3h0m-46 0h0"/><path stroke="#1E2638" stroke-width="9.5" d="M544 596h0m-5-32h0m128 44h0m-209-49h0m-4-60h0m23-48h0m-99 53h0m83-82h0m-73-15h0m-57 62h0m6-64h0m-14-46h0m98-5h0m-104 18h0m129-4h0m-148-4h0m149 13h0m-4-25h0m-12-38h0m24-17h0m-1 27h0m-7-58h0m8 50h0m-3-35h0m1 38h0m-2-45h0m368 333h0m120-44h0m20-85h0m80 115h0m3-9h0m-2-95h0m-4 119h0m89-150h0m-4 124h0m18-40h0m5-26h0m-15 48h0m12-81h0m25-68h0m-69 3h0m103 89h0m71-73h0m-115-71h0m9-5h0m99 99h0m-2-75h0m-5 92h0m4-9h0m-4 14h0m17-59h0m17-1h0m7-25h0m-128-54h0m123-8h0m9 33h0"/><path stroke="#1E2638" stroke-width="10" d="M669 599h0m4-25h0m-1-7h0m-3 50h0m0 7h0m-290-175h0m5-27h0m-7 74h0m-45-76h0m76-45h0m-78 56h0m106-46h0m-121 52h0m81-98h0m-84 88h0m-1-20h0m76-67h0m-75 60h0m-1 13h0m0-10h0m129-73h0m1-2h0m2 13h0m3 17h0m-148 15h0m73-84h0m25-3h0m50 64h0m-12-37h0m3 7h0m-17-24h0m36-9h0m-5-17h0m8 41h0m-79-71h0m50 6h0m11 9h0m15 57h0m-2-34h0m3 39h0m1-23h0m1 5h0m-1 11h0m-1-12h0m-1-8h0m-41-50h0m42 63h0m1 12h0m1-10h0m368 235h0m0 14h0m-148 27h0m259 3h0m-7 38h0m114-49h0m1-42h0m-51-89h0m-46 53h0m90-15h0m66-32h0m31 112h0m-1 12h0m10-43h0m-3 18h0m-10 22h0m12-78h0m-64-53h0m129 46h0m-6 30h0m-6 16h0m12-37h0m-14 36h0m-68-140h0m143 70h0m3-56h0m0 38h0m-10 30h0m13-42h0m-95-104h0m-19 32h0m140 20h0m-1 16h0m-4 19h0m-93-103h0"/><path stroke="#1E2638" stroke-width="10.5" d="M670 523h0m5 62h0m-2 19h0m-214-34h0m10-139h0m-70-43h0m-5 7h0m-17 78h0m6 65h0m-2-10h0m-3-70h0m68-61h0m-115 79h0m-2-23h0m39-73h0m-55 51h0m118-65h0m13-34h0m7 28h0m-1 10h0m-87-81h0m71 20h0m9 15h0m-7-13h0m-138 69h0m143-61h0m4 21h0m3 46h0m-1-52h0m-4-7h0m5 16h0m0 6h0m-45-62h0m28 18h0m19 52h0m371 261h0m4-22h0m-147-41h0m175-42h0m-15 13h0m103 46h0m-112 39h0m217-98h0m4 43h0m-8 55h0m5-28h0m1-42h0m-5-47h0m2 107h0m61-153h0m36 108h0m66-51h0m-6 18h0m-29-107h0m100 35h0m-141-67h0m147 51h0m-2 1h0m-16 45h0m17-56h0m-14 49h0m-101-117h0m141 33h0m-7 24h0m8-39h0m0 6h0m0-20h0m-94-54h0m19 2h0m74 58h0m-139-18h0m141 23h0"/><path stroke="#1E2638" stroke-width="11" d="M537 538h0m140 12h0m-299-88h0m102-13h0m-103 37h0m26-110h0m-70 105h0m95-122h0m20-15h0m1 36h0m2-9h0m-1-9h0m0 9h0m-2-28h0m-21-42h0m19 34h0m4 20h0m1 10h0m-2 16h0m231 222h0m-2-37h0m148 36h0m113-6h0m-3 25h0m112-31h0m0-72h0m101 13h0m-1-28h0m-93-66h0m89 121h0m63-42h0m-119-90h0m181 45h0m8-57h0m-71-54h0m69 93h0m-5 13h0m8-23h0m29-68h0m-11-40h0m-19-18h0m29 71h0m-5 16h0m4-46h0m1 27h0m-2 14h0m-1 0h0m4-29h0m-7-29h0"/><path stroke="#1E2638" stroke-width="11.5" d="M677 612h0m-133-9h0m134-10h0m-224-66h0m0-13h0m0-44h0m-16-77h0m-57 132h0m40-149h0m30 26h0m-31-54h0m17 26h0m0-1h0m4 12h0m-2-7h0m-7-15h0m398 211h0m-7 50h0m7-65h0m-70-66h0m74 42h0m105 68h0m27-136h0m85 63h0m-15-67h0m4-18h0m109 95h0m4-128h0m32 8h0m-71-13h0m95 55h0m70-42h0m-4-17h0m-1 59h0m5-40h0m-2 32h0m3-23h0m-2-18h0m-79-55h0m79 94h0m-59-89h0m43 18h0m-25-16h0m42 74h0"/><path stroke="#1E2638" stroke-width="12" d="M536 516h0m140 20h0m-220 8h0m6-127h0m-31-29h0m7-3h0m10 10h0m3 5h0m-7-9h0m-10-10h0m19 23h0m376 125h0m-151 43h0m92-78h0m177 5h0m39-52h0m67 116h0m-1-23h0m-94-61h0m17-22h0m75 138h0m96-107h0m4 30h0m-60-76h0m-18-6h0m140 57h0m-14-60h0m5 8h0m8 64h0m-35-89h0m8 4h0m-17-5h0m39 32h0m3 66h0"/><path stroke="#1E2638" stroke-width="12.5" d="M539 574h0m104-81h0m31 32h0m-220-119h0m31 50h0m-20-36h0m12 19h0m-31-41h0m34 48h0m-4-9h0m-5-9h0m210 180h0m149-19h0m-152-1h0m146 42h0m51-127h0m64 106h0m3-99h0m107-2h0m-49-68h0m146 118h0m3-49h0m-11-38h0m1 2h0m11 46h0m-30-67h0m29 50h0m-22-44h0"/><path stroke="#1E2638" stroke-width="13" d="M681 599h0m-124-122h0m-32 4h0m10 11h0m-19-20h0m310 145h0m1-9h0m4-21h0m-1 8h0m-2 4h0m116-31h0m0 7h0m2-34h0m-119 59h0m211-134h0m16 88h0m-2-24h0m-8-44h0m9 89h0m1-29h0m-2 40h0m-6-92h0m-18-48h0m23 72h0m2 56h0m-1-51h0m-2-13h0"/><path stroke="#1E2638" stroke-width="13.5" d="M678 539h0m-19-38h0m15 25h0m153-8h0m4 62h0m0-40h0"/><path stroke="#BC7E1A" stroke-width="4" d="M309 262h0m0-5h0m-1-6h0m0-5h0m0-5h0m1-5h0m1-5h0m2-5h0m2-4h0m2-5h0m3-4h0m3-4h0m4-4h0m4-3h0m4-3h0m5-2h0m5-3h0m6-1h0m6-2h0m6 0h0m6 0h0m6 0h0m7 1h0m6 1h0m7 2h0m6 3h0m7 2h0m6 4h0m6 4h0m6 4h0m5 5h0m6 5h0m5 6h0m5 5h0m4 6h0m4 7h0m3 6h0m3 7h0m3 7h0m3 7h0m1 7h0m2 7h0m1 7h0m1 7h0m0 7h0m-1 7h0m0 7h0m-1 8h0m-2 7h0m0 6h0"/><path stroke="#BC7E1A" stroke-width="4.5" d="M287 382h0m-3-4h0m-3-5h0m-2-5h0m-2-6h0m-2-5h0m-1-5h0m-1-6h0m0-5h0m0-6h0m1-5h0m2-6h0m1-5h0m3-5h0m2-5h0m3-5h0m4-5h0m4-5h0m5-4h0m5-4h0m5-3h0m6-4h0m6-2h0m7-3h0m6-2h0m7-1h0m8-1h0m7-1h0m8 0h0m7 1h0m8 1h0m7 2h0m8 2h0m7 3h0m4 3h0m7 4h0m6 4h0m6 5h0m6 5h0m6 6h0m5 6h0m4 7h0m4 6h0m4 7h0m3 7h0m3 7h0m2 8h0m2 7h0m2 8h0m1 7h0m0 8h0m1 7h0m-1 8h0m0 8h0m-1 7h0m-151 71h0m-2-5h0m-2-5h0m-2-5h0m-1-6h0m-1-5h0m-1-6h0m0-6h0m1-6h0m1-5h0m200 15h0m2 8h0m1 8h0m563-72h0m-2 5h0m-2 5h0m-1 6h0m-1 5h0m-1 6h0m-1 6h0m0 6h0m205 60h0m5-6h0m4-7h0m4-7h0m3-7h0m3-8h0m2-8h0m2-8h0m2-8h0m1-8h0m0-8h0m0-8h0m-1-8h0m-1-8h0m-1-8h0m-2-8h0m-3-8h0m-3-8h0m-4-7h0m-4-7h0m-4-7h0m-5-7h0m-5-6h0m-6-5h0m-5-6h0m-6-4h0m-7-5h0m-6-3h0m-7-4h0m-6-2h0m-7-2h0m-7-2h0m-7-1h0m-6 0h0m-7 0h0m-6 1h0m-6 2h0m-6 1h0m-5 3h0m-5 3h0m-5 3h0m-5 4h0m-4 3h0m-4 5h0m-3 4h0m-3 5h0m0 5h0m-2 5h0m-1 6h0m-1 5h0m-1 6h0m0 6h0m0 6h0m1 5h0m1 6h0m191 15h0m3-6h0m3-7h0m3-7h0m3-8h0m1-7h0m2-7h0"/><path stroke="#BC7E1A" stroke-width="5" d="M307 429h0m2-6h0m2-6h0m3-6h0m3-6h0m4-6h0m4-5h0m5-6h0m5-5h0m6-5h0m6-4h0m7-4h0m7-4h0m7-4h0m8-2h0m8-2h0m8-2h0m9-1h0m9 0h0m8 1h0m9 2h0m8 2h0m8 3h0m5 3h0m7 5h0m7 4h0m6 6h0m6 5h0m5 6h0m5 7h0m4 6h0m4 7h0m4 8h0m3 7h0m3 7h0m2 8h0m-79 143h0m0-5h0m0-6h0m0-5h0m1-6h0m1-6h0m1-6h0m2-7h0m2-6h0m2-7h0m3-6h0m3-7h0m3-7h0m4-7h0m4-7h0m4-7h0m5-7h0m5-6h0m6-7h0m6-6h0m6-6h0m7-6h0m8-5h0m8-4h0m8-4h0m9-2h0m8-1h0m9 0h0m7 2h0m8 2h0m7 3h0m6 4h0m6 4h0m5 5h0m5 4h0m5 6h0m4 6h0m168 2h0m3 3h0m2 4h0m3 4h0m2 5h0m151 168h0m4-6h0m4-6h0m40-193h0m-1-5h0m-2-4h0m-2-3h0m-2-2h0m-2 0h0m-2 0h0m-2 1h0m-2 1h0m-2 3h0m-1 3h0m-1 3h0m-1 4h0m-1 5h0m-1 4h0m0 6h0m0 5h0m0 6h0m0 6h0m1 6h0m191 97h0m5-7h0m4-7h0m4-7h0m4-7h0m3-8h0m3-8h0m3-8h0m2-8h0m2-9h0m1-9h0m1-8h0m1-9h0m0-9h0m0-9h0m-1-9h0m-1-8h0m-1-9h0m-2-9h0m-3-8h0m-3-8h0m-3-8h0m-3-7h0m-4-7h0m-5-6h0m-4-6h0m-5-5h0m-5-5h0m-6-3h0m-5-3h0m-5-2h0m-6-1h0m-5-1h0m-5 0h0m-4 1h0m-5 2h0m-4 2h0m-4 3h0m-4 3h0m-3 4h0m-3 4h0"/><path stroke="#BC7E1A" stroke-width="5.5" d="M645 667h0m3-5h0m2-6h0m3-6h0m2-6h0m3-7h0m3-6h0m3-7h0m3-8h0m4-8h0m3-7h0m3-8h0m4-9h0m4-8h0m3-8h0m4-9h0m4-8h0m4-9h0m5-8h0m4-9h0m4-8h0m5-8h0m4-8h0m5-7h0m4-6h0m5-6h0m4-5h0m4-3h0m4-2h0m4-1h0m3 0h0m3 1h0m176 167h0m4-7h0m3-7h0m4-8h0m3-8h0m3-8h0m3-9h0m3-8h0m2-9h0m3-9h0m2-8h0m2-10h0m2-9h0m1-9h0m5-6h0m1-9h0m0-9h0m1-9h0m-1-9h0m0-8h0m-1-8h0m-1-7h0m-1-7h0"/></g></svg>
+        </div>
+        <div class="stage-ctl" role="group" aria-label="Model controls">
+          <button type="button" data-act="pause"><svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M5.5 3.5v11M12.5 3.5v11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Pause</span></button>
+          <button type="button" class="ctl-turn" data-act="left" aria-label="Turn the model left"><svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M14.5 10.5a5.5 5.5 0 1 1-1.6-5.1M13 1.8v3.9H9.1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" transform="matrix(-1 0 0 1 18 0)"/></svg></button>
+          <button type="button" class="ctl-turn" data-act="right" aria-label="Turn the model right"><svg viewBox="0 0 18 18" aria-hidden="true" focusable="false"><path d="M14.5 10.5a5.5 5.5 0 1 1-1.6-5.1M13 1.8v3.9H9.1" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+        <figcaption><b>Fig. 1</b> A lower arch drawn in dots, with a spiral suggesting the scanner's path. An illustration, not a patient's scan.</figcaption>
+      </figure>
     </div>
-    <form class="contact-card panel form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=3D Scan Appointment&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nReason for visit: ' + this.reason.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="reason" type="text" placeholder="What brings you in?">
-      <button type="submit">Request an appointment</button>
-    </form>
-  </div>
-</section>
+  </section>
 
-<footer class="wrap">
-  <span>© 2026 Helix Dental Digital Studio, Perungudi.</span>
-  <span>Design portfolio piece · Not a live business</span>
+  <section id="treatments" aria-labelledby="treat-title">
+    <div class="wrap">
+      <div class="treat-head reveal">
+        <h2 id="treat-title">Treatments we plan.</h2>
+        <p>Each of these usually starts with a 3D&nbsp;scan of your teeth and gums.</p>
+      </div>
+      <ul class="treat-list reveal">
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false"><path d="M13 10c3-3 6-2 9-.5 3-1.5 6-2.5 9 .5 3 3.5 2 9-.5 13.5-1.6 3-2 7-3 11-.6 2.4-3.4 2.4-4-.2l-1.5-6.3-1.5 6.3c-.6 2.6-3.4 2.6-4 .2-1-4-1.4-8-3-11-2.5-4.5-3.5-10-.5-13.5Z" fill="none" stroke="#1E2638" stroke-width="2" stroke-linejoin="round"/><path d="M4 16h36M4 22h36" stroke="#D18A16" stroke-width="2" stroke-linecap="round" stroke-dasharray="0 4"/></svg>
+          <h3>3D&nbsp;scans</h3>
+          <p>A full digital model of your mouth, usually ready to look at within minutes.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false"><path d="M13 9c3-2.6 6-1.8 9-.4 3-1.4 6-2.2 9 .4 2.3 2 2 5.6.6 8.4H12.4C11 14.6 10.7 11 13 9Z" fill="none" stroke="#1E2638" stroke-width="2" stroke-linejoin="round"/><path d="M18 17.4h8l-1 3H19Z" fill="#1E2638"/><path d="M19.5 21.5h5v14l-2.5 4-2.5-4Z" fill="none" stroke="#1E2638" stroke-width="2" stroke-linejoin="round"/><path d="M19.5 25.5l5-1.6M19.5 29.5l5-1.6M19.5 33.5l5-1.6" stroke="#1E2638" stroke-width="1.6"/><path d="M6 27h7M31 27h7" stroke="#D18A16" stroke-width="2" stroke-linecap="round" stroke-dasharray="0 3.5"/></svg>
+          <h3>Guided implants</h3>
+          <p>Placement is simulated and checked before the day of surgery.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false"><path d="M7 17c9 7 21 7 30 0" fill="none" stroke="#1E2638" stroke-width="2" stroke-linecap="round"/><path d="M7 17c4 13 26 13 30 0" fill="none" stroke="#1E2638" stroke-width="2" stroke-linecap="round"/><path d="M14 21.6v4.6M19 22.8v5.4M25 22.8v5.4M30 21.6v4.6" stroke="#1E2638" stroke-width="1.6"/><path d="M5 33c10 5.5 24 5.5 34 0" fill="none" stroke="#D18A16" stroke-width="2" stroke-linecap="round" stroke-dasharray="0 4"/></svg>
+          <h3>Smile simulation</h3>
+          <p>A rendered preview of how your smile could look, before treatment starts.</p>
+        </li>
+        <li>
+          <svg viewBox="0 0 44 44" aria-hidden="true" focusable="false"><path d="M8 36V20C8 11 14 6 22 6s14 5 14 14v16" fill="none" stroke="#1E2638" stroke-width="2" stroke-linecap="round"/><path d="M14 36V21c0-5 3.5-8.5 8-8.5s8 3.5 8 8.5v15" fill="none" stroke="#1E2638" stroke-width="2" stroke-linecap="round"/><path d="M11 33V21.5C11 14 16 9.3 22 9.3S33 14 33 21.5V33" fill="none" stroke="#D18A16" stroke-width="2" stroke-linecap="round" stroke-dasharray="0 4"/></svg>
+          <h3>Digital aligners</h3>
+          <p>Clear aligners planned stage by stage, with a preview of each stage of movement.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="studio" id="studio" aria-labelledby="studio-title">
+    <div class="wrap studio-grid">
+      <div class="reveal">
+        <h2 id="studio-title">Every case is modelled first.</h2>
+        <p><strong>Dr.&nbsp;Vikram Iyer, BDS, MDS,</strong> invested early in full-mouth 3D&nbsp;imaging, so that a diagnosis is something you can look at, not take on faith. You see the model, you see the plan, and you decide.</p>
+      </div>
+      <ul class="tally reveal">
+        <li><b>6,000+</b><span>3D&nbsp;models rendered</span></li>
+        <li><b>12 yrs</b><span>digital-first practice</span></li>
+        <li><b>4.9&nbsp;★</b><span>Google rating</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="visit" aria-labelledby="visit-title">
+    <div class="wrap visit-grid">
+      <div class="reveal">
+        <h2 id="visit-title">Visit the studio in Perungudi.</h2>
+        <dl class="info">
+          <div><dt>Address</dt><dd>Rajiv&nbsp;Gandhi&nbsp;Salai, Perungudi, <span class="nw">Chennai 600096</span></dd></div>
+          <div><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX" class="nw">+91 98XXX XXXXX</a></dd></div>
+          <div><dt>Hours</dt><dd><span class="nw">Mon–Sat,</span> <span class="nw">10 AM – 8 PM</span></dd></div>
+          <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Text Helix on WhatsApp</a></dd></div>
+        </dl>
+      </div>
+      <form class="form" id="book" action="mailto:?subject=Helix%20Dental%3A%20scan%20request" method="post" enctype="text/plain">
+        <h3>Ask for a scan time</h3>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+        <div class="field"><label for="f-reason">What brings you in? <span>(optional)</span></label><input id="f-reason" name="reason" type="text"></div>
+        <button type="submit" class="btn">Request a scan time</button>
+        <p class="form-note">Your mail app takes it from here, with the message already written. It becomes a booking only when the studio agrees a time with you.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Helix Dental Digital Studio, Perungudi.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Text Helix on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+(function () {
+  /* Section fade-in; everything is visible by default without JS. */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Scan request: a readable email body instead of key=value lines. */
+  var form = document.getElementById('book');
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = 'Name: ' + form.name.value + '\nPhone: ' + form.phone.value + '\nWhat brings me in: ' + form.reason.value;
+    location.href = 'mailto:?subject=' + encodeURIComponent('Helix Dental: scan request') + '&body=' + encodeURIComponent(body);
+  });
+})();
 </script>
+<script>
+/* webgl-scene: the plate drawn live with plain WebGL (no libraries). Solid surfaces go into the depth buffer only, to
+   hide what is behind them; dots go on top, each sized by a small lighting model (key light, fill, highlight, dark
+   edges), so they read like an engraving. A spiral path draws itself along the arch and the tooth it has just passed
+   turns gold. The static SVG in the HTML stays on screen whenever this cannot run (no WebGL, shader failure, context
+   lost) and is what a reader without JS sees.
+   Motion: the model sways slowly; fine pointers turn it a little; scrolling past tips it a touch; Pause stops it all.
+   Reduced motion: one still frame, no loop. Nothing runs while the plate is off screen or the tab is hidden. */
+(function () {
+  'use strict';
+  /* helix-model:begin */
+  /* The scene, built once in plain numbers: a lower dental arch of 14 teeth on a gum ridge and cast base, as solid
+     triangles (they hide what is behind them) plus dots spread evenly over those surfaces (what you see), and a spiral
+     of dots wound along the arch. Same seed, same model every time; the static drawing in the HTML comes from it too. */
+  function helixModel(density) {
+    var seed = 1061;
+    function rnd() { seed = (seed * 48271) % 2147483647; return seed / 2147483647; }
+    function norm(v) { var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]) || 1; return [v[0] / l, v[1] / l, v[2] / l]; }
+    function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+    function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+    function pw(c, e) { return (c < 0 ? -1 : 1) * Math.pow(Math.abs(c), e); }
+    function smooth(a, b, x) { var t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
 
-<script type="module">
-  const stage = document.getElementById('glStage');
-  const canvas = document.getElementById('glCanvas');
-  const fallback = document.getElementById('glFallback');
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-  async function initScene(){
-    let THREE;
-    try{
-      THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js');
-    }catch(err){
-      canvas.style.display = 'none';
-      fallback.style.display = 'flex';
-      return;
+    /* the arch: half an ellipse, incisors at the front (z = 0), molars going back (-z) */
+    var A = 3.3, B = 5.1, STEPS = 1400, PHI_MAX = 1.8, tabPhi = [0], tabLen = [0];
+    for (var i = 1; i <= STEPS; i++) {
+      var p0 = PHI_MAX * (i - 1) / STEPS, p1 = PHI_MAX * i / STEPS;
+      tabPhi.push(p1);
+      tabLen.push(tabLen[i - 1] + Math.hypot(A * (Math.sin(p1) - Math.sin(p0)), B * (Math.cos(p1) - Math.cos(p0))));
+    }
+    function along(len) {
+      var s = len < 0 ? -1 : 1, l = Math.abs(len), lo = 0, hi = STEPS;
+      while (hi - lo > 1) { var m = (lo + hi) >> 1; if (tabLen[m] < l) lo = m; else hi = m; }
+      var ph = s * (tabPhi[lo] + (l - tabLen[lo]) / ((tabLen[hi] - tabLen[lo]) || 1) * (tabPhi[hi] - tabPhi[lo]));
+      var sp = Math.sin(ph), cp = Math.cos(ph);
+      return { P: [A * sp, 0, -B * (1 - cp)], T: norm([A * cp, 0, -B * sp]), N: norm([sp / A, 0, cp / B]) };
     }
 
-    let renderer;
-    try{
-      renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
-    }catch(err){
-      canvas.style.display = 'none';
-      fallback.style.display = 'flex';
-      return;
+    /* teeth from the midline out: width along the arch, depth cheek-to-tongue, crown height; I incisor, C canine,
+       P premolar, M molar */
+    var KINDS = 'IICPPMM', W = [0.86, 0.68, 0.78, 0.72, 0.68, 1.04, 0.96], D = [0.66, 0.6, 0.8, 0.9, 0.92, 1.1, 1.04],
+      H = [1.22, 1.1, 1.22, 0.92, 0.86, 0.8, 0.74], GAP = 0.03;
+    var half = 0, centres = [], contacts = [0];
+    for (i = 0; i < 7; i++) { centres.push(half + GAP / 2 + W[i] / 2); half += W[i] + GAP; contacts.push(half); }
+    function depthAt(l) { /* tooth depth along the arch, eased between neighbours */
+      var a = Math.abs(l);
+      for (var k = 0; k < 7; k++) if (a <= contacts[k + 1]) break;
+      k = Math.min(k, 6);
+      var f = (a - contacts[k]) / (contacts[k + 1] - contacts[k]), d0 = D[k], d1 = D[Math.min(6, k + 1)], dm = D[Math.max(0, k - 1)];
+      return f < 0.5 ? d0 + (dm - d0) * (0.5 - f) * 0.5 : d0 + (d1 - d0) * (f - 0.5) * 0.5;
     }
 
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 100);
-    camera.position.set(0, 0, 6.2);
-
-    const group = new THREE.Group();
-    scene.add(group);
-
-    const core = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.55, 1),
-      new THREE.MeshBasicMaterial({ color: 0xb6ff3d, wireframe: true, transparent: true, opacity: 0.9 })
-    );
-    group.add(core);
-
-    const shell = new THREE.Mesh(
-      new THREE.IcosahedronGeometry(1.95, 0),
-      new THREE.MeshBasicMaterial({ color: 0x4ce0e8, wireframe: true, transparent: true, opacity: 0.35 })
-    );
-    group.add(shell);
-
-    const particleCount = 140;
-    const positions = new Float32Array(particleCount * 3);
-    for(let i = 0; i < particleCount; i++){
-      const r = 2.6 + Math.random() * 0.8;
-      const theta = Math.random() * Math.PI * 2;
-      const phi = Math.acos((Math.random() * 2) - 1);
-      positions[i*3] = r * Math.sin(phi) * Math.cos(theta);
-      positions[i*3+1] = r * Math.sin(phi) * Math.sin(theta);
-      positions[i*3+2] = r * Math.cos(phi);
+    /* every surface is a grid: the fine grid is what the dots are spread over; every second row and column of it
+       is the coarse, solid occluder the GPU draws into the depth buffer */
+    var pos = [], idx = [], spos = [], snor = [], stag = [], surfaces = [];
+    function addGrid(rows, cols, at, kindOf, closeCols, inside, fixedN) {
+      var base = spos.length / 3, P = [], r, c;
+      for (r = 0; r <= rows; r++) for (c = 0; c <= cols; c++) P.push(at(r, c));
+      var G = function (r, c) { r = Math.max(0, Math.min(rows, r)); if (closeCols) c = (c + cols) % cols; else c = Math.max(0, Math.min(cols, c)); return P[r * (cols + 1) + c]; };
+      var tris = [];
+      for (r = 0; r <= rows; r++) for (c = 0; c <= cols; c++) {
+        var p = G(r, c), n = fixedN || norm(cross(sub(G(r, c + 1), G(r, c - 1)), sub(G(r + 1, c), G(r - 1, c))));
+        if (!fixedN) { var o = inside(r, c), dd = sub(p, o); if (n[0] * dd[0] + n[1] * dd[1] + n[2] * dd[2] < 0) n = [-n[0], -n[1], -n[2]]; }
+        spos.push(p[0], p[1], p[2]); snor.push(n[0], n[1], n[2]); stag.push(kindOf(p));
+      }
+      for (r = 0; r < rows; r++) for (c = 0; c < cols; c++) {
+        var a = base + r * (cols + 1) + c, b = a + 1, d = a + cols + 1, e = d + 1;
+        tris.push(a, b, e, a, e, d);
+      }
+      surfaces.push(tris);
+      var sr = rows > 1 ? 2 : 1, ob = pos.length / 3, lr = Math.ceil(rows / sr), lc = Math.ceil(cols / 2);
+      for (r = 0; r <= lr; r++) for (c = 0; c <= lc; c++) { var q = P[Math.min(rows, r * sr) * (cols + 1) + Math.min(cols, c * 2)]; pos.push(q[0], q[1], q[2]); }
+      for (r = 0; r < lr; r++) for (c = 0; c < lc; c++) {
+        var a2 = ob + r * (lc + 1) + c, b2 = a2 + 1, d2 = a2 + lc + 1, e2 = d2 + 1;
+        idx.push(a2, b2, e2, a2, e2, d2);
+      }
     }
-    const particleGeo = new THREE.BufferGeometry();
-    particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    const particles = new THREE.Points(particleGeo, new THREE.PointsMaterial({ color: 0xf0f1f6, size: 0.035, transparent: true, opacity: 0.6 }));
-    scene.add(particles);
 
-    function resize(){
-      const w = stage.clientWidth, h = stage.clientHeight;
-      renderer.setSize(w, h, false);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
+    var Y = [0, 1, 0];
+    for (var side = -1; side <= 1; side += 2) for (var t = 0; t < 7; t++) (function (side, t) {
+      var kind = KINDS[t], f = along(side * centres[t]), wx = W[t] / 2, wz = D[t] / 2, h = H[t];
+      var e1 = kind === 'I' ? 0.32 : 0.5, e2 = kind === 'I' ? 0.8 : kind === 'C' ? 0.85 : 0.7;
+      var eta0 = -Math.asin(Math.pow(0.16 / h, 1 / e1));
+      addGrid(16, 32, function (r, c) {
+        var eta = eta0 + (Math.PI / 2 - eta0) * r / 16, om = 2 * Math.PI * c / 32;
+        var y = h * pw(Math.sin(eta), e1), q = Math.max(0, y / h), ce = pw(Math.cos(eta), e1);
+        var neck = 0.84 + 0.16 * smooth(-0.05, 0.45, q), sx = wx * neck, sz = wz * neck;
+        if (kind === 'I') { sz *= 1 - 0.7 * Math.pow(q, 1.4); sx *= 1 + 0.08 * q; }
+        if (kind === 'C') { sx *= 1 - 0.42 * Math.pow(q, 1.7); sz *= 1 - 0.30 * Math.pow(q, 1.7); }
+        var xl = sx * ce * pw(Math.cos(om), e2), zl = sz * ce * pw(Math.sin(om), e2), top = Math.pow(q, 3);
+        var g = function (cx, cz, sg) { return Math.exp(-((xl - cx) * (xl - cx) + (zl - cz) * (zl - cz)) / (sg * sg)); };
+        if (kind === 'C') y += 0.16 * top * g(0, 0.04, 0.16);
+        if (kind === 'P') y += top * (0.11 * g(0, 0.42 * wz, 0.2) + 0.07 * g(0, -0.42 * wz, 0.18) - 0.05 * g(0, 0, 0.1));
+        if (kind === 'M') y += top * (0.08 * (g(0.42 * wx, 0.4 * wz, 0.2) + g(-0.42 * wx, 0.4 * wz, 0.2) + g(0.42 * wx, -0.4 * wz, 0.2) + g(-0.42 * wx, -0.4 * wz, 0.2)) - 0.05 * g(0, 0, 0.14));
+        if (kind === 'I') y += 0.02 * top * Math.cos(xl / wx * 4.7);
+        if (kind === 'I' || kind === 'C') zl += 0.1 * q * q; /* front teeth lean out a little */
+        return [f.P[0] + f.T[0] * xl + f.N[0] * zl, y, f.P[2] + f.T[2] * xl + f.N[2] * zl];
+      }, function () { return 0; }, true, function () { return [f.P[0], 0.3 * h, f.P[2]]; });
+    })(side, t);
+
+    /* gum ridge and the cast base under it: one band along the arch, rounded on top, straight walls down */
+    var GL = half + 0.32, GR = 220, PROF = 24, YB = -0.78, YR = 0.02, GH = 0.24;
+    function profile(len, k) {
+      var gw = depthAt(len) / 2 + 0.2, n, y;
+      if (k <= 4) { n = -gw; y = YB + (YR - YB) * k / 4; }
+      else if (k >= PROF - 4) { n = gw; y = YR + (YB - YR) * (k - (PROF - 4)) / 4; }
+      else {
+        var al = Math.PI * (1 - (k - 4) / (PROF - 8)), ca = Math.cos(al), sa = Math.sin(al);
+        n = gw * pw(ca, 0.55); y = YR + GH * Math.pow(Math.abs(sa), 0.55);
+        var pap = 0; for (var j = 0; j <= 7; j++) { var d1 = Math.abs(len) - contacts[j]; pap += Math.exp(-d1 * d1 / 0.012); }
+        y += 0.12 * pap * Math.pow(Math.abs(sa), 2);
+      }
+      return [n, y];
     }
-    resize();
-    window.addEventListener('resize', resize);
-
-    let targetRotX = 0, targetRotY = 0;
-    stage.addEventListener('mousemove', (e)=>{
-      const r = stage.getBoundingClientRect();
-      targetRotY = ((e.clientX - r.left) / r.width - 0.5) * 0.9;
-      targetRotX = ((e.clientY - r.top) / r.height - 0.5) * -0.9;
+    addGrid(GR, PROF, function (r, k) {
+      var len = -GL + 2 * GL * r / GR, f = along(len), pr = profile(len, k);
+      return [f.P[0] + f.N[0] * pr[0], pr[1], f.P[2] + f.N[2] * pr[0]];
+    }, function (p) { return p[1] > YR - 0.24 ? 1 : 2; }, false, function (r) { var f = along(-GL + 2 * GL * r / GR); return [f.P[0], -0.3, f.P[2]]; });
+    /* end caps */
+    [-GL, GL].forEach(function (len) {
+      var f = along(len), ring = [], cx = 0, cy = 0;
+      for (var k = 0; k <= PROF; k++) { var pr = profile(len, k); ring.push(pr); cx += pr[0]; cy += pr[1]; }
+      cx /= ring.length; cy /= ring.length;
+      addGrid(1, PROF, function (r, k) {
+        var pr = r ? ring[k] : [cx, cy];
+        return [f.P[0] + f.N[0] * pr[0], pr[1], f.P[2] + f.N[2] * pr[0]];
+      }, function (p) { return p[1] > YR - 0.24 ? 1 : 2; }, false, null, len < 0 ? [-f.T[0], -f.T[1], -f.T[2]] : f.T);
     });
 
-    let running = true;
-    const obs = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{ running = e.isIntersecting; });
-    }, { threshold: 0.05 });
-    obs.observe(stage);
+    /* dots: spread over every surface by area, no two closer than a minimum gap (even, engraving-like stipple) */
+    var RHO = [175, 100, 60], dots = [], dinfo = [];
+    var cell = 0.62 / Math.sqrt(RHO[2] * density), hash = new Map();
+    function key(gx, gy, gz) { return (gx + 512) * 1048576 + (gy + 512) * 1024 + (gz + 512); }
+    function near(p, rmin) {
+      var gx = Math.floor(p[0] / cell), gy = Math.floor(p[1] / cell), gz = Math.floor(p[2] / cell), r2 = rmin * rmin;
+      for (var x = -1; x <= 1; x++) for (var y = -1; y <= 1; y++) for (var z = -1; z <= 1; z++) {
+        var list = hash.get(key(gx + x, gy + y, gz + z));
+        if (list) for (var q = 0; q < list.length; q += 3) {
+          var dx = list[q] - p[0], dy = list[q + 1] - p[1], dz = list[q + 2] - p[2];
+          if (dx * dx + dy * dy + dz * dz < r2) return true;
+        }
+      }
+      return false;
+    }
+    surfaces.forEach(function (tris) {
+      var areas = [], total = 0;
+      for (var i = 0; i < tris.length; i += 3) {
+        var a = tris[i] * 3, b = tris[i + 1] * 3, c = tris[i + 2] * 3;
+        var ab = [spos[b] - spos[a], spos[b + 1] - spos[a + 1], spos[b + 2] - spos[a + 2]], ac = [spos[c] - spos[a], spos[c + 1] - spos[a + 1], spos[c + 2] - spos[a + 2]];
+        var cr = cross(ab, ac), ar = Math.sqrt(cr[0] * cr[0] + cr[1] * cr[1] + cr[2] * cr[2]) / 2;
+        total += ar * RHO[stag[tris[i]] === 0 ? 0 : (spos[a + 1] + spos[b + 1] + spos[c + 1]) / 3 > YR - 0.24 ? 1 : 2]; areas.push(total);
+      }
+      var want = Math.round(total * density), got = 0, tries = 0;
+      while (got < want && tries < want * 6) {
+        tries++;
+        var pick = rnd() * total, lo = 0, hi = areas.length - 1;
+        while (lo < hi) { var m = (lo + hi) >> 1; if (areas[m] < pick) lo = m + 1; else hi = m; }
+        var ia = tris[lo * 3], ib = tris[lo * 3 + 1], ic = tris[lo * 3 + 2], u = rnd(), v = rnd();
+        if (u + v > 1) { u = 1 - u; v = 1 - v; }
+        var w = 1 - u - v, p = [], n = [];
+        for (var k = 0; k < 3; k++) { p.push(spos[ia * 3 + k] * w + spos[ib * 3 + k] * u + spos[ic * 3 + k] * v); n.push(snor[ia * 3 + k] * w + snor[ib * 3 + k] * u + snor[ic * 3 + k] * v); }
+        var kind = stag[ia] === 0 ? 0 : p[1] > YR - 0.24 ? 1 : 2;
+        var rmin = 0.62 / Math.sqrt(RHO[kind] * density);
+        if (near(p, rmin)) continue;
+        var hk = key(Math.floor(p[0] / cell), Math.floor(p[1] / cell), Math.floor(p[2] / cell)), hl = hash.get(hk);
+        if (hl) hl.push(p[0], p[1], p[2]); else hash.set(hk, [p[0], p[1], p[2]]);
+        n = norm(n);
+        dots.push(p[0], p[1], p[2], n[0], n[1], n[2]);
+        dinfo.push(kind, 0);
+        got++;
+      }
+    });
+    /* arch position of each dot, -1 (left molars) to 1 (right molars), for the scan sweep */
+    for (i = 0; i < dinfo.length; i += 2) {
+      var px = dots[i * 3], pz = dots[i * 3 + 2];
+      var ph = Math.atan2(px / A, 1 + pz / B);
+      var l = 0, a = Math.abs(ph), lo2 = 0, hi2 = STEPS;
+      while (hi2 - lo2 > 1) { var m2 = (lo2 + hi2) >> 1; if (tabPhi[m2] < a) lo2 = m2; else hi2 = m2; }
+      l = tabLen[lo2];
+      dinfo[i + 1] = (ph < 0 ? -l : l) / half;
+    }
 
-    if(reduceMotion){
-      group.rotation.set(0.4, 0.6, 0);
-      particles.rotation.set(0.2, 0.3, 0);
-      renderer.render(scene, camera);
-    } else {
-      const animate = ()=>{
-        requestAnimationFrame(animate);
-        if(!running) return;
-        group.rotation.y += 0.0035 + targetRotY * 0.01;
-        group.rotation.x += targetRotX * 0.01;
-        shell.rotation.x -= 0.0018;
-        particles.rotation.y += 0.0012;
-        renderer.render(scene, camera);
-      };
-      animate();
+    /* the spiral: a scanner-like path wound around the crowns, from the left molars to the right */
+    var LT = half - 0.18, TURNS = 8, spiral = [], prev = null, acc = 0, SP = 0.05 / Math.sqrt(density);
+    for (i = 0; i <= 24000; i++) {
+      var u2 = i / 24000, len2 = -LT + 2 * LT * u2, f2 = along(len2), th = 2 * Math.PI * TURNS * u2;
+      var rn = depthAt(len2) / 2 + 0.16, ca2 = Math.cos(th), sa2 = Math.sin(th);
+      var p2 = [f2.P[0] + f2.N[0] * ca2 * rn, 0.56 + 0.76 * sa2, f2.P[2] + f2.N[2] * ca2 * rn];
+      if (prev) acc += Math.hypot(p2[0] - prev[0], p2[1] - prev[1], p2[2] - prev[2]);
+      prev = p2;
+      if (i === 0 || acc >= SP) {
+        acc = 0;
+        var n2 = norm([f2.N[0] * ca2, sa2, f2.N[2] * ca2]);
+        spiral.push(p2[0], p2[1], p2[2], n2[0], n2[1], n2[2]);
+        spiral.push(3, u2); /* kind 3, position along the spiral 0..1 */
+      }
+    }
+    for (i = 0; i < spiral.length; i += 8) { dots.push(spiral[i], spiral[i + 1], spiral[i + 2], spiral[i + 3], spiral[i + 4], spiral[i + 5]); dinfo.push(spiral[i + 6], spiral[i + 7]); }
+
+    var bb = [1e9, 1e9, 1e9, -1e9, -1e9, -1e9];
+    for (i = 0; i < pos.length; i += 3) for (var k2 = 0; k2 < 3; k2++) { bb[k2] = Math.min(bb[k2], pos[i + k2]); bb[k2 + 3] = Math.max(bb[k2 + 3], pos[i + k2]); }
+    return { pos: pos, idx: idx, dots: dots, dinfo: dinfo, bb: bb, half: half };
+  }
+  /* helix-model:end */
+  var stage = document.querySelector('[data-signature="webgl-scene"]');
+  if (!stage || !window.WebGLRenderingContext || !window.Float32Array) return;
+  var plate = stage.closest ? stage.closest('.plate') : stage.parentNode;
+  var pauseBtn = plate.querySelector('[data-act="pause"]');
+  var hero = stage.closest ? (stage.closest('section') || document.body) : document.body;
+  function mq(q) { try { return window.matchMedia(q); } catch (e) { return { matches: false }; } }
+  var reduce = mq('(prefers-reduced-motion: reduce)'), fine = mq('(hover: hover) and (pointer: fine)'), small = mq('(max-width: 720px)');
+
+  var canvas = document.createElement('canvas');
+  canvas.setAttribute('aria-hidden', 'true');
+  var gl = null;
+  try {
+    var opts = { alpha: true, premultipliedAlpha: true, antialias: false, depth: true, powerPreference: 'low-power' };
+    gl = canvas.getContext('webgl', opts) || canvas.getContext('experimental-webgl', opts);
+  } catch (e) { gl = null; }
+  if (!gl) return; /* the static drawing stays */
+
+  var BASE_YAW = -0.2, ELEV = 0.5, LIFT = 0.08, FOV = 24 * Math.PI / 180, TAN = Math.tan(FOV / 2), CYCLE = 15;
+  var INK = [0.118, 0.149, 0.22], ROSE = [0.698, 0.314, 0.416], GREY = [0.42, 0.44, 0.48], GOLD = [0.82, 0.54, 0.086];
+  var LIGHT = norm3([-0.5, 0.8, 0.55]), FILL = norm3([0.75, 0.2, 0.55]);
+  var density = small.matches ? 0.6 : 1, model = null, P = {}, B = {}, ready = false, lost = false, live = false, dead = false;
+  var paused = false, onScreen = true, raf = 0, last = 0, t = 0, fit = null, dist = 0, cssW = 0, cssH = 0;
+  var userYaw = 0, userYawT = 0, tiltX = 0, tiltY = 0, tiltXT = 0, tiltYT = 0;
+  var listeners = [], observers = [];
+
+  function norm3(v) { var l = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]); return [v[0] / l, v[1] / l, v[2] / l]; }
+  function on(target, type, fn, o) { target.addEventListener(type, fn, o || false); listeners.push([target, type, fn, o || false]); }
+
+  /* ---------- shaders ---------- */
+  var VS_MESH = 'attribute vec3 aPos;uniform mat4 uProj;uniform mat4 uView;uniform mat4 uModel;' +
+    'void main(){gl_Position=uProj*uView*uModel*vec4(aPos,1.0);}';
+  var FS_MESH = 'precision mediump float;void main(){gl_FragColor=vec4(0.0);}';
+  /* dots: each one is lit in the vertex shader (key light, fill, highlight, dark edges) and its size follows the
+     result, so the sprite is only as big as the dot; the fragment shader cuts the round, antialiased dot */
+  var VS_DOTS = 'attribute vec3 aPos;attribute vec3 aNor;attribute vec2 aInfo;' +
+    'uniform mat4 uProj;uniform mat4 uView;uniform mat4 uModel;uniform mat3 uRot;uniform vec3 uEye;' +
+    'uniform vec3 uLight;uniform vec3 uFill;uniform vec3 uInk;uniform vec3 uRose;uniform vec3 uGrey;uniform vec3 uGold;' +
+    'uniform float uSize;uniform float uHead;uniform float uSweep;uniform float uSpiral;uniform float uSpan;' +
+    'varying vec3 vCol;varying float vAlpha;varying float vR;varying float vPx;varying float vRing;' +
+    'void main(){vec4 w=uModel*vec4(aPos,1.0);vec3 n=normalize(uRot*aNor);vec3 v=normalize(uEye-w.xyz);float k=aInfo.x;' +
+    'float sz;float r;vec4 c;vAlpha=1.0;vRing=0.0;' +
+    'if(k>3.5){sz=4.2;r=1.0;vRing=1.0;vAlpha=uSweep;vCol=uGold;c=uProj*uView*w;}' +
+    'else if(k>2.5){float nr=exp(-max(uHead-aInfo.y,0.0)*90.0)*uSweep;sz=0.66*(1.0+0.7*nr);r=0.6;' +
+    'vAlpha=uSpiral*step(aInfo.y,uHead);vCol=mix(uGold,uInk,0.12*(1.0-nr));c=uProj*uView*w;}' +
+    'else{sz=k<0.5?1.0:k<1.5?1.3:1.6;float d=(uHead*2.0-1.0)*uSpan-aInfo.y;' +
+    'float g=k<0.5?uSweep*step(0.0,d)*smoothstep(0.12,0.55,exp(-d*14.0)):0.0;' +
+    'float lum=0.22+0.78*max(dot(n,uLight),0.0)+0.2*max(dot(n,uFill),0.0)+0.5*pow(max(dot(n,normalize(uLight+v)),0.0),36.0);' +
+    'float rim=pow(1.0-clamp(dot(n,v),0.0,1.0),2.5);float tone=pow(clamp(1.0-lum+0.5*rim,0.04,1.0),1.35);' +
+    'if(k>0.5)tone*=k<1.5?0.85:0.6;r=sqrt(mix(tone,max(tone,0.5),g));vCol=mix(k<0.5?uInk:k<1.5?uRose:uGrey,uGold,g);' +
+    'c=uProj*uView*vec4(w.xyz+n*0.012,1.0);if(dot(n,v)<-0.12)c=vec4(2.0,2.0,2.0,1.0);}' +
+    'gl_Position=c;float px=uSize*sz/c.w;vR=px*r*0.5;vPx=vRing>0.5?px:px*r+2.0;gl_PointSize=vPx;}';
+  var FS_DOTS = 'precision mediump float;varying vec3 vCol;varying float vAlpha;varying float vR;varying float vPx;varying float vRing;' +
+    'void main(){if(vAlpha<0.01)discard;float d=length(gl_PointCoord-0.5)*vPx;float a;' +
+    'if(vRing>0.5){float R=vPx*0.5;a=(1.0-smoothstep(R*0.86-0.8,R*0.86+0.8,d))*smoothstep(R*0.62-0.8,R*0.62+0.8,d)+(1.0-smoothstep(R*0.26-0.8,R*0.26+0.8,d));}' +
+    'else a=1.0-smoothstep(vR-0.8,vR+0.8,d);' +
+    'a*=vAlpha;if(a<0.01)discard;gl_FragColor=vec4(vCol*a,a);}';
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS) && !gl.isContextLost()) throw new Error('shader');
+    return s;
+  }
+  function program(vs, fs, attrs, unis) {
+    var p = gl.createProgram();
+    gl.attachShader(p, compile(gl.VERTEX_SHADER, vs)); gl.attachShader(p, compile(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(p);
+    if (!gl.getProgramParameter(p, gl.LINK_STATUS) && !gl.isContextLost()) throw new Error('link');
+    var o = { p: p, a: {}, u: {} };
+    attrs.forEach(function (n) { o.a[n] = gl.getAttribLocation(p, n); });
+    unis.forEach(function (n) { o.u[n] = gl.getUniformLocation(p, n); });
+    return o;
+  }
+
+  /* ---------- GPU resources (again after a context restore) ---------- */
+  function setup() {
+    P.mesh = program(VS_MESH, FS_MESH, ['aPos'], ['uProj', 'uView', 'uModel']);
+    P.dots = program(VS_DOTS, FS_DOTS, ['aPos', 'aNor', 'aInfo'], ['uProj', 'uView', 'uModel', 'uRot', 'uEye', 'uLight', 'uFill', 'uInk', 'uRose', 'uGrey', 'uGold', 'uSize', 'uHead', 'uSweep', 'uSpiral', 'uSpan']);
+    var mesh = new Float32Array(model.pos), nd = model.dinfo.length / 2, dots = new Float32Array(nd * 8);
+    for (var i = 0; i < nd; i++) {
+      for (var k = 0; k < 6; k++) dots[i * 8 + k] = model.dots[i * 6 + k];
+      dots[i * 8 + 6] = model.dinfo[i * 2]; dots[i * 8 + 7] = model.dinfo[i * 2 + 1];
+    }
+    B.mesh = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, B.mesh); gl.bufferData(gl.ARRAY_BUFFER, mesh, gl.STATIC_DRAW);
+    B.idx = gl.createBuffer(); gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, B.idx); gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(model.idx), gl.STATIC_DRAW);
+    B.dots = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, B.dots); gl.bufferData(gl.ARRAY_BUFFER, dots, gl.STATIC_DRAW);
+    B.head = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, B.head); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(8), gl.DYNAMIC_DRAW);
+    B.nIdx = model.idx.length; B.nDots = nd;
+    gl.clearColor(0, 0, 0, 0);
+    ready = true;
+  }
+
+  /* ---------- camera: the distance that keeps the whole model in frame for any turn (closed form per point) ---------- */
+  function fitTable(aspect) {
+    var pts = [], i, c = model.c, tab = [];
+    for (i = 0; i < model.pos.length; i += 3 * 7) pts.push(model.pos[i] - c[0], model.pos[i + 1] - c[1], model.pos[i + 2] - c[2]);
+    for (i = 0; i < model.dots.length; i += 6 * 5) pts.push(model.dots[i] - c[0], model.dots[i + 1] - c[1], model.dots[i + 2] - c[2]);
+    for (var s = 0; s < 72; s++) {
+      var yaw = s / 72 * 2 * Math.PI, need = 0;
+      [ELEV - 0.07, ELEV + 0.2].forEach(function (e) {
+        var cy = Math.cos(yaw), sy = Math.sin(yaw), ce = Math.cos(e), se = Math.sin(e);
+        for (var j = 0; j < pts.length; j += 3) {
+          var x = cy * pts[j] + sy * pts[j + 2], z = -sy * pts[j] + cy * pts[j + 2], y = pts[j + 1];
+          var yc = y * ce - z * se, zc = y * se + z * ce; /* camera space: right x, up yc, toward camera zc */
+          need = Math.max(need, zc + Math.abs(x) / (0.93 * TAN * aspect), zc + Math.abs(yc) / (0.93 * TAN));
+        }
+      });
+      tab.push(need);
+    }
+    /* each angle takes the widest need within +-0.45 rad (sway plus tilt), so the distance holds still while it sways */
+    return tab.map(function (v, s) { var m = 0; for (var d = -5; d <= 5; d++) m = Math.max(m, tab[(s + d + 72) % 72]); return m; });
+  }
+  function fitAt(yaw) {
+    var f = ((yaw / (2 * Math.PI)) % 1 + 1) % 1 * 72, i = Math.floor(f) % 72, j = (i + 1) % 72, w = f - Math.floor(f);
+    return fit[i] * (1 - w) + fit[j] * w;
+  }
+
+  /* ---------- matrices ---------- */
+  /* LIFT shifts the picture up a little: the model base is nearer the camera, so it would otherwise sit low */
+  function persp(aspect, n, f) { var y = 1 / TAN; return [y / aspect, 0, 0, 0, 0, y, 0, 0, 0, -LIFT, (f + n) / (n - f), -1, 0, 0, 2 * f * n / (n - f), 0]; }
+  function view(eye) {
+    var z = norm3(eye), x = norm3([z[2], 0, -z[0]]), y = [z[1] * x[2] - z[2] * x[1], z[2] * x[0] - z[0] * x[2], z[0] * x[1] - z[1] * x[0]];
+    return [x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+      -(x[0] * eye[0] + x[1] * eye[1] + x[2] * eye[2]), -(y[0] * eye[0] + y[1] * eye[1] + y[2] * eye[2]), -(z[0] * eye[0] + z[1] * eye[1] + z[2] * eye[2]), 1];
+  }
+
+  /* ---------- the timeline: hold (spiral complete) -> fade -> the spiral draws itself -> hold ---------- */
+  function phase(time) {
+    var u = time % CYCLE, head = 1, spiral = 1, sweep = 0;
+    if (u >= 1.6 && u < 2.4) spiral = 1 - (u - 1.6) / 0.8;
+    else if (u >= 2.4 && u < 12.4) { var x = (u - 2.4) / 10; head = x * x * (3 - 2 * x) * 0.9 + x * 0.1; sweep = Math.min(1, (u - 2.4) / 0.4, (12.4 - u) / 0.4); }
+    return { head: head, spiral: spiral, sweep: sweep };
+  }
+
+  function size() {
+    var w = stage.clientWidth, h = stage.clientHeight;
+    if (!w || !h) return false;
+    var dpr = Math.min(window.devicePixelRatio || 1, small.matches ? 1.5 : 2);
+    var W = Math.round(w * dpr), H = Math.round(h * dpr);
+    if (canvas.width !== W || canvas.height !== H) { canvas.width = W; canvas.height = H; }
+    if (w !== cssW || h !== cssH || !fit) { cssW = w; cssH = h; fit = fitTable(w / h); dist = 0; }
+    return true;
+  }
+
+  function draw(time, snap) {
+    if (!ready || lost || !size()) return false;
+    var ph = reduce.matches ? { head: 1, spiral: 1, sweep: 0 } : phase(time);
+    var sway = reduce.matches ? 0 : 0.28 * Math.sin(time * 2 * Math.PI / 26);
+    var yaw = BASE_YAW + userYaw + sway + tiltX, scroll = 0;
+    if (!reduce.matches && !paused) { var r = stage.getBoundingClientRect(); scroll = Math.max(0, Math.min(1, -r.top / Math.max(1, r.height))); }
+    var elev = ELEV + tiltY + 0.16 * scroll, want = fitAt(BASE_YAW + userYaw);
+    dist = dist && !snap ? dist + (want - dist) * 0.08 : want;
+    var aspect = canvas.width / canvas.height, eye = [0, dist * Math.sin(elev), dist * Math.cos(elev)];
+    var cy = Math.cos(yaw), sy = Math.sin(yaw), c = model.c;
+    var rot = [cy, 0, -sy, 0, 1, 0, sy, 0, cy];
+    var mdl = [cy, 0, -sy, 0, 0, 1, 0, 0, sy, 0, cy, 0,
+      -(cy * c[0] + sy * c[2]), -c[1], -(-sy * c[0] + cy * c[2]), 1];
+    var proj = persp(aspect, dist * 0.5, dist * 1.6), vw = view(eye);
+    var ppu = canvas.height / (2 * TAN); /* device px per unit at distance 1 */
+
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST); gl.depthFunc(gl.LEQUAL);
+    gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+    function shared(p) {
+      gl.useProgram(p.p);
+      gl.uniformMatrix4fv(p.u.uProj, false, proj); gl.uniformMatrix4fv(p.u.uView, false, vw); gl.uniformMatrix4fv(p.u.uModel, false, mdl);
+    }
+    function attrib(loc, n, stride, off) { if (loc < 0) return; gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, n, gl.FLOAT, false, stride, off); }
+
+    /* 1. solid surfaces, depth only (they hide the dots behind them), pushed back a hair so the dots on them win */
+    shared(P.mesh);
+    gl.colorMask(false, false, false, false);
+    gl.depthMask(true); gl.enable(gl.POLYGON_OFFSET_FILL); gl.polygonOffset(1, 2);
+    gl.bindBuffer(gl.ARRAY_BUFFER, B.mesh);
+    attrib(P.mesh.a.aPos, 3, 12, 0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, B.idx);
+    gl.drawElements(gl.TRIANGLES, B.nIdx, gl.UNSIGNED_SHORT, 0);
+    gl.disable(gl.POLYGON_OFFSET_FILL); gl.colorMask(true, true, true, true);
+    if (P.mesh.a.aPos >= 0) gl.disableVertexAttribArray(P.mesh.a.aPos);
+
+    /* 2. dots, then the scan head */
+    shared(P.dots); gl.depthMask(false);
+    gl.uniformMatrix3fv(P.dots.u.uRot, false, rot); gl.uniform3fv(P.dots.u.uEye, eye);
+    gl.uniform3fv(P.dots.u.uLight, LIGHT); gl.uniform3fv(P.dots.u.uFill, FILL);
+    gl.uniform3fv(P.dots.u.uInk, INK); gl.uniform3fv(P.dots.u.uRose, ROSE); gl.uniform3fv(P.dots.u.uGrey, GREY); gl.uniform3fv(P.dots.u.uGold, GOLD);
+    gl.uniform1f(P.dots.u.uSize, 0.073 / Math.sqrt(density) * ppu);
+    gl.uniform1f(P.dots.u.uHead, ph.head); gl.uniform1f(P.dots.u.uSweep, ph.sweep); gl.uniform1f(P.dots.u.uSpiral, ph.spiral);
+    gl.uniform1f(P.dots.u.uSpan, model.span);
+    gl.bindBuffer(gl.ARRAY_BUFFER, B.dots);
+    attrib(P.dots.a.aPos, 3, 32, 0); attrib(P.dots.a.aNor, 3, 32, 12); attrib(P.dots.a.aInfo, 2, 32, 24);
+    gl.drawArrays(gl.POINTS, 0, B.nDots);
+    if (ph.sweep > 0) {
+      var hp = model.headAt(ph.head);
+      gl.bindBuffer(gl.ARRAY_BUFFER, B.head);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, new Float32Array([hp[0], hp[1], hp[2], 0, 1, 0, 4, 0]));
+      attrib(P.dots.a.aPos, 3, 32, 0); attrib(P.dots.a.aNor, 3, 32, 12); attrib(P.dots.a.aInfo, 2, 32, 24);
+      gl.drawArrays(gl.POINTS, 0, 1);
+    }
+    [P.dots.a.aPos, P.dots.a.aNor, P.dots.a.aInfo].forEach(function (l) { if (l >= 0) gl.disableVertexAttribArray(l); });
+    gl.depthMask(true);
+    return true;
+  }
+
+  /* ---------- live / static switching ---------- */
+  function setLive(v) {
+    if (v === live) return;
+    live = v;
+    plate.classList.toggle('is-live', v);
+    plate.classList.toggle('is-still', !!reduce.matches);
+  }
+  function running() { return live && !paused && !reduce.matches && onScreen && !document.hidden && !lost && !dead; }
+  function tick(now) {
+    raf = 0;
+    if (!running()) return;
+    if (now - last >= 15) { /* at most ~60 frames a second, even on faster screens */
+      var dt = Math.min(0.05, (now - last) / 1000);
+      last = now; t += dt;
+      var k = 1 - Math.exp(-dt * 5);
+      userYaw += (userYawT - userYaw) * k; tiltX += (tiltXT - tiltX) * k; tiltY += (tiltYT - tiltY) * k;
+      draw(t);
+    }
+    raf = requestAnimationFrame(tick);
+  }
+  function kick() {
+    if (raf || dead) return;
+    if (running()) { last = performance.now() - 16; raf = requestAnimationFrame(tick); }
+    else if (live && !lost && onScreen && !document.hidden) raf = requestAnimationFrame(function () { raf = 0; userYaw = userYawT; draw(t, true); if (running()) kick(); });
+  }
+
+  function start() {
+    if (dead) return;
+    try {
+      if (!model) {
+        model = helixModel(density);
+        var bb = model.bb, sp = [];
+        model.c = [(bb[0] + bb[3]) / 2, (bb[1] + bb[4]) / 2, (bb[2] + bb[5]) / 2];
+        for (var i = 0; i < model.dinfo.length; i += 2) if (model.dinfo[i] === 3) sp.push(model.dinfo[i + 1], model.dots[i * 3], model.dots[i * 3 + 1], model.dots[i * 3 + 2]);
+        model.span = (model.half - 0.18) / model.half;
+        model.headAt = function (u) {
+          var lo = 0, hi = sp.length / 4 - 1;
+          while (hi - lo > 1) { var m = (lo + hi) >> 1; if (sp[m * 4] < u) lo = m; else hi = m; }
+          return [sp[hi * 4 + 1], sp[hi * 4 + 2], sp[hi * 4 + 3]];
+        };
+      }
+      setup();
+      if (!canvas.parentNode) stage.appendChild(canvas);
+      if (!draw(t)) { ready = false; return; }
+      setLive(true);
+      kick();
+    } catch (e) {
+      ready = false; setLive(false); /* shader or setup failure: keep the static drawing */
     }
   }
 
-  if(window.WebGLRenderingContext){
-    initScene();
-  } else {
-    canvas.style.display = 'none';
-    fallback.style.display = 'flex';
+  /* ---------- events ---------- */
+  on(canvas, 'webglcontextlost', function (e) { e.preventDefault(); lost = true; ready = false; if (raf) cancelAnimationFrame(raf); raf = 0; setLive(false); });
+  on(canvas, 'webglcontextrestored', function () { lost = false; start(); });
+  on(document, 'visibilitychange', kick);
+  if (pauseBtn) on(pauseBtn, 'click', function () { /* the label names the action: Pause, then Play */
+    paused = !paused;
+    pauseBtn.lastChild.textContent = paused ? 'Play' : 'Pause';
+    pauseBtn.firstChild.innerHTML = paused ? '<path d="M5 3.2v11.6L14.6 9Z" fill="currentColor"/>' : '<path d="M5.5 3.5v11M12.5 3.5v11" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>';
+    if (paused) { tiltXT = tiltYT = 0; } else kick();
+  });
+  [].forEach.call(plate.querySelectorAll('[data-act="left"], [data-act="right"]'), function (b) {
+    on(b, 'click', function () { userYawT += (b.getAttribute('data-act') === 'left' ? 1 : -1) * Math.PI / 6; if (!running()) kick(); });
+  });
+  on(hero, 'pointermove', function (e) {
+    if (e.pointerType !== 'mouse' || !fine.matches || paused || reduce.matches) return;
+    var r = stage.getBoundingClientRect();
+    tiltXT = 0.16 * Math.max(-1, Math.min(1, (e.clientX - (r.left + r.width / 2)) / (r.width * 0.75)));
+    tiltYT = 0.07 * Math.max(-1, Math.min(1, (e.clientY - (r.top + r.height / 2)) / (r.height * 0.75)));
+  }, { passive: true });
+  on(hero, 'pointerleave', function () { tiltXT = tiltYT = 0; });
+  if (reduce.addEventListener) on(reduce, 'change', function () { plate.classList.toggle('is-still', !!reduce.matches); tiltXT = tiltYT = tiltX = tiltY = 0; kick(); });
+
+  if ('ResizeObserver' in window) {
+    var ro = new ResizeObserver(function () { if (live) kick(); });
+    ro.observe(stage); observers.push(ro);
+  } else on(window, 'resize', function () { if (live) kick(); });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) { onScreen = es[es.length - 1].isIntersecting; kick(); });
+    io.observe(stage); observers.push(io);
   }
+  /* if the plate is ever taken out of the page, stop and let go of everything */
+  if ('MutationObserver' in window) {
+    var mo = new MutationObserver(function () { if (!document.documentElement.contains(stage)) destroy(); });
+    mo.observe(document.body, { childList: true, subtree: true }); observers.push(mo);
+  }
+  function destroy() {
+    dead = true;
+    if (raf) cancelAnimationFrame(raf); raf = 0;
+    listeners.forEach(function (l) { l[0].removeEventListener(l[1], l[2], l[3]); });
+    observers.forEach(function (o) { o.disconnect(); });
+    listeners = []; observers = [];
+    var lose = gl.getExtension('WEBGL_lose_context'); if (lose) lose.loseContext();
+  }
+
+  /* build after the first paint, so the page and the static drawing show at once */
+  setTimeout(start, 0);
+})();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
