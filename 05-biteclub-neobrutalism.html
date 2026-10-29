@@ -25,7 +25,9 @@
     .btn:hover, .pcard:hover, .wa-float:hover{transform:translate(-2px,-2px); box-shadow:calc(var(--sh) + 2px) calc(var(--sh) + 2px) 0 var(--ink);}
   }
   .btn:active, .btn.is-pressed, .wa-float:active, .wa-float.is-pressed,
-  .pcard:active, .pcard.is-pressed, .pcard:has(input:active), .pcard:has(input:checked){transform:translate(var(--sh),var(--sh)); box-shadow:0 0 0 var(--ink);}
+  .pcard:active, .pcard.is-pressed, .pcard.is-on{transform:translate(var(--sh),var(--sh)); box-shadow:0 0 0 var(--ink);}
+  /* :has() rules stay separate so a browser without :has() keeps the press rules above; there JS adds .is-on and .has-focus */
+  .pcard:has(input:active), .pcard:has(input:checked){transform:translate(var(--sh),var(--sh)); box-shadow:0 0 0 var(--ink);}
   .btn:focus-visible, .wa-float:focus-visible{box-shadow:0 0 0 2px #fff, var(--sh) var(--sh) 0 var(--ink)!important;}
   .btn:active:focus-visible, .btn.is-pressed:focus-visible, .wa-float.is-pressed:focus-visible{box-shadow:0 0 0 2px #fff!important;}
 
@@ -70,6 +72,10 @@
   .pc-flag{display:none; margin-left:auto; padding:1px 8px; background:var(--ink); color:var(--yellow); font-size:14px; font-weight:700; text-transform:uppercase;}
   .pc-box{flex:none; width:30px; height:30px; border:3px solid var(--ink); background:var(--white);}
   .pc-box svg{display:block; width:100%; height:100%; opacity:0;}
+  .pcard.is-on .pc-box{background:var(--ink);}
+  .pcard.is-on .pc-box svg{opacity:1;}
+  .pcard.is-on .pc-flag{display:inline-block;}
+  .pcard.has-focus{outline:3px solid #111; outline-offset:4px;}
   .pcard:has(input:checked) .pc-box{background:var(--ink);}
   .pcard:has(input:checked) .pc-box svg{opacity:1;}
   .pcard:has(input:checked) .pc-flag{display:inline-block;}
@@ -165,7 +171,8 @@
     .form{scroll-margin-top:12px;}
   }
   @media (max-width:640px){
-    .wrap{padding:0 18px;}
+    .wrap{padding-left:18px; padding-right:18px;}
+    .hero{padding-top:40px; padding-bottom:64px;}
     .sec{padding-top:64px; padding-bottom:72px;}
     .hero-actions .btn{width:calc(100% - 6px);}
     .pgrid{grid-template-columns:minmax(0,1fr); gap:22px;}
@@ -251,7 +258,7 @@
   <div class="wrap">
     <div class="sec-head reveal">
       <div><span class="tag">The price list</span><h2>No hidden line items.</h2></div>
-      <p>A plain number is fixed. A + means it depends on the tooth, and you get the exact figure before we start.</p>
+      <p>A plain number is fixed. A + means the final figure depends on your case. You get it before we start.</p>
     </div>
     <p class="press-hint"><svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" fill="#fff" stroke="#0A0A0A" stroke-width="3"/><rect x="8" y="8" width="20" height="20" fill="#F5FF3D" stroke="#0A0A0A" stroke-width="3"/></svg>Press the ones you need. They go on your booking slip.</p>
     <ul class="pgrid" data-signature="brutal-press">
@@ -389,6 +396,7 @@
     function rs(n){ return '₹' + n.toLocaleString('en-IN'); }
     function update(){
       var on = boxes.filter(function(b){ return b.checked; });
+      boxes.forEach(function(b){ b.parentNode.classList.toggle('is-on', b.checked); });
       var total = 0, plus = false;
       list.textContent = '';
       on.forEach(function(b){
@@ -410,7 +418,12 @@
       b.textContent = rs(total) + (plus ? '+' : '');
       sum.appendChild(b);
     }
-    boxes.forEach(function(b){ b.addEventListener('change', update); });
+    boxes.forEach(function(b){
+      b.addEventListener('change', update);
+      // fallbacks for browsers without :has(): mirror focus-visible onto the card
+      b.addEventListener('focus', function(){ var fv = true; try { fv = b.matches(':focus-visible'); } catch(err){} b.parentNode.classList.toggle('has-focus', fv); });
+      b.addEventListener('blur', function(){ b.parentNode.classList.remove('has-focus'); });
+    });
     update();
   })();
 
