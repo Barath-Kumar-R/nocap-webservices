@@ -1,231 +1,557 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pulse Dental Studio — Sholinganallur, Chennai</title>
+<title>Pulse Dental Studio · Sholinganallur, Chennai</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&family=DM+Sans:opsz,wght@9..40,400..700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#101014; --panel:#17171D; --violet:#7C3AED; --cyan:#22D3EE; --coral:#FF5D5D; --white:#F5F4F8; --muted:#8B8A96; --line:rgba(245,244,248,0.1);
+    --bg:#101014; --panel:#17171D; --raise:#1F1F27; --violet:#7C3AED; --violet-l:#C4A5FA; --cyan:#22D3EE; --coral:#FF5D5D; --coral-l:#FF9E9E;
+    --white:#F5F4F8; --muted:#A9A8B4; --line:rgba(245,244,248,0.14); --nav-h:73px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--white); overflow-x:hidden;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  body{font-family:'DM Sans',system-ui,sans-serif; font-size:17px; line-height:1.6; background:var(--bg); color:var(--white);}
+  h1,h2,h3{font-family:'Syne',sans-serif; font-weight:700; line-height:1.08;}
   a{color:inherit;}
-  .wrap{max-width:1200px; margin:0 auto; padding:0 28px;}
-  .eyebrow{font-family:'Space Grotesk',sans-serif; font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cyan); font-weight:600;}
-  .grad-text{background:linear-gradient(90deg,var(--violet),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  .eyebrow{font-family:'Syne',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; color:var(--cyan);}
+  .nowrap{white-space:nowrap;}
 
-  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(16,16,20,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--line);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:20px 28px; max-width:1200px; margin:0 auto;}
-  .logo{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:19px;}
-  .logo span{color:var(--cyan);}
-  .nav-links{display:flex; gap:32px; font-size:14px; font-weight:500;}
-  .nav-links a{text-decoration:none; color:var(--muted); transition:color .2s;}
+  /* ---------- buttons and links ---------- */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 26px; border:0; border-radius:8px; background:var(--cyan); color:var(--bg); font:700 16px/1.2 'DM Sans',sans-serif; text-decoration:none; cursor:pointer; transition:background .2s, transform .2s;}
+  .btn:hover{background:#67E3F4;}
+  .btn:active{transform:translateY(1px);}
+  .text-link{display:inline-flex; align-items:center; gap:8px; min-height:44px; font-weight:700; text-decoration:underline; text-decoration-color:var(--violet-l); text-decoration-thickness:2px; text-underline-offset:6px;}
+  .text-link:hover{color:var(--cyan); text-decoration-color:var(--cyan);}
+  html :focus-visible{outline-color:var(--cyan)!important;}
+
+  /* ---------- nav ---------- */
+  .top{position:sticky; top:0; z-index:100; background:var(--bg); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; gap:28px; min-height:72px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-family:'Syne',sans-serif; font-weight:800; font-size:21px; text-decoration:none; letter-spacing:-0.01em;}
+  .logo-mark{display:flex; width:34px; height:34px; border-radius:8px; background:var(--cyan); flex:none;}
+  .logo-mark svg{width:100%; height:100%;}
+  .logo small{font:500 16px 'DM Sans',sans-serif; color:var(--muted); letter-spacing:0;}
+  .nav-links{display:flex; gap:6px; margin-left:auto;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 12px; color:var(--muted); font-size:16px; font-weight:500; text-decoration:none; white-space:nowrap; transition:color .2s;}
   .nav-links a:hover{color:var(--white);}
-  .btn-fill{background:linear-gradient(90deg,var(--violet),var(--cyan)); color:var(--bg); padding:11px 24px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none;}
-  .burger{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--white);}
-  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:20px 28px 26px; border-top:1px solid var(--line);}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{text-decoration:none; color:var(--white); font-size:15px; font-weight:500;}
+  .nav .btn{min-height:46px; padding:0 20px; font-size:15px; white-space:nowrap;}
 
-  .hero{position:relative; min-height:100vh; display:flex; align-items:center; padding-top:110px; overflow:hidden;}
-  .hero::before{content:''; position:absolute; top:-200px; right:-200px; width:600px; height:600px; background:radial-gradient(circle,rgba(124,58,237,0.35),transparent 70%); z-index:0;}
-  .hero::after{content:''; position:absolute; bottom:-200px; left:-150px; width:500px; height:500px; background:radial-gradient(circle,rgba(34,211,238,0.2),transparent 70%); z-index:0;}
-  .hero-grid{display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px; align-items:center; position:relative; z-index:1;}
-  .hero h1{font-size:clamp(38px,5.4vw,66px); line-height:1.06;}
-  .hero p{font-size:17px; line-height:1.75; color:var(--muted); max-width:440px; margin:24px 0 34px; font-weight:300;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-outline{border:1.5px solid rgba(245,244,248,0.3); color:var(--white); padding:14px 26px; border-radius:8px; font-size:13.5px; font-weight:600; text-decoration:none;}
-  .photo-ph{height:460px; border-radius:16px; background:linear-gradient(155deg,#1D1D26,#15151A); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; position:relative; clip-path:polygon(0 4%, 100% 0, 100% 96%, 0 100%);}
-  .photo-ph svg{width:32px; height:32px; stroke:var(--cyan); opacity:0.6;}
-  .photo-ph span{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
+  /* ---------- hero + signature: kinetic type ---------- */
+  .hero{padding-top:64px; padding-bottom:0;}
+  .kt{margin-top:22px; font-size:clamp(44px,8vw,104px); line-height:1.02; letter-spacing:0; font-weight:700;}
+  .kt .ln{display:block; text-wrap:balance;}
+  .kt .ln-2{color:var(--cyan);}
+  .kw{position:relative; display:inline-block;}
+  .kw-g{visibility:hidden; -webkit-user-select:none; user-select:none;}
+  .kw-t{position:absolute; left:50%; top:0; white-space:nowrap; transform:translateX(-50%); transform-origin:50% 80%;}
+  .hero-row{display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:end; gap:24px 56px; margin-top:34px;}
+  .lede{max-width:33em; font-size:18px; color:#D6D5DE;}
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:14px 26px;}
 
-  section{padding:110px 0; position:relative;}
-  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; gap:30px; margin-bottom:56px; flex-wrap:wrap;}
-  .sec-head h2{font-size:clamp(28px,3.4vw,42px); max-width:520px;}
-  .sec-head p{color:var(--muted); font-size:14.5px; max-width:300px; line-height:1.7; font-weight:300;}
+  /* hours ruler: 11 AM to 10 PM, 11 one-hour cells */
+  .hours{margin-top:56px; padding:22px 0 30px; border-top:1px solid var(--line);}
+  .hours-cap{display:flex; justify-content:space-between; gap:12px; margin-bottom:12px; font-size:15px; color:var(--muted);}
+  .hours-cap b{color:var(--white); font-weight:600;}
+  .track{position:relative; height:48px; border:1px solid rgba(245,244,248,0.28); border-radius:6px; overflow:hidden;
+    background:repeating-linear-gradient(90deg, transparent 0 calc(100% / 11 - 1px), rgba(245,244,248,0.16) calc(100% / 11 - 1px) calc(100% / 11));}
+  .track .eve{position:absolute; top:0; bottom:0; left:calc(700% / 11); right:0; display:flex; align-items:center; gap:10px; padding-left:16px; background:var(--cyan); color:var(--bg); font-size:15px; font-weight:700; white-space:nowrap;}
+  .track .eve svg{width:18px; height:18px; flex:none;}
+  .ticks{position:relative; height:24px; margin-top:8px; font-size:14px; color:var(--muted);}
+  .ticks span{position:absolute; top:0; transform:translateX(-50%); white-space:nowrap;}
+  .ticks span:first-child{transform:none;}
+  .ticks span:last-child{transform:translateX(-100%);}
 
-  .services{background:var(--panel); clip-path:polygon(0 4%, 100% 0, 100% 96%, 0 100%); margin:0 -1px;}
-  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:2px;}
-  .svc-card{background:#1B1B22; padding:36px 30px; transition:background .25s;}
-  .svc-card:hover{background:#212129;}
-  .svc-card .tag{display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.04em; padding:4px 10px; border-radius:100px; margin-bottom:20px;}
-  .svc-card h3{font-size:19px; margin-bottom:10px; font-weight:600;}
-  .svc-card p{font-size:13.5px; color:var(--muted); line-height:1.7; font-weight:300;}
+  /* ---------- sections ---------- */
+  section{scroll-margin-top:var(--nav-h);}
+  .sec{padding-top:112px; padding-bottom:112px;}
+  .sec h2{font-size:clamp(32px,4.4vw,54px); letter-spacing:-0.01em; text-wrap:balance;}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
-  .about-photo{height:480px; border-radius:16px; background:linear-gradient(155deg,#1D1D26,#15151A); border:1px solid var(--line); clip-path:polygon(0 0, 100% 4%, 100% 100%, 0 96%);}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:36px; padding-top:30px; border-top:1px solid var(--line);}
-  .stat-row h4{font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:700;}
-  .stat-row p{font-size:12.5px; color:var(--muted); margin-top:4px;}
+  /* chair time: a timetable, not a card grid */
+  .chair{position:relative; isolation:isolate;}
+  /* slanted panel: only the background is cut, never the content (the section padding clears the slant) */
+  .chair::before{content:""; position:absolute; z-index:-1; inset:0; background:var(--panel); clip-path:polygon(0 3.6vw, 100% 0, 100% calc(100% - 3.6vw), 0 100%);}
+  .chair-head{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr); gap:20px 64px; align-items:end; margin-bottom:46px;}
+  .chair-head h2{margin-top:14px;}
+  .chair-head p{color:var(--muted); max-width:28em;}
+  .menu{list-style:none; border-top:1px solid var(--line);}
+  .row{display:grid; grid-template-columns:44px 150px minmax(0,1fr) 190px; grid-template-areas:"ico time what price"; gap:0 26px; align-items:start; padding:26px 4px 26px 0; border-bottom:1px solid var(--line);}
+  .r-ico{grid-area:ico; width:40px; height:40px; margin-top:2px;}
+  .r-ico svg{display:block; width:40px; height:40px;}
+  .r-time{grid-area:time; font-family:'Syne',sans-serif; font-weight:700; font-size:26px; line-height:1.15; white-space:nowrap;}
+  .r-what{grid-area:what;}
+  .r-what h3{font-size:21px; line-height:1.25;}
+  .r-what p{margin-top:6px; color:var(--muted); font-size:16px;}
+  .r-price{grid-area:price; text-align:right;}
+  .r-price b{display:block; font-family:'Syne',sans-serif; font-weight:700; font-size:26px; line-height:1.15; white-space:nowrap;}
+  .r-price span{display:block; margin-top:4px; color:var(--muted); font-size:14px;}
+  .r-price .ask{font-family:'DM Sans',sans-serif; font-size:16px; color:var(--violet-l); font-weight:600; line-height:1.4; padding-top:4px;}
+  .chair-foot{display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:14px 28px; margin-top:30px; color:var(--muted); font-size:16px;}
 
-  .pricing{background:var(--panel);}
-  .price-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
-  .price-card{background:#1B1B22; padding:30px 26px; text-align:center;}
-  .price-card .amt{font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:700; margin:12px 0 4px;}
-  .price-card .lbl{font-size:13.5px; font-weight:600;}
-  .price-card .desc{font-size:12px; color:var(--muted); margin-top:8px; line-height:1.5;}
+  /* dentist */
+  .doc{display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:72px; align-items:center;}
+  .night{margin:0;}
+  .night svg{display:block; width:100%; height:auto; border-radius:14px;}
+  .night figcaption{margin-top:12px; font-size:14px; color:var(--muted);}
+  .doc-copy h2{margin-top:14px;}
+  .doc-copy > p{margin-top:20px; max-width:33em; color:#D6D5DE; font-size:18px;}
+  .stats{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:20px; margin-top:38px; padding-top:28px; border-top:1px solid var(--line); list-style:none;}
+  .stats b{display:block; font-family:'Syne',sans-serif; font-size:32px; font-weight:700; line-height:1.1;}
+  .stats span{display:block; margin-top:6px; font-size:15px; color:var(--muted);}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  .info-row{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line);}
-  .info-row .lbl{width:110px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cyan); font-weight:600; flex-shrink:0;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{background:var(--panel); border:1px solid var(--line); border-radius:8px; padding:14px; color:var(--white); font-family:'Inter',sans-serif; font-size:14px;}
-  .form input::placeholder, .form textarea::placeholder{color:#5C5A66;}
-  .form button{background:linear-gradient(90deg,var(--violet),var(--cyan)); color:var(--bg); border:none; padding:15px; border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  /* visit */
+  .visit-head{max-width:640px; margin-bottom:44px;}
+  .visit-head h2{margin-top:14px;}
+  .visit{display:grid; grid-template-columns:minmax(0,0.95fr) minmax(0,1.05fr); border:1px solid var(--line); border-radius:16px; overflow:hidden;}
+  .info{padding:30px 34px; background:var(--panel);}
+  .info-row{display:grid; grid-template-columns:116px minmax(0,1fr); gap:14px; align-items:baseline; padding:15px 0; border-bottom:1px solid var(--line);}
+  .info-row:last-child{border-bottom:0;}
+  .info-row .lbl{font-family:'Syne',sans-serif; font-size:14px; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; color:var(--cyan);}
+  .info-row a{display:inline-flex; align-items:center; min-height:44px; margin:-10px 0; font-weight:700; color:var(--cyan); text-underline-offset:4px;}
+  .form{padding:30px 34px 34px; scroll-margin-top:calc(var(--nav-h) + 16px);}
+  .form h3{font-size:24px; margin-bottom:22px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; margin-bottom:7px; font-size:15px; font-weight:600;}
+  .field input, .field select, .field textarea{display:block; width:100%; min-height:52px; padding:12px 14px; border:1.5px solid #6E6D7A; border-radius:8px; background:var(--bg); color:var(--white); font:16px 'DM Sans',sans-serif;}
+  .field select{appearance:none; -webkit-appearance:none; padding-right:44px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%2322D3EE' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:20px;}
+  .field textarea{min-height:96px; resize:vertical;}
+  .field input::placeholder, .field textarea::placeholder{color:#8D8C99;}
+  .form .btn{width:100%;}
+  .form-note{margin-top:14px; font-size:16px; color:var(--muted);}
 
-  footer{padding:32px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted);}
-  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  footer{border-top:1px solid var(--line);}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; padding-top:28px; padding-bottom:34px; font-size:14px; color:var(--muted);}
 
   .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 24px rgba(0,0,0,0.5); text-decoration:none;}
-  .wa-float svg{width:28px; height:28px; fill:white;}
+  .wa-float svg{width:28px; height:28px; fill:#fff;}
+  /* shown only from 1280px, where it clears the 1064px column; below that WhatsApp is in Visit and the phone bar */
+  @media (max-width:1279px){ html body .wa-float{display:none;} }
 
-  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  .js .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
 
-  @media (max-width:900px){
-    .nav-links,.btn-outline{display:none;}
-    .burger{display:block;}
-    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr;}
-    .price-grid{grid-template-columns:1fr 1fr;}
-    .stat-row{grid-template-columns:1fr 1fr;}
-    section{padding:78px 0;}
-    .services,.photo-ph,.about-photo{clip-path:none;}
+  @media (max-width:1000px){
+    .row{grid-template-columns:44px 128px minmax(0,1fr) 150px; gap:0 20px;}
+    .r-time{font-size:23px;}
+    .doc{gap:48px;}
   }
+  @media (max-width:900px){
+    .logo small{display:none;}
+    .nav{gap:16px;}
+    .hero-row{grid-template-columns:minmax(0,1fr);}
+    .chair-head{grid-template-columns:minmax(0,1fr);}
+    .doc{grid-template-columns:minmax(0,1fr);}
+    .night{max-width:460px;}
+    .visit{grid-template-columns:minmax(0,1fr);}
+  }
+  @media (max-width:720px){
+    .top{position:static;}
+    :root{--nav-h:0px;}
+    .nav-links, .nav .btn{display:none;}
+    .nav{min-height:64px;}
+    .sec{padding-top:80px; padding-bottom:80px;}
+    .row{grid-template-columns:40px minmax(0,1fr) auto; grid-template-areas:"name name name" "ico time price" "desc desc desc"; gap:12px 14px; padding:22px 0;}
+    .r-what{display:contents;}
+    .r-what h3{grid-area:name;}
+    .r-what p{grid-area:desc; margin-top:0;}
+    .r-time{font-size:22px; align-self:center;}
+    .r-price b{font-size:22px;}
+    .form{scroll-margin-top:12px;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+  }
+  @media (max-width:560px){
+    .wrap{padding-left:18px; padding-right:18px;}
+    .hero{padding-top:36px;}
+    .kt{font-size:clamp(40px,12vw,56px); line-height:1.04;}
+    .lede{font-size:17px;}
+    .hero-actions .btn{width:100%;}
+    .hours{margin-top:44px;}
+    .hours-cap .sun{display:none;}
+    .ticks .t2{display:none;}
+    .track .eve{padding-left:10px; gap:6px;}
+    .track .eve svg{display:none;}
+    .stats{grid-template-columns:minmax(0,1fr); gap:0;}
+    .stats li{display:flex; align-items:baseline; justify-content:space-between; gap:12px; padding:12px 0; border-bottom:1px solid var(--line);}
+    .stats li:last-child{border-bottom:0;}
+    .stats span{margin-top:0; text-align:right;}
+    .info{padding:22px 20px;}
+    .info-row{grid-template-columns:minmax(0,1fr); gap:2px;}
+    .info-row a{margin:-4px 0;}
+    .form{padding:24px 20px 26px;}
+  }
+  /* the evening band is 4/11 of the column: below 420px only "Evening" fits */
+  @media (max-width:420px){
+    .track .eve-s{display:none;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#17171D;--nc-fg:#F5F4F8;--nc-accent:#22D3EE;--nc-on-accent:#17171D;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">Pulse<span> Dental</span></div>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Book</a>
-    </div>
-    <a class="btn-fill" href="#contact">Book a Slot</a>
-    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
-  </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#pricing">Pricing</a>
-    <a href="#contact">Book</a>
-  </div>
-</nav>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 34 34" focusable="false"><path d="M5 18h6l2.4-6 4.2 12 3.2-9 1.8 3H29" fill="none" stroke="#101014" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Pulse <small>Dental Studio</small></a>
+    <div class="nav-links"><a href="#chair">Chair times</a><a href="#dentist">Dentist</a><a href="#visit">Visit</a></div>
+    <a class="btn" href="#bookForm">Book a slot</a>
+  </nav>
+</header>
 
-<section class="hero wrap">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">Sholinganallur · OMR IT Corridor</div>
-      <h1 style="margin-top:14px;">Dental care that fits <span class="grad-text">your actual calendar.</span></h1>
-      <p>Pulse runs online slot booking, evening hours till 10 PM, and 30-minute checkup guarantees — built for people whose day doesn't end at 6.</p>
-      <div class="hero-ctas">
-        <a class="btn-fill" href="#contact">Book a Slot</a>
-        <a class="btn-outline" href="#services">See Services</a>
+<main id="top">
+<section class="wrap hero" data-signature="kinetic-type">
+  <p class="eyebrow">Sholinganallur · <span class="nowrap">OMR IT corridor</span></p>
+  <h1 class="kt"><span class="ln">Your day runs late.</span> <span class="ln ln-2">So do we.</span></h1>
+  <div class="hero-row">
+    <p class="lede">A dental studio on OMR, open till 10 PM from Monday to Saturday. Book on WhatsApp and come in after work. A checkup and clean usually takes about 25 minutes.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#bookForm">Book an evening slot</a>
+      <a class="text-link" href="#chair">Chair times and prices</a>
+    </div>
+  </div>
+  <div class="hours" role="img" aria-label="Open 11 AM to 10 PM, Monday to Saturday. Evening slots from 6 PM. Sunday by appointment.">
+    <div class="hours-cap" aria-hidden="true"><span><b>Mon–Sat</b> · one cell is one hour</span><span class="sun">Sunday by appointment</span></div>
+    <div class="track" aria-hidden="true"><span class="eve"><svg viewBox="0 0 24 24" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5Z" fill="#101014"/></svg><span>Evening<span class="eve-s"> slots</span></span></span></div>
+    <div class="ticks" aria-hidden="true"><span style="left:0">11 AM</span><span class="t2" style="left:calc(300% / 11)">2 PM</span><span style="left:calc(700% / 11)">6 PM</span><span style="left:100%">10 PM</span></div>
+  </div>
+</section>
+
+<section class="chair sec" id="chair">
+  <div class="wrap">
+    <div class="chair-head reveal">
+      <div><p class="eyebrow">Chair time</p><h2>Plan it around your meetings.</h2></div>
+      <p>Each treatment shows its usual time in the chair and its price. A + means the final figure depends on the tooth, and you get that figure before you book.</p>
+    </div>
+    <ol class="menu">
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="#5B5A66" stroke-width="2"/><circle cx="20" cy="20" r="7.5" fill="none" stroke="#22D3EE" stroke-width="15" stroke-dasharray="19.63 47.12" transform="rotate(-90 20 20)"/></svg></span>
+        <span class="r-time">25 min</span>
+        <div class="r-what"><h3>Checkup and clean</h3><p>Exam, digital scan and polish. Fits inside a lunch break.</p></div>
+        <div class="r-price"><b>₹500</b><span>Scan and exam included</span></div>
+      </li>
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="#5B5A66" stroke-width="2"/><circle cx="20" cy="20" r="7.5" fill="none" stroke="#22D3EE" stroke-width="15" stroke-dasharray="27.49 47.12" transform="rotate(-90 20 20)"/></svg></span>
+        <span class="r-time">35 min</span>
+        <div class="r-what"><h3>Composite filling</h3><p>Tooth-coloured and done in the same visit, so there is no second appointment.</p></div>
+        <div class="r-price"><b>₹1,800+</b><span>Per tooth</span></div>
+      </li>
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><circle cx="20" cy="20" r="17" fill="none" stroke="#5B5A66" stroke-width="2"/><circle cx="20" cy="20" r="7.5" fill="none" stroke="#22D3EE" stroke-width="15" stroke-dasharray="35.34 47.12" transform="rotate(-90 20 20)"/></svg></span>
+        <span class="r-time">45 min</span>
+        <div class="r-what"><h3>Whitening</h3><p>One in-studio session. How many shades it lifts depends on where your teeth start.</p></div>
+        <div class="r-price"><b>₹6,500</b><span>Single session</span></div>
+      </li>
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="3" y="13" width="9" height="14" rx="2" fill="#C4A5FA"/><rect x="15.5" y="13" width="9" height="14" rx="2" fill="#C4A5FA"/><rect x="29" y="14" width="7" height="12" rx="2" fill="none" stroke="#C4A5FA" stroke-width="2" stroke-dasharray="3 2.4"/></svg></span>
+        <span class="r-time">2–3 visits</span>
+        <div class="r-what"><h3>Root canal</h3><p>Rotary instruments, with the visits split across evening slots so you don't lose a workday.</p></div>
+        <div class="r-price"><span class="ask">Quoted on WhatsApp</span></div>
+      </li>
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><rect x="5" y="8" width="30" height="27" rx="4" fill="none" stroke="#C4A5FA" stroke-width="2.2"/><path d="M5 16h30M13 4v8M27 4v8" stroke="#C4A5FA" stroke-width="2.2" stroke-linecap="round"/><rect x="11" y="21" width="7" height="7" rx="1.5" fill="#C4A5FA"/></svg></span>
+        <span class="r-time">Monthly</span>
+        <div class="r-what"><h3>Clear aligners</h3><p>A fitting in the studio each month, with remote progress checks in between.</p></div>
+        <div class="r-price"><b>₹38,000+</b><span>Full course, all reviews</span></div>
+      </li>
+      <li class="row">
+        <span class="r-ico" aria-hidden="true"><svg viewBox="0 0 40 40" focusable="false"><path d="M23 3 9 23h9l-3 14 15-21h-9.5L23 3Z" fill="#FF9E9E"/></svg></span>
+        <span class="r-time">Same day</span>
+        <div class="r-what"><h3>Emergency visit</h3><p>Two slots are kept free each day for urgent cases. Call before you come.</p></div>
+        <div class="r-price"><span class="ask">Priced after the exam</span></div>
+      </li>
+    </ol>
+    <div class="chair-foot">
+      <p>Times are usual chair times; your own visit can run shorter or longer.</p>
+      <a class="text-link" href="#bookForm">Ask for a slot</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="dentist">
+  <div class="wrap doc">
+    <figure class="night">
+      <svg viewBox="0 0 400 440" role="img" aria-label="Illustration: an office block on OMR at night, with the third floor lit." focusable="false">
+        <rect width="400" height="440" fill="#17171D"/>
+        <g fill="#F5F4F8"><circle cx="46" cy="44" r="1.6" opacity=".55"/><circle cx="98" cy="22" r="1.2" opacity=".4"/><circle cx="214" cy="38" r="1.4" opacity=".5"/><circle cx="262" cy="16" r="1.1" opacity=".35"/><circle cx="372" cy="128" r="1.3" opacity=".45"/><circle cx="20" cy="104" r="1.1" opacity=".35"/></g>
+        <circle cx="330" cy="62" r="25" fill="#F5F4F8"/>
+        <circle cx="342" cy="54" r="22" fill="#17171D"/>
+        <!-- back towers -->
+        <rect x="18" y="138" width="84" height="262" fill="#1E1E27"/>
+        <g fill="#272731"><rect x="28" y="150" width="14" height="10"/><rect x="50" y="150" width="14" height="10"/><rect x="72" y="150" width="14" height="10"/><rect x="28" y="172" width="14" height="10"/><rect x="50" y="172" width="14" height="10"/><rect x="72" y="172" width="14" height="10"/><rect x="28" y="194" width="14" height="10"/><rect x="72" y="194" width="14" height="10"/><rect x="28" y="216" width="14" height="10"/><rect x="50" y="216" width="14" height="10"/><rect x="28" y="238" width="14" height="10"/><rect x="50" y="238" width="14" height="10"/><rect x="72" y="238" width="14" height="10"/><rect x="50" y="260" width="14" height="10"/><rect x="72" y="260" width="14" height="10"/><rect x="28" y="282" width="14" height="10"/><rect x="50" y="282" width="14" height="10"/><rect x="28" y="304" width="14" height="10"/><rect x="72" y="304" width="14" height="10"/><rect x="28" y="326" width="14" height="10"/><rect x="50" y="326" width="14" height="10"/><rect x="72" y="326" width="14" height="10"/><rect x="50" y="348" width="14" height="10"/><rect x="72" y="348" width="14" height="10"/></g>
+        <g fill="#4A4A58"><rect x="50" y="194" width="14" height="10"/><rect x="28" y="260" width="14" height="10"/><rect x="50" y="304" width="14" height="10"/></g>
+        <rect x="314" y="176" width="70" height="224" fill="#1E1E27"/>
+        <g fill="#272731"><rect x="324" y="188" width="12" height="10"/><rect x="344" y="188" width="12" height="10"/><rect x="364" y="188" width="12" height="10"/><rect x="324" y="210" width="12" height="10"/><rect x="364" y="210" width="12" height="10"/><rect x="324" y="232" width="12" height="10"/><rect x="344" y="232" width="12" height="10"/><rect x="344" y="254" width="12" height="10"/><rect x="364" y="254" width="12" height="10"/><rect x="324" y="276" width="12" height="10"/><rect x="344" y="276" width="12" height="10"/><rect x="364" y="276" width="12" height="10"/><rect x="324" y="298" width="12" height="10"/><rect x="364" y="298" width="12" height="10"/><rect x="344" y="320" width="12" height="10"/><rect x="324" y="342" width="12" height="10"/><rect x="364" y="342" width="12" height="10"/></g>
+        <g fill="#4A4A58"><rect x="344" y="210" width="12" height="10"/><rect x="364" y="232" width="12" height="10"/><rect x="344" y="298" width="12" height="10"/></g>
+        <!-- OMR Business Hub -->
+        <rect x="112" y="98" width="190" height="302" fill="#24242E"/>
+        <rect x="132" y="84" width="150" height="14" fill="#2C2C37"/>
+        <path d="M207 84V58" stroke="#3A3A46" stroke-width="3"/>
+        <circle cx="207" cy="56" r="3" fill="#FF5D5D"/>
+        <g fill="#2E2E3A">
+          <rect x="126" y="110" width="28" height="22"/><rect x="162" y="110" width="28" height="22"/><rect x="198" y="110" width="28" height="22"/><rect x="234" y="110" width="28" height="22"/><rect x="270" y="110" width="20" height="22"/>
+          <rect x="126" y="146" width="28" height="22"/><rect x="198" y="146" width="28" height="22"/><rect x="234" y="146" width="28" height="22"/><rect x="270" y="146" width="20" height="22"/>
+          <rect x="126" y="182" width="28" height="22"/><rect x="162" y="182" width="28" height="22"/><rect x="198" y="182" width="28" height="22"/><rect x="270" y="182" width="20" height="22"/>
+          <rect x="162" y="218" width="28" height="22"/><rect x="198" y="218" width="28" height="22"/><rect x="234" y="218" width="28" height="22"/><rect x="270" y="218" width="20" height="22"/>
+          <rect x="126" y="290" width="28" height="22"/><rect x="162" y="290" width="28" height="22"/><rect x="234" y="290" width="28" height="22"/><rect x="270" y="290" width="20" height="22"/>
+          <rect x="126" y="326" width="28" height="22"/><rect x="162" y="326" width="28" height="22"/><rect x="198" y="326" width="28" height="22"/><rect x="234" y="326" width="28" height="22"/>
+        </g>
+        <!-- other offices still working late -->
+        <g fill="#5A5A6A"><rect x="162" y="146" width="28" height="22"/><rect x="234" y="182" width="28" height="22"/><rect x="126" y="218" width="28" height="22"/><rect x="198" y="290" width="28" height="22"/><rect x="270" y="326" width="20" height="22"/></g>
+        <!-- third floor: the studio -->
+        <rect x="116" y="250" width="182" height="34" fill="#22D3EE" opacity=".16"/>
+        <g fill="#22D3EE"><rect x="126" y="254" width="28" height="22"/><rect x="162" y="254" width="28" height="22"/><rect x="198" y="254" width="28" height="22"/><rect x="234" y="254" width="28" height="22"/><rect x="270" y="254" width="20" height="22"/></g>
+        <path d="M206 258.5c-1.6 0-2.7 1.3-2.7 3.4 0 2.2.6 3.4 1 5.2.3 1.6.6 3.4 1.5 3.4.8 0 1-1.6 1.3-2.8.2-.8.4-1.4 1-1.4s.8.6 1 1.4c.3 1.2.5 2.8 1.3 2.8.9 0 1.2-1.8 1.5-3.4.4-1.8 1-3 1-5.2 0-2.1-1.1-3.4-2.7-3.4-1 0-1.4.5-2.1.5s-1.1-.5-2.1-.5Z" fill="#101014"/>
+        <rect x="112" y="362" width="190" height="38" fill="#1C1C24"/>
+        <rect x="186" y="370" width="42" height="30" fill="#33333F"/>
+        <path d="M207 370v30" stroke="#24242E" stroke-width="2"/>
+        <!-- OMR at night -->
+        <rect y="400" width="400" height="40" fill="#121217"/>
+        <path d="M0 420H400" stroke="#3A3A46" stroke-width="2" stroke-dasharray="16 12"/>
+        <path d="M0 408C90 407 160 406 230 407S350 409 400 408" fill="none" stroke="#FF5D5D" stroke-width="3" stroke-linecap="round" opacity=".9"/>
+        <path d="M30 412C120 411 200 411 290 412" fill="none" stroke="#FF9E9E" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+        <path d="M60 431C150 430 260 430 400 431" fill="none" stroke="#F5F4F8" stroke-width="3" stroke-linecap="round" opacity=".75"/>
+        <path d="M0 434C80 434 140 433 210 434" fill="none" stroke="#C4A5FA" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+      </svg>
+      <figcaption>3rd floor, OMR Business Hub. Illustration.</figcaption>
+    </figure>
+    <div class="doc-copy reveal">
+      <p class="eyebrow">The dentist</p>
+      <h2>Dr. Kavya Ramesh, BDS</h2>
+      <p>Kavya opened Pulse after years of watching IT-corridor patients cancel appointments they had waited months for, because 6 PM never worked. Booking, reminders and records all run on WhatsApp, so there is no phone tag.</p>
+      <ul class="stats">
+        <li><b>6 yrs</b><span>Open in Sholinganallur</span></li>
+        <li><b>2,400+</b><span>Patients treated</span></li>
+        <li><b>4.8★</b><span>Google rating</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="visit">
+  <div class="wrap">
+    <div class="visit-head reveal"><p class="eyebrow">Visit</p><h2>Ask for an evening slot.</h2></div>
+    <div class="visit">
+      <div class="info">
+        <div class="info-row"><div class="lbl">Address</div><div>3rd Floor, OMR Business Hub, Sholinganallur, Chennai 600119</div></div>
+        <div class="info-row"><div class="lbl">Phone</div><div><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></div></div>
+        <div class="info-row"><div class="lbl">Hours</div><div>Mon–Sat, 11 AM to 10 PM<br>Sunday by appointment</div></div>
+        <div class="info-row"><div class="lbl">WhatsApp</div><div><a href="https://wa.me/9198XXXXXXXX">Message the studio →</a></div></div>
       </div>
-    </div>
-    <div class="photo-ph">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Studio interior photo</span>
-    </div>
-  </div>
-</section>
-
-<section class="services" id="services">
-  <div class="wrap reveal" style="padding:100px 28px;">
-    <div class="sec-head">
-      <div><div class="eyebrow">Services</div><h2 style="margin-top:12px;">Built for fast, precise visits.</h2></div>
-      <p>Every service below lists its typical chair time — book around your meetings, not the other way around.</p>
-    </div>
-    <div class="svc-grid">
-      <div class="svc-card"><span class="tag" style="background:rgba(124,58,237,0.18); color:#C4A5FA;">~25 min</span><h3>Checkup & Clean</h3><p>Digital scan, exam, and polish — usually done inside a lunch break.</p></div>
-      <div class="svc-card"><span class="tag" style="background:rgba(34,211,238,0.15); color:#7FE3F0;">~35 min</span><h3>Composite Filling</h3><p>Same-day tooth-coloured fillings, no second appointment needed.</p></div>
-      <div class="svc-card"><span class="tag" style="background:rgba(255,93,93,0.15); color:#FF9E9E;">~45 min</span><h3>Whitening Session</h3><p>In-studio whitening with visible results in a single sitting.</p></div>
-      <div class="svc-card"><span class="tag" style="background:rgba(124,58,237,0.18); color:#C4A5FA;">2–3 visits</span><h3>Root Canal</h3><p>Rotary endodontics, scheduled across evening slots.</p></div>
-      <div class="svc-card"><span class="tag" style="background:rgba(34,211,238,0.15); color:#7FE3F0;">Monthly</span><h3>Clear Aligners</h3><p>Remote progress checks between in-studio fittings.</p></div>
-      <div class="svc-card"><span class="tag" style="background:rgba(255,93,93,0.15); color:#FF9E9E;">Same-day</span><h3>Emergency Visit</h3><p>Two slots held open daily for urgent walk-ins.</p></div>
+      <form class="form" id="bookForm" action="mailto:?subject=Slot%20request" method="post" enctype="text/plain">
+        <h3>Slot request</h3>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
+        <div class="field"><label for="f-when">When suits you?</label>
+          <select id="f-when" name="when">
+            <option>Weekday evening, 6 to 10 PM</option>
+            <option>Weekday, 11 AM to 6 PM</option>
+            <option>Saturday</option>
+            <option>Sunday, by appointment</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-note">What do you need? (optional)</label><textarea id="f-note" name="note" rows="3" placeholder="A checkup, a filling, a sore tooth"></textarea></div>
+        <button class="btn" type="submit">Send request</button>
+        <p class="form-note">Opens your email app with these details. This asks for a slot; it does not book one.</p>
+      </form>
     </div>
   </div>
 </section>
+</main>
 
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="about-photo">
-      <div class="photo-ph" style="height:100%; clip-path:none;">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-        <span>Doctor portrait photo</span>
-      </div>
-    </div>
-    <div>
-      <div class="eyebrow">Founder</div>
-      <h2 style="margin-top:12px; font-size:clamp(26px,3vw,38px);">Dr. [Full Name], BDS</h2>
-      <p style="font-size:15.5px; color:var(--muted); line-height:1.85; margin-top:16px; font-weight:300;">Built Pulse after years of watching IT-corridor patients cancel appointments they'd waited months for, simply because 6 PM never worked. Booking, records, and reminders all run through WhatsApp — no phone tag required.</p>
-      <div class="stat-row">
-        <div><h4>6 yrs</h4><p>Open in Sholinganallur</p></div>
-        <div><h4>2,400+</h4><p>Patients treated</p></div>
-        <div><h4>4.8 ★</h4><p>Google rating</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="pricing" id="pricing">
-  <div class="wrap reveal" style="padding:100px 28px;">
-    <div class="sec-head">
-      <div><div class="eyebrow">Straight Pricing</div><h2 style="margin-top:12px;">No consultation-only visits.</h2></div>
-      <p>Quoted upfront by WhatsApp before you even book.</p>
-    </div>
-    <div class="price-grid">
-      <div class="price-card"><div class="lbl">Checkup</div><div class="amt">₹500</div><div class="desc">Scan + exam included</div></div>
-      <div class="price-card"><div class="lbl">Filling</div><div class="amt">₹1,800+</div><div class="desc">Per tooth, same-day</div></div>
-      <div class="price-card"><div class="lbl">Whitening</div><div class="amt">₹6,500</div><div class="desc">Single in-studio session</div></div>
-      <div class="price-card"><div class="lbl">Aligners</div><div class="amt">₹38,000+</div><div class="desc">Full course, all reviews</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <div class="wrap contact-grid reveal">
-    <div>
-      <div class="eyebrow">Book a Slot</div>
-      <h2 style="margin:12px 0 32px; font-size:clamp(26px,3vw,38px);">Evening slots open daily.</h2>
-      <div class="info-row"><div class="lbl">ADDRESS</div><div>3rd Floor, OMR Business Hub, Sholinganallur, Chennai 600119</div></div>
-      <div class="info-row"><div class="lbl">PHONE</div><div>+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">HOURS</div><div>Mon–Sat, 11 AM – 10 PM · Sun by appointment</div></div>
-      <div class="info-row"><div class="lbl">WHATSAPP</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--cyan); font-weight:600;">Book via WhatsApp →</a></div></div>
-    </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Slot Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nPreferred time: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="4" placeholder="Preferred evening / service needed"></textarea>
-      <button type="submit">Request a Slot</button>
-    </form>
-  </div>
-</section>
-
-<footer class="wrap foot-inner">
-  <span>© 2026 Pulse Dental Studio, Sholinganallur.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap"><span>© 2026 Pulse Dental Studio, Sholinganallur.</span><span>Design portfolio piece · Not a live business</span></div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
+  document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+  /* sticky nav height for scroll offsets */
+  (function(){
+    var top = document.querySelector('.top');
+    function fit(){ if(getComputedStyle(top).position === 'sticky') document.documentElement.style.setProperty('--nav-h', top.offsetHeight + 'px'); else document.documentElement.style.removeProperty('--nav-h'); }
+    fit();
+    addEventListener('resize', fit);
+  })();
+
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  /* signature: kinetic type. With a mouse or pen over the hero, the headline words near the pointer stay
+     bold and upright; words further away thin out and lean toward it. Each word sits on an invisible
+     ghost copy at rest weight, and the visible copy is absolutely positioned on top, so nothing reflows.
+     Letter-spacing gives back half the width a lighter weight loses. Touch, reduced motion and no JS: static. */
+  (function(){
+    var hero = document.querySelector('[data-signature="kinetic-type"]');
+    var h1 = hero && hero.querySelector('.kt');
+    if(!h1 || !window.requestAnimationFrame) return;
+    // TRACK: share of the lost width given back as letter-spacing; the rest stays as space around the word,
+    // so the gaps between words always stay wider than the gaps between letters
+    // SKEW_FWD: lean right (like italics); SKEW_BACK: lean left, kept smaller because back-slanted text reads worse
+    var REST = 700, LIGHT = 460, SKEW_FWD = 10, SKEW_BACK = 6, TRACK = 0.5, STEPS = [400, 450, 500, 550, 600, 650, 700];
+    var mq = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var reduce = !!(mq && mq.matches);
+    var words = [];
+    [].forEach.call(h1.querySelectorAll('.ln'), function(line){
+      var parts = line.textContent.trim().split(/\s+/);
+      line.textContent = '';
+      parts.forEach(function(txt, i){
+        if(i) line.appendChild(document.createTextNode(' '));
+        var box = document.createElement('span'); box.className = 'kw';
+        var ghost = document.createElement('span'); ghost.className = 'kw-g'; ghost.setAttribute('aria-hidden', 'true'); ghost.textContent = txt;
+        var t = document.createElement('span'); t.className = 'kw-t'; t.textContent = txt;
+        box.appendChild(ghost); box.appendChild(t); line.appendChild(box);
+        words.push({box:box, t:t, n:txt.length, w:REST, s:0, em:null});
+      });
+    });
+
+    var measured = false;
+    function measure(){
+      var fs = parseFloat(getComputedStyle(h1).fontSize);
+      words.forEach(function(o){ o.t.style.cssText = ''; });
+      words.forEach(function(o){
+        o.em = STEPS.map(function(wt){ o.t.style.fontWeight = wt; return o.t.getBoundingClientRect().width / fs; });
+        o.restEm = o.em[o.em.length - 1];
+      });
+      measured = true;
+      words.forEach(paint);
+    }
+    function widthAt(o, wt){
+      var x = (Math.max(400, Math.min(700, wt)) - 400) / 50, i = Math.min(5, Math.floor(x));
+      return o.em[i] + (o.em[i + 1] - o.em[i]) * (x - i);
+    }
+    function paint(o){
+      if(o.w >= REST - 0.01 && Math.abs(o.s) < 0.01){ o.t.style.cssText = ''; return; }
+      var wt = Math.round(o.w);
+      var ls = o.em ? Math.max(0, TRACK * (o.restEm - widthAt(o, wt)) / o.n) : 0;
+      o.t.style.fontWeight = wt;
+      o.t.style.letterSpacing = ls.toFixed(4) + 'em';
+      o.t.style.transform = 'translateX(-50%) translateX(' + (ls / 2).toFixed(4) + 'em) skewX(' + o.s.toFixed(2) + 'deg)';
+    }
+
+    var px = 0, py = 0, focusEl = null, active = false, inView = true, raf = 0;
+    function frame(){
+      raf = 0;
+      // reads first, then writes
+      var hr = h1.getBoundingClientRect();
+      var rects = words.map(function(o){ return o.box.getBoundingClientRect(); });
+      if(focusEl){ var fr = focusEl.getBoundingClientRect(); px = fr.left + fr.width / 2; py = fr.top + fr.height / 2; }
+      var R = Math.max(200, hr.width * 0.3), moving = false;
+      words.forEach(function(o, i){
+        var tw = REST, ts = 0;
+        if(active){
+          var b = rects[i], dx = px - (b.left + b.width / 2), dy = (py - (b.top + b.height / 2)) * 1.4;
+          var f = Math.exp(-(dx * dx + dy * dy) / (R * R));
+          tw = LIGHT + (REST - LIGHT) * f;
+          var lean = Math.max(-1, Math.min(1, dx / R)) * (1 - f);
+          ts = lean > 0 ? -SKEW_FWD * lean : -SKEW_BACK * lean;
+        }
+        o.w += (tw - o.w) * 0.18; o.s += (ts - o.s) * 0.18;
+        if(Math.abs(tw - o.w) < 0.6 && Math.abs(ts - o.s) < 0.05){ o.w = tw; o.s = ts; } else moving = true;
+      });
+      words.forEach(paint);
+      if(moving) raf = requestAnimationFrame(frame);
+    }
+    function kick(){ if(!measured) measure(); if(!raf) raf = requestAnimationFrame(frame); }
+    function rest(){
+      active = false; focusEl = null;
+      if(raf){ cancelAnimationFrame(raf); raf = 0; }
+      words.forEach(function(o){ o.w = REST; o.s = 0; paint(o); });
+    }
+    function usable(e){ return !reduce && inView && e.pointerType !== 'touch'; }
+
+    hero.addEventListener('pointermove', function(e){
+      if(!usable(e)) return;
+      px = e.clientX; py = e.clientY; focusEl = null; active = true; kick();
+    });
+    hero.addEventListener('pointerleave', function(e){
+      if(e.pointerType === 'touch' || !active || focusEl) return;
+      active = false; kick();
+    });
+    addEventListener('scroll', function(){ if(active) kick(); }, {passive:true});
+    // keyboard: a focused hero link acts as the pointer, and leaving the hero lets the words settle
+    hero.addEventListener('focusin', function(e){
+      if(reduce || !inView || !e.target.matches('a, button')) return;
+      focusEl = e.target; active = true; kick();
+    });
+    hero.addEventListener('focusout', function(e){
+      if(!focusEl || (e.relatedTarget && hero.contains(e.relatedTarget))) return;
+      focusEl = null; active = false; kick();
+    });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        inView = entries[0].isIntersecting;
+        if(!inView) rest();
+      }).observe(hero);
+    }
+    if(mq){
+      var onPref = function(){ reduce = mq.matches; if(reduce) rest(); };
+      if(mq.addEventListener) mq.addEventListener('change', onPref); else if(mq.addListener) mq.addListener(onPref);
+    }
+    // a late web font changes the widths: measure again before the next run
+    if(document.fonts && document.fonts.addEventListener){
+      document.fonts.addEventListener('loadingdone', function(){ measured = false; if(active) kick(); });
+    }
+  })();
+
+  /* slot request: tidy email body when JS is on; without JS the form still posts as mailto */
+  (function(){
+    var f = document.getElementById('bookForm');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var body = 'Name: ' + f.elements.name.value + '\nPhone: ' + f.elements.phone.value + '\nWhen: ' + f.elements.when.value
+        + (f.elements.note.value ? '\nNeed: ' + f.elements.note.value : '');
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('Slot request') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#bookForm">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
