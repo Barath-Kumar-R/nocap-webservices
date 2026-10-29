@@ -3,241 +3,661 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sunshine Smiles Kids & Family Dental — Guduvancheri</title>
+<title>Sunshine Smiles Kids &amp; Family Dental, Guduvancheri</title>
+<meta name="description" content="Kids-first family dental clinic on GST Road, Guduvancheri. Open Mon–Sat 9:30 AM – 7:30 PM, Sun 10 AM – 1 PM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script>document.documentElement.className += ' js';</script>
 <style>
+  /* metric-matched local fallbacks (measured widths), so the swap to the web fonts barely moves the layout */
+  @font-face{font-family:'Fredoka Fallback'; font-weight:400 800; src:local('Arial Bold'),local('Arial-BoldMT'),local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Helvetica Bold'); size-adjust:94%;}
+  @font-face{font-family:'Nunito Fallback'; font-weight:400 600; src:local('Arial'),local('ArialMT'),local('Liberation Sans'),local('LiberationSans'),local('Helvetica'); size-adjust:101.8%;}
+  @font-face{font-family:'Nunito Fallback'; font-weight:700 900; src:local('Arial Bold'),local('Arial-BoldMT'),local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Helvetica Bold'); size-adjust:100.6%;}
   :root{
-    --yellow:#FFC857; --coral:#FF8C69; --teal:#3AAFA9; --teal-deep:#2A8B86; --cream:#FFF8ED; --ink:#2B2118; --muted:#7A6E60;
+    --sun:#FFD15C; --sun-deep:#F4B43A; --sun-soft:#FFE9A8; --marigold:#F27A1A; --lip:#C2570B;
+    --peach:#FFDCC4; --cream:#FFF7E6; --paper:#FFFDF7; --ink:#3B2414; --ink-soft:#6B4A33;
+    --teal:#1F7A75; --teal-felt:#2A8B86; --teal-band:#1E6964; --teal-soft:#CDEDE9; --coral:#FF8C69; --line:#B7791F;
+    --hdr-h:0px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Nunito',sans-serif; background:var(--cream); color:var(--ink);}
-  h1,h2,h3{font-family:'Fredoka',sans-serif; font-weight:600; color:var(--ink);}
+  html{scroll-behavior:smooth; scroll-padding-top:var(--hdr-h);}
+  body{font-family:'Nunito','Nunito Fallback',sans-serif; font-size:17px; line-height:1.6; background:var(--cream); color:var(--ink); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; line-height:1.12; color:var(--ink); text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
-  .eyebrow{font-family:'Fredoka',sans-serif; font-size:13px; letter-spacing:0.04em; color:var(--teal-deep); font-weight:600;}
+  svg{display:block;}
+  .wrap{max-width:1180px; margin:0 auto; padding-left:28px; padding-right:28px;}
+  .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0;}
+  .nw{white-space:nowrap;}
 
-  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(255,248,237,0.94); backdrop-filter:blur(8px); border-bottom:3px solid var(--yellow);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:16px 28px; max-width:1180px; margin:0 auto;}
-  .logo{font-family:'Fredoka',sans-serif; font-weight:700; font-size:21px; display:flex; align-items:center; gap:10px;}
-  .logo .mascot{width:34px; height:34px;}
-  .nav-links{display:flex; gap:28px; font-size:15px; font-weight:600;}
-  .nav-links a{text-decoration:none; color:var(--ink);}
-  .nav-links a:hover{color:var(--coral);}
-  .btn-fill{background:var(--coral); color:white; padding:12px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none; box-shadow:0 4px 0 #D96F4F;}
-  .burger{display:none; background:none; border:none; font-size:24px; cursor:pointer; color:var(--ink);}
-  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:18px 28px 24px; border-top:2px dashed var(--yellow);}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{text-decoration:none; color:var(--ink); font-size:16px; font-weight:600;}
+  /* header: part of the yellow hero; sticky from tablet up */
+  .top{background:var(--sun); position:relative; z-index:60;}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; height:64px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:22px; text-decoration:none; color:var(--ink);}
+  .logo svg{width:38px; height:38px; flex:none;}
+  .nav-links{display:none; gap:4px; list-style:none;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; border-radius:999px; font-weight:700; font-size:16px; text-decoration:none;}
+  .nav-links a:hover{background:rgba(255,253,247,.55);}
+  .nav .btn{display:none;}
 
-  .hero{padding:140px 0 80px; position:relative; overflow:hidden;}
-  .hero::before{content:''; position:absolute; top:-80px; right:-80px; width:340px; height:340px; background:var(--yellow); border-radius:50%; opacity:0.35; z-index:0;}
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center; position:relative; z-index:1;}
-  .hero h1{font-size:clamp(34px,4.8vw,56px); line-height:1.14;}
-  .hero h1 .u{position:relative; color:var(--coral); display:inline-block;}
-  .hero p{font-size:16.5px; line-height:1.75; color:var(--muted); max-width:440px; margin:20px 0 30px; font-weight:500;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-outline{border:2.5px solid var(--ink); color:var(--ink); padding:11px 24px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
-  .photo-ph{height:420px; border-radius:32px 32px 32px 4px; background:linear-gradient(160deg,#FFE8C2,#FFD9A0); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px; position:relative;}
-  .photo-ph svg{width:34px; height:34px; opacity:0.55;}
-  .photo-ph span{font-size:12px; color:var(--muted); font-weight:700;}
-  .star{position:absolute; z-index:2;}
+  /* tactile buttons: a soft lip underneath that the button presses into */
+  .btn{display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0 28px; border:0; border-radius:999px; background:var(--marigold); color:var(--ink); font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:19px; line-height:1.15; text-align:center; text-decoration:none; cursor:pointer; box-shadow:0 5px 0 var(--lip); transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease;}
+  .btn:hover{background:#F68A33;}
+  .btn:active{transform:translateY(3px); box-shadow:0 2px 0 var(--lip);}
+  .nav .btn{min-height:46px; padding:0 22px; font-size:17px; box-shadow:0 4px 0 var(--lip);}
+  .tlink{display:inline-flex; align-items:center; min-height:44px; font-weight:800; font-size:17px; color:var(--ink); text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:5px;}
+  .tlink:hover{text-decoration-color:var(--marigold);}
 
-  section{padding:96px 0;}
-  .sec-head{text-align:center; max-width:560px; margin:0 auto 52px;}
-  .sec-head h2{font-size:clamp(26px,3.4vw,38px); margin-top:10px;}
-  .sec-head p{color:var(--muted); font-size:15px; margin-top:12px; font-weight:500;}
+  /* hero: the yellow stage; the puppet comes up from its bottom edge */
+  .hero{background:var(--sun); border-radius:0 0 40px 40px; padding-top:24px; padding-bottom:0;}
+  .hero-grid{display:grid; grid-template-columns:1fr; gap:8px;}
+  .chip{display:inline-block; background:var(--paper); color:var(--ink); border-radius:999px; padding:5px 14px; font-weight:800; font-size:15px;}
+  .hero h1{font-size:clamp(38px,5.3vw,68px); margin-top:16px; letter-spacing:-.005em;}
+  .hero h1 em{font-style:normal; color:#8E3A06;}
+  .lede{font-size:18px; color:var(--ink-soft); max-width:33em; margin:18px 0 26px; font-weight:600;}
+  .cta-row{display:flex; flex-wrap:wrap; align-items:center; gap:14px 26px;}
+  .hours-line{margin-top:20px; font-size:16px; font-weight:700; color:var(--ink-soft);}
+  .hero-art{align-self:end; justify-self:start; width:min(100%,320px); margin-top:16px;}
+  .hero-art svg{width:100%; height:auto;}
 
-  .mascot-strip{background:var(--teal); border-top:3px solid var(--ink); border-bottom:3px solid var(--ink);}
-  .mascot-strip .wrap{display:flex; align-items:center; gap:40px; padding:56px 28px;}
-  .mascot-big{width:140px; height:140px; flex-shrink:0;}
-  .mascot-strip h2{color:white; font-size:clamp(22px,3vw,32px);}
-  .mascot-strip p{color:#EAF7F5; font-size:15px; margin-top:10px; font-weight:500; max-width:480px;}
+  main > section{padding:72px 0;}
+  h2{font-size:clamp(30px,3.7vw,46px); letter-spacing:-.005em;}
+  .intro{font-size:18px; color:var(--ink-soft); margin-top:14px; max-width:34em;}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
-  .svc-card{background:white; border:3px solid var(--ink); border-radius:22px; padding:32px 26px; box-shadow:6px 6px 0 var(--ink); transition:transform .2s;}
-  .svc-card:hover{transform:translate(-3px,-3px); box-shadow:9px 9px 0 var(--ink);}
-  .svc-icon{width:52px; height:52px; border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
-  .svc-icon svg{width:24px; height:24px; stroke:var(--ink);}
-  .svc-card h3{font-size:19px; margin-bottom:10px;}
-  .svc-card p{font-size:14px; color:var(--muted); line-height:1.6; font-weight:500;}
-
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:52px; align-items:center;}
-  .stat-row{display:flex; gap:14px; flex-wrap:wrap; margin-top:32px;}
-  .stat-pill{background:var(--yellow); border:2.5px solid var(--ink); border-radius:100px; padding:10px 20px; font-weight:700; font-size:13.5px;}
-
-  .steps-row{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
-  .step-card{text-align:center;}
-  .step-num{width:56px; height:56px; border-radius:50%; background:var(--coral); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; font-family:'Fredoka',sans-serif; font-weight:700; color:white; font-size:20px; margin:0 auto 16px;}
-  .step-card h4{font-size:15.5px; margin-bottom:6px;}
-  .step-card p{font-size:12.5px; color:var(--muted); font-weight:500; line-height:1.5;}
-
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:52px;}
-  .info-row{display:flex; gap:16px; padding:16px 0; border-bottom:2px dashed #E0D3BE;}
-  .info-row .lbl{width:100px; font-size:12px; color:var(--teal-deep); font-weight:700; flex-shrink:0;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:2.5px solid var(--ink); border-radius:14px; padding:14px; font-family:'Nunito',sans-serif; font-size:14px; background:white;}
-  .form button{background:var(--coral); color:white; border:3px solid var(--ink); border-radius:100px; padding:15px; font-size:14px; font-weight:700; cursor:pointer; box-shadow:0 4px 0 #D96F4F;}
-
-  footer{padding:32px 0; border-top:3px solid var(--yellow); font-size:13px; color:var(--muted); font-weight:600;}
-  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
-
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:0 4px 0 #17994A; text-decoration:none;}
-  .wa-float svg{width:28px; height:28px; fill:white;}
-
-  .reveal{opacity:0; transform:translateY(16px); transition:opacity .5s ease, transform .5s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
-
-  @media (max-width:900px){
-    .nav-links,.btn-outline{display:none;}
-    .burger{display:block;}
-    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr;}
-    .steps-row{grid-template-columns:1fr 1fr; gap:28px;}
-    .mascot-strip .wrap{flex-direction:column; text-align:center; padding:40px 28px;}
-    section{padding:66px 0;}
+  /* quiz */
+  .quiz-grid{display:grid; grid-template-columns:1fr; gap:36px; align-items:start;}
+  .talk{display:flex; flex-direction:column; align-items:flex-start; gap:8px; margin-top:22px;}
+  .talk a{display:inline-flex; align-items:center; gap:12px; min-height:48px; padding-right:10px; border-radius:999px; font-weight:800; font-size:17px; text-decoration:none; color:var(--ink);}
+  .talk a:hover{text-decoration:underline; text-underline-offset:4px;}
+  .talk .ic{width:44px; height:44px; flex:none; border-radius:50%; display:grid; place-items:center; background:var(--teal-soft);}
+  .talk .ic svg{width:22px; height:22px;}
+  .quiz{background:var(--paper); border-radius:30px; padding:24px 22px 20px; box-shadow:0 10px 0 var(--sun-deep), 0 26px 40px -24px rgba(59,36,20,.35);}
+  .quiz[hidden]{display:none;}
+  .q-top{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:16px;}
+  .q-count{font-weight:800; font-size:15px; color:var(--ink-soft);}
+  .q-pips{display:flex; gap:6px; list-style:none;}
+  .q-pips li{width:30px; height:10px; border-radius:99px; background:#EEDCB6;}
+  .q-pips li.on{background:var(--lip);}
+  .q-title{font-size:clamp(24px,2.5vw,30px); margin-bottom:16px; outline:none;}
+  .q-opts{display:grid; grid-template-columns:1fr; gap:12px;}
+  .q-opt{display:flex; align-items:center; gap:14px; width:100%; min-height:62px; padding:10px 16px; text-align:left; background:#fff; color:var(--ink); border:2px solid var(--line); border-radius:20px; box-shadow:0 4px 0 var(--line); font-family:'Nunito','Nunito Fallback',sans-serif; font-weight:800; font-size:18px; line-height:1.25; cursor:pointer; transition:transform .12s ease, box-shadow .12s ease, background-color .12s ease;}
+  .q-opt:hover{background:#FFF3D1;}
+  .q-opt:active{transform:translateY(2px); box-shadow:0 2px 0 var(--line);}
+  .q-opt[aria-pressed="true"]{background:var(--sun-soft); border-color:var(--ink); box-shadow:0 4px 0 var(--ink);}
+  .q-opt svg{width:38px; height:38px; flex:none;}
+  .q-opt small{display:block; font-size:15px; font-weight:600; color:var(--ink-soft); margin-top:2px;}
+  .q-foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 12px; margin-top:20px; padding-top:14px; border-top:2px dashed #EEDCB6;}
+  .q-foot[hidden]{display:none;}
+  .q-foot button{display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 14px; border:0; border-radius:999px; background:transparent; color:var(--ink); font-family:'Nunito','Nunito Fallback',sans-serif; font-weight:800; font-size:16px; cursor:pointer;}
+  .q-foot button:hover{background:#FFF3D1;}
+  .q-foot button[hidden]{display:none;}
+  .q-foot svg{width:18px; height:18px;}
+  .q-kicker{font-weight:800; font-size:15px; color:var(--teal);}
+  .q-result .q-title{margin:4px 0 8px;}
+  .q-why{font-size:16px; color:var(--ink-soft);}
+  .q-facts{list-style:none; margin:14px 0; display:grid; gap:8px;}
+  .q-facts li{position:relative; padding-left:22px;}
+  .q-facts li::before{content:''; position:absolute; left:2px; top:.6em; width:10px; height:10px; border-radius:50%; background:var(--marigold);}
+  .q-when{display:flex; align-items:flex-start; gap:10px; background:var(--sun-soft); border-radius:14px; padding:10px 14px; font-weight:700; font-size:16px;}
+  .q-when svg{width:20px; height:20px; flex:none; margin-top:2px;}
+  .q-note{margin-top:12px; padding-left:12px; border-left:4px solid var(--coral); font-weight:600;}
+  .q-honest{margin-top:12px; font-size:16px; color:var(--ink-soft);}
+  .q-actions{display:flex; flex-wrap:wrap; align-items:center; gap:14px 22px; margin-top:18px;}
+  .q-actions a.tlink, .q-actions button.tlink{background:none; border:0; padding:0; font-family:'Nunito','Nunito Fallback',sans-serif; cursor:pointer;}
+  @media (prefers-reduced-motion:no-preference){
+    .q-body.q-in{animation:qIn .28s ease-out both;}
+    @keyframes qIn{from{opacity:0; transform:translateX(16px);} to{opacity:1; transform:none;}}
   }
+
+  /* services: grouped by who they are for */
+  .sec-head{max-width:640px; margin-bottom:36px;}
+  .shelf{display:grid; grid-template-columns:1fr; gap:18px;}
+  .panel{border-radius:28px; padding:22px 22px 24px;}
+  .panel.kids{background:var(--sun-soft);}
+  .panel.teens{background:var(--peach);}
+  .panel.adults{background:var(--teal-soft);}
+  .who{display:flex; align-items:center; gap:10px; font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:18px; color:var(--ink);}
+  .who svg{width:34px; height:34px; flex:none;}
+  .panel h3, .everyone h3{font-size:22px; margin-top:16px;}
+  .panel p, .everyone p{font-size:16px; color:var(--ink-soft); margin-top:4px; max-width:30em;}
+  .kids-items{display:grid; gap:0 26px;}
+  .everyone{display:grid; grid-template-columns:1fr; gap:4px 28px; border-radius:28px; padding:20px 22px 24px; background:var(--paper); border:2px dashed #E3C389;}
+  .everyone .who{align-self:start; margin-top:14px;}
+
+  /* first visit */
+  .first{background:var(--teal-band); color:var(--cream); border-radius:40px;}
+  .first h2{color:var(--paper);}
+  .first .intro{color:#F4EBDC;}
+  .steps{list-style:none; display:grid; grid-template-columns:1fr; gap:14px; margin-top:36px;}
+  .step{display:grid; grid-template-columns:auto 1fr; gap:4px 16px; align-items:start; background:var(--cream); color:var(--ink); border-radius:24px; padding:18px 18px 20px; box-shadow:0 6px 0 #154C48;}
+  .tok{grid-row:span 2; width:52px; height:52px; border-radius:50%; display:grid; place-items:center; background:var(--marigold); box-shadow:0 4px 0 var(--lip); font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:700; font-size:22px; color:var(--ink);}
+  .step h3{font-size:21px; align-self:center;}
+  .step p{font-size:16px; color:var(--ink-soft);}
+
+  /* about */
+  .about-grid{display:grid; grid-template-columns:1fr; gap:40px; align-items:center;}
+  .about h2{font-size:clamp(28px,3.3vw,42px);}
+  .about .intro{max-width:32em;}
+  .stickers{display:flex; flex-wrap:wrap; gap:0 10px; list-style:none; padding:6px 8px;}
+  .sticker{width:106px; height:106px; border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:10px; background:var(--sun); box-shadow:0 6px 0 var(--sun-deep); transform:rotate(-5deg);}
+  .sticker:nth-child(2){background:var(--peach); box-shadow:0 6px 0 #EDB894; transform:rotate(4deg);}
+  .sticker:nth-child(3){background:var(--teal-soft); box-shadow:0 6px 0 #9FD3CD; transform:rotate(-2deg);}
+  .sticker b{font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:26px; line-height:1.05;}
+  .sticker span{font-size:14px; font-weight:800; line-height:1.2; margin-top:3px;}
+  @media (max-width:599px){ .stickers{max-width:250px;} .sticker:nth-child(3){margin:-14px 0 0 64px;} }
+
+  /* visit */
+  .visit-grid{display:grid; grid-template-columns:1fr; gap:36px; align-items:start;}
+  .visit h2{margin-bottom:22px;}
+  .info{background:var(--sun-soft); border-radius:28px; padding:6px 22px; list-style:none;}
+  .info li{display:grid; grid-template-columns:96px 1fr; gap:4px 14px; padding:15px 0; border-bottom:2px dashed rgba(183,121,31,.4);}
+  .info li:last-child{border-bottom:0;}
+  .info .lbl{font-weight:800; font-size:15px; color:#17625E; padding-top:2px;}
+  @media (max-width:480px){ .info li{grid-template-columns:1fr; padding:13px 0;} .info .lbl{padding-top:0;} }
+  .info a{display:inline-flex; align-items:center; min-height:44px; margin:-10px 0; font-weight:800; text-underline-offset:4px;}
+  .book{background:var(--paper); border-radius:28px; padding:24px 22px 22px; box-shadow:0 10px 0 var(--sun-deep), 0 26px 40px -24px rgba(59,36,20,.35); scroll-margin-top:calc(var(--hdr-h) + 16px);}
+  .book h3{font-size:24px; margin-bottom:14px;}
+  .field{margin-bottom:14px;}
+  .field label{display:block; font-weight:800; font-size:16px; margin-bottom:6px;}
+  .field input, .field textarea{width:100%; border:2px solid var(--line); border-radius:14px; padding:11px 14px; font-family:'Nunito','Nunito Fallback',sans-serif; font-size:17px; color:var(--ink); background:#fff;}
+  .field textarea{resize:vertical; min-height:104px;}
+  .book .btn{width:100%; margin-top:4px;}
+  .form-note{font-size:16px; color:var(--ink-soft); margin-top:14px;}
+
+  footer{border-top:3px solid var(--sun); padding:26px 0 30px;}
+  .foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 24px; font-size:15px; font-weight:600; color:var(--ink-soft);}
+
+  .wa-float{display:none;}
+
+  .js .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
+
+  /* small tablets and up */
+  @media (min-width:600px){
+    .q-opts{grid-template-columns:1fr 1fr;}
+    .quiz{padding:28px 30px 22px;}
+    .kids-items{grid-template-columns:1fr 1fr;}
+    .steps{grid-template-columns:1fr 1fr;}
+    .step{grid-template-columns:1fr; padding:20px 20px 22px;}
+    .tok{grid-row:auto; margin-bottom:8px;}
+    .stickers{flex-wrap:nowrap; gap:0 18px;}
+    .sticker{width:132px; height:132px;}
+    .sticker b{font-size:30px;} .sticker span{font-size:15px;}
+  }
+  @media (min-width:721px){
+    :root{--hdr-h:76px;}
+    .top{position:sticky; top:0; box-shadow:0 2px 0 rgba(59,36,20,.08);}
+    .nav{height:76px;}
+    .nav .btn{display:inline-flex;}
+    .hero{border-radius:0 0 56px 56px; padding-top:36px;}
+    .hero-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:36px; align-items:center;}
+    .hero-text{padding-bottom:64px;}
+    .hero-art{width:100%; max-width:440px; justify-self:end; margin-top:0;}
+    main > section{padding:92px 0;}
+    .shelf{grid-template-columns:1fr 1fr;}
+    .panel.kids{grid-column:1 / -1;}
+    .everyone{grid-column:1 / -1; grid-template-columns:1fr 1fr;}
+    .everyone .who{grid-column:1 / -1;}
+    .book{padding:28px 28px 24px;}
+  }
+  @media (min-width:901px){
+    .visit-grid{grid-template-columns:1fr 1fr; gap:40px;}
+  }
+  @media (min-width:961px){
+    .nav-links{display:flex;}
+  }
+  @media (min-width:1001px){
+    .quiz-grid{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr); gap:56px;}
+    .quiz-intro{position:sticky; top:calc(var(--hdr-h) + 32px);}
+    .about-grid{grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr); gap:56px;}
+    .stickers{flex-direction:column; align-items:center; gap:0;}
+    .sticker{width:150px; height:150px;}
+    .sticker:nth-child(2){margin:-12px 0 0 120px;}
+    .sticker:nth-child(3){margin:-14px 60px 0 0;}
+    .sticker b{font-size:34px;}
+  }
+  @media (min-width:1081px){
+    .shelf{grid-template-columns:1.3fr 1fr 1fr;}
+    .panel.kids{grid-column:auto;}
+    .kids-items{grid-template-columns:1fr;}
+    .everyone{grid-template-columns:auto 1fr 1fr; align-items:start;}
+    .everyone .who{grid-column:auto; margin-top:18px;}
+    .steps{grid-template-columns:repeat(4,1fr); gap:18px; align-items:start;}
+    .step:nth-child(even){margin-top:34px;}
+    .visit-grid{grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); gap:56px;}
+  }
+  @media (min-width:1360px){
+    .wa-float{display:flex; position:fixed; right:26px; bottom:26px; z-index:90; width:58px; height:58px; border-radius:50%; align-items:center; justify-content:center; background:#25D366; box-shadow:0 4px 0 #179C4C;}
+    .wa-float svg{width:28px; height:28px; fill:#fff;}
+  }
+  @media (max-width:720px){
+    .wrap{padding-left:20px; padding-right:20px;}
+    h2{font-size:clamp(28px,7.6vw,34px);}
+    .first{border-radius:28px;}
+  }
+
+  /* demo tuning of the shared polish block (bar, focus ring) */
+  html:root{--nc-radius:999px;}
+  html :focus-visible{outline-color:#3B2414!important; box-shadow:0 0 0 2px #FFFDF7!important;}
+  html .quiz .q-title:focus-visible{outline:none!important; box-shadow:none!important;}
+  html .nc-bar{font-family:'Fredoka','Fredoka Fallback',sans-serif; font-weight:600; font-size:18px; border-top:2px solid #E2A93A;}
+  html .nc-bar a.nc-book{box-shadow:0 3px 0 #C2570B;}
+  @media (max-width:720px){
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#FFD15C;--nc-fg:#3B2414;--nc-accent:#F27A1A;--nc-on-accent:#3B2414;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">
-      <svg class="mascot" viewBox="0 0 60 60"><path d="M30 8c-9 0-15 8-15 18 0 12 6 22 9 26 2 2.5 3 1 3.5-1 1-4 1.5-6 2.5-6s1.5 2 2.5 6c.5 2 1.5 3.5 3.5 1 3-4 9-14 9-26 0-10-6-18-15-18z" fill="#fff" stroke="#2B2118" stroke-width="2.5"/><circle cx="24" cy="26" r="2.5" fill="#2B2118"/><circle cx="36" cy="26" r="2.5" fill="#2B2118"/><path d="M25 33q5 4 10 0" stroke="#2B2118" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
+<header class="top" id="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top">
+      <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false"><g stroke="#F27A1A" stroke-width="3" stroke-linecap="round"><path d="M20 2.5v3.5M20 34v3.5M2.5 20h3.5M34 20h3.5M7.6 7.6l2.5 2.5M29.9 29.9l2.5 2.5M7.6 32.4l2.5-2.5M29.9 10.1l2.5-2.5"/></g><circle cx="20" cy="20" r="12.5" fill="#F27A1A"/><path d="M13.6 17.6c0-3.4 2.5-5.1 4.7-4.2.6.2 1.1.5 1.7.8.6-.3 1.1-.6 1.7-.8 2.2-.9 4.7.8 4.7 4.2 0 3.3-1.1 6-2 7.6-.6 1.1-1.5 1-1.7-.2l-.6-2.6c-.2-.9-.8-1.3-2.1-1.3s-1.9.4-2.1 1.3l-.6 2.6c-.2 1.2-1.1 1.3-1.7.2-.9-1.6-2-4.3-2-7.6z" fill="#FFFDF7"/></svg>
       Sunshine Smiles
-    </div>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#about">Our Clinic</a>
-      <a href="#visit">First Visit</a>
-      <a href="#contact">Book</a>
-    </div>
-    <a class="btn-fill" href="#contact">Book a Visit</a>
-    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
-  </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#services">Services</a>
-    <a href="#about">Our Clinic</a>
-    <a href="#visit">First Visit</a>
-    <a href="#contact">Book</a>
-  </div>
-</nav>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#quiz">Not sure?</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#first-visit">First visit</a></li>
+      <li><a href="#visit">Visit us</a></li>
+    </ul>
+    <a class="btn" href="#book">Book a visit</a>
+  </nav>
+</header>
 
-<section class="hero wrap">
-  <div class="hero-grid">
-    <div>
-      <div class="eyebrow">★ Guduvancheri, Chennai</div>
-      <h1 style="margin-top:12px;">Where kids <span class="u">actually</span> look forward to the dentist.</h1>
-      <p>Sunshine Smiles treats the whole family, but we built the clinic around kids first — a play corner, a no-drill-sound promise for checkups, and dentists who explain everything in words a six-year-old understands.</p>
-      <div class="hero-ctas">
-        <a class="btn-fill" href="#contact">Book a Visit</a>
-        <a class="btn-outline" href="#services">Our Services</a>
+<main>
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap hero-grid">
+    <div class="hero-text">
+      <span class="chip">Guduvancheri · kids &amp; family dentistry</span>
+      <h1 id="h1">Where kids <em>actually</em> look forward to the dentist.</h1>
+      <p class="lede">A family clinic on GST Road, built around kids first. There’s a play corner, a tooth puppet called Dr.&nbsp;Molar, and dentists who explain things in words a six-year-old understands.</p>
+      <div class="cta-row">
+        <a class="btn" href="#book">Book a visit</a>
+        <a class="tlink" href="#quiz">Not sure what to book?</a>
       </div>
+      <p class="hours-line">Open <span class="nw">Mon–Sat 9:30 AM – 7:30 PM,</span> <span class="nw">Sun 10 AM – 1 PM</span></p>
     </div>
-    <div class="photo-ph">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#7A6E60" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Play corner photo</span>
+    <div class="hero-art">
+      <svg viewBox="0 0 440 420" role="img" aria-label="Drawing of Dr. Molar, the clinic’s tooth puppet, holding up a hand mirror in front of a sun">
+        <g transform="translate(262 176)" fill="#FFBF3F">
+          <rect x="-11" y="-172" width="22" height="42" rx="11"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(30)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(60)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(90)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(120)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(150)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(180)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(210)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(240)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(270)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(300)"/>
+          <rect x="-11" y="-172" width="22" height="42" rx="11" transform="rotate(330)"/>
+          <circle r="114" fill="#FF9F3A"/>
+          <circle r="88" fill="#FFAE4A"/>
+        </g>
+        <!-- arm (under the sleeve, so it comes out of its side seam) -->
+        <path d="M188 346c34-4 62-38 72-68" fill="none" stroke="#3B2414" stroke-width="29" stroke-linecap="round"/>
+        <path d="M188 346c34-4 62-38 72-68" fill="none" stroke="#2A8B86" stroke-width="22" stroke-linecap="round"/>
+        <!-- sleeve, cuff, then the sleeve outline on top -->
+        <path d="M77 292h126c8 38 14 88 18 128H59c4-40 10-90 18-128z" fill="#2A8B86"/>
+        <path d="M75.6 302h128.8l2.5 18H73.1z" fill="#227570"/>
+        <path d="M82 311h116" stroke="#CDEDE9" stroke-width="2.5" stroke-dasharray="6 6" stroke-linecap="round"/>
+        <path d="M77 292h126c8 38 14 88 18 128H59c4-40 10-90 18-128z" fill="none" stroke="#3B2414" stroke-width="3.5" stroke-linejoin="round"/>
+        <g transform="rotate(18 300 176)">
+          <rect x="291" y="214" width="18" height="50" rx="9" fill="#C2570B" stroke="#3B2414" stroke-width="3.5"/>
+          <ellipse cx="300" cy="170" rx="38" ry="47" fill="#1F6F6A" stroke="#3B2414" stroke-width="3.5"/>
+          <ellipse cx="300" cy="170" rx="28" ry="37" fill="#DDF4F1"/>
+          <path d="M288 166c0-9 5-13 9.5-11.5l2.5 1.3 2.5-1.3c4.5-1.5 9.5 2.5 9.5 11.5 0 7-2.4 12.5-4.4 15.6-1.2 1.8-2.8 1.6-3.2-.4l-1.4-5c-.5-1.6-1.4-2.2-3-2.2s-2.5.6-3 2.2l-1.4 5c-.4 2-2 2.2-3.2.4-2-3.1-4.4-8.6-4.4-15.6z" fill="#fff" stroke="#8DC9C2" stroke-width="2"/>
+          <path d="M281 154c2-8 7-13 14-15" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+        </g>
+        <circle cx="262" cy="268" r="16" fill="#33A39D" stroke="#3B2414" stroke-width="3.5"/>
+        <!-- felt tooth head -->
+        <path d="M60 215c0-55 33-77 65-65 8 3 12 6 15 8 3-2 7-5 15-8 32-12 65 10 65 65 0 40-12 70-23 85H83c-11-15-23-45-23-85z" fill="#FFFBF0" stroke="#3B2414" stroke-width="3.5" stroke-linejoin="round"/>
+        <path d="M60 215c0-55 33-77 65-65 8 3 12 6 15 8 3-2 7-5 15-8 32-12 65 10 65 65 0 40-12 70-23 85H83c-11-15-23-45-23-85z" fill="none" stroke="#E2CDA2" stroke-width="2.5" stroke-dasharray="7 7" stroke-linecap="round" transform="translate(140 222) scale(.87) translate(-140 -222)"/>
+        <path d="M101 190q12-8 24-1M155 189q12-7 24 1" fill="none" stroke="#3B2414" stroke-width="3.5" stroke-linecap="round"/>
+        <circle cx="113" cy="211" r="11" fill="#3B2414"/>
+        <circle cx="167" cy="211" r="11" fill="#3B2414"/>
+        <circle cx="109.5" cy="211" r="2.2" fill="#FFFBF0"/><circle cx="116.5" cy="211" r="2.2" fill="#FFFBF0"/>
+        <circle cx="163.5" cy="211" r="2.2" fill="#FFFBF0"/><circle cx="170.5" cy="211" r="2.2" fill="#FFFBF0"/>
+        <ellipse cx="96" cy="238" rx="11" ry="7" fill="#FF8C69" opacity=".55"/>
+        <ellipse cx="184" cy="238" rx="11" ry="7" fill="#FF8C69" opacity=".55"/>
+        <path d="M121 239q19 18 38 0" fill="none" stroke="#3B2414" stroke-width="4" stroke-linecap="round"/>
+      </svg>
     </div>
   </div>
 </section>
 
-<section class="mascot-strip">
+<section id="quiz" class="quiz-sec" aria-labelledby="quiz-h">
+  <div class="wrap quiz-grid">
+    <div class="quiz-intro">
+      <h2 id="quiz-h">Not sure what to book?</h2>
+      <p class="intro" data-live="Three quick taps and we’ll suggest a kind of visit to ask for. It’s a suggestion, not a diagnosis. Rather talk to a person? Call or message us.">Call or message us. Tell us who’s coming and what it’s about, and the front desk can point you to the right kind of visit.</p>
+      <div class="talk">
+        <a href="tel:+9198XXXXXXXX"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#1F6F6A" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg></span>Call +91&nbsp;98XXX&nbsp;XXXXX</a>
+        <a href="https://wa.me/9198XXXXXXXX"><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="#1F6F6A" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></span>WhatsApp the front desk</a>
+      </div>
+    </div>
+
+    <div class="quiz" data-signature="smile-quiz" hidden>
+      <div class="q-top">
+        <p class="q-count" id="qCount">Question 1 of 3</p>
+        <ol class="q-pips" aria-hidden="true"><li class="on"></li><li></li><li></li></ol>
+      </div>
+      <div class="q-body" id="qBody"></div>
+      <div class="q-foot" hidden>
+        <button type="button" class="q-back"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M12.5 4.5 7 10l5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Back</button>
+        <button type="button" class="q-reset"><svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M4.5 9.5a5.6 5.6 0 1 1 1.7 4.4M4.5 4.5v5h5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>Start over</button>
+      </div>
+      <p class="sr" aria-live="polite" id="qLive"></p>
+    </div>
+  </div>
+</section>
+
+<section id="services" aria-labelledby="svc-h">
   <div class="wrap">
-    <svg class="mascot-big" viewBox="0 0 60 60"><path d="M30 8c-9 0-15 8-15 18 0 12 6 22 9 26 2 2.5 3 1 3.5-1 1-4 1.5-6 2.5-6s1.5 2 2.5 6c.5 2 1.5 3.5 3.5 1 3-4 9-14 9-26 0-10-6-18-15-18z" fill="#FFF8ED" stroke="#2B2118" stroke-width="2.5"/><circle cx="24" cy="26" r="2.5" fill="#2B2118"/><circle cx="36" cy="26" r="2.5" fill="#2B2118"/><path d="M25 33q5 4 10 0" stroke="#2B2118" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg>
-    <div>
-      <h2>Meet Dr. Molar — our clinic's favourite explainer.</h2>
-      <p>Every kid gets a puppet-and-mirror walkthrough of their own mouth before any tool comes near it. No surprises, no tears.</p>
+    <div class="sec-head reveal">
+      <h2 id="svc-h">Kids first. Grown-ups welcome too.</h2>
+      <p class="intro">Sunshine Smiles treats the whole family. Here is what each age usually comes in for.</p>
     </div>
-  </div>
-</section>
-
-<section id="services">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">★ What We Treat</div>
-      <h2>Dentistry for every age at home.</h2>
-    </div>
-    <div class="svc-grid">
-      <div class="svc-card"><div class="svc-icon" style="background:var(--yellow);"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Kids' Checkups</h3><p>Gentle first visits from age 2, with sticker charts and no scary tools shown upfront.</p></div>
-      <div class="svc-card"><div class="svc-icon" style="background:#C9EAE8;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Family Cleanings</h3><p>Back-to-back slots for the whole family on one Saturday morning.</p></div>
-      <div class="svc-card"><div class="svc-icon" style="background:#FFD9C7;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 12h16M4 12a8 8 0 0116 0"/></svg></div><h3>Braces for Teens</h3><p>Metal and ceramic braces, with a payment plan spread across the treatment.</p></div>
-      <div class="svc-card"><div class="svc-icon" style="background:var(--yellow);"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg></div><h3>Cavity Fillings</h3><p>Tooth-coloured fillings, done calmly with a running commentary for nervous kids.</p></div>
-      <div class="svc-card"><div class="svc-icon" style="background:#C9EAE8;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 21c-4-3-8-6-8-11a5 5 0 0110-1 5 5 0 0110 1c0 5-4 8-8 11z"/></svg></div><h3>Adult General Care</h3><p>Root canals, crowns, and whitening for parents and grandparents too.</p></div>
-      <div class="svc-card"><div class="svc-icon" style="background:#FFD9C7;"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg></div><h3>Emergency Care</h3><p>Same-day slots held for toothaches and after-school playground mishaps.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="photo-ph" style="border-radius:4px 32px 32px 32px; height:400px;">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#7A6E60" stroke-width="1.6"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Doctor & team photo</span>
-    </div>
-    <div>
-      <div class="eyebrow">★ About Us</div>
-      <h2 style="margin-top:10px; font-size:clamp(24px,3vw,34px);">Started by a mum who couldn't find a kid-friendly dentist nearby.</h2>
-      <p style="font-size:15px; color:var(--muted); line-height:1.8; margin-top:14px; font-weight:500;">Dr. [Full Name] opened Sunshine Smiles after driving 40 minutes each way for her own kids' checkups. Guduvancheri families now get the same unhurried, play-first approach five minutes from home.</p>
-      <div class="stat-row">
-        <div class="stat-pill">8 yrs open</div>
-        <div class="stat-pill">2,000+ kids treated</div>
-        <div class="stat-pill">4.8 ★ rating</div>
+    <div class="shelf reveal">
+      <div class="panel kids">
+        <p class="who"><svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="14" r="6" fill="#F27A1A" stroke="#3B2414" stroke-width="2"/><path d="M9 33c0-6.5 3.9-10.5 9-10.5s9 4 9 10.5" fill="#FFFDF7" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>Kids, from age 2</p>
+        <div class="kids-items">
+          <div><h3>Check-ups</h3><p>Gentle first visits, sticker charts, and no scary tools on show.</p></div>
+          <div><h3>Fillings</h3><p>Tooth-coloured, done calmly, with a running commentary for nervous kids.</p></div>
+        </div>
+      </div>
+      <div class="panel teens">
+        <p class="who"><svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="10" r="5.5" fill="#F27A1A" stroke="#3B2414" stroke-width="2"/><path d="M9 34c0-9 3.9-15 9-15s9 6 9 15" fill="#FFFDF7" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>Teens</p>
+        <h3>Braces</h3>
+        <p>Metal or ceramic braces, with a payment plan spread across the treatment.</p>
+      </div>
+      <div class="panel adults">
+        <p class="who"><svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="8" r="5" fill="#2A8B86" stroke="#3B2414" stroke-width="2"/><path d="M8 35c0-11 4.4-19 10-19s10 8 10 19" fill="#FFFDF7" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>Parents and grandparents</p>
+        <h3>Everyday adult care</h3>
+        <p>Root canals, crowns and whitening for parents and grandparents too.</p>
+      </div>
+      <div class="everyone">
+        <p class="who"><svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="9" cy="12" r="4" fill="#2A8B86" stroke="#3B2414" stroke-width="1.8"/><path d="M2.5 33c0-8 2.9-14 6.5-14s6.5 6 6.5 14" fill="#FFFDF7" stroke="#3B2414" stroke-width="1.8"/><circle cx="27" cy="12" r="4" fill="#2A8B86" stroke="#3B2414" stroke-width="1.8"/><path d="M20.5 33c0-8 2.9-14 6.5-14s6.5 6 6.5 14" fill="#FFFDF7" stroke="#3B2414" stroke-width="1.8"/><circle cx="18" cy="20" r="3.4" fill="#F27A1A" stroke="#3B2414" stroke-width="1.8"/><path d="M12.6 34c0-5 2.4-8.6 5.4-8.6s5.4 3.6 5.4 8.6" fill="#FFFDF7" stroke="#3B2414" stroke-width="1.8"/></svg>The whole family</p>
+        <div><h3>Saturday family cleanings</h3><p>Back-to-back slots for everyone on one Saturday morning.</p></div>
+        <div><h3>Toothaches and knocks</h3><p>A few same-day slots are kept for toothaches and after-school playground mishaps.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="visit">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">★ First Visit</div>
-      <h2>What to expect, so nobody's nervous.</h2>
+<section id="first-visit" class="first" aria-labelledby="first-h">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <h2 id="first-h">What happens on a first visit.</h2>
+      <p class="intro">Every child gets a puppet-and-mirror walkthrough of their own mouth before any tool comes near it.</p>
     </div>
-    <div class="steps-row">
-      <div class="step-card"><div class="step-num">1</div><h4>Say hi to Dr. Molar</h4><p>A quick puppet intro before anything else happens.</p></div>
-      <div class="step-card"><div class="step-num">2</div><h4>Count the teeth</h4><p>A mirror check, explained out loud, no tools yet.</p></div>
-      <div class="step-card"><div class="step-num">3</div><h4>Gentle clean</h4><p>Polish and clean with flavoured paste, kid's choice.</p></div>
-      <div class="step-card"><div class="step-num">4</div><h4>Sticker & report</h4><p>A sticker for them, a written note for you.</p></div>
-    </div>
+    <ol class="steps reveal">
+      <li class="step"><span class="tok" aria-hidden="true">1</span><h3>Say hi to Dr.&nbsp;Molar</h3><p>A quick hello before anything else happens.</p></li>
+      <li class="step"><span class="tok" aria-hidden="true">2</span><h3>Count the teeth</h3><p>A mirror check, explained out loud as it goes.</p></li>
+      <li class="step"><span class="tok" aria-hidden="true">3</span><h3>A gentle clean</h3><p>A polish with flavoured paste. They pick the flavour.</p></li>
+      <li class="step"><span class="tok" aria-hidden="true">4</span><h3>Sticker and a note</h3><p>A sticker for them, a written note for you.</p></li>
+    </ol>
   </div>
 </section>
 
-<section id="contact">
-  <div class="wrap contact-grid reveal">
+<section id="about" class="about" aria-labelledby="about-h">
+  <div class="wrap about-grid reveal">
     <div>
-      <div class="eyebrow">★ Visit Us</div>
-      <h2 style="margin:10px 0 30px; font-size:clamp(24px,3vw,34px);">Book a family visit.</h2>
-      <div class="info-row"><div class="lbl">ADDRESS</div><div>27 GST Road, Guduvancheri, Chengalpattu Dt. 603202</div></div>
-      <div class="info-row"><div class="lbl">PHONE</div><div>+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">HOURS</div><div>Mon–Sat, 9:30 AM – 7:30 PM · Sun 10 AM – 1 PM</div></div>
-      <div class="info-row"><div class="lbl">WHATSAPP</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--teal-deep); font-weight:700;">Message us →</a></div></div>
+      <h2 id="about-h">Started by a mum who couldn’t find a kid-friendly dentist nearby.</h2>
+      <p class="intro">Dr. Divya Rajendran opened Sunshine Smiles after driving 40 minutes each way for her own kids’ check-ups. Guduvancheri families now get the same unhurried, play-first approach without the drive.</p>
     </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Booking Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Parent's name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="4" placeholder="Kid's age / reason for visit"></textarea>
-      <button type="submit">Book a Visit</button>
+    <ul class="stickers">
+      <li class="sticker"><b>8</b><span>years open</span></li>
+      <li class="sticker"><b>2,000+</b><span>kids treated</span></li>
+      <li class="sticker"><b>4.8 ★</b><span>rating</span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="visit" class="visit" aria-labelledby="visit-h">
+  <div class="wrap visit-grid">
+    <div class="reveal">
+      <h2 id="visit-h">Book a family visit.</h2>
+      <ul class="info">
+        <li><span class="lbl">Address</span><span>27 GST Road, Guduvancheri, Chengalpattu&nbsp;Dt. <span class="nw">603202</span></span></li>
+        <li><span class="lbl">Phone</span><span><a href="tel:+9198XXXXXXXX" class="nw">+91 98XXX XXXXX</a></span></li>
+        <li><span class="lbl">Hours</span><span>Mon–Sat, <span class="nw">9:30 AM – 7:30 PM</span><br>Sun, <span class="nw">10 AM – 1 PM</span></span></li>
+        <li><span class="lbl">WhatsApp</span><span><a href="https://wa.me/9198XXXXXXXX">Message the front desk</a></span></li>
+      </ul>
+    </div>
+    <form class="book" id="book" action="mailto:?subject=Sunshine%20Smiles%3A%20asking%20for%20a%20visit" method="post" enctype="text/plain">
+      <h3>Ask for a visit</h3>
+      <div class="field"><label for="f-name">Parent’s name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+      <div class="field"><label for="f-note">Who’s coming, and what for?</label><textarea id="f-note" name="note" rows="4"></textarea></div>
+      <button type="submit" class="btn">Send the request</button>
+      <p class="form-note">Your mail app opens with this written out. Nothing is fixed until the front desk writes back with a day.</p>
     </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap foot-inner">
-  <span>© 2026 Sunshine Smiles Kids & Family Dental.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Sunshine Smiles Kids &amp; Family Dental, Guduvancheri.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="WhatsApp Sunshine Smiles"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
+(function () {
+  /* Interactive wording for elements that describe a JS-only feature (static text stays true with JS off). */
+  document.querySelectorAll('[data-live]').forEach(function (el) { el.textContent = el.getAttribute('data-live'); });
+
+  /* Gentle section fade-in; content is visible by default without JS. */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+
+  /* Booking form: write a readable email body instead of key=value lines. */
+  var form = document.getElementById('book');
+  var note = document.getElementById('f-note');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = 'Name: ' + form.name.value + '\nPhone: ' + form.phone.value + '\n\n' + note.value;
+    location.href = 'mailto:?subject=' + encodeURIComponent('Sunshine Smiles: asking for a visit') + '&body=' + encodeURIComponent(body);
+  });
+
+  /* ---------- smile-quiz: three questions, then a suggested kind of visit (never a diagnosis) ---------- */
+  var quiz = document.querySelector('[data-signature="smile-quiz"]');
+  if (!quiz) return;
+  var body = document.getElementById('qBody');
+  var count = document.getElementById('qCount');
+  var live = document.getElementById('qLive');
+  var pips = quiz.querySelectorAll('.q-pips li');
+  var foot = quiz.querySelector('.q-foot');
+  var back = quiz.querySelector('.q-back');
+  var reset = quiz.querySelector('.q-reset');
+  var reduce = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : { matches: true };
+  var TEL = 'tel:+9198XXXXXXXX';
+  var WA = 'https://wa.me/9198XXXXXXXX';
+  var HOURS = 'Mon–Sat <span class="nw">9:30 AM – 7:30 PM</span><br>Sun <span class="nw">10 AM – 1 PM</span>';
+
+  var ICON = {
+    child: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="15" r="6" fill="#F27A1A" stroke="#3B2414" stroke-width="2"/><path d="M9 33c0-6 3.9-10 9-10s9 4 9 10" fill="#FFE9A8" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>',
+    teen: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="10" r="5.5" fill="#F27A1A" stroke="#3B2414" stroke-width="2"/><path d="M9 34c0-9 3.9-15 9-15s9 6 9 15" fill="#FFDCC4" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>',
+    adult: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="8" r="5" fill="#2A8B86" stroke="#3B2414" stroke-width="2"/><path d="M8 35c0-11 4.4-19 10-19s10 8 10 19" fill="#CDEDE9" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>',
+    family: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="9" cy="12" r="4" fill="#2A8B86" stroke="#3B2414" stroke-width="1.8"/><path d="M2.5 33c0-8 2.9-14 6.5-14s6.5 6 6.5 14" fill="#CDEDE9" stroke="#3B2414" stroke-width="1.8"/><circle cx="27" cy="12" r="4" fill="#2A8B86" stroke="#3B2414" stroke-width="1.8"/><path d="M20.5 33c0-8 2.9-14 6.5-14s6.5 6 6.5 14" fill="#CDEDE9" stroke="#3B2414" stroke-width="1.8"/><circle cx="18" cy="20" r="3.4" fill="#F27A1A" stroke="#3B2414" stroke-width="1.8"/><path d="M12.6 34c0-5 2.4-8.6 5.4-8.6s5.4 3.6 5.4 8.6" fill="#FFE9A8" stroke="#3B2414" stroke-width="1.8"/></svg>',
+    fine: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="15" fill="#FFE9A8" stroke="#3B2414" stroke-width="2"/><circle cx="13" cy="15" r="2" fill="#3B2414"/><circle cx="23" cy="15" r="2" fill="#3B2414"/><path d="M11.5 21.5q6.5 6 13 0" fill="none" stroke="#3B2414" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    bit: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="15" fill="#FFDCC4" stroke="#3B2414" stroke-width="2"/><circle cx="13" cy="15" r="2" fill="#3B2414"/><circle cx="23" cy="15" r="2" fill="#3B2414"/><path d="M11.5 23.5q2.2-2.5 4.3 0t4.3 0 4.3 0" fill="none" stroke="#3B2414" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    very: '<svg viewBox="0 0 36 36" aria-hidden="true" focusable="false"><circle cx="18" cy="18" r="15" fill="#CDEDE9" stroke="#3B2414" stroke-width="2"/><path d="M10 11.5l5 1.8M26 11.5l-5 1.8" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/><circle cx="13" cy="16.5" r="2" fill="#3B2414"/><circle cx="23" cy="16.5" r="2" fill="#3B2414"/><ellipse cx="18" cy="24.5" rx="3" ry="3.6" fill="none" stroke="#3B2414" stroke-width="2.2"/></svg>'
+  };
+
+  var WHO = [
+    { v: 'child', t: 'A child, 2 to 12' },
+    { v: 'teen', t: 'A teenager' },
+    { v: 'adult', t: 'An adult', s: 'You, a parent or a grandparent' },
+    { v: 'family', t: 'The whole family' }
+  ];
+  var WHAT = {
+    child: [{ v: 'first', t: 'Their first ever dentist visit' }, { v: 'check', t: 'A check-up and clean' }, { v: 'spot', t: 'A dark spot or a hole in a tooth' }, { v: 'pain', t: 'A toothache or a knock' }],
+    teen: [{ v: 'check', t: 'A check-up and clean' }, { v: 'align', t: 'Crooked or crowded teeth' }, { v: 'pain', t: 'A toothache or a chipped tooth' }],
+    adult: [{ v: 'check', t: 'A check-up and clean' }, { v: 'pain', t: 'A toothache or a chipped tooth' }, { v: 'rct', t: 'A root canal or a crown' }, { v: 'white', t: 'Whiter teeth' }],
+    family: [{ v: 'check', t: 'Check-ups for everyone' }, { v: 'first', t: 'The youngest one’s first visit' }, { v: 'pain', t: 'Someone has a toothache' }]
+  };
+  var FEEL_Q = { child: 'How do they feel about dentists?', teen: 'How do they feel about dentists?', adult: 'How do you feel about dentists?', family: 'How does everyone feel about dentists?' };
+  var FEEL = [{ v: 'fine', t: 'Fine about it' }, { v: 'bit', t: 'A bit nervous' }, { v: 'very', t: 'Really scared' }];
+
+  // Suggestions use only what the page already says about each service.
+  var KIND = {
+    first: { title: 'A first visit with Dr.\u00a0Molar', facts: ['First visits start from age 2.', 'Usually a puppet hello, a mirror check, a gentle clean, then a sticker and a note for you.'] },
+    kids: { title: 'A kids’ check-up and clean', facts: ['A look at every tooth, then a polish with flavoured paste.', 'They go home with a sticker chart.'] },
+    look: { title: 'A check-up to look at that tooth', facts: ['The dentist looks first and tells you what it needs, if anything.', 'If it does turn out to need a filling, ours are tooth-coloured and done calmly, with a running commentary.'] },
+    pain: { title: 'A same-day toothache slot', facts: ['A few same-day slots are kept for toothaches and knocks.', 'Calling is quickest. The front desk tells you what is free today.'], call: true },
+    check: { title: 'A check-up and clean', facts: ['A look at teeth and gums, then a clean.', 'If anything needs doing, the dentist explains it before starting.'] },
+    braces: { title: 'A braces consult', facts: ['The dentist checks the bite and talks you through metal and ceramic braces, if they make sense now.', 'Braces come with a payment plan spread across the treatment.'] },
+    adult: { title: 'An appointment about a root canal or crown', facts: ['The dentist looks at the tooth first, then explains what they would suggest and why.'] },
+    white: { title: 'A whitening chat', facts: ['It starts with a check-up, then a talk about the shade you are hoping for.'] },
+    family: { title: 'A family Saturday morning', facts: ['Back-to-back slots for everyone on one Saturday morning.'], when: 'Saturdays, from <span class="nw">9:30 AM</span>' }
+  };
+  function kindFor(a) {
+    if (a.what === 'pain') return KIND.pain;
+    if (a.what === 'first') return KIND.first;
+    if (a.who === 'child') return a.what === 'spot' ? KIND.look : KIND.kids;
+    if (a.who === 'teen') return a.what === 'align' ? KIND.braces : KIND.check;
+    if (a.who === 'adult') return a.what === 'rct' ? KIND.adult : a.what === 'white' ? KIND.white : KIND.check;
+    return KIND.family;
+  }
+  function noteFor(a) {
+    if (a.feel === 'bit') return 'Mention the nerves when you ask, so the dentist knows beforehand.';
+    if (a.feel === 'very') return 'Say so in your message. Knowing early helps the dentist keep the visit unhurried.';
+    return '';
+  }
+
+  var state = { step: 0, a: {} };
+  function label(list, v) { for (var i = 0; i < list.length; i++) if (list[i].v === v) return list[i].t; return ''; }
+  function lc(s) { return s.charAt(0).toLowerCase() + s.slice(1); }
+  function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+
+  function question(title, list, key, icons) {
+    var h = el('h3', 'q-title', title); h.id = 'qTitle'; h.tabIndex = -1;
+    var g = el('div', 'q-opts'); g.setAttribute('role', 'group'); g.setAttribute('aria-labelledby', 'qTitle');
+    list.forEach(function (o) {
+      var b = el('button', 'q-opt'); b.type = 'button';
+      if (icons && ICON[o.v]) b.insertAdjacentHTML('beforeend', ICON[o.v]);
+      var span = el('span', null, o.t);
+      if (o.s) span.appendChild(el('small', null, o.s));
+      b.appendChild(span);
+      if (state.a[key] === o.v) b.setAttribute('aria-pressed', 'true');
+      b.addEventListener('click', function () { choose(key, o.v); });
+      g.appendChild(b);
+    });
+    return [h, g];
+  }
+
+  function result() {
+    var a = state.a, k = kindFor(a);
+    var whoT = label(WHO, a.who), whatT = label(WHAT[a.who], a.what), feelT = label(FEEL, a.feel);
+    var wrap = el('div', 'q-result');
+    wrap.appendChild(el('p', 'q-kicker', 'A good visit to ask for'));
+    var h = el('h3', 'q-title', k.title); h.id = 'qTitle'; h.tabIndex = -1; wrap.appendChild(h);
+    wrap.appendChild(el('p', 'q-why', 'From your answers: ' + lc(whoT) + ' · ' + lc(whatT) + ' · ' + lc(feelT) + '.'));
+    var ul = el('ul', 'q-facts'); k.facts.forEach(function (f) { ul.appendChild(el('li', null, f)); }); wrap.appendChild(ul);
+    var when = el('p', 'q-when');
+    when.innerHTML = '<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="none" stroke="#3B2414" stroke-width="2"/><path d="M10 5.5V10l3 2" fill="none" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>';
+    var hrs = el('span'); hrs.innerHTML = k.when || HOURS; when.appendChild(hrs); wrap.appendChild(when);
+    var n = noteFor(a); if (n) wrap.appendChild(el('p', 'q-note', n));
+    wrap.appendChild(el('p', 'q-honest', 'This is a suggestion from three answers, not a diagnosis. The dentist decides what is needed after a look, and the front desk confirms the day.'));
+
+    var msg = 'Asking for: ' + k.title + '. Who: ' + lc(whoT) + '. About: ' + lc(whatT) + '. Feeling: ' + lc(feelT) + '.';
+    var waText = 'Hello Sunshine Smiles, I would like to ask for ' + lc(k.title) + '. (' + whoT + '; ' + lc(whatT) + '; ' + lc(feelT) + '.) ' + (k.call ? 'Is anything free today?' : 'Which days are free?');
+    var acts = el('div', 'q-actions');
+    var useForm = el('button', k.call ? 'tlink' : 'btn', k.call ? 'Use the booking form' : 'Put this in the booking form');
+    useForm.type = 'button';
+    useForm.addEventListener('click', function () {
+      note.value = msg;
+      var name = document.getElementById('f-name');
+      document.getElementById('book').scrollIntoView({ behavior: reduce.matches ? 'auto' : 'smooth', block: 'start' });
+      name.focus({ preventScroll: true });
+    });
+    var wa = el('a', 'tlink', 'Send it on WhatsApp'); wa.href = WA + '?text=' + encodeURIComponent(waText);
+    if (k.call) { var call = el('a', 'btn', 'Call the clinic'); call.href = TEL; acts.appendChild(call); acts.appendChild(wa); acts.appendChild(useForm); }
+    else { acts.appendChild(useForm); acts.appendChild(wa); }
+    wrap.appendChild(acts);
+    return wrap;
+  }
+
+  function render(focus) {
+    var s = state.step, nodes;
+    if (s === 0) nodes = question('Who’s the visit for?', WHO, 'who', true);
+    else if (s === 1) nodes = question('What’s it about?', WHAT[state.a.who], 'what', false);
+    else if (s === 2) nodes = question(FEEL_Q[state.a.who], FEEL, 'feel', true);
+    else nodes = [result()];
+    body.textContent = '';
+    nodes.forEach(function (n) { body.appendChild(n); });
+    count.textContent = s < 3 ? 'Question ' + (s + 1) + ' of 3' : 'Our suggestion';
+    for (var i = 0; i < pips.length; i++) pips[i].className = i <= s ? 'on' : '';
+    foot.hidden = s === 0;
+    live.textContent = s < 3 ? 'Question ' + (s + 1) + ' of 3.' : 'Suggestion ready.';
+    if (!reduce.matches) { body.classList.remove('q-in'); void body.offsetWidth; body.classList.add('q-in'); }
+    if (focus) { var t = document.getElementById('qTitle'); if (t) t.focus(); }
+  }
+
+  function choose(key, v) {
+    if (key === 'who' && state.a.who !== v) { state.a = { who: v }; }
+    state.a[key] = v;
+    state.step++;
+    render(true);
+  }
+  back.addEventListener('click', function () { if (state.step > 0) { state.step--; render(true); } });
+  reset.addEventListener('click', function () { state = { step: 0, a: {} }; render(true); });
+
+  quiz.hidden = false;
+  render(false);
+})();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
