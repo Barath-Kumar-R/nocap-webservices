@@ -125,7 +125,7 @@
   .tblock dd a{font-weight:600; text-decoration:underline; text-decoration-color:var(--orange); text-decoration-thickness:2px; text-underline-offset:4px; display:inline-block; padding:10px 0; margin:-10px 0;}
   .tblock-foot{display:flex; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; padding:10px 18px; border-top:1px solid var(--ink); font-family:var(--head); font-weight:600; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2);}
 
-  .form{background:var(--sheet); border:1px solid var(--rule); border-radius:4px; padding:24px 20px; box-shadow:0 22px 40px -30px rgba(21,25,30,.5); scroll-margin-top:calc(var(--hdr-h) + 16px);}
+  .form{background:var(--sheet); border:1px solid var(--rule); border-radius:4px; padding:24px 20px; box-shadow:0 22px 40px -30px rgba(21,25,30,.5); scroll-margin-top:16px;}
   .form h3{font-size:24px; margin-bottom:18px;}
   .field{margin-bottom:16px;}
   .field label{display:block; font-weight:600; font-size:16px; margin-bottom:6px;}
@@ -149,6 +149,8 @@
   }
   @media (min-width:721px){
     :root{--hdr-h:69px;}
+    html{scroll-padding-top:calc(var(--hdr-h) + 8px);} /* in-page links and focus land below the sticky header */
+    .form{scroll-margin-top:8px;} /* with the padding above: the form still lands 16px under the header */
     .top{position:sticky; top:0;}
     .nav .btn{display:inline-flex;}
     .hero{padding:64px 0 72px;}
@@ -281,8 +283,8 @@
               <path d="M454 88V182" stroke="#15191E" stroke-width=".9" marker-start="url(#arr)" marker-end="url(#arr)"/>
             </g>
           </svg>
-          <span class="view-tag" style="left:27.3%">Front</span>
-          <span class="view-tag" style="left:75%">Top</span>
+          <span class="view-tag" style="left:calc(14px + (100% - 28px) * .2727)">Front</span>
+          <span class="view-tag" style="left:calc(14px + (100% - 28px) * .75)">Top</span>
         </div>
         <figcaption class="title-block"><span><b>Lower molar crown</b>, two views</span><span>Illustration</span></figcaption>
       </figure>
@@ -312,7 +314,7 @@
               <svg class="tc-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false"><path d="M13 48V25a13 13 0 0 1 26 0v23" fill="none" stroke="#15191E" stroke-width="12.5" stroke-linecap="round"/><path d="M13 48V25a13 13 0 0 1 26 0v23" fill="none" stroke="#FFFFFF" stroke-width="9.3" stroke-linecap="round"/><circle class="a" cx="13.0" cy="45.0" r="2.2"/><circle class="a" cx="13.0" cy="38.5" r="2.2"/><circle class="a" cx="13.0" cy="32.0" r="2.2"/><circle class="a" cx="13.4" cy="21.6" r="2.2"/><circle class="a" cx="16.3" cy="16.3" r="2.2"/><circle class="a" cx="21.6" cy="12.8" r="2.2"/><circle class="a" cx="30.4" cy="12.8" r="2.2"/><circle class="a" cx="35.7" cy="16.3" r="2.2"/><circle class="a" cx="38.6" cy="21.6" r="2.2"/><circle class="a" cx="39.0" cy="32.0" r="2.2"/><circle class="a" cx="39.0" cy="38.5" r="2.2"/><circle class="a" cx="39.0" cy="45.0" r="2.2"/></svg>
             </div>
             <h3>Clear aligners</h3>
-            <p>We show you the planned tooth movement, step by step, before you decide to start.</p>
+            <p>Removable trays that move your teeth in small steps, planned from your scan.</p>
             <a class="tc-link" href="#book" data-treatment="Clear aligners"><span>Ask about aligners</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
           </article>
         </li>
@@ -376,7 +378,7 @@
           <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
           <div class="field"><label for="f-reason">What brings you in?</label><input id="f-reason" name="reason" type="text"></div>
           <button type="submit" class="btn">Send visit request</button>
-          <p class="form-note">This drafts an email in your mail app, like a work ticket for the lab. No time is held until one is agreed with you.</p>
+          <p class="form-note">Your mail app gets this as a ready-to-send message. A visit time is only set once the clinic agrees one with you.</p>
         </form>
       </div>
     </div>
