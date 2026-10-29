@@ -57,7 +57,7 @@
 
   /* layer-parallax: six paper layers in an arched window; five move at different rates while the arch scrolls past */
   .lp{width:100%; max-width:482px; padding:0 11px; justify-self:center;} /* the padding holds the paper ring and the sill */
-  .lp-frame{position:relative; aspect-ratio:600 / 740; overflow:hidden; border-radius:50% 50% 0 0 / 40.54% 40.54% 0 0; background:#F5DBC0;
+  .lp-frame{position:relative; isolation:isolate; aspect-ratio:600 / 740; overflow:hidden; border-radius:50% 50% 0 0 / 40.54% 40.54% 0 0; background:#F5DBC0;
     box-shadow:0 0 0 10px var(--paper-2), 0 0 0 11px var(--line), 0 34px 50px -34px rgba(29,35,33,.55);}
   .lp-layer{position:absolute; left:0; right:0; top:-9.46%; height:118.92%;}
   .lp-layer svg{display:block; width:100%; height:100%;}
@@ -87,9 +87,8 @@
 
   /* studio */
   .studio-grid{display:grid; gap:36px;}
-  .idea{font-family:var(--serif); font-weight:500; font-size:clamp(32px, 4.4vw, 56px); line-height:1.12; letter-spacing:-0.015em; color:var(--teal-deep); max-width:11em; padding-top:22px; border-top:3px solid var(--clay);}
-  .idea::before{content:'\201C'; color:var(--clay);}
-  .idea::after{content:'\201D'; color:var(--clay);}
+  .idea{font-family:var(--serif); font-weight:500; font-size:clamp(32px, 4.4vw, 56px); line-height:1.12; letter-spacing:-0.015em; color:var(--teal-deep); max-width:11em; margin-top:10px;}
+  .idea-label{font-size:15px; font-weight:600; color:var(--clay-ink); padding-top:18px; border-top:3px solid var(--clay);}
   .studio p.body{margin-top:18px; color:var(--muted); max-width:32em;}
   .studio p.body strong{color:var(--ink); font-weight:600;}
   .tally{list-style:none; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); margin-top:30px; border-top:1px solid var(--line);}
@@ -104,7 +103,7 @@
   .info li{display:grid; grid-template-columns:minmax(0,1fr); gap:2px 18px; padding:14px 0; border-bottom:1px solid var(--line);}
   .info .lbl{font-size:15px; font-weight:600; color:var(--clay-ink);}
   .info a{font-weight:600; color:var(--teal-deep); text-underline-offset:4px; display:inline-block; padding:10px 0; margin:-10px 0;}
-  .form{background:var(--paper-2); border:1px solid var(--line); border-radius:18px; padding:24px 20px; box-shadow:0 24px 40px -32px rgba(29,35,33,.5); scroll-margin-top:calc(var(--hdr-h) + 16px);}
+  .form{background:var(--paper-2); border:1px solid var(--line); border-radius:18px; padding:24px 20px; box-shadow:0 24px 40px -32px rgba(29,35,33,.5); scroll-margin-top:16px;}
   .form h3{font-size:25px; margin-bottom:16px;}
   .field{margin-bottom:16px;}
   .field label{display:block; font-weight:600; font-size:16px; margin-bottom:6px;}
@@ -128,6 +127,8 @@
   }
   @media (min-width:721px){
     :root{--hdr-h:71px;}
+    html{scroll-padding-top:calc(var(--hdr-h) + 8px);} /* in-page links and focus land below the sticky header */
+    .form{scroll-margin-top:8px;} /* with the padding above: the form still lands 16px under the header */
     .top{position:sticky; top:0;}
     .nav .btn{display:inline-flex;}
     .hero{padding:56px 0 72px;}
@@ -243,7 +244,7 @@
         <p>From the first scan to the check after treatment.</p>
       </div>
       <ol class="strata reveal">
-        <li><span class="n">01</span><h3>Scan and check-up</h3><p>A 3D scan of your mouth, alongside a regular check-up.</p></li>
+        <li><span class="n">01</span><h3>Scan and check-up</h3><p>A 3D scan of your mouth, usually alongside a regular check-up.</p></li>
         <li><span class="n">02</span><h3>Talking it through</h3><p>We go through what the scan shows, one part at a time, before you decide anything.</p></li>
         <li><span class="n">03</span><h3>Treatment</h3><p>Fillings, root canals and crowns, planned from the scan outward.</p></li>
         <li><span class="n">04</span><h3>Follow-up</h3><p>A follow-up scan to check that healing matches the plan.</p></li>
@@ -254,11 +255,12 @@
   <section class="studio" id="studio" aria-labelledby="studio-title">
     <div class="wrap studio-grid">
       <div class="reveal">
+        <p class="idea-label">The idea behind the studio</p>
         <p class="idea">People trust what they can see.</p>
       </div>
       <div class="reveal">
-        <h2 id="studio-title">Diagnosis first, treatment second.</h2>
-        <p class="body"><strong>Dr.&nbsp;Shalini Thomas, BDS, MDS</strong>, built Depthscape around that one idea. Every scan is reviewed with you, out loud, before any work begins.</p>
+        <h2 id="studio-title">Built by Dr.&nbsp;Shalini Thomas.</h2>
+        <p class="body"><strong>BDS, MDS.</strong> She built Depthscape around that one idea.</p>
         <ul class="tally">
           <li><b>15 yrs</b><span>in practice</span></li>
           <li><b>3,200+</b><span>3D scans reviewed</span></li>
@@ -285,7 +287,7 @@
         <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
         <div class="field"><label for="f-concern">What would you like checked?</label><input id="f-concern" name="concern" type="text"></div>
         <button type="submit" class="btn">Request my scan</button>
-        <p class="form-note">Sending opens a draft in your own mail app. A scan time is only fixed once the studio confirms it.</p>
+        <p class="form-note">Nothing leaves this page: the button only prepares an email for you to send. A scan time is fixed once the studio confirms it.</p>
       </form>
     </div>
   </section>
