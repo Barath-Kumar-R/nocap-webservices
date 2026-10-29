@@ -56,7 +56,7 @@
   .meta{display:flex; flex-wrap:wrap; gap:4px 0; margin-top:28px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted); list-style:none;}
   .meta li{display:flex; align-items:center;}
   .meta li + li::before{content:''; width:4px; height:4px; margin:0 12px; border-radius:50%; background:var(--ctl);}
-  .hero .call-link{margin-top:14px;}
+  .hero-contact{display:flex; flex-wrap:wrap; gap:0 26px; margin-top:14px;}
 
   /* Signature: chat-booking */
   .chat{display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--line); border-radius:16px; overflow:hidden; scroll-margin-top:16px; box-shadow:0 40px 90px -50px #000;}
@@ -77,7 +77,7 @@
   .msg{max-width:88%; padding:10px 14px; border-radius:14px; font-size:16px; line-height:1.45;}
   .msg-bot{align-self:flex-start; background:var(--panel2); border:1px solid var(--line); border-bottom-left-radius:4px;}
   .msg-me{align-self:flex-end; background:var(--lilac); color:var(--on-lilac); font-weight:500; border-bottom-right-radius:4px;}
-  .msg-link{display:inline-flex; align-items:center; min-height:44px; color:var(--text); font-weight:600; text-decoration:underline; text-underline-offset:4px;}
+  .msg-link{display:flex; align-items:center; width:fit-content; min-height:44px; margin-top:2px; color:var(--text); font-weight:600; text-decoration:underline; text-underline-offset:4px;}
   .msg-card{align-self:stretch; max-width:none; padding:14px 16px 8px; background:var(--bg); border:1px solid var(--ctl); border-radius:12px;}
   .card-k{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); margin-bottom:6px;}
   .card-dl div{display:grid; grid-template-columns:92px minmax(0,1fr); gap:12px; padding:8px 0; border-top:1px solid var(--line);}
@@ -252,31 +252,31 @@
     <div class="hero-copy">
       <p class="eyebrow">Kanchipuram · Railway Station Road</p>
       <h1>Ask for a dental slot the way you’d send a message<span class="caret" aria-hidden="true"></span></h1>
-      <p class="lede">Pick what you need, a day and a time. It reaches our front desk as a WhatsApp message, written for you.</p>
+      <p class="lede" data-live="Pick what you need, a day and a time. WhatsApp then opens with the message written for you.">Message the front desk on WhatsApp, or call, with what you need and a day that suits you.</p>
       <ul class="meta" aria-label="Clinic details">
         <li>Mon–Sat</li>
         <li>9 AM – 8 PM</li>
         <li>2 dentists</li>
       </ul>
-      <a class="call-link" href="tel:+9198XXXXXXXX">Rather talk? Call&nbsp;<span class="nowrap">+91 98XXX XXXXX</span></a>
+      <p class="hero-contact"><a class="call-link" href="tel:+9198XXXXXXXX"><span>Call <span class="nowrap">+91 98XXX XXXXX</span></span></a><a class="call-link" href="https://wa.me/9198XXXXXXXX"><span>Message on WhatsApp</span></a></p>
     </div>
 
     <div class="chat" id="book" data-signature="chat-booking" role="region" aria-labelledby="chat-title">
       <div class="chat-head">
         <span class="chat-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5c-2.4 0-3.6 1.8-3.6 4 0 1.9.7 3.1 1.2 4.7.5 1.7.7 3.7 1.2 5.2.4 1 1.4 1 1.8 0 .4-1.3.6-3.8 1.4-4.7.5-.5 1.5-.5 2 0 .8.9 1 3.4 1.4 4.7.4 1 1.4 1 1.8 0 .5-1.5.7-3.5 1.2-5.2.5-1.6 1.2-2.8 1.2-4.7 0-2.2-1.2-4-3.6-4-1.5 0-2.3.8-4 .8s-2.5-.8-4-.8Z"/></svg></span>
         <p class="chat-title" id="chat-title">Visit request</p>
-        <p class="chat-sub">Scripted helper · not a live chat</p>
+        <p class="chat-sub" data-live="Scripted helper · not a live chat">Front desk · Mon–Sat, 9 AM – 8 PM</p>
         <p class="chat-step" id="chatStep" hidden></p>
       </div>
 
       <div class="chat-static">
-        <p class="msg msg-bot">Message the front desk with what you need and a day that suits you. They reply to confirm a time.</p>
+        <p class="msg msg-bot">Nothing is booked until the front desk replies with a time.</p>
         <ul class="hours-mini">
           <li><span>Mon–Sat</span><span>9 AM – 8 PM</span></li>
           <li><span>Sunday</span><span>Closed</span></li>
         </ul>
         <a class="btn btn-primary" href="https://wa.me/9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24"/></svg>Message on WhatsApp</a>
-        <a class="call-link" href="tel:+9198XXXXXXXX">Or call&nbsp;<span class="nowrap">+91 98XXX XXXXX</span></a>
+        <a class="call-link" href="tel:+9198XXXXXXXX"><span>Or call <span class="nowrap">+91 98XXX XXXXX</span></span></a>
       </div>
 
       <div class="chat-live" hidden>
@@ -310,7 +310,7 @@
       <li>
         <span class="svc-no">02</span>
         <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 5C8.8 5 7 7.6 7 10.6c0 2.6 1 4.3 1.7 6.6.7 2.3 1 5 1.7 7 .5 1.4 1.9 1.4 2.4 0 .6-1.8.8-5 1.9-6.3.7-.8 2-.8 2.7 0 1.1 1.3 1.3 4.5 1.9 6.3.5 1.4 1.9 1.4 2.4 0 .7-2 1-4.7 1.7-7 .7-2.3 1.7-4 1.7-6.6C25 7.6 23.2 5 20 5c-2 0-3 1.1-4 1.1S14 5 12 5Z"/><path d="M13.2 11.2c.4-1.6 1.6-2.4 2.8-2.4s2.4.8 2.8 2.4c-.9.8-1.8 1.2-2.8 1.2s-1.9-.4-2.8-1.2Z" fill="currentColor" stroke="none" style="color:var(--cyan)"/></svg>
-        <div><h3>Fillings</h3><p>Tooth-coloured fillings for small cavities and chipped edges.</p></div>
+        <div><h3>Fillings</h3><p>For a small cavity or a chipped edge.</p></div>
         <a class="svc-ask" href="#book" data-ask="filling">Request<span class="sr"> a filling</span> <span aria-hidden="true">→</span></a>
       </li>
       <li>
@@ -344,14 +344,14 @@
       <ol class="steps">
         <li><span class="st-no">01</span><div><h3>You choose</h3><p>What you need, a day, and a time inside opening hours.</p></div></li>
         <li><span class="st-no">02</span><div><h3>You send</h3><p>WhatsApp opens with the message filled in. Edit it if you like.</p></div></li>
-        <li><span class="st-no">03</span><div><h3>We reply</h3><p>The front desk confirms the time or offers another one.</p></div></li>
+        <li><span class="st-no">03</span><div><h3>We reply</h3><p>The front desk replies with that time or another one.</p></div></li>
       </ol>
     </div>
     <figure class="phone reveal">
       <div class="ph-head"><span class="ph-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5c-2.4 0-3.6 1.8-3.6 4 0 1.9.7 3.1 1.2 4.7.5 1.7.7 3.7 1.2 5.2.4 1 1.4 1 1.8 0 .4-1.3.6-3.8 1.4-4.7.5-.5 1.5-.5 2 0 .8.9 1 3.4 1.4 4.7.4 1 1.4 1 1.8 0 .5-1.5.7-3.5 1.2-5.2.5-1.6 1.2-2.8 1.2-4.7 0-2.2-1.2-4-3.6-4-1.5 0-2.3.8-4 .8s-2.5-.8-4-.8Z"/></svg></span>NovaCare front desk</div>
       <div class="ph-body">
-        <p class="ph-out"><span class="ph-who">You</span>Hello NovaCare Dental, I would like to request a check-up and cleaning on Thursday at 6:30 PM. Please confirm if this time works.</p>
-        <p class="ph-in"><span class="ph-who">Front desk</span>Thursday 6:30 PM is fine. See you then.</p>
+        <p class="ph-out"><span class="ph-who">You</span>Hi NovaCare, could I come in for a check-up and cleaning on Thursday at 5:30 PM? Please let me know if that time works.</p>
+        <p class="ph-in"><span class="ph-who">Front desk</span>Thursday 5:30 PM works. See you then.</p>
       </div>
       <figcaption>Example messages, not a real patient.</figcaption>
     </figure>
@@ -363,7 +363,7 @@
     <div class="visit-copy reveal">
       <p class="eyebrow">Visit</p>
       <h2 id="visit-title">On Railway Station Road, Kanchipuram.</h2>
-      <p class="visit-lede">Walk in during opening hours, or send a request first so a chair is ready for you.</p>
+      <p class="visit-lede">Walk in during opening hours, or send a request first so the front desk has the details.</p>
       <ol class="week" aria-hidden="true">
         <li><i></i>Mon</li><li><i></i>Tue</li><li><i></i>Wed</li><li><i></i>Thu</li><li><i></i>Fri</li><li><i></i>Sat</li><li class="off"><i></i>Sun</li>
       </ol>
@@ -400,7 +400,7 @@
 
   // Signature: chat-booking. A scripted, three-step form shaped like a chat: treatment, day, time,
   // then a summary card. Nothing is sent anywhere by this page; the last step opens WhatsApp with the
-  // request filled in, and the front desk confirms. Options are real buttons in a labelled group (the
+  // request filled in; nothing is booked until the front desk replies. Options are real buttons in a labelled group (the
   // keyboard path); messages are added to a role="log" live region. Without JS the static panel shows.
   (function(){
     var root = document.querySelector('[data-signature="chat-booking"]');
@@ -462,7 +462,7 @@
     }
 
     function message(){
-      return 'Hello NovaCare Dental, I would like to request ' + state.treat.msg + ' on ' + dayLong(state.day) + ' at ' + state.time + '. Please confirm if this time works.';
+      return 'Hi NovaCare, could I come in for ' + state.treat.msg + ' on ' + dayLong(state.day) + ' at ' + state.time + '? Please let me know if that time works.';
     }
 
     function show(stage, focus, noScroll){
@@ -477,7 +477,7 @@
       }else if(stage === 1){
         ask.textContent = 'Choose a day';
         row = make('div', 'opts');
-        days.forEach(function(d, i){ row.appendChild(chip(dayShort(i), dayLong(i), function(){ pickDay(i); })); });
+        days.forEach(function(d, i){ row.appendChild(chip(dayShort(i), null, function(){ pickDay(i); })); });
         row.appendChild(chip('Start over', null, restart, 'opt-ghost'));
         opts.appendChild(row);
       }else if(stage === 2){
@@ -496,15 +496,15 @@
         opts.appendChild(row);
       }else{
         ask.textContent = 'Your request is ready';
-        var send = make('a', 'btn btn-primary chat-send', document.querySelector('.chat-static .btn svg').outerHTML + 'Send on WhatsApp');
+        var send = make('a', 'btn btn-primary chat-send', document.querySelector('.chat-static .btn svg').outerHTML + 'Open in WhatsApp');
         send.href = WA + '?text=' + encodeURIComponent(message());
         opts.appendChild(send);
         row = make('div', 'chat-alt');
         row.appendChild(chip('Change time', null, function(){ rewind(2); show(2, true); }, 'opt-ghost'));
         row.appendChild(chip('Start over', null, restart, 'opt-ghost'));
         opts.appendChild(row);
-        opts.appendChild(make('p', 'chat-note', 'This is a request, not a booking. The front desk confirms it or suggests another time.'));
-        opts.appendChild(make('a', 'call-link chat-call', 'Need it sooner? Call&nbsp;<span class="nowrap">' + TEL_TXT + '</span>'));
+        opts.appendChild(make('p', 'chat-note', 'Nothing is booked until the front desk replies with a time.'));
+        opts.appendChild(make('a', 'call-link chat-call', '<span>Need it sooner? Call <span class="nowrap">' + TEL_TXT + '</span></span>'));
         opts.lastChild.href = TEL;
       }
       settle(focus, noScroll);
@@ -526,7 +526,7 @@
     function pickTreat(t, noScroll){
       state.treat = t;
       me(t.label, 0);
-      if(t.k === 'pain') say('If the pain is severe or there is swelling, call the clinic instead: <a class="msg-link" href="' + TEL + '">' + TEL_TXT + '</a>', 1);
+      if(t.k === 'pain') say('If the pain is severe or there is swelling, call the clinic instead.<a class="msg-link" href="' + TEL + '">Call ' + TEL_TXT + '</a>', 1);
       say('Which day suits you? We are open Monday to Saturday.', 1);
       show(1, true, noScroll);
     }
@@ -579,6 +579,8 @@
 
     addEventListener('resize', fitLog);
     show(0, false);
+    // Wording that only holds while the helper runs is swapped in here; the defaults are true without JS.
+    [].forEach.call(document.querySelectorAll('[data-live]'), function(el){ el.textContent = el.getAttribute('data-live'); });
     still.hidden = true;
     live.hidden = false;
     stepEl.hidden = false;
