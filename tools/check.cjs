@@ -338,6 +338,64 @@ async function checkBar(browser, file) {
   }));
 }
 
+// Only for demos whose signature is webgl-scene (see ONLY_FOR). Opens the page in its own Chromium with the 3D APIs
+// switched off (--disable-3d-apis makes getContext('webgl' / 'webgl2') return null; the check confirms that first),
+// at 1280 and 390, and 1.5s after load asserts: no uncaught exceptions and no console errors (Google Fonts failures
+// excepted, as in console); the first h1 and the primary CTA (first btn/cta-class link or button after that h1)
+// shown, judged as in nojs/offline; the static illustration ([data-fallback] inside the signature element) shown and
+// at least 120x120px; and at 390 no horizontal overflow.
+const WEBGL_OFF_ARGS = ['--disable-3d-apis', '--disable-gpu'];
+
+async function checkWebglOff(browser, file) {
+  const off = await chromium.launch({ args: WEBGL_OFF_ARGS });
+  const shown = (s) => s.opacity >= 0.99 && !s.hidden && !s.empty;
+  try {
+    for (const width of [1280, 390]) {
+      const reason = await withPage(off, file, { width }, async (page, errors) => {
+        await page.waitForTimeout(1500);
+        const gl = await page.evaluate(() => {
+          const c = document.createElement('canvas');
+          return !!(c.getContext('webgl') || c.getContext('experimental-webgl') || c.getContext('webgl2'));
+        });
+        if (gl) return `WebGL still available with ${WEBGL_OFF_ARGS.join(' ')}`;
+        const real = errors.filter((e) => !isFontLoadFailure(e));
+        if (real.length) return describeError(real[0]) + (real.length > 1 ? ` (+${real.length - 1} more)` : '');
+        const [h1] = await renderStates(page, 'h1');
+        if (!h1) return 'no h1 element';
+        if (!shown(h1)) return `first h1 not visible (opacity ${h1.opacity}${h1.hidden ? ', hidden' : ''}${h1.empty ? ', no box' : ''})`;
+        const hasCta = await page.evaluate(() => {
+          const h = document.querySelector('h1');
+          const cta = [...document.querySelectorAll('a[class*=btn], a[class*=cta], button[class*=btn], button[class*=cta]')]
+            .find((el) => h.compareDocumentPosition(el) & Node.DOCUMENT_POSITION_FOLLOWING);
+          if (cta) cta.setAttribute('data-webgl-off-cta', '');
+          return !!cta;
+        });
+        if (!hasCta) return 'no btn/cta-class link or button after the h1';
+        const [cta] = await renderStates(page, '[data-webgl-off-cta]');
+        if (!shown(cta)) return `primary CTA "${cta.text}" not visible (opacity ${cta.opacity}${cta.hidden ? ', hidden' : ''}${cta.empty ? ', no box' : ''})`;
+        const fbSel = '[data-signature="webgl-scene"] [data-fallback]';
+        const [fb] = await renderStates(page, fbSel);
+        if (!fb) return `no ${fbSel} illustration`;
+        if (!shown(fb)) return `fallback illustration not visible (opacity ${fb.opacity}${fb.hidden ? ', hidden' : ''}${fb.empty ? ', no box' : ''})`;
+        const box = await page.evaluate((sel) => {
+          const r = document.querySelector(sel).getBoundingClientRect();
+          return { w: Math.round(r.width), h: Math.round(r.height) };
+        }, fbSel);
+        if (box.w < 120 || box.h < 120) return `fallback illustration only ${box.w}x${box.h}px (want at least 120x120)`;
+        if (width === 390) {
+          const sw = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: window.innerWidth }));
+          if (sw.scroll > sw.inner) return `scrollWidth ${sw.scroll}>${sw.inner}`;
+        }
+        return null;
+      });
+      if (reason) return `@${width} ${reason}`;
+    }
+    return null;
+  } finally {
+    await off.close();
+  }
+}
+
 const CHECKS = {
   console: checkConsole,
   overflow: checkOverflow,
@@ -354,6 +412,12 @@ const CHECKS = {
   focus: checkFocus,
   offline: checkOffline,
   bar: checkBar,
+  'webgl-off': checkWebglOff,
+};
+
+// Checks that run only for some files; every other check runs for every file.
+const ONLY_FOR = {
+  'webgl-off': (file) => file.expected.signature === 'webgl-scene',
 };
 
 /* ---------- runner ---------- */
@@ -385,6 +449,7 @@ async function main() {
     for (const file of files) {
       console.log(file.name);
       for (const [id, check] of Object.entries(CHECKS)) {
+        if (ONLY_FOR[id] && !ONLY_FOR[id](file)) continue;
         let reason;
         try {
           reason = await check(browser, file);
