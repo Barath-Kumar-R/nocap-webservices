@@ -298,7 +298,7 @@
     <div class="svc-head reveal">
       <p class="eyebrow">Services</p>
       <h2 id="svc-title">What you can ask for.</h2>
-      <p class="svc-lede">Choose a row to start a request with that treatment already picked.</p>
+      <p class="svc-lede" data-live="Choose a row to start a request with that treatment already picked.">Each Request link leads to the front desk, on WhatsApp or by phone.</p>
     </div>
     <ol class="svc-list reveal">
       <li>
@@ -339,11 +339,11 @@
   <div class="wrap how-grid">
     <div class="reveal">
       <p class="eyebrow">How it works</p>
-      <h2 id="how-title">It writes the message. People answer it.</h2>
-      <p class="how-lede">The helper on this page is a short scripted form, not an AI and not a live chat. It cannot diagnose anything. It turns three answers into a message you read before you send it.</p>
+      <h2 id="how-title" data-live="It writes the message. People answer it.">You send a message. People answer it.</h2>
+      <p class="how-lede" data-live="The helper on this page is a short scripted form, not an AI and not a live chat. It cannot diagnose anything. It turns three answers into a message you read before you send it.">This page does not book or diagnose anything. Your request goes to the front desk on WhatsApp or by phone.</p>
       <ol class="steps">
-        <li><span class="st-no">01</span><div><h3>You choose</h3><p>What you need, a day, and a time inside opening hours.</p></div></li>
-        <li><span class="st-no">02</span><div><h3>You send</h3><p>WhatsApp opens with the message filled in. Edit it if you like.</p></div></li>
+        <li><span class="st-no">01</span><div><h3 data-live="You choose">You write</h3><p data-live="What you need, a day, and a time inside opening hours.">What you need and a day that suits you, Mon–Sat, 9 AM – 8 PM.</p></div></li>
+        <li><span class="st-no">02</span><div><h3>You send</h3><p data-live="WhatsApp opens with the message filled in. Edit it if you like.">Send it on WhatsApp, or call the front desk instead.</p></div></li>
         <li><span class="st-no">03</span><div><h3>We reply</h3><p>The front desk replies with that time or another one.</p></div></li>
       </ol>
     </div>
@@ -526,7 +526,7 @@
     function pickTreat(t, noScroll){
       state.treat = t;
       me(t.label, 0);
-      if(t.k === 'pain') say('If the pain is severe or there is swelling, call the clinic instead.<a class="msg-link" href="' + TEL + '">Call ' + TEL_TXT + '</a>', 1);
+      if(t.k === 'pain') say('If the pain is severe or there is swelling, call the clinic instead. <a class="msg-link" href="' + TEL + '">Call ' + TEL_TXT + '</a>', 1);
       say('Which day suits you? We are open Monday to Saturday.', 1);
       show(1, true, noScroll);
     }
