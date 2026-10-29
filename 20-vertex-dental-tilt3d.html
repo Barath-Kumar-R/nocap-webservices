@@ -3,239 +3,520 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vertex Dental Lab — Porur</title>
+<title>Vertex Dental Lab, Porur</title>
+<meta name="description" content="Dental clinic with its own 3D scanner and crown lab on Mount Poonamallee Road, Porur, Chennai. Mon–Sat, 10 AM – 8 PM.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.className += ' js';</script>
 <style>
+  /* metric-matched local fallbacks (measured widths), so the page reads the same if Google Fonts never arrive */
+  @font-face{font-family:'Grotesk Fallback'; font-weight:400 600; src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'); size-adjust:108.9%;}
+  @font-face{font-family:'Grotesk Fallback'; font-weight:700 800; src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'); size-adjust:101.1%;}
+  @font-face{font-family:'Inter Fallback'; font-weight:400 500; src:local('Liberation Sans'),local('LiberationSans'),local('Arial'),local('ArialMT'); size-adjust:106.8%;}
+  @font-face{font-family:'Inter Fallback'; font-weight:600 800; src:local('Liberation Sans Bold'),local('LiberationSans-Bold'),local('Arial Bold'),local('Arial-BoldMT'); size-adjust:101.9%;}
+
   :root{
-    --bg:#0A0B10; --surface:#14151D; --surface2:#1B1D28; --text:#F2F2F5; --muted:#9396A3;
-    --line:rgba(255,255,255,0.09); --violet:#8B6CFF; --cyan:#3FE8D0; --white:#FFFFFF;
+    --bench:#ECEEF0; --sheet:#FFFFFF; --ink:#15191E; --ink-2:#3E4650; --rule:#B4BCC5; --ctl:#69737E;
+    --orange:#E4571E; --orange-ink:#A63A0C; --graphite:#1B2026; --on-graphite:#F1F3F5; --muted-graphite:#B9C1CA; --orange-lit:#F2814F;
+    --head:'Space Grotesk','Grotesk Fallback',Arial,sans-serif; --body:'Inter','Inter Fallback',Arial,sans-serif;
+    --hdr-h:0px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; overflow-x:hidden;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:700; letter-spacing:-0.01em;}
+  body{font-family:var(--body); font-size:17px; line-height:1.6; color:var(--ink); background:var(--bench); -webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(rgba(21,25,30,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(21,25,30,.05) 1px, transparent 1px);
+    background-size:24px 24px;}
+  h1,h2,h3{font-family:var(--head); font-weight:700; letter-spacing:-0.015em; line-height:1.1;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .wrap{max-width:1180px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  .nw{white-space:nowrap;}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
 
-  /* TILT CARD ENGINE */
-  .tilt-card{position:relative; transform-style:preserve-3d; transition:transform .18s cubic-bezier(.2,.8,.3,1), box-shadow .18s ease; will-change:transform;}
-  .tilt-card::after{content:''; position:absolute; inset:0; border-radius:inherit; background:radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(255,255,255,0.16), transparent 55%); opacity:0; transition:opacity .25s ease; pointer-events:none;}
-  .tilt-card:hover::after{opacity:1;}
-  @media (prefers-reduced-motion:reduce){ .tilt-card{transition:none !important; transform:none !important;} }
+  /* header */
+  .top{background:var(--bench); border-bottom:1px solid var(--rule); position:relative; z-index:100;}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:68px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-family:var(--head); font-weight:700; font-size:19px; text-decoration:none; letter-spacing:-0.01em;}
+  .logo svg{width:30px; height:30px; flex:none;}
+  .nav-links{display:none; gap:30px; font-size:16px; font-weight:500;}
+  .nav-links a{text-decoration:none; color:var(--ink-2); display:inline-flex; align-items:center; min-height:44px;}
+  .nav-links a:hover{color:var(--ink); text-decoration:underline; text-underline-offset:4px;}
+  .nav .btn{display:none;}
 
-  .panel{background:var(--surface); border:1px solid var(--line); border-radius:20px;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:0 22px; border-radius:4px; font-family:var(--head); font-weight:700; font-size:17px; text-decoration:none; background:var(--orange); color:var(--ink); border:2px solid var(--orange); cursor:pointer; transition:background-color .15s ease, border-color .15s ease;}
+  .btn:hover{background:#EF6A33; border-color:#EF6A33;}
+  .btn svg{width:18px; height:18px; flex:none;}
+  .text-link{font-family:var(--head); font-weight:600; font-size:17px; color:var(--ink); text-decoration:underline; text-decoration-color:var(--orange); text-decoration-thickness:2px; text-underline-offset:5px; display:inline-flex; align-items:center; min-height:44px;}
+  .text-link:hover{text-decoration-color:var(--ink);}
 
-  nav{padding:22px 0; border-bottom:1px solid var(--line); position:sticky; top:0; background:rgba(10,11,16,0.85); backdrop-filter:blur(10px); z-index:100;}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{display:flex; align-items:center; gap:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px;}
-  .logo .mark{width:30px; height:30px; border-radius:9px; background:conic-gradient(from 140deg, var(--violet), var(--cyan), var(--violet)); display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:700; color:var(--bg);}
-  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
-  .nav-links a{text-decoration:none; color:var(--muted);}
-  .btn-nav{background:linear-gradient(120deg,var(--violet),var(--cyan)); color:var(--bg); padding:11px 22px; border-radius:100px; font-size:13.5px; font-weight:700; text-decoration:none;}
+  /* hero */
+  .hero{padding:48px 0 64px;}
+  .hero-grid{display:grid; gap:40px; align-items:center;}
+  .eyebrow{display:inline-flex; align-items:center; gap:10px; font-family:var(--head); font-weight:600; font-size:15px; letter-spacing:.06em; text-transform:uppercase; color:var(--orange-ink);}
+  .eyebrow svg{width:16px; height:16px; flex:none;}
+  .hero h1{font-size:clamp(38px, 5.2vw, 64px); margin-top:18px; max-width:13em;}
+  .lede{margin-top:22px; font-size:18px; color:var(--ink-2); max-width:34em;}
+  .hero-ctas{display:flex; flex-wrap:wrap; align-items:center; gap:12px 24px; margin-top:30px;}
+  .facts{margin-top:26px; padding-top:16px; border-top:1px solid var(--rule); font-size:16px; color:var(--ink-2); display:flex; flex-wrap:wrap; gap:4px 18px; max-width:34em;}
+  .facts b{font-family:var(--head); font-weight:600; color:var(--ink);}
 
-  /* HERO */
-  .hero{padding:80px 0 60px; position:relative;}
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:50px; align-items:center;}
-  .eyebrow{display:inline-flex; align-items:center; gap:8px; font-size:12px; letter-spacing:0.08em; text-transform:uppercase; font-weight:700; color:var(--cyan);}
-  .eyebrow .dot{width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
-  .hero h1{font-size:clamp(34px,4.4vw,52px); line-height:1.1; margin-top:16px;}
-  .hero h1 .u{background:linear-gradient(120deg,var(--violet),var(--cyan)); -webkit-background-clip:text; background-clip:text; color:transparent;}
-  .hero p{margin-top:22px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:460px;}
-  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-  .btn-primary{background:var(--white); color:var(--bg); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
-  .btn-secondary{background:transparent; border:1px solid var(--line); color:var(--text); padding:15px 26px; border-radius:100px; font-size:14px; font-weight:700; text-decoration:none;}
+  /* the drawing sheet */
+  .sheet{background:var(--sheet); border:1px solid var(--rule); border-radius:4px; box-shadow:0 1px 0 rgba(21,25,30,.04), 0 22px 40px -28px rgba(21,25,30,.45); max-width:600px; width:100%; justify-self:center;}
+  .sheet-art{position:relative; padding:14px 14px 4px;}
+  .sheet-art svg{display:block; width:100%; height:auto;}
+  .view-tag{position:absolute; bottom:6px; font-family:var(--head); font-weight:600; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2); transform:translateX(-50%);}
+  .title-block{display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:center; border-top:1px solid var(--rule); font-size:15px;}
+  .title-block > *{padding:10px 14px;}
+  .title-block span + span{border-left:1px solid var(--rule); color:var(--ink-2);}
+  .title-block b{font-family:var(--head); font-weight:600;}
 
-  /* 3D FANNED STACK */
-  .stage{position:relative; height:420px; perspective:1200px;}
-  .orbit-ring{position:absolute; top:50%; left:50%; width:380px; height:380px; margin:-190px 0 0 -190px; border-radius:50%; background:conic-gradient(from 0deg, transparent, rgba(139,108,255,0.35), transparent 40%, rgba(63,232,208,0.3), transparent 80%); transform:rotateX(68deg) rotateZ(0deg); animation:spinring 18s linear infinite; filter:blur(1px);}
-  @keyframes spinring{ to{ transform:rotateX(68deg) rotateZ(360deg); } }
-  @media (prefers-reduced-motion:reduce){ .orbit-ring{animation:none;} }
-  .stack{position:relative; height:100%; transform-style:preserve-3d;}
-  .scard{position:absolute; width:230px; padding:20px; transform-style:preserve-3d;}
-  .scard .k{font-size:10.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cyan); font-weight:700;}
-  .scard h4{font-size:16px; margin-top:8px; font-family:'Inter',sans-serif; font-weight:700;}
-  .scard p{font-size:12px; color:var(--muted); margin-top:6px; line-height:1.5;}
-  .sc1{top:20px; left:30px; z-index:1; transform:translateZ(-40px) rotateY(10deg) rotateX(4deg);}
-  .sc2{top:100px; left:150px; z-index:3; transform:translateZ(30px) rotateY(-8deg) rotateX(-2deg);}
-  .sc3{top:220px; left:50px; z-index:2; transform:translateZ(-10px) rotateY(6deg) rotateX(3deg);}
+  /* sections */
+  main > section{padding:72px 0;}
+  main > section#treatments{padding-top:24px;}
+  .sec-head{display:grid; gap:12px 48px; margin-bottom:36px;}
+  .sec-head h2{font-size:clamp(30px, 3.6vw, 44px); max-width:14em;}
+  .sec-head p{color:var(--ink-2); max-width:30em; align-self:end;}
 
-  section{padding:80px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 44px;}
-  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:12px;}
-  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px; line-height:1.7;}
+  /* tilt cards: the slot keeps the layout box and the hit area; the card inside tilts */
+  .tc-grid{display:grid; grid-template-columns:minmax(0,1fr); gap:20px; list-style:none;}
+  .tc-slot{display:flex;}
+  .tc{position:relative; flex:1; display:flex; flex-direction:column; min-height:100%; padding:22px 22px 18px; border:1px solid #9AA3AD; border-radius:6px;
+    background:radial-gradient(circle at var(--hx,26%) var(--hy,14%), #FFFFFF 0%, rgba(255,255,255,.7) 20%, rgba(255,255,255,0) 50%), linear-gradient(172deg, #F7F8FA 0%, #EBEEF1 50%, #DDE2E7 100%);
+    box-shadow:0 1px 0 rgba(255,255,255,.9) inset, calc(var(--sx,0) * 1px) calc(var(--sy,14) * 1px) 26px -16px rgba(21,25,30,.55);
+    transform-origin:50% 50%;}
+  .tc.tilting{will-change:transform;}
+  .tc-top{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
+  .tc-no{font-family:var(--head); font-weight:600; font-size:15px; letter-spacing:.06em; color:var(--orange-ink);}
+  .tc-icon{width:52px; height:52px; flex:none;}
+  .tc-icon .s{fill:none; stroke:var(--ink); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+  .tc-icon .a{fill:none; stroke:var(--orange); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+  .tc-icon .f{fill:#FFFFFF; stroke:var(--ink); stroke-width:1.6; stroke-linejoin:round;}
+  .tc h3{font-size:23px; margin-top:22px;}
+  .tc p{margin-top:10px; color:var(--ink-2); font-size:16px;}
+  .tc-link{margin-top:auto; padding-top:18px; display:inline-flex; align-items:center; gap:8px; min-height:44px; font-family:var(--head); font-weight:600; font-size:16px; color:var(--ink); text-decoration:none;}
+  .tc-link span{text-decoration:underline; text-decoration-color:var(--orange); text-decoration-thickness:2px; text-underline-offset:4px;}
+  .tc-link svg{width:16px; height:16px; flex:none;}
+  .tc-link::before{content:''; position:absolute; inset:-1px; border-radius:6px; pointer-events:none;}
+  .tc-link::after{content:''; position:absolute; inset:-9px; z-index:1;} /* hit area reaches past a receding corner */
+  .tc:hover .tc-link span{text-decoration-color:var(--ink);}
+  html .tc-link:focus-visible{outline:none!important; box-shadow:none!important;}
+  html .tc-link:focus-visible::before{outline:3px solid var(--ink); outline-offset:3px; box-shadow:0 0 0 3px var(--bench);}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .svc-card{padding:28px 22px;}
-  .svc-icon{width:44px; height:44px; border-radius:13px; background:var(--surface2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
-  .svc-icon svg{width:20px; height:20px; stroke:var(--cyan); fill:none; stroke-width:1.6;}
-  .svc-card h3{font-size:16px; margin-bottom:8px; font-family:'Inter',sans-serif;}
-  .svc-card p{font-size:12.5px; color:var(--muted); line-height:1.6;}
+  /* lab band */
+  .lab{background:var(--graphite); color:var(--on-graphite);}
+  .lab-grid{display:grid; gap:40px;}
+  .lab h2{font-size:clamp(30px, 3.6vw, 44px); max-width:13em;}
+  .lab p{margin-top:20px; color:var(--muted-graphite); max-width:32em;}
+  .lab p strong{color:var(--on-graphite); font-weight:600;}
+  .readouts{list-style:none; display:grid; grid-template-columns:minmax(0,1fr); border-top:1px solid #4A535D; align-self:end;}
+  .readouts li{display:flex; align-items:baseline; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid #4A535D;}
+  .readouts b{font-family:var(--head); font-weight:700; font-size:clamp(28px, 3vw, 38px); color:var(--orange-lit); letter-spacing:-0.01em; white-space:nowrap;}
+  .readouts span{font-size:16px; color:var(--muted-graphite); text-align:right;}
 
-  .about-grid{display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center;}
-  .about-visual{height:360px; padding:0; display:flex; align-items:center; justify-content:center; background:radial-gradient(circle at 30% 20%, rgba(139,108,255,0.18), transparent 60%), var(--surface);}
-  .about-visual svg{width:34px; height:34px; stroke:var(--cyan); fill:none; stroke-width:1.3;}
-  .about-copy h3{font-size:24px; margin-bottom:14px;}
-  .about-copy p{font-size:14.5px; color:var(--muted); line-height:1.8;}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:26px;}
-  .mini-panel{padding:16px;}
-  .mini-panel b{font-family:'Space Grotesk',sans-serif; font-size:22px; display:block; color:var(--cyan);}
-  .mini-panel span{font-size:11px; color:var(--muted);}
+  /* visit */
+  .visit-grid{display:grid; gap:28px; align-items:start;}
+  .visit-info h2{font-size:clamp(30px, 3.6vw, 44px); max-width:12em; margin-bottom:28px;}
+  .tblock{background:var(--sheet); border:1px solid var(--ink); border-radius:2px;}
+  .tblock dl{display:grid; grid-template-columns:minmax(0,1fr);}
+  .tblock .row{display:grid; grid-template-columns:minmax(0,1fr); gap:2px; padding:14px 18px; border-bottom:1px solid var(--rule);}
+  .tblock .row:last-child{border-bottom:none;}
+  .tblock dt{font-family:var(--head); font-weight:600; font-size:14px; letter-spacing:.07em; text-transform:uppercase; color:var(--orange-ink);}
+  .tblock dd{font-size:17px;}
+  .tblock dd a{font-weight:600; text-decoration:underline; text-decoration-color:var(--orange); text-decoration-thickness:2px; text-underline-offset:4px; display:inline-block; padding:10px 0; margin:-10px 0;}
+  .tblock-foot{display:flex; justify-content:space-between; gap:8px 16px; flex-wrap:wrap; padding:10px 18px; border-top:1px solid var(--ink); font-family:var(--head); font-weight:600; font-size:14px; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-2);}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:22px;}
-  .contact-card{padding:36px;}
-  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-size:11px; text-transform:uppercase; letter-spacing:0.06em; color:var(--cyan); font-weight:700; flex-shrink:0;}
-  .info-row .val{font-size:14px; color:var(--text);}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:1px solid var(--line); background:var(--surface2); color:var(--text); border-radius:12px; padding:14px 16px; font-family:'Inter',sans-serif; font-size:14px;}
-  .form input::placeholder, .form textarea::placeholder{color:var(--muted);}
-  .form button{background:linear-gradient(120deg,var(--violet),var(--cyan)); color:var(--bg); border:none; padding:15px; border-radius:12px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  .form{background:var(--sheet); border:1px solid var(--rule); border-radius:4px; padding:24px 20px; box-shadow:0 22px 40px -30px rgba(21,25,30,.5); scroll-margin-top:calc(var(--hdr-h) + 16px);}
+  .form h3{font-size:24px; margin-bottom:18px;}
+  .field{margin-bottom:16px;}
+  .field label{display:block; font-weight:600; font-size:16px; margin-bottom:6px;}
+  .field input{width:100%; border:1.5px solid var(--ctl); border-radius:4px; padding:11px 12px; font-family:var(--body); font-size:17px; color:var(--ink); background:#fff;}
+  .field input:hover{border-color:var(--ink-2);}
+  .form .btn{width:100%; margin-top:4px;}
+  .form-note{margin-top:12px; font-size:16px; color:var(--ink-2);}
 
-  footer{padding:30px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  footer{border-top:1px solid var(--rule); padding:26px 0 30px;}
+  .foot{display:flex; flex-wrap:wrap; justify-content:space-between; gap:6px 24px; font-size:15px; color:var(--ink-2);}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 14px 30px -8px rgba(37,211,102,0.5); text-decoration:none;}
-  .wa-float svg{width:27px; height:27px; fill:white;}
+  .wa-float{display:none;}
 
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  .js .reveal{opacity:0; transform:translateY(12px); transition:opacity .5s ease, transform .5s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
 
-  @media (max-width:900px){
-    .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr;}
-    .stage{height:320px;}
-    .svc-grid{grid-template-columns:1fr 1fr;}
-    .about-grid{grid-template-columns:1fr;}
-    .contact-grid{grid-template-columns:1fr;}
+  @media (min-width:600px){
+    .tc-grid{grid-template-columns:repeat(2, minmax(0,1fr));}
+    .form{padding:30px 28px;}
+    .tblock .row{grid-template-columns:120px minmax(0,1fr); gap:16px; align-items:baseline;}
   }
-  @media (max-width:560px){
-    .svc-grid{grid-template-columns:1fr;}
-    .stack{display:flex; flex-direction:column; gap:14px; height:auto;}
-    .scard{position:static; width:100% !important; transform:none !important;}
-    .orbit-ring{display:none;}
+  @media (min-width:721px){
+    :root{--hdr-h:69px;}
+    .top{position:sticky; top:0;}
+    .nav .btn{display:inline-flex;}
+    .hero{padding:64px 0 72px;}
+    main > section{padding:96px 0;}
+    main > section#treatments{padding-top:48px;}
+    .sec-head{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);}
   }
+  @media (min-width:860px){
+    .nav-links{display:flex;}
+  }
+  @media (min-width:961px){
+    .hero-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:56px;}
+    .lab-grid{grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr); gap:72px; align-items:end;}
+    .visit-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:40px;}
+  }
+  @media (min-width:1101px){
+    .tc-grid{grid-template-columns:repeat(4, minmax(0,1fr));}
+  }
+  @media (min-width:1360px){
+    .wa-float{display:flex; position:fixed; right:26px; bottom:26px; z-index:90; width:56px; height:56px; border-radius:50%; align-items:center; justify-content:center; background:var(--ink); border:2px solid var(--orange); box-shadow:0 10px 20px -10px rgba(21,25,30,.6);}
+    .wa-float svg{width:26px; height:26px; fill:#fff;}
+  }
+  @media (max-width:720px){
+    .wrap{padding-left:20px; padding-right:20px;}
+  }
+  @media (max-width:420px){
+    .wrap{padding-left:16px; padding-right:16px;}
+    .readouts li{flex-direction:column; align-items:flex-start; gap:2px;}
+    .readouts span{text-align:left;}
+  }
+
+  /* demo tuning of the shared polish block (bar, focus ring) */
+  html:root{--nc-radius:4px;}
+  html :focus-visible{outline-color:var(--ink)!important; box-shadow:0 0 0 2px var(--bench)!important;}
+  html .lab :focus-visible{outline-color:var(--on-graphite)!important; box-shadow:0 0 0 2px var(--graphite)!important;}
+  html .nc-bar{font-family:var(--head); font-weight:700; border-top:1px solid var(--rule);}
+  @media (max-width:720px){
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#ECEEF0;--nc-fg:#15191E;--nc-accent:#E4571E;--nc-on-accent:#15191E;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><div class="mark">V</div>Vertex Dental Lab</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-nav" href="#contact">Book a visit</a>
-  </div>
-</nav>
-
-<header class="wrap hero reveal">
-  <div class="hero-grid">
-    <div>
-      <span class="eyebrow"><span class="dot"></span>Porur, Chennai</span>
-      <h1>Dentistry rendered in <span class="u">three dimensions.</span></h1>
-      <p>Digital scans, guided planning and a case walkthrough you can actually tilt and turn — so you see your treatment the way our lab sees it.</p>
-      <div class="hero-ctas">
-        <a class="btn-primary" href="#contact">Book a visit</a>
-        <a class="btn-secondary" href="#services">See our process</a>
-      </div>
-    </div>
-    <div class="stage">
-      <div class="orbit-ring"></div>
-      <div class="stack" id="tiltStack">
-        <div class="scard panel tilt-card sc1">
-          <span class="k">Scan</span><h4>Full Arch Capture</h4><p>Intraoral 3D scan in under 4 minutes.</p>
-        </div>
-        <div class="scard panel tilt-card sc2">
-          <span class="k">Plan</span><h4>Digital Smile Design</h4><p>Your new alignment, modelled and shared with you.</p>
-        </div>
-        <div class="scard panel tilt-card sc3">
-          <span class="k">Build</span><h4>In-House Milling</h4><p>Crowns and aligners milled same-week, on site.</p>
-        </div>
-      </div>
-    </div>
+<header class="top" id="top">
+  <div class="wrap nav">
+    <a class="logo" href="#top" aria-label="Vertex Dental Lab, home">
+      <svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><path d="M4 25 15 5l11 20Z" fill="none" stroke="#15191E" stroke-width="2" stroke-linejoin="round"/><path d="M15 5v13M4 25l11-7 11 7" fill="none" stroke="#15191E" stroke-width="1.4" stroke-linejoin="round"/><circle cx="15" cy="18" r="3.2" fill="#E4571E"/></svg>
+      <span>Vertex Dental Lab</span>
+    </a>
+    <nav class="nav-links" aria-label="Sections">
+      <a href="#treatments">Treatments</a>
+      <a href="#lab">The lab</a>
+      <a href="#visit">Visit</a>
+    </nav>
+    <a class="btn" href="#book">Book a visit</a>
   </div>
 </header>
 
-<section class="wrap" id="services">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Services</span><h2>Built on a digital workflow, start to finish.</h2></div>
-  <div class="svc-grid reveal">
-    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></svg></div><h3>3D Scanning</h3><p>No putty impressions — a wand and a screen.</p></div>
-    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>Clear Aligners</h3><p>Full treatment simulated before you commit.</p></div>
-    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Same-Week Crowns</h3><p>Designed and milled in our own digital lab.</p></div>
-    <div class="svc-card panel tilt-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 2l2.4 6.9L21 12l-6.6 3.1L12 22l-2.4-6.9L3 12l6.6-3.1L12 2Z"/></svg></div><h3>Implant Planning</h3><p>Placement mapped on your own 3D jaw model.</p></div>
-  </div>
-</section>
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><circle cx="8" cy="8" r="4.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 0v5M8 11v5M0 8h5M11 8h5" stroke="currentColor" stroke-width="1.5"/></svg>Porur, Chennai</p>
+        <h1 id="hero-title">See your teeth the way our lab sees them.</h1>
+        <p class="lede">Vertex is a dental clinic with its own 3D scanner and crown lab. We scan your mouth, build a model of it, and go through that model with you before any treatment starts.</p>
+        <div class="hero-ctas">
+          <a class="btn" href="#book">Book a visit</a>
+          <a class="text-link" href="#treatments">What we treat</a>
+        </div>
+        <p class="facts"><span><b>Mon–Sat</b> <span class="nw">10 AM – 8 PM</span></span><span class="nw">Mount Poonamallee Road</span></p>
+      </div>
 
-<section class="wrap" id="about">
-  <div class="about-grid reveal">
-    <div class="about-visual panel tilt-card">
-      <svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
+      <figure class="sheet">
+        <div class="sheet-art">
+          <svg viewBox="0 0 440 270" role="img" aria-label="Line drawing of a lower molar crown seen from the front and from the top, with dimension lines and a scan mesh over the crown.">
+            <defs>
+              <pattern id="grid10" width="12" height="12" patternUnits="userSpaceOnUse"><path d="M12 0H0V12" fill="none" stroke="#E3E7EB" stroke-width="1"/></pattern>
+              <pattern id="mesh" width="14" height="24.25" patternUnits="userSpaceOnUse"><path d="M0 0H14M0 12.12H14M0 0 14 24.25M14 0 0 24.25" fill="none" stroke="#E4571E" stroke-opacity=".4" stroke-width=".7"/></pattern>
+              <linearGradient id="enamel" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset="1" stop-color="#E4E8EC"/></linearGradient>
+              <marker id="arr" viewBox="0 0 8 8" refX="8" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 8 4 0 7Z" fill="#15191E"/></marker>
+              <clipPath id="crownClip"><path d="M108 170C100 160 95 140 95 124C95 112 99 104 106 100C112 94 118 92 124 94C132 97 138 102 143 104C148 98 156 93 164 94C172 96 177 101 181 103C186 99 193 98 198 102C204 108 206 118 205 126C204 142 199 160 192 170C175 177 125 177 108 170Z"/></clipPath>
+            </defs>
+            <rect width="440" height="270" fill="url(#grid10)"/>
+            <g transform="translate(-30 -40)">
+              <!-- front view: centre line, gum line, roots (dashed, below the gum) -->
+              <path d="M150 50V284" stroke="#E4571E" stroke-width=".9" stroke-dasharray="14 4 2 4"/>
+              <path d="M78 182H222" stroke="#69737E" stroke-width="1" stroke-dasharray="2 4"/>
+              <path d="M109 173C106 200 107 236 114 262C117 272 127 273 130 264C133 240 137 216 146 205C148 203 152 203 154 205C162 216 166 238 169 260C171 270 181 270 184 260C189 236 192 200 191 173" fill="none" stroke="#69737E" stroke-width="1.3" stroke-dasharray="5 4"/>
+              <!-- front view: crown with its scan mesh -->
+              <path d="M108 170C100 160 95 140 95 124C95 112 99 104 106 100C112 94 118 92 124 94C132 97 138 102 143 104C148 98 156 93 164 94C172 96 177 101 181 103C186 99 193 98 198 102C204 108 206 118 205 126C204 142 199 160 192 170C175 177 125 177 108 170Z" fill="url(#enamel)"/>
+              <rect x="90" y="88" width="120" height="92" fill="url(#mesh)" clip-path="url(#crownClip)"/>
+              <path d="M108 170C100 160 95 140 95 124C95 112 99 104 106 100C112 94 118 92 124 94C132 97 138 102 143 104C148 98 156 93 164 94C172 96 177 101 181 103C186 99 193 98 198 102C204 108 206 118 205 126C204 142 199 160 192 170C175 177 125 177 108 170Z" fill="none" stroke="#15191E" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M143 104C142 110 141 117 141 124M181 103C182 108 182.5 113 183 118" fill="none" stroke="#15191E" stroke-width="1.1" stroke-linecap="round"/>
+              <!-- front view dimensions -->
+              <path d="M95 118V62M205 120V62" stroke="#15191E" stroke-width=".7"/>
+              <path d="M97 70H203" stroke="#15191E" stroke-width=".9" marker-start="url(#arr)" marker-end="url(#arr)"/>
+              <path d="M208 93H250M196 173H250" stroke="#15191E" stroke-width=".7"/>
+              <path d="M242 95V171" stroke="#15191E" stroke-width=".9" marker-start="url(#arr)" marker-end="url(#arr)"/>
+            </g>
+            <g transform="translate(-40 -40)">
+              <!-- top view -->
+              <path d="M370 64V222M300 136H444" stroke="#E4571E" stroke-width=".9" stroke-dasharray="14 4 2 4"/>
+              <path d="M322 100C340 86 362 84 372 88C384 84 402 86 413 99C423 111 425 132 421 150C417 168 406 180 392 182C380 186 364 186 352 184C336 184 322 178 316 166C312 150 312 116 322 100Z" fill="url(#enamel)" stroke="#15191E" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M333 137C343 132 351 140 360 134C372 128 384 139 396 133C399 131 402 132 404 134M348 138C347 152 345 166 343 180M386 136C389 150 391 164 394 178M372 131C372 118 372 104 371 90" fill="none" stroke="#15191E" stroke-width="1.2" stroke-linecap="round"/>
+              <path d="M327 113C334 105 342 101 350 100M394 100C402 101 408 105 412 112M327 160C333 170 340 174 348 175M398 175C405 172 410 166 413 158" fill="none" stroke="#15191E" stroke-width=".9" stroke-linecap="round" stroke-opacity=".5"/>
+              <circle cx="333" cy="137" r="2.5" fill="#E4571E"/><circle cx="360" cy="134" r="2.5" fill="#E4571E"/><circle cx="404" cy="134" r="2.5" fill="#E4571E"/>
+              <!-- top view dimensions -->
+              <path d="M316 172V216M423 152V216" stroke="#15191E" stroke-width=".7"/>
+              <path d="M318 208H421" stroke="#15191E" stroke-width=".9" marker-start="url(#arr)" marker-end="url(#arr)"/>
+              <path d="M380 86H462M392 184H462" stroke="#15191E" stroke-width=".7"/>
+              <path d="M454 88V182" stroke="#15191E" stroke-width=".9" marker-start="url(#arr)" marker-end="url(#arr)"/>
+            </g>
+          </svg>
+          <span class="view-tag" style="left:27.3%">Front</span>
+          <span class="view-tag" style="left:75%">Top</span>
+        </div>
+        <figcaption class="title-block"><span><b>Lower molar crown</b>, two views</span><span>Illustration</span></figcaption>
+      </figure>
     </div>
-    <div class="about-copy">
-      <span class="eyebrow">The Lab</span>
-      <h3 style="margin-top:12px;">A dental studio built around its own scanner.</h3>
-      <p>Dr. [Name], BDS, MDS Prosthodontics, runs Vertex as a fully digital practice — every case is scanned, modelled and reviewed on-screen with the patient before a single tool touches a tooth.</p>
-      <div class="stat-row">
-        <div class="mini-panel panel"><b>4,800+</b><span>Digital scans done</span></div>
-        <div class="mini-panel panel"><b>Same-week</b><span>Crown turnaround</span></div>
-        <div class="mini-panel panel"><b>4.8 ★</b><span>Google rating</span></div>
+  </section>
+
+  <section id="treatments" aria-labelledby="treat-title">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2 id="treat-title">Four treatments that begin with a scan.</h2>
+        <p data-live="Choose a card to start a request with that treatment already written in.">Ask about any of them in the request form at the end of this page.</p>
+      </div>
+      <ul class="tc-grid" data-signature="tilt-cards">
+        <li class="tc-slot">
+          <article class="tc">
+            <div class="tc-top"><span class="tc-no">01</span>
+              <svg class="tc-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false"><path class="a" d="M38 21 31 37M42 21l6.5 16" stroke-dasharray="2.6 2.6"/><path class="f" d="M4 12.5c0-2.5 2-4.5 4.5-4.5H33l4-2.5h8c2.2 0 4 1.8 4 4v6c0 2.2-1.8 4-4 4h-8L33 17H8.5C6 17 4 15 4 12.5Z"/><path class="s" d="M39 13h5"/><path class="f" d="M30.5 48c-.8-3.5-1-7.5.2-10.3.8-1.9 2.9-2 3.8-.4.8-.9 2.1-.9 2.9 0 .9-1.6 3-1.5 3.8.4 1.2 2.8 1 6.8.2 10.3-2.2.7-8.6.7-10.9 0Z"/></svg>
+            </div>
+            <h3>3D scanning</h3>
+            <p>No putty trays. A small camera wand records your teeth; a full arch usually takes under four minutes.</p>
+            <a class="tc-link" href="#book" data-treatment="3D scan"><span>Ask about scanning</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+        </li>
+        <li class="tc-slot">
+          <article class="tc">
+            <div class="tc-top"><span class="tc-no">02</span>
+              <svg class="tc-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false"><path d="M13 48V25a13 13 0 0 1 26 0v23" fill="none" stroke="#15191E" stroke-width="12.5" stroke-linecap="round"/><path d="M13 48V25a13 13 0 0 1 26 0v23" fill="none" stroke="#FFFFFF" stroke-width="9.3" stroke-linecap="round"/><circle class="a" cx="13.0" cy="45.0" r="2.2"/><circle class="a" cx="13.0" cy="38.5" r="2.2"/><circle class="a" cx="13.0" cy="32.0" r="2.2"/><circle class="a" cx="13.4" cy="21.6" r="2.2"/><circle class="a" cx="16.3" cy="16.3" r="2.2"/><circle class="a" cx="21.6" cy="12.8" r="2.2"/><circle class="a" cx="30.4" cy="12.8" r="2.2"/><circle class="a" cx="35.7" cy="16.3" r="2.2"/><circle class="a" cx="38.6" cy="21.6" r="2.2"/><circle class="a" cx="39.0" cy="32.0" r="2.2"/><circle class="a" cx="39.0" cy="38.5" r="2.2"/><circle class="a" cx="39.0" cy="45.0" r="2.2"/></svg>
+            </div>
+            <h3>Clear aligners</h3>
+            <p>We show you the planned tooth movement, step by step, before you decide to start.</p>
+            <a class="tc-link" href="#book" data-treatment="Clear aligners"><span>Ask about aligners</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+        </li>
+        <li class="tc-slot">
+          <article class="tc">
+            <div class="tc-top"><span class="tc-no">03</span>
+              <svg class="tc-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false"><path class="f" d="M5 39v4.5c0 3.1 9.4 5.5 21 5.5s21-2.4 21-5.5V39Z"/><ellipse class="f" cx="26" cy="39" rx="21" ry="5.5"/><path class="f" d="M14.5 39.5c-2-7.2-2.4-16 .4-21.8 1.9-4.1 6.2-4.2 8-1 1.7-1.9 4.4-1.9 6.1 0 1.8-3.2 6.1-3.1 8 1 2.8 5.8 2.4 14.6.4 21.8-3.6 1.4-19.3 1.4-22.9 0Z"/><path class="a" d="M44 1.5v7.5"/><path d="M41.8 9h4.4l-1.1 6.2h-2.2Z" fill="#E4571E"/></svg>
+            </div>
+            <h3>Same-week crowns</h3>
+            <p>Designed here and milled in our own lab, so a crown is usually ready within the week.</p>
+            <a class="tc-link" href="#book" data-treatment="Crown"><span>Ask about crowns</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+        </li>
+        <li class="tc-slot">
+          <article class="tc">
+            <div class="tc-top"><span class="tc-no">04</span>
+              <svg class="tc-icon" viewBox="0 0 52 52" aria-hidden="true" focusable="false"><path class="f" d="M16 12.5C16 7.5 20 5 26 5s10 2.5 10 7.5c0 4-1.3 6.8-2.8 8.5H18.8C17.3 19.3 16 16.5 16 12.5Z"/><path class="f" d="M21.5 21h9v4.5h-9Z"/><path class="f" d="M20.5 25.5h11l-1.2 16.5L26 47l-4.3-5-1.2-16.5Z"/><path class="a" d="M20.8 30h10.4M21.1 34.5h9.8M21.5 39h9"/></svg>
+            </div>
+            <h3>Implant planning</h3>
+            <p>The implant position is worked out on a 3D model of your own jaw.</p>
+            <a class="tc-link" href="#book" data-treatment="Implant planning"><span>Ask about implants</span><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          </article>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="lab" id="lab" aria-labelledby="lab-title">
+    <div class="wrap lab-grid">
+      <div class="reveal">
+        <h2 id="lab-title">A clinic built around its own scanner.</h2>
+        <p><strong>Dr.&nbsp;Ashwin Natarajan, BDS, MDS&nbsp;(Prosthodontics)</strong>, runs Vertex as a fully digital practice. Each case is scanned and modelled first, and he goes through the plan with you on screen before a tool touches a tooth.</p>
+      </div>
+      <ul class="readouts reveal">
+        <li><b>4,800+</b><span>digital scans done</span></li>
+        <li><b>Same week</b><span>usual crown turnaround</span></li>
+        <li><b>4.8&nbsp;★</b><span>Google rating</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="visit" aria-labelledby="visit-title">
+    <div class="wrap">
+      <div class="visit-grid">
+        <div class="visit-info">
+        <h2 id="visit-title" class="reveal">Visit the lab in Porur.</h2>
+        <div class="tblock reveal">
+          <dl>
+            <div class="row"><dt>Address</dt><dd>Mount Poonamallee Road, Porur, <span class="nw">Chennai 600116</span></dd></div>
+            <div class="row"><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX" class="nw">+91 98XXX XXXXX</a></dd></div>
+            <div class="row"><dt>Hours</dt><dd><span class="nw">Mon–Sat,</span> <span class="nw">10 AM – 8 PM</span></dd></div>
+            <div class="row"><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Send a WhatsApp message</a></dd></div>
+          </dl>
+          <div class="tblock-foot"><span>Vertex Dental Lab</span><span>Porur</span></div>
+        </div>
+        </div>
+
+        <form class="form" id="book" action="mailto:?subject=Vertex%20Dental%20Lab%3A%20visit%20request" method="post" enctype="text/plain">
+          <h3>Visit request</h3>
+          <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+          <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+          <div class="field"><label for="f-reason">What brings you in?</label><input id="f-reason" name="reason" type="text"></div>
+          <button type="submit" class="btn">Send visit request</button>
+          <p class="form-note">This drafts an email in your mail app, like a work ticket for the lab. No time is held until one is agreed with you.</p>
+        </form>
       </div>
     </div>
-  </div>
-</section>
+  </section>
+</main>
 
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Visit</span><h2>Come see your case in 3D.</h2></div>
-  <div class="contact-grid reveal">
-    <div class="contact-card panel">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">Mount Poonamallee Road, Porur, Chennai 600116</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 8 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--cyan); font-weight:600;">Message the front desk →</a></div></div>
-    </div>
-    <form class="contact-card panel form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Scan Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nReason for visit: ' + this.reason.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="reason" type="text" placeholder="What brings you in?">
-      <button type="submit">Request an appointment</button>
-    </form>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Vertex Dental Lab, Porur.</span>
+    <span>Design portfolio piece · Not a live business</span>
   </div>
-</section>
-
-<footer class="wrap">
-  <span>© 2026 Vertex Dental Lab, Porur.</span>
-  <span>Design portfolio piece · Not a live business</span>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="WhatsApp Vertex Dental Lab"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+(function () {
+  var root = document.documentElement;
 
-  // Pointer-tracked 3D tilt for every .tilt-card
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(!reduceMotion){
-    document.querySelectorAll('.tilt-card').forEach(card=>{
-      const baseTransform = card.style.transform || '';
-      card.addEventListener('mousemove', (e)=>{
-        const r = card.getBoundingClientRect();
-        const x = e.clientX - r.left, y = e.clientY - r.top;
-        const rotY = ((x / r.width) - 0.5) * 16;
-        const rotX = ((y / r.height) - 0.5) * -16;
-        card.style.transform = `${baseTransform} perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.03,1.03,1.03)`;
-        card.style.setProperty('--mx', `${(x / r.width) * 100}%`);
-        card.style.setProperty('--my', `${(y / r.height) * 100}%`);
+  /* Section fade-in; everything is visible by default without JS. */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  /* Copy that is only true once the script runs. */
+  document.querySelectorAll('[data-live]').forEach(function (el) { el.textContent = el.getAttribute('data-live'); });
+
+  /* tilt-cards: each card leans toward a mouse or pen pointer (at most 6 degrees) and a soft highlight follows it.
+     The slot is never transformed, so it keeps the layout box; the link's ::after covers the whole card. Touch, keyboard and reduced motion
+     leave the cards flat with a fixed highlight. One rAF loop runs only while a card is easing. */
+  var grid = document.querySelector('[data-signature="tilt-cards"]');
+  var MAX = 6, HX = 26, HY = 14;
+  var fine = null, reduce = null;
+  try { fine = window.matchMedia('(hover: hover) and (pointer: fine)'); reduce = window.matchMedia('(prefers-reduced-motion: reduce)'); } catch (e) {}
+  function canTilt() { return !!fine && fine.matches && !(reduce && reduce.matches); }
+
+  var cards = [], raf = 0;
+  if (grid) {
+    grid.querySelectorAll('.tc-slot').forEach(function (slot) {
+      var c = { slot: slot, el: slot.querySelector('.tc'), rx: 0, ry: 0, hx: HX, hy: HY, trx: 0, try: 0, thx: HX, thy: HY, rect: null, on: false, persp: 900 };
+      cards.push(c);
+      slot.addEventListener('pointerenter', function (e) {
+        if ((e.pointerType !== 'mouse' && e.pointerType !== 'pen') || !canTilt()) return;
+        c.on = true; c.rect = slot.getBoundingClientRect();
+        c.el.classList.add('tilting');
+        aim(c, e);
       });
-      card.addEventListener('mouseleave', ()=>{
-        card.style.transform = baseTransform;
-      });
+      slot.addEventListener('pointermove', function (e) { if (c.on) aim(c, e); });
+      slot.addEventListener('pointerleave', function () { if (c.on) { c.on = false; rest(c); } });
+    });
+    grid.addEventListener('focusout', function (e) {
+      cards.forEach(function (c) { if (c.slot.contains(e.target) && !c.on) rest(c); });
+    });
+    var forget = function () { cards.forEach(function (c) { c.rect = null; }); };
+    window.addEventListener('scroll', forget, { passive: true });
+    window.addEventListener('resize', forget);
+    if (reduce && reduce.addEventListener) reduce.addEventListener('change', function () { cards.forEach(function (c) { c.on = false; rest(c); }); });
+
+    /* Prefill the request form with the card's treatment; whatever the visitor already typed is kept. */
+    grid.addEventListener('click', function (e) {
+      var a = e.target.closest ? e.target.closest('.tc-link') : null;
+      var field = document.getElementById('f-reason');
+      if (!a || !field) return;
+      var t = a.getAttribute('data-treatment'), v = field.value.trim();
+      if (!v) field.value = t;
+      else if (v.toLowerCase().indexOf(t.toLowerCase()) === -1) field.value = v + '; ' + t;
     });
   }
+
+  function aim(c, e) {
+    if (!c.rect) c.rect = c.slot.getBoundingClientRect();
+    c.persp = Math.round(Math.max(900, c.rect.width * 3.2)); /* wide cards get a flatter perspective, so their edges stay put */
+    var nx = Math.min(1, Math.max(0, (e.clientX - c.rect.left) / c.rect.width));
+    var ny = Math.min(1, Math.max(0, (e.clientY - c.rect.top) / c.rect.height));
+    c.try = (nx - 0.5) * 2 * MAX;
+    c.trx = (0.5 - ny) * 2 * MAX;
+    c.thx = nx * 100; c.thy = ny * 100;
+    kick();
+  }
+  function rest(c) { c.trx = 0; c.try = 0; c.thx = HX; c.thy = HY; kick(); }
+  function kick() { if (!raf) raf = requestAnimationFrame(step); }
+  function step() {
+    raf = 0;
+    var busy = false;
+    cards.forEach(function (c) {
+      var k = 0.16;
+      c.rx += (c.trx - c.rx) * k; c.ry += (c.try - c.ry) * k;
+      c.hx += (c.thx - c.hx) * k; c.hy += (c.thy - c.hy) * k;
+      var settled = Math.abs(c.trx - c.rx) < 0.02 && Math.abs(c.try - c.ry) < 0.02 && Math.abs(c.thx - c.hx) < 0.2 && Math.abs(c.thy - c.hy) < 0.2;
+      if (settled) { c.rx = c.trx; c.ry = c.try; c.hx = c.thx; c.hy = c.thy; } else busy = true;
+      var s = c.el.style;
+      if (settled && !c.on && c.rx === 0 && c.ry === 0) {
+        /* flat again: drop every inline value so the card renders as plain, crisp layout */
+        s.transform = ''; s.removeProperty('--hx'); s.removeProperty('--hy'); s.removeProperty('--sx'); s.removeProperty('--sy');
+        c.el.classList.remove('tilting');
+        return;
+      }
+      s.transform = 'perspective(' + c.persp + 'px) rotateX(' + c.rx.toFixed(2) + 'deg) rotateY(' + c.ry.toFixed(2) + 'deg)';
+      s.setProperty('--hx', c.hx.toFixed(1) + '%');
+      s.setProperty('--hy', c.hy.toFixed(1) + '%');
+      s.setProperty('--sx', (-c.ry * 1.4).toFixed(1));
+      s.setProperty('--sy', (14 + c.rx * 1.2).toFixed(1));
+    });
+    if (busy) raf = requestAnimationFrame(step);
+  }
+
+  /* Request form: a readable email body instead of key=value lines. */
+  var form = document.getElementById('book');
+  if (form) form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var body = 'Name: ' + form.name.value + '\nPhone: ' + form.phone.value + '\nWhat brings me in: ' + form.reason.value;
+    location.href = 'mailto:?subject=' + encodeURIComponent('Vertex Dental Lab: visit request') + '&body=' + encodeURIComponent(body);
+  });
+})();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
