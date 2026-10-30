@@ -135,11 +135,11 @@ Task-specific steps:
 ### Task 10: Screenshots
 
 **Files:**
-- Create: `tools/shoot.cjs`, `assets/shots/<NN>-<slug>.jpg` (22, 1280 wide, top 2400px of the page), `assets/shots/<NN>-<slug>-m.jpg` (22, 390 wide, top 844px)
+- Create: `tools/shoot.cjs`, `assets/shots/<demo>.jpg` (22, 1280 wide, top 2400px of the page), `assets/shots/<demo>-m.jpg` (22, 390 wide, top 844px)
 
 **Interfaces:**
 - Consumes: finished demos from Tasks 3-9.
-- Produces: `node tools/shoot.cjs` writes the files above; each full-size JPEG is under 150KB (quality 78). Exits 1 if any demo's heading font does not load (`document.fonts.check('16px "<Heading>"')` false) or any shot is over 150KB. Slug is the filename minus `NN-` and `.html`.
+- Produces: `node tools/shoot.cjs` writes the files above; each desktop JPEG is under 225KB and each phone JPEG under 150KB (quality 78, stepping down to 60 if needed). Exits 1 if any demo's heading font does not load (`document.fonts.check('16px "<Heading>"')` false) or any shot is over its cap (225KB desktop, 150KB phone). `<demo>` is the demo file name without `.html`.
 
 - [ ] **Step 1:** Write `tools/shoot.cjs` with the font and size assertions; wait for `document.fonts.ready` and a 1.2s settle (signature intros finished) before each shot.
 - [ ] **Step 2:** Run it. If it fails on fonts because the sandbox blocks Google Fonts, stop and report to the user; do not commit fallback-font shots (pins Review Focus 1).
