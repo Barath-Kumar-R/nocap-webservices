@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Prism Dental Collective · Kanchipuram</title>
+<meta name="description" content="Prism Dental Collective, a fictional three-dentist clinic on Gandhi Road, Kanchipuram, in a bold poster style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,7 +14,10 @@
     --muted:#4F586C; --on-navy:#C9D0DE; --nav-h:76px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  /* In-page links and keyboard focus land below the sticky header (--nav-h). Focus on a text field scrolls to its
+     caret, about 15px inside the field, hence the 24px; the bottom padding keeps a focused textarea whole on screen.
+     Phones (header not sticky) keep the default top, see the 720px block. */
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 24px); scroll-padding-bottom:64px;}
   body{font-family:'Work Sans',sans-serif; font-size:17px; line-height:1.6; background:var(--cream); color:var(--navy);}
   h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; line-height:1.02; letter-spacing:-0.005em;}
   h1,h2{text-transform:uppercase; text-wrap:balance;}
@@ -63,7 +67,6 @@
   .stats span{display:block; margin-top:6px; font-size:14px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;}
 
   /* ---------- sections ---------- */
-  section{scroll-margin-top:var(--nav-h);}
   .sec{padding-top:104px; padding-bottom:104px;}
   .sec h2{font-size:clamp(30px,3.9vw,48px); margin-top:14px;}
 
@@ -105,7 +108,6 @@
   .info-row:first-child{border-top:1px solid rgba(250,246,240,0.22);}
   .info-row .lbl{font-size:14px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--sun);}
   .info-row a{display:inline-flex; align-items:center; min-height:44px; margin:-10px 0; color:var(--sun); font-weight:700; text-underline-offset:4px;}
-  .form{scroll-margin-top:calc(var(--nav-h) + 16px);}
   .form h3{font-size:24px; text-transform:uppercase; margin-bottom:22px;}
   .field{margin-bottom:18px;}
   .field label{display:block; margin-bottom:7px; font-size:15px; font-weight:600;}
@@ -147,8 +149,11 @@
     .sec{padding-top:76px; padding-bottom:76px;}
     .stats ul{grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:22px;}
     .stats li:nth-child(2){border-right:0;}
+    html{scroll-padding-top:auto;}
     .form{scroll-margin-top:12px;}
     html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    /* a focused field lands clear of the call/book bar (focus scrolls to the caret, about 15px inside the field) */
+    html:root{scroll-padding-bottom:calc(var(--nc-bar-h) + 24px);}
     html .nc-bar{border-top:3px solid var(--sun);}
     html:root{--nc-radius:0px;}
   }
@@ -323,7 +328,7 @@
         </div>
         <div class="field"><label for="f-note">Anything else? (optional)</label><textarea id="f-note" name="note" rows="3" placeholder="A day that suits you, or what's bothering you"></textarea></div>
         <button class="btn" type="submit">Send request</button>
-        <p class="form-note">Opens your email app with these details. This asks for an appointment; it does not book one.</p>
+        <p class="form-note">Your request becomes an email that you send yourself. It stays a request until the clinic names a day and a dentist.</p>
       </form>
     </div>
   </div>
