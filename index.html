@@ -7,10 +7,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
   :root{
     --paper:#FAFAF8; --ink:#111114; --muted:#63636D; --line:#E7E5E0; --white:#FFFFFF;
     --lime:#C8FF3D; --coral:#FF4D2E; --navy:#12163B;
+    --coral-ink:#CC3517; /* coral for small text: 5.1:1 on white, where --coral is 3.3:1 */
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
@@ -74,22 +76,48 @@
   .filters{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:40px 0 44px;}
   .filter-btn{background:var(--white); border:1px solid var(--line); color:var(--muted); padding:10px 20px; border-radius:100px; font-size:13.5px; font-weight:600; cursor:pointer; transition:all .15s;}
   .filter-btn.active, .filter-btn:hover{background:var(--ink); color:var(--white); border-color:var(--ink);}
+  html:not(.js) .filters{display:none;} /* the buttons need the script; without it all 22 cards simply show */
 
   /* GALLERY */
   .gallery{display:grid; grid-template-columns:repeat(3,1fr); gap:26px;}
-  .g-card{background:var(--white); border:1px solid var(--line); border-radius:18px; overflow:hidden; text-decoration:none; color:var(--ink); display:block; transition:transform .2s, box-shadow .2s;}
-  .g-card:hover{transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(17,17,20,0.18);}
+  .g-card{background:var(--white); border:1px solid var(--line); border-radius:18px; overflow:hidden; text-decoration:none; color:var(--ink); display:flex; flex-direction:column; transition:transform .2s, box-shadow .2s;}
+  .g-card:hover, .g-card:focus-visible{transform:translateY(-5px); box-shadow:0 20px 40px -16px rgba(17,17,20,0.18);}
+  .g-card:focus-visible{outline:3px solid var(--navy); outline-offset:3px;}
+  /* Tabbing scrolls a card into view: keep it, ring included, clear of the sticky nav (39px tall, 55px under 405px wide) */
+  .g-card{scroll-margin:80px 0 24px;}
   .g-chrome{padding:10px 14px; display:flex; align-items:center; gap:6px; background:#F2F1EC; border-bottom:1px solid var(--line);}
-  .g-chrome .d{width:8px; height:8px; border-radius:50%; background:#D2D0C8;}
-  .g-chrome .url{font-family:'JetBrains Mono',monospace; font-size:10px; color:var(--muted); margin-left:6px;}
-  .g-swatch{height:150px; display:flex; align-items:flex-end; padding:14px 16px;}
-  .g-swatch span{background:rgba(0,0,0,0.28); color:white; font-size:10.5px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; padding:5px 11px; border-radius:100px;}
-  .g-body{padding:20px 22px 24px;}
-  .g-tag{font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral); font-weight:700;}
-  .g-body h3{font-size:17.5px; margin:9px 0 7px; font-family:'Inter',sans-serif; font-weight:700;}
-  .g-body p{font-size:13px; color:var(--muted); line-height:1.6;}
-  .g-body .loc{font-size:11.5px; color:#8F8E88; margin-top:12px; display:flex; justify-content:space-between; align-items:center;}
-  .g-body .loc .go{color:var(--ink); font-weight:700;}
+  .g-chrome .d{flex:none; width:8px; height:8px; border-radius:50%; background:#D2D0C8;}
+  .g-chrome .bar{flex:0 1 46%; height:12px; margin-left:8px; border-radius:6px; background:var(--white);}
+
+  /* Screenshot window: a 4:3 view of the top of the demo (each shot is 1280 wide, about 2400 tall). With a mouse,
+     hovering pans the shot down to its last row over about 6s; keyboard focus does the same. The image moves by its
+     own height (-100%) less the window's (75cqw: the window is 3/4 of its own width), and returns in .6s on leave.
+     The thin thumb on the right moves with it like a scrollbar. Touch screens and reduced motion keep the static top,
+     and so do browsers without container units (the pan sits in @supports, so the thumb never moves on its own). */
+  .g-shot{position:relative; aspect-ratio:4/3; overflow:hidden; background:#EDEBE5; border-bottom:1px solid var(--line); container-type:inline-size;}
+  .g-shot img{display:block; width:100%; height:auto; transition:transform .6s cubic-bezier(.3,0,.2,1);}
+  .g-shot::after{content:''; position:absolute; top:6px; right:6px; width:5px; height:calc((100% - 12px) * .4); border-radius:3px; background:rgba(17,17,20,.55); box-shadow:0 0 0 1px rgba(255,255,255,.75); opacity:0; transition:opacity .2s, transform .6s cubic-bezier(.3,0,.2,1);}
+  @supports (width:1cqw){
+    @media (prefers-reduced-motion:no-preference){
+      .g-card:focus-visible .g-shot img{transform:translateY(calc(-100% + 75cqw)); transition:transform 6s cubic-bezier(.45,.05,.55,.95) .15s;}
+      .g-card:focus-visible .g-shot::after{opacity:1; transform:translateY(150%); transition:opacity .2s, transform 6s cubic-bezier(.45,.05,.55,.95) .15s;}
+    }
+    @media (prefers-reduced-motion:no-preference) and (hover:hover) and (pointer:fine){
+      .g-card:hover .g-shot img{transform:translateY(calc(-100% + 75cqw)); transition:transform 6s cubic-bezier(.45,.05,.55,.95) .15s;}
+      .g-card:hover .g-shot::after{opacity:1; transform:translateY(150%); transition:opacity .2s, transform 6s cubic-bezier(.45,.05,.55,.95) .15s;}
+    }
+  }
+
+  .g-body{flex:1; display:flex; flex-direction:column; padding:20px 22px 22px;}
+  .g-tag{font-size:14px; letter-spacing:0.05em; text-transform:uppercase; color:var(--coral-ink); font-weight:700;}
+  .g-body h3{font-size:19px; line-height:1.25; margin:8px 0; font-family:'Inter',sans-serif; font-weight:700;}
+  .g-body p{font-size:15px; color:var(--muted); line-height:1.6;}
+  /* Capability badges: what the demo does, kept quiet so the screenshot leads. Pinned with the location row to the
+     bottom of the card, so they line up across a row of cards. */
+  .badges{display:flex; flex-wrap:wrap; gap:6px; margin-top:auto; padding-top:16px;}
+  .badge{font-size:14px; font-weight:600; line-height:1.3; color:var(--ink); background:#F2F1EC; border:1px solid var(--line); padding:4px 11px; border-radius:100px;}
+  .g-body .loc{margin-top:14px; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 12px; font-size:14px; color:var(--muted);}
+  .g-body .loc .go{flex:none; margin-left:auto; color:var(--ink); font-weight:700;} /* stays right if a long place name pushes it down a line */
 
   /* WHY / PROCESS */
   .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
@@ -114,15 +142,16 @@
   .btn-outline-dark{background:transparent; border:2px solid var(--ink); color:var(--ink); padding:14px 28px; border-radius:100px; font-size:14.5px; font-weight:700; text-decoration:none;}
 
   footer{padding:40px 0; border-top:1px solid var(--line); display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:13.5px; color:var(--muted);}
-  footer .foot-links{display:flex; gap:20px;}
+  footer .foot-links{display:flex; flex-wrap:wrap; gap:8px 20px;}
   footer a{text-decoration:none; color:var(--muted);}
 
   .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 10px 24px rgba(0,0,0,0.2); text-decoration:none;}
   .wa-float svg{width:28px; height:28px; fill:white;}
 
-  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  /* Reveal on scroll only hides content when the script that shows it again is running (html.js, set in the head) */
+  .js .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
+  @media (prefers-reduced-motion:reduce){.js .reveal{opacity:1; transform:none; transition:none;}}
 
   /* HERO BLOOM CANVAS */
   .hero{position:relative; overflow:hidden;}
@@ -240,7 +269,7 @@
   <div class="sec-head reveal">
     <span class="eyebrow">The Style Library</span>
     <h2>Twenty-two directions. Pick the one that's you.</h2>
-    <p>Every card below is a real, working page — open it, scroll it, click the WhatsApp button. Nothing here is a static image.</p>
+    <p>Each preview is a screenshot of a working page. On a computer, hover over a card to scroll it. Open any card to try the page itself.</p>
   </div>
 
   <div class="filters reveal">
@@ -257,243 +286,265 @@
   <div class="gallery reveal" id="galleryGrid">
 
     <a class="g-card" data-cat="modern" href="01-meridian-dental-bento.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">01-meridian-bento.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#0F8B8D,#FF6B5B,#FFC145);"><span>Bento Grid</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Meridian Dental Group website preview" src="assets/shots/01-meridian-dental-bento.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Modern & Minimalist</div>
         <h3>Meridian Dental Group</h3>
         <p>Modular, organised blocks for a multi-specialist clinic with a lot to show at once.</p>
+        <div class="badges"><span class="badge">Cursor spotlight</span></div>
         <div class="loc"><span>Maraimalai Nagar</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="modern" href="02-still-dental-minimal.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">02-still-minimal.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#4A5C56,#17171A);"><span>Minimalist</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Still Dental Studio website preview" src="assets/shots/02-still-dental-minimal.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Modern & Minimalist</div>
         <h3>Still Dental Studio</h3>
         <p>Huge whitespace and restraint, for a solo dentist who wants to feel unhurried.</p>
+        <div class="badges"><span class="badge">Type reveal</span></div>
         <div class="loc"><span>Sriperumbudur</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="modern" href="03-happytooth-flat.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">03-happytooth-flat.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#4C9AFF,#FF6F61,#FFD23F);"><span>Flat Design</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Happy Tooth Family Dental website preview" src="assets/shots/03-happytooth-flat.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Modern & Minimalist</div>
         <h3>Happy Tooth Family Dental</h3>
-        <p>Bright, illustrated and friendly — built for a clinic that treats every age.</p>
+        <p>Flat, bright illustrations and a smiling tooth in the hero. The clinic sees everyone from a first tooth to grandparents.</p>
+        <div class="badges"><span class="badge">Before/after slider</span></div>
         <div class="loc"><span>Thiruporur</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="bold" href="04-candystudio-maximalism.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">04-candystudio-max.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#FF3D8A,#7B2FF7,#C6FF3D);"><span>Maximalism</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Candy Studio Dental Aesthetics website preview" src="assets/shots/04-candystudio-maximalism.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Trendy & Bold</div>
         <h3>Candy Studio Dental Aesthetics</h3>
-        <p>Loud, saturated and confident — for a cosmetic studio chasing a younger crowd.</p>
+        <p>A cosmetic-only studio, done in loud colour for a younger crowd.</p>
+        <div class="badges"><span class="badge">Sticker marquee</span></div>
         <div class="loc"><span>Uttiramerur</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="bold" href="05-biteclub-neobrutalism.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">05-biteclub-brutalism.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#0A0A0A,#F5FF3D 55%,#FF3B30);"><span>Neo-Brutalism</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Bite Club Dental website preview" src="assets/shots/05-biteclub-neobrutalism.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Trendy & Bold</div>
         <h3>Bite Club Dental</h3>
-        <p>Raw, thick-bordered and blunt — for a clinic that sells itself on straight talk.</p>
+        <p>Thick borders, hard shadows and blunt copy. Every price is listed before a tooth is touched.</p>
+        <div class="badges"><span class="badge">Pressable price list</span></div>
         <div class="loc"><span>Thirukalukundram</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="bold" href="06-lucent-glassmorphism.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">06-lucent-glass.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#6C7CE0,#4FC7C7,#F7B5D0);"><span>Glassmorphism</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Lucent Dental website preview" src="assets/shots/06-lucent-glassmorphism.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Trendy & Bold</div>
         <h3>Lucent Dental</h3>
-        <p>Frosted glass panels over a soft gradient — premium and quietly futuristic.</p>
+        <p>Frosted glass panels over slow-drifting colour. The treatment plan is shown on screen before anything starts.</p>
+        <div class="badges"><span class="badge">Frosted glass</span></div>
         <div class="loc"><span>Chengalpattu</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="tech" href="07-novacare-ai-native.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">07-novacare-ai.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#0B0E14,#8B5CF6,#22D3EE);"><span>AI-Native UI</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="NovaCare Dental website preview" src="assets/shots/07-novacare-ai-native.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Futuristic & Tech</div>
         <h3>NovaCare Dental</h3>
-        <p>A conversational booking widget front and centre — dark, technical, current.</p>
+        <p>A scripted helper asks three questions and writes the WhatsApp message for you. The page says plainly that it is not an AI.</p>
+        <div class="badges"><span class="badge">Booking flow</span><span class="badge">Chat-style</span></div>
         <div class="loc"><span>Kanchipuram</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="tech" href="08-halo-spatial-ui.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">08-halo-spatial.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#F2F3F7,#6C7CE0);"><span>Spatial UI</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Halo Dental Implant Center website preview" src="assets/shots/08-halo-spatial-ui.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Futuristic & Tech</div>
         <h3>Halo Dental Implant Center</h3>
-        <p>Floating, layered panels with real depth — built for a digital implant practice.</p>
+        <p>Floating panels with real depth. Built for an implant-only practice with its own digital lab.</p>
+        <div class="badges"><span class="badge">Depth stack</span></div>
         <div class="loc"><span>Guduvancheri</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="tech" href="09-auroracalm-aurora.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">09-auroracalm.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#0B1220,#34D9C9,#8B5CF6);"><span>Aurora</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Aurora Calm Dental website preview" src="assets/shots/09-auroracalm-aurora.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Futuristic & Tech</div>
         <h3>Aurora Calm Dental</h3>
-        <p>Soft glowing gradients for an anxiety-friendly, sedation-forward practice.</p>
+        <p>Soft glowing colour for nervous patients: sedation if they want it, and longer appointments.</p>
+        <div class="badges"><span class="badge">Cursor aurora</span></div>
         <div class="loc"><span>Sriperumbudur</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="tactile" href="10-littlesprout-collage.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">10-littlesprout.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#F6EFE3,#FF8B6B,#E8B93E);"><span>Collage / Hand-Drawn</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Little Sprout Dental website preview" src="assets/shots/10-littlesprout-collage.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Artistic & Tactile</div>
         <h3>Little Sprout Dental</h3>
         <p>Scrapbook textures and hand-drawn doodles for a kid-first family clinic.</p>
+        <div class="badges"><span class="badge">Drag collage</span></div>
         <div class="loc"><span>Chengalpattu</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="tactile" href="11-byte-pixelart.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">11-byte-pixel.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#1A1C2C,#FF004D,#29ADFF);"><span>Pixel Art</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Byte Dental website preview" src="assets/shots/11-byte-pixelart.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Artistic & Tactile</div>
         <h3>Byte Dental</h3>
-        <p>8-bit sprite and retro loading bars for a clinic near a college corridor.</p>
+        <p>Pixel fonts, an 8-bit tooth and an item-shop price list. Aimed at students on College Road.</p>
+        <div class="badges"><span class="badge">Pixel art</span><span class="badge">Typewriter intro</span></div>
         <div class="loc"><span>Kanchipuram</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="luxury" href="12-aura-dental-luxury.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">12-aura-luxury.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#141316,#C9A227);"><span>Editorial</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Aura Dental Studio website preview" src="assets/shots/12-aura-dental-luxury.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Luxury & Premium</div>
         <h3>Aura Dental Studio</h3>
-        <p>A quiet, high-end studio feel — dark ink palette, serif display, minimal copy.</p>
+        <p>Dark ink, gold and a serif display face, for a cosmetic studio in Adyar.</p>
+        <div class="badges"><span class="badge">Magnetic hover</span></div>
         <div class="loc"><span>Adyar, Chennai</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="luxury" href="13-bloom-dental-luxury.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">13-bloom-luxury.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#4A2E35,#7C8B6F);"><span>Spa-Wellness</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Bloom Dental & Aesthetics website preview" src="assets/shots/13-bloom-dental-luxury.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Luxury & Premium</div>
         <h3>Bloom Dental & Aesthetics</h3>
-        <p>Wellness-clinic framing for anxious-patient-friendly, cosmetic-forward practices.</p>
+        <p>Spa-like and slow. The first visit at this dental and aesthetics practice starts with a cup of tea.</p>
+        <div class="badges"><span class="badge">Line-draw intro</span></div>
         <div class="loc"><span>Besant Nagar, Chennai</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="modern" href="14-clarity-dental-modern.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">14-clarity-modern.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#14181C,#B8E3D6);"><span>Swiss Grid</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Clarity Dental website preview" src="assets/shots/14-clarity-dental-modern.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Modern & Minimalist</div>
         <h3>Clarity Dental</h3>
         <p>Upfront pricing and a clinical, grid-based layout built on transparency.</p>
+        <div class="badges"><span class="badge">Booking flow</span><span class="badge">Slot picker</span></div>
         <div class="loc"><span>Thoraipakkam, OMR</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="modern" href="15-northpoint-dental-modern.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">15-northpoint-modern.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#1C2B39,#FF6B57);"><span>Corporate-Family</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="NorthPoint Family Dental website preview" src="assets/shots/15-northpoint-dental-modern.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Modern & Minimalist</div>
         <h3>NorthPoint Family Dental</h3>
-        <p>Membership-plan pricing and evening-hours messaging for working families.</p>
+        <p>Evening hours till 9 PM and one yearly plan that covers the whole household.</p>
+        <div class="badges"><span class="badge">Scroll story</span></div>
         <div class="loc"><span>Velachery, Chennai</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="warm" href="16-sunshine-smiles-warm.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">16-sunshine-warm.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#FFC857,#FF8C69);"><span>Playful Pastel</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Sunshine Smiles Kids & Family website preview" src="assets/shots/16-sunshine-smiles-warm.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Warm & Family</div>
         <h3>Sunshine Smiles Kids & Family</h3>
-        <p>A kid-first, mascot-led design for paediatric-leaning practices.</p>
+        <p>Kids first, with a play corner and a tooth puppet called Dr. Molar.</p>
+        <div class="badges"><span class="badge">Care quiz</span></div>
         <div class="loc"><span>Guduvancheri</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="warm" href="17-oakwood-family-warm.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">17-oakwood-warm.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#C1613D,#3F5744);"><span>Neighbourhood</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Oakwood Family Dental website preview" src="assets/shots/17-oakwood-family-warm.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Warm & Family</div>
         <h3>Oakwood Family Dental</h3>
-        <p>A cozy, long-established feel for a multi-generation neighbourhood clinic.</p>
+        <p>Warm and settled. This neighbourhood clinic has looked after Chengalpattu families since 2009.</p>
+        <div class="badges"><span class="badge">Hand-drawn underlines</span></div>
         <div class="loc"><span>Chengalpattu Town</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="bold" href="18-pulse-dental-bold.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">18-pulse-bold.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#101014,#7C3AED,#22D3EE);"><span>Dark Mode</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Pulse Dental Studio website preview" src="assets/shots/18-pulse-dental-bold.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Trendy & Bold</div>
         <h3>Pulse Dental Studio</h3>
-        <p>Fast, transparent, evening-hours dentistry — dark UI, diagonal layout cuts.</p>
+        <p>Dark, with diagonal section cuts. The studio is on OMR and stays open till 10 PM.</p>
+        <div class="badges"><span class="badge">Kinetic type</span></div>
         <div class="loc"><span>Sholinganallur, OMR</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="bold" href="19-prism-dental-bold.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">19-prism-bold.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#1A2A4A,#FF6B35,#FFC93C);"><span>Poster Graphic</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Prism Dental Collective website preview" src="assets/shots/19-prism-dental-bold.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Trendy & Bold</div>
         <h3>Prism Dental Collective</h3>
-        <p>A bold, daylight, print-poster-inspired look for a multi-dentist practice.</p>
+        <p>Flat poster colours and heavy type. Three dentists share one patient file.</p>
+        <div class="badges"><span class="badge">Prism split</span></div>
         <div class="loc"><span>Kanchipuram Town</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="3d" href="20-vertex-dental-tilt3d.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">20-vertex-tilt3d.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#0A0B10,#8B6CFF,#3FE8D0);"><span>3D Tilt Cards</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Vertex Dental Lab website preview" src="assets/shots/20-vertex-dental-tilt3d.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Immersive & 3D</div>
         <h3>Vertex Dental Lab</h3>
-        <p>Pointer-tracked 3D tilt and glare on every card — a digital lab that feels physical.</p>
+        <p>The four treatment cards tilt in 3D toward your pointer. The clinic has its own scanner and crown lab.</p>
+        <div class="badges"><span class="badge">3D tilt</span></div>
         <div class="loc"><span>Porur, Chennai</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="3d" href="21-depthscape-dental-parallax3d.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">21-depthscape-parallax3d.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#1D2321,#2F6B63,#C97B4A);"><span>Depth Parallax</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2400" alt="Depthscape Dental Studio website preview" src="assets/shots/21-depthscape-dental-parallax3d.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Immersive & 3D</div>
         <h3>Depthscape Dental Studio</h3>
-        <p>Scroll-driven layered depth — a scan-slice hero that separates as you scroll in.</p>
+        <p>A paper-cut scene in an arched window, with layers that slide at different speeds as you scroll.</p>
+        <div class="badges"><span class="badge">Parallax</span></div>
         <div class="loc"><span>Chengalpattu Bypass</span><span class="go">View demo →</span></div>
       </div>
     </a>
 
     <a class="g-card" data-cat="3d" href="22-helix-dental-webgl3d.html">
-      <div class="g-chrome"><div class="d"></div><div class="d"></div><div class="d"></div><div class="url">22-helix-webgl3d.html</div></div>
-      <div class="g-swatch" style="background:linear-gradient(135deg,#070911,#B6FF3D,#4CE0E8);"><span>WebGL Scene</span></div>
+      <div class="g-chrome" aria-hidden="true"><div class="d"></div><div class="d"></div><div class="d"></div><div class="bar"></div></div>
+      <div class="g-shot"><img loading="lazy" decoding="async" width="1280" height="2340" alt="Helix Dental Digital Studio website preview" src="assets/shots/22-helix-dental-webgl3d.jpg"></div>
       <div class="g-body">
         <div class="g-tag">Immersive & 3D</div>
         <h3>Helix Dental Digital Studio</h3>
-        <p>A real rotating WebGL model in the hero — the flagship, heaviest-tech demo in the set.</p>
+        <p>A lower arch drawn in dots, rendered live in WebGL. It sways slowly and turns a little toward your pointer.</p>
+        <div class="badges"><span class="badge">WebGL</span></div>
         <div class="loc"><span>Perungudi, OMR</span><span class="go">View demo →</span></div>
       </div>
     </a>
@@ -554,10 +605,12 @@
 <a class="wa-float" href="https://wa.me/7395938220" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
+  /* Any overlap with the viewport, 40px in from the bottom. Not an area ratio: on a phone the one-column gallery is
+     many screens tall, so no ratio above a few percent is ever reached and it would stay hidden. */
   const els = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.08});
+  }, {rootMargin:'0px 0px -40px 0px'});
   els.forEach(el=>io.observe(el));
 
   const filterBtns = document.querySelectorAll('.filter-btn');
@@ -568,7 +621,7 @@
       btn.classList.add('active');
       const f = btn.dataset.filter;
       cards.forEach(c=>{
-        c.style.display = (f === 'all' || c.dataset.cat === f) ? 'block' : 'none';
+        c.style.display = (f === 'all' || c.dataset.cat === f) ? '' : 'none';
       });
     });
   });
@@ -608,7 +661,13 @@
       return;
     }
 
+    /* Draw only while the hero is on screen: the blurred canvas is costly, and left running under the gallery it
+       held the whole page near 20fps in software rendering, so the card previews stuttered. The blobs follow the
+       clock, so when the hero comes back they are where they would have been. */
+    let onScreen = false, raf = 0;
     function frame(t){
+      raf = 0;
+      if(!onScreen) return;
       ctx.clearRect(0,0,w,h);
       ctx.filter = 'blur(70px)';
       blobs.forEach(b=>{
@@ -617,9 +676,12 @@
         ctx.fillStyle = `rgba(${b.color},0.32)`;
         ctx.beginPath(); ctx.arc(x,y,b.r,0,Math.PI*2); ctx.fill();
       });
-      requestAnimationFrame(frame);
+      raf = requestAnimationFrame(frame);
     }
-    requestAnimationFrame(frame);
+    new IntersectionObserver(([e])=>{
+      onScreen = e.isIntersecting;
+      if(onScreen && !raf) raf = requestAnimationFrame(frame);
+    }).observe(hero);
   })();
 
   /* CUSTOM CURSOR + FAN TILT */
