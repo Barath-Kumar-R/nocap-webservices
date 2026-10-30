@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Lucent Dental · GST Road, Chengalpattu</title>
+<meta name="description" content="Lucent Dental, a fictional clinic on GST Road, Chengalpattu, in a soft glassmorphism style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -88,12 +89,13 @@
   .svc h3{font-size:20px; line-height:1.25;}
   .svc p{margin-top:6px; color:var(--text); font-size:16px;}
 
-  #dentist::before{background:radial-gradient(540px 400px at 10% 44%, rgba(243,166,198,0.72), transparent 70%), radial-gradient(480px 360px at 94% 58%, rgba(255,199,154,0.75), transparent 70%), radial-gradient(360px 300px at 55% 32%, rgba(89,207,198,0.32), transparent 70%);}
+  .sec-dentist::before{background:radial-gradient(540px 400px at 10% 44%, rgba(243,166,198,0.72), transparent 70%), radial-gradient(480px 360px at 94% 58%, rgba(255,199,154,0.75), transparent 70%), radial-gradient(360px 300px at 55% 32%, rgba(89,207,198,0.32), transparent 70%);}
   .who{display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:32px; align-items:stretch;}
   .place{padding:28px; border-radius:32px; display:flex; flex-direction:column; justify-content:center;}
   .place svg{display:block; width:100%; height:auto;}
   .place figcaption{margin-top:12px; font-size:15px; color:var(--text);}
-  .who-copy{padding:48px; border-radius:32px;}
+  /* the nav's Dentist link lands on this card: beside the drawing the whole row stays in view, stacked the heading leads */
+  .who-copy{padding:48px; border-radius:32px; scroll-margin-top:92px;}
   .who-copy h2{font-size:clamp(28px,3vw,38px); line-height:1.15; margin-top:12px;}
   .who-copy p{margin-top:18px; color:var(--text);}
   .stats{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:30px; list-style:none; max-width:440px;}
@@ -136,6 +138,7 @@
     .facts li:nth-child(2){border-top:none; padding-top:4px;}
     .who{grid-template-columns:minmax(0,1fr);}
     .place{max-width:520px;}
+    .who-copy{scroll-margin-top:16px;}
     .visit-grid{grid-template-columns:minmax(0,1fr);}
   }
   @media (max-width:860px){
@@ -272,7 +275,7 @@
   </div>
 </section>
 
-<section class="sec" id="dentist">
+<section class="sec sec-dentist">
   <div class="wrap who">
     <figure class="place glass reveal">
       <svg viewBox="0 0 320 280" role="img" aria-label="Drawing of a yellow-capped GST Road milestone reading Chennai 56 km, with two palm trees behind it">
@@ -322,7 +325,7 @@
       </svg>
       <figcaption>A GST Road milestone. Chengalpattu is about 56 km from Chennai.</figcaption>
     </figure>
-    <div class="who-copy glass reveal">
+    <div class="who-copy glass reveal" id="dentist">
       <span class="eyebrow">The dentist</span>
       <h2>Dr. Revathi Anand, MDS. Ten years in Chengalpattu.</h2>
       <p>A first visit is mostly a conversation: what is bothering you, what she finds, and what your options are. She explains each one and leaves the choice with you.</p>
@@ -354,7 +357,7 @@
         <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
         <div class="field"><label for="f-note">Reason for visit</label><textarea id="f-note" name="note" rows="3" placeholder="For example: check-up, a chipped tooth"></textarea></div>
         <button class="btn" type="submit">Send request</button>
-        <p class="form-note">Opens your email app with these details. It is a request, not a confirmed booking.</p>
+        <p class="form-note">Everything above lands in a message in your mail app. Look it over, then send it. That starts the conversation; the appointment itself waits until you and the clinic settle a time.</p>
       </form>
     </div>
   </div>
