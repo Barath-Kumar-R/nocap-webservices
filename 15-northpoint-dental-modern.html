@@ -3,93 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NorthPoint Family Dental — Velachery, Chennai</title>
+<title>NorthPoint Family Dental · Velachery, Chennai</title>
+<meta name="description" content="NorthPoint Family Dental, a fictional family clinic in Velachery, Chennai, with a scroll-linked treatment timeline in a clean modern style. Design portfolio piece, not a live business.">
+<script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#1C2B39; --navy-soft:#2E4258; --powder:#CFE0EA; --coral:#FF6B57; --bg:#FBFCFD; --line:#E2E9EE; --muted:#5D6E7D;
+    --navy:#1C2B39; --navy-soft:#2E4258; --powder:#CFE0EA; --powder-soft:#EAF2F7; --coral:#FF6B57; --coral-ink:#C2402E;
+    --bg:#FBFCFD; --white:#FFFFFF; --line:#E2E9EE; --muted:#566676; --gum:#F3B8AE;
+    --hdr-h:73px; /* sticky header height (72px nav + 1px border), measured at every width 721-1920 */
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Inter',sans-serif; background:var(--bg); color:var(--navy);}
-  h1,h2,h3{font-family:'Manrope',sans-serif; font-weight:800; letter-spacing:-0.015em; color:var(--navy);}
+  /* In-page links and keyboard focus land below the sticky header. Focus on a text field scrolls to its caret,
+     about 15px inside the field, hence the 24px. Phones (header not sticky) keep the default, see the 720px block. */
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr-h) + 24px);}
+  body{font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.65; background:var(--bg); color:var(--navy); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Outfit',sans-serif; font-weight:600; letter-spacing:-0.015em; line-height:1.1; color:var(--navy);}
+  h2{text-wrap:balance;}
+  .nw{white-space:nowrap;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 28px;}
-  .eyebrow{font-size:12px; letter-spacing:0.14em; text-transform:uppercase; color:var(--coral); font-weight:700;}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+  .wrap{max-width:1160px; margin:0 auto; padding:0 28px;}
+  .eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:14px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-ink);}
+  .eyebrow::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--coral);}
+  .sec-intro{max-width:620px;}
+  .sec-intro h2{font-size:clamp(30px,3.6vw,44px); margin-top:14px;}
+  .sec-intro p:not(.eyebrow){color:var(--muted); font-size:17px; margin-top:16px;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 26px; border-radius:12px; background:var(--navy); color:var(--white); font-weight:600; font-size:16px; text-decoration:none; border:0; cursor:pointer; font-family:inherit;}
+  .btn:hover{background:var(--navy-soft);}
+  .link{display:inline-flex; align-items:center; gap:6px; min-height:44px; font-weight:600; text-decoration:none;}
+  .link .u{text-decoration:underline; text-decoration-thickness:1.5px; text-underline-offset:5px;}
+  .link:hover{color:var(--coral-ink);}
 
-  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(251,252,253,0.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:1180px; margin:0 auto;}
-  .logo{font-family:'Manrope',sans-serif; font-weight:800; font-size:19px;}
-  .logo span{color:var(--coral);}
-  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:600;}
-  .nav-links a{text-decoration:none; color:var(--navy);}
-  .nav-links a:hover{color:var(--coral);}
-  .btn-fill{background:var(--navy); color:white; padding:11px 24px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none;}
-  .burger{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--navy);}
-  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:20px 28px 26px; border-top:1px solid var(--line);}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{text-decoration:none; color:var(--navy); font-size:15px; font-weight:600;}
+  /* Header */
+  .top{position:sticky; top:0; z-index:100; background:rgba(251,252,253,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:72px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; text-decoration:none; font-family:'Outfit',sans-serif; font-weight:700; font-size:20px; letter-spacing:-0.01em;}
+  .logo svg{width:30px; height:30px; flex:none;}
+  .logo span{font-weight:500; color:var(--muted);}
+  .nav-links{display:flex; gap:2px; font-size:15px; font-weight:500;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 13px; border-radius:10px; text-decoration:none;}
+  .nav-links a:hover{background:var(--powder-soft);}
+  .btn-nav{display:inline-flex; align-items:center; min-height:44px; padding:0 20px; border-radius:12px; border:1.5px solid var(--navy); font-weight:600; font-size:15px; text-decoration:none;}
+  .btn-nav:hover{background:var(--navy); color:var(--white);}
+  .nav-right{display:flex; align-items:center; gap:10px;}
+  .burger{display:none; align-items:center; justify-content:center; width:44px; height:44px; border:1.5px solid var(--line); border-radius:12px; background:var(--white); color:var(--navy); cursor:pointer;}
+  .burger svg{width:22px; height:22px; stroke:currentColor; stroke-width:2; stroke-linecap:round; fill:none;}
+  .burger .b-close, .burger[aria-expanded="true"] .b-open{display:none;}
+  .burger[aria-expanded="true"] .b-close{display:inline;}
+  .mobile-menu{display:flex; flex-direction:column; padding:6px 0 14px; border-top:1px solid var(--line);}
+  .mobile-menu[hidden]{display:none;}
+  .mobile-menu a{display:flex; align-items:center; min-height:48px; font-size:17px; font-weight:500; text-decoration:none; border-bottom:1px solid var(--line);}
+  .mobile-menu a:last-child{border-bottom:0;}
 
-  .hero{padding:150px 0 90px;}
-  .hero-grid{display:grid; grid-template-columns:1.05fr 0.95fr; gap:56px; align-items:center;}
-  .hero h1{font-size:clamp(36px,4.8vw,58px); line-height:1.1;}
-  .hero h1 span{color:var(--coral);}
-  .hero p{font-size:16.5px; line-height:1.75; color:var(--muted); max-width:440px; margin:22px 0 34px;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-outline{border:1.5px solid var(--navy); color:var(--navy); padding:14px 26px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none;}
-  .badges{display:flex; gap:22px; margin-top:40px; flex-wrap:wrap;}
-  .badge{font-size:12.5px; color:var(--muted); display:flex; align-items:center; gap:8px; font-weight:500;}
-  .badge svg{width:16px; height:16px; stroke:var(--coral);}
-  .photo-ph{height:440px; border-radius:20px; background:linear-gradient(160deg,var(--powder),#E4EFF4); border:1px solid var(--line); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;}
-  .photo-ph svg{width:32px; height:32px; stroke:var(--navy-soft); opacity:0.5;}
-  .photo-ph span{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
+  /* Hero */
+  .hero{padding:64px 0 96px;}
+  .hero-grid{display:grid; grid-template-columns:minmax(0,1.12fr) minmax(0,0.88fr); gap:56px; align-items:center;}
+  .hero h1{font-size:clamp(40px,4.7vw,60px); letter-spacing:-0.03em; line-height:1.04; margin-top:18px;}
+  .hero h1 span{display:block; text-wrap:balance;}
+  .lede{font-size:18px; color:var(--muted); max-width:29em; margin-top:22px;}
+  .hero-ctas{display:flex; align-items:center; gap:28px; flex-wrap:wrap; margin-top:32px;}
+  .hours-line{display:flex; flex-wrap:wrap; gap:6px 22px; margin-top:30px; padding-top:22px; border-top:1px solid var(--line); font-size:15px; color:var(--muted);}
+  .hours-line b{color:var(--navy); font-weight:600;}
+  .hero-art{position:relative; aspect-ratio:1 / 1.04; border-radius:32px; overflow:hidden; background-color:var(--powder);
+    background-image:linear-gradient(rgba(255,255,255,.5) 1.5px, transparent 1.5px), linear-gradient(90deg, rgba(255,255,255,.5) 1.5px, transparent 1.5px);
+    background-size:86px 86px; background-position:-1px -1px;}
+  .hero-art::after{content:''; position:absolute; left:0; right:0; bottom:0; height:17%; background:#BCD2DF;}
+  .hero-art .cup{position:absolute; z-index:1; left:50%; bottom:13.6%; width:68%; height:auto; transform:translateX(-50%);}
 
-  section{padding:100px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 56px;}
-  .sec-head h2{font-size:clamp(26px,3.4vw,40px); margin-top:12px;}
-  .sec-head p{color:var(--muted); font-size:15px; margin-top:14px; line-height:1.7;}
+  /* Services */
+  .services{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:100px 0;}
+  .svc-grid{display:grid; grid-template-columns:minmax(0,4fr) minmax(0,7fr); gap:72px; align-items:start;}
+  .svc-list{list-style:none; display:grid; grid-template-columns:1fr 1fr; gap:44px 40px;}
+  .svc-list li{display:grid; grid-template-columns:52px minmax(0,1fr); gap:18px; align-items:start;}
+  .ic{width:52px; height:52px; border-radius:16px; background:var(--powder-soft); color:var(--navy); display:flex; align-items:center; justify-content:center;}
+  .ic svg{width:26px; height:26px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round;}
+  .svc-list h3{font-size:21px; margin-top:2px;}
+  .svc-list p{color:var(--muted); margin-top:6px;}
+  .svc-list .link{font-size:15px; margin-top:2px;}
 
-  .services{background:white; border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
-  .svc-card{background:var(--bg); border:1px solid var(--line); border-radius:14px; padding:30px 24px;}
-  .svc-card .ic{width:42px; height:42px; border-radius:10px; background:var(--powder); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
-  .svc-card .ic svg{width:19px; height:19px; stroke:var(--navy);}
-  .svc-card h3{font-size:16px; font-weight:700; margin-bottom:8px;}
-  .svc-card p{font-size:13px; color:var(--muted); line-height:1.6;}
+  /* Signature: treatment-timeline */
+  .braces{padding:104px 0;}
+  .tl{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:80px; align-items:start; margin-top:56px;}
+  .tl-visual{position:sticky; top:104px;}
+  .tl-card{border-radius:24px; overflow:hidden; background:var(--powder);}
+  .teeth{display:block; width:100%; height:auto;}
+  .teeth .gum{fill:var(--gum);}
+  .teeth .tw{fill:#fff; stroke:var(--navy-soft); stroke-width:1.8; stroke-linejoin:round;}
+  .teeth .br{fill:#C9D4DE; stroke:var(--navy-soft); stroke-width:1.2;}
+  .teeth .wire{fill:none; stroke:var(--navy-soft); stroke-width:2; stroke-linejoin:round; stroke-linecap:round;}
+  .teeth .ties circle{fill:var(--coral);}
+  .teeth .br, .teeth .brace{transition:opacity .3s ease;}
+  .tl.no-braces .teeth .br, .tl.no-braces .teeth .brace{opacity:0;}
+  .tl-now{padding:20px 26px 24px;}
+  .tl-now-k{font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--navy-soft);}
+  .tl-now-t{font-family:'Outfit',sans-serif; font-weight:600; font-size:26px; line-height:1.15; margin-top:4px;}
+  .tl-pips{display:flex; gap:6px; margin-top:16px;}
+  .tl-pips i{flex:1; height:6px; border-radius:3px; background:var(--coral); transition:background-color .2s ease;}
+  .tl.is-live .tl-pips i{background:rgba(46,66,88,.18);}
+  .tl.is-live .tl-pips i.on{background:var(--coral);}
+  .tl-cap{font-size:14px; color:var(--muted); margin-top:12px;}
+  .tl-list{list-style:none;}
+  .tl-step{position:relative; padding:0 0 46px 56px;}
+  .tl-step:last-child{padding-bottom:0;}
+  .tl-step::before, .tl-step::after{content:''; position:absolute; left:11px; top:28px; bottom:4px; width:2px; border-radius:1px; background:var(--line);}
+  .tl-step::after{background:var(--coral); transform-origin:top; transform:scaleY(var(--f,1));}
+  .tl-step:last-child::before, .tl-step:last-child::after{display:none;}
+  .tl-dot{position:absolute; left:0; top:0; width:24px; height:24px; border-radius:50%; background:var(--coral); border:2px solid var(--coral); transition:background-color .2s ease, border-color .2s ease;}
+  .tl-dot::after{content:''; position:absolute; inset:5px; border-radius:50%; background:var(--white);}
+  .tl.is-live .tl-step:not(.is-reached) .tl-dot{background:var(--white); border-color:#B4C3CF;}
+  .tl.is-live .tl-step:not(.is-reached) .tl-dot::after{background:transparent;}
+  .tl-when{font-size:14px; font-weight:600; letter-spacing:.02em; color:var(--coral-ink); line-height:24px;}
+  .tl-step h3{font-size:25px; margin-top:4px;}
+  .tl-step p:not(.tl-when){color:var(--muted); margin-top:8px; max-width:33em;}
 
-  /* PLANS - signature element */
-  .plans-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  .plan-card{border:1px solid var(--line); border-radius:16px; padding:36px 30px; background:white;}
-  .plan-card.featured{background:var(--navy); border-color:var(--navy); color:white; transform:scale(1.03); box-shadow:0 20px 40px -12px rgba(28,43,57,0.3);}
-  .plan-card.featured h3, .plan-card.featured .price{color:white;}
-  .plan-card.featured .feat-tag{display:inline-block; background:var(--coral); color:white; font-size:11px; font-weight:700; padding:4px 10px; border-radius:6px; margin-bottom:14px; letter-spacing:0.04em;}
-  .plan-card h3{font-size:19px; margin-bottom:6px;}
-  .plan-card .price{font-family:'Manrope',sans-serif; font-weight:800; font-size:30px; margin:14px 0 4px;}
-  .plan-card .price span{font-size:13px; font-weight:500; color:var(--muted);}
-  .plan-card.featured .price span{color:#B9C6D1;}
-  .plan-card ul{list-style:none; margin:22px 0 26px; display:flex; flex-direction:column; gap:12px;}
-  .plan-card li{font-size:13.5px; display:flex; gap:10px; align-items:flex-start;}
-  .plan-card li svg{width:15px; height:15px; stroke:var(--coral); flex-shrink:0; margin-top:2px;}
-  .plan-card.featured li svg{stroke:#7FD9C6;}
-  .plan-btn{display:block; text-align:center; padding:12px; border-radius:8px; border:1.5px solid var(--navy); color:var(--navy); text-decoration:none; font-weight:700; font-size:13.5px;}
-  .plan-card.featured .plan-btn{background:white; color:var(--navy); border:none;}
+  /* Plans */
+  .plans{background:var(--white); border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:100px 0;}
+  .plans-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,5fr); gap:24px; margin-top:52px;}
+  .plan-main{background:var(--navy); color:var(--white); border-radius:28px; padding:44px 44px 40px; display:flex; flex-direction:column;}
+  .plan-main h3{color:var(--white); font-size:30px;}
+  .plan-for{color:#B9C6D1; margin-top:4px;}
+  .price{font-family:'Outfit',sans-serif; font-weight:600; font-size:44px; letter-spacing:-0.02em; line-height:1; margin-top:26px;}
+  .price span{font-family:'Public Sans',sans-serif; font-weight:500; font-size:16px; letter-spacing:0; color:#B9C6D1; margin-left:6px;}
+  .ticks{list-style:none; display:grid; gap:12px; margin:28px 0 36px;}
+  .ticks li{display:flex; gap:12px; align-items:flex-start;}
+  .ticks svg{width:20px; height:20px; flex:none; margin-top:3px; fill:none; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round;}
+  .plan-main .ticks svg{stroke:var(--coral);}
+  .plan-buy{margin-top:auto; display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:20px; padding-top:28px; border-top:1px solid rgba(255,255,255,.16);}
+  .plan-buy .price{margin-top:0;}
+  .btn-coral{background:var(--coral); color:var(--navy);}
+  .btn-coral:hover{background:#FF8574;}
+  .plan-side{display:grid; gap:24px;}
+  .plan-mini{border:1px solid var(--line); border-radius:24px; padding:30px 32px 26px; background:var(--bg);}
+  .plan-mini h3{font-size:22px;}
+  .plan-mini .price{font-size:32px; margin-top:14px;}
+  .plan-mini .price span{color:var(--muted);}
+  .plan-mini .ticks{margin:18px 0 10px; gap:8px;}
+  .plan-mini .ticks svg{stroke:var(--navy-soft);}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:36px; padding-top:30px; border-top:1px solid var(--line);}
-  .stat-row h4{font-family:'Manrope',sans-serif; font-size:26px; font-weight:800;}
-  .stat-row p{font-size:12.5px; color:var(--muted); margin-top:4px;}
+  /* About */
+  .about{padding:104px 0;}
+  .about-grid{display:grid; grid-template-columns:minmax(0,7fr) minmax(0,4fr); gap:80px; align-items:end;}
+  .about h2{font-size:clamp(30px,3.6vw,44px); margin-top:14px; max-width:15em;}
+  .about-copy p:not(.eyebrow){color:var(--muted); font-size:17px; margin-top:18px; max-width:34em;}
+  .about-stats{display:grid; gap:0; border-top:2px solid var(--navy);}
+  .about-stats div{display:flex; flex-direction:row-reverse; align-items:baseline; justify-content:space-between; gap:16px; padding:16px 0; border-bottom:1px solid var(--line);}
+  .about-stats dd{font-family:'Outfit',sans-serif; font-weight:600; font-size:36px; letter-spacing:-0.02em; line-height:1.1;}
+  .about-stats dt{color:var(--muted); text-align:right;}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  .info-row{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid var(--line);}
-  .info-row .lbl{width:110px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--muted); flex-shrink:0; font-weight:600;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:1px solid var(--line); border-radius:8px; padding:14px; font-family:'Inter',sans-serif; font-size:14px; background:white;}
-  .form button{background:var(--coral); color:white; border:none; padding:15px; border-radius:8px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  /* Contact */
+  .contact{background:var(--powder-soft); padding:100px 0;}
+  .contact-grid{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:64px; align-items:start;}
+  .contact h2{font-size:clamp(30px,3.6vw,44px); margin-top:14px; max-width:12em;}
+  .info{margin-top:30px; border-top:1px solid #D3DFE7;}
+  .info div{display:grid; grid-template-columns:110px minmax(0,1fr); gap:16px; align-items:center; min-height:62px; padding:8px 0; border-bottom:1px solid #D3DFE7;}
+  .info dt{font-size:14px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--navy-soft);}
+  .info dd a{display:inline-flex; align-items:center; gap:6px; min-height:44px; font-weight:600; text-decoration:underline; text-underline-offset:4px;}
+  .form{background:var(--white); border-radius:24px; padding:36px; display:grid; gap:18px; box-shadow:0 1px 0 #D3DFE7;}
+  .field{display:grid; gap:6px;}
+  .field label{font-size:15px; font-weight:600;}
+  .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+  .form input, .form select{width:100%; min-height:50px; border:1px solid #7A8D9C; border-radius:12px; padding:0 14px; font:inherit; font-size:16px; color:var(--navy); background:var(--bg);}
+  .form select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231C2B39' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:18px; padding-right:40px;}
+  .form input:hover, .form select:hover{border-color:#5E7282;}
+  .form .btn{width:100%; margin-top:4px;}
+  .form-note{font-size:14px; color:var(--muted);}
 
-  footer{padding:32px 0; border-top:1px solid var(--line); font-size:13px; color:var(--muted);}
-  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  footer{padding:28px 0 36px;}
+  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:14px; color:var(--muted);}
 
   .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 20px rgba(28,43,57,0.25); text-decoration:none;}
   .wa-float svg{width:28px; height:28px; fill:white;}
@@ -98,173 +181,414 @@
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
-  @media (max-width:900px){
-    .nav-links,.btn-outline{display:none;}
-    .burger{display:block;}
-    .hero-grid,.about-grid,.contact-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr 1fr;}
-    .plans-grid{grid-template-columns:1fr;}
-    .plan-card.featured{transform:none;}
-    .stat-row{grid-template-columns:1fr 1fr;}
-    section{padding:74px 0;}
+  @media (max-width:1060px){
+    .nav-links{display:none;}
+    .js .burger{display:inline-flex;}
   }
+  @media (min-width:1061px){ .mobile-menu{display:none !important;} }
+  @media (min-width:901px) and (max-width:1100px){ .form-row{grid-template-columns:minmax(0,1fr);} }
+  @media (max-width:900px){
+    .hero{padding:40px 0 72px;}
+    .hero-grid,.svc-grid,.about-grid,.contact-grid{grid-template-columns:minmax(0,1fr);}
+    .hero-grid{gap:40px;}
+    .hero-art{aspect-ratio:16 / 11; max-width:560px;}
+    .hero-art .cup{width:44%;}
+    .svc-grid,.about-grid,.contact-grid{gap:40px;}
+    .services,.plans,.contact{padding:76px 0;}
+    .braces,.about{padding:80px 0;}
+    .tl{grid-template-columns:minmax(0,1fr); gap:28px; margin-top:36px;}
+    .tl-visual{position:static;}
+    .tl-card{max-width:560px;}
+    .tl.is-live .tl-visual{position:sticky; top:0; z-index:5; margin:0 -28px; padding:10px 28px 12px; background:var(--bg);}
+    /* Compact sticky card on phones: the drawing at full width with the top of the gum cropped, one label row. */
+    .tl.is-live .tl-card .teeth{margin:-8% 0 -2.5%;}
+    .tl.is-live .tl-now{display:grid; grid-template-columns:minmax(0,1fr) 96px; column-gap:16px; align-items:center; padding:8px 16px 12px;}
+    .tl.is-live .tl-now-k{grid-column:1;}
+    .tl.is-live .tl-now-t{grid-column:1; font-size:19px; margin-top:0;}
+    .tl.is-live .tl-pips{grid-column:2; grid-row:1 / span 2; margin-top:0; gap:4px;}
+    .tl.is-live .tl-cap{display:none;}
+    .plans-grid{grid-template-columns:minmax(0,1fr);}
+  }
+  @media (max-width:1279px){
+    /* Below 1280 the float would sit over the content column (it clears it from 1268px). WhatsApp stays in
+       Visit us as a 44px link, and the call/book bar covers phones. */
+    html body .wa-float{display:none;}
+  }
+  @media (min-width:721px) and (max-width:900px){
+    /* The header is still sticky here, so the compact card sticks just below it. */
+    .tl.is-live .tl-visual{top:73px;}
+  }
+  @media (max-width:720px){
+    .top{position:relative;}
+    html{scroll-padding-top:auto;}
+    section[id]{scroll-margin-top:0;}
+    #bookForm{scroll-margin-top:12px;}
+    .btn-nav{display:none;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    html:root{--nc-radius:12px;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 16px;}
+    .nav{min-height:64px;}
+    .logo{font-size:18px;}
+    .logo span{display:none;}
+    .hero h1{font-size:clamp(36px,10.4vw,46px);}
+    .lede{font-size:17px;}
+    .hero-art{border-radius:24px;}
+    .hero-art .cup{width:56%;}
+    .svc-list{grid-template-columns:minmax(0,1fr); gap:28px;}
+    .svc-list li{grid-template-columns:46px minmax(0,1fr); gap:14px;}
+    .ic{width:46px; height:46px; border-radius:14px;}
+    .tl.is-live .tl-visual{margin:0 -16px; padding:8px 16px 10px;}
+    .tl.is-live .tl-card{border-radius:18px;}
+    .tl.is-live .tl-now-k{font-size:14px; letter-spacing:.04em;}
+    .tl.is-live .tl-now-t{font-size:17px;}
+    .tl-step{padding:0 0 36px 44px;}
+    .tl-step h3{font-size:21px;}
+    .plan-main{padding:30px 24px 28px; border-radius:22px;}
+    .price{font-size:38px;}
+    .plan-mini{padding:24px 22px 20px; border-radius:20px;}
+    .about-stats dd{font-size:30px;}
+    .form{padding:24px 18px; border-radius:20px;}
+    .form-row{grid-template-columns:minmax(0,1fr);}
+    .info div{grid-template-columns:minmax(0,1fr); gap:0; padding:12px 0;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#1C2B39;--nc-fg:#FFFFFF;--nc-accent:#FF6B57;--nc-on-accent:#1C2B39;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">NorthPoint<span> Family Dental</span></div>
-    <div class="nav-links">
+<header class="top">
+  <nav class="wrap" aria-label="Main">
+    <div class="nav">
+      <a class="logo" href="#top"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#1C2B39"/><path d="M16 4.5 20.4 16h-8.8z" fill="#FF6B57"/><path d="M11.6 16h8.8L16 27.5z" fill="#fff"/></svg>NorthPoint<span>&nbsp;Family Dental</span></a>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#braces">Braces</a>
+        <a href="#plans">Family plans</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="nav-right">
+        <a class="btn-nav" href="#bookForm">Book a visit</a>
+        <button class="burger" type="button" aria-expanded="false" aria-controls="mMenu" aria-label="Menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path class="b-open" d="M4 7h16M4 12h16M4 17h16"/><path class="b-close" d="M6 6l12 12M18 6 6 18"/></svg></button>
+      </div>
+    </div>
+    <div class="mobile-menu" id="mMenu" hidden>
       <a href="#services">Services</a>
-      <a href="#plans">Family Plans</a>
+      <a href="#braces">Braces</a>
+      <a href="#plans">Family plans</a>
       <a href="#about">About</a>
       <a href="#contact">Contact</a>
     </div>
-    <a class="btn-fill" href="#contact">Book Now</a>
-    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
-  </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#services">Services</a>
-    <a href="#plans">Family Plans</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </div>
-</nav>
+  </nav>
+</header>
 
-<section class="hero wrap">
-  <div class="hero-grid">
+<main id="top">
+<section class="hero" aria-labelledby="hero-title">
+  <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow">Velachery, Chennai</div>
-      <h1 style="margin-top:14px;">Dental care built for <span>busy families.</span></h1>
-      <p>NorthPoint runs on evening and weekend slots, shared family records, and yearly membership plans — so the whole household stays on top of checkups without six separate bookings.</p>
+      <p class="eyebrow">Velachery, Chennai</p>
+      <h1 id="hero-title"><span>Checkups after school.</span> <span>Fillings after office.</span></h1>
+      <p class="lede">NorthPoint is open till 9 PM, Monday to Saturday. One shared record and one yearly plan cover the whole household, so checkups don't take six separate bookings.</p>
       <div class="hero-ctas">
-        <a class="btn-fill" href="#contact">Book an Appointment</a>
-        <a class="btn-outline" href="#plans">See Family Plans</a>
+        <a class="btn" href="#bookForm">Book an evening slot</a>
+        <a class="link" href="#plans"><span class="u">See family plans</span><span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="badges">
-        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>Open till 9 PM weekdays</div>
-        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>Corporate tie-ups accepted</div>
-        <div class="badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg>Kids' dentistry on-site</div>
-      </div>
+      <p class="hours-line"><span><b>Mon to Sat</b> 11 AM – 9 PM</span><span><b>Sunday</b> 10 AM – 3 PM</span></p>
     </div>
-    <div class="photo-ph">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Clinic waiting area photo</span>
+    <div class="hero-art"><svg class="cup" viewBox="70 40 280 360" aria-hidden="true" focusable="false"><ellipse cx="200" cy="388" rx="104" ry="10" fill="#1C2B39" opacity=".10"/><g transform="translate(176 372) rotate(-17)"><rect x="-7" y="-236" width="14" height="236" rx="7" fill="#FF6B57"/><rect x="-3.5" y="-270" width="7" height="40" rx="3.5" fill="#FF6B57"/><rect x="-6.5" y="-300" width="13" height="38" rx="6" fill="#FF6B57"/><rect x="-4" y="-208" width="8" height="46" rx="4" fill="#fff" opacity=".28"/><rect x="6" y="-297" width="17" height="32" rx="2.5" fill="#fff"/><path d="M6 -289h17M6 -281h17M6 -273h17" stroke="#9DB6C6" stroke-width="1.4"/></g><g transform="translate(198 374) rotate(-4)"><rect x="-7" y="-252" width="14" height="252" rx="7" fill="#1C2B39"/><rect x="-3.5" y="-286" width="7" height="40" rx="3.5" fill="#1C2B39"/><rect x="-6.5" y="-316" width="13" height="38" rx="6" fill="#1C2B39"/><rect x="-4" y="-224" width="8" height="46" rx="4" fill="#fff" opacity=".28"/><rect x="6" y="-313" width="17" height="32" rx="2.5" fill="#fff"/><path d="M6 -305h17M6 -297h17M6 -289h17" stroke="#9DB6C6" stroke-width="1.4"/></g><g transform="translate(218 372) rotate(9)"><rect x="-7" y="-218" width="14" height="218" rx="7" fill="#7FD9C6"/><rect x="-3.5" y="-252" width="7" height="40" rx="3.5" fill="#7FD9C6"/><rect x="-6.5" y="-282" width="13" height="38" rx="6" fill="#7FD9C6"/><rect x="-4" y="-190" width="8" height="46" rx="4" fill="#fff" opacity=".28"/><rect x="6" y="-279" width="17" height="32" rx="2.5" fill="#fff"/><path d="M6 -271h17M6 -263h17M6 -255h17" stroke="#9DB6C6" stroke-width="1.4"/></g><g transform="translate(234 370) rotate(21)"><rect x="-9" y="-158" width="18" height="158" rx="9" fill="#FFC857"/><rect x="-3.5" y="-192" width="7" height="40" rx="3.5" fill="#FFC857"/><rect x="-6.5" y="-222" width="13" height="38" rx="6" fill="#FFC857"/><rect x="-6" y="-130" width="12" height="34" rx="6" fill="#fff" opacity=".28"/><rect x="6" y="-219" width="15" height="32" rx="2.5" fill="#FFE7E3"/><path d="M6 -211h15M6 -203h15M6 -195h15" stroke="#9DB6C6" stroke-width="1.4"/></g><path d="M126 228H274L262 366Q260 382 244 382H156Q140 382 138 366Z" fill="#F4F8FB" opacity=".72"/><path d="M126 228H274" stroke="#fff" stroke-width="4" stroke-linecap="round"/><path d="M144 246L154 360" stroke="#fff" stroke-width="7" stroke-linecap="round" opacity=".9"/><path d="M138 366Q140 382 156 382H244Q260 382 262 366" fill="none" stroke="#B5CAD8" stroke-width="3"/></svg></div>
+  </div>
+</section>
+
+<section class="services" id="services" aria-labelledby="svc-title">
+  <div class="wrap svc-grid">
+    <div class="sec-intro reveal">
+      <p class="eyebrow">Services</p>
+      <h2 id="svc-title">From milk teeth to wisdom teeth.</h2>
+      <p>Grandparents, parents and kids are seen by the same two dentists, with the whole family's history in one record.</p>
+    </div>
+    <ul class="svc-list reveal">
+      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="15.5" cy="8.5" r="4.6"/><path d="M12.2 11.8 4 20"/></svg></span><div><h3>General checkups</h3><p>Exams and cleaning for every age. Book the family back to back in one evening.</p></div></li>
+      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="12.5" width="8" height="8" rx="1.5"/><rect x="12.5" y="12.5" width="8" height="8" rx="1.5"/><path d="M8 10.5 12 3.5l4 7z"/></svg></span><div><h3>Kids' dentistry</h3><p>A separate play corner and a gentle, unhurried first visit for young patients.</p></div></li>
+      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.6 3.5c-2.4 0-4 1.9-4 4.6 0 3 1 5 1.7 8 .5 2.1.9 4.4 2.1 4.4s1.5-2.4 2-4.2c.3-1.2.9-1.8 2.6-1.8s2.3.6 2.6 1.8c.5 1.8.8 4.2 2 4.2s1.6-2.3 2.1-4.4c.7-3 1.7-5 1.7-8 0-2.7-1.6-4.6-4-4.6-1.8 0-2.6 1-4.4 1s-2.6-1-4.4-1Z"/><path d="M2.5 10h19"/><rect x="9.6" y="8" width="4.8" height="4" rx=".8"/></svg></span><div><h3>Braces and aligners</h3><p>Metal, ceramic and clear aligner options for teens and adults.</p><a class="link nw" href="#braces"><span class="u">Braces, visit by visit</span><span aria-hidden="true">&darr;</span></a></div></li>
+      <li><span class="ic"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/><circle cx="12" cy="15.2" r="1.9" fill="currentColor" stroke="none"/></svg></span><div><h3>Emergency slots</h3><p>Same-day emergency appointments are held open every day.</p></div></li>
+    </ul>
+  </div>
+</section>
+
+<section class="braces" id="braces" aria-labelledby="braces-title">
+  <div class="wrap">
+    <div class="sec-intro reveal">
+      <p class="eyebrow">Braces, step by step</p>
+      <h2 id="braces-title">Braces for your teen, <span class="nw">visit by visit.</span></h2>
+      <p>This is what happens at each visit, from the first consultation to the retainer checks.</p>
+    </div>
+    <div class="tl" data-signature="treatment-timeline">
+      <div class="tl-visual" aria-hidden="true">
+        <div class="tl-card">
+          <svg class="teeth" viewBox="0 0 340 118" aria-hidden="true" focusable="false"><g transform="translate(95 48)"><g class="tt" data-i="2" data-dx="-1" data-dy="4" data-a="13" data-ox="15.5" data-oy="27"><path class="tw" d="M3.1 -22L27.9 -22C30.7 18.9 31 32.4 30.1 46.4Q29.5 54 24.8 54L6.2 54Q1.6 54 0.9 46.4C0 32.4 0.3 18.9 3.1 -22Z"/><rect class="br" x="9.5" y="21" width="12" height="12" rx="2.5"/></g></g><g transform="translate(214 48)"><g class="tt" data-i="5" data-dx="4" data-dy="-4" data-a="-13" data-ox="15.5" data-oy="27"><path class="tw" d="M3.1 -22L27.9 -22C30.7 18.9 31 32.4 30.1 46.4Q29.5 54 24.8 54L6.2 54Q1.6 54 0.9 46.4C0 32.4 0.3 18.9 3.1 -22Z"/><rect class="br" x="9.5" y="21" width="12" height="12" rx="2.5"/></g></g><g transform="translate(27 50)"><g class="tt" data-i="0" data-dx="0" data-dy="3" data-a="5" data-ox="15" data-oy="26"><path class="tw" d="M3.6 -22L26.4 -22C29.4 18.2 30 28.6 29.1 38.5Q27 52 15 52Q3 52 0.9 38.5C0 28.6 0.6 18.2 3.6 -22Z"/><rect class="br" x="9" y="20" width="12" height="12" rx="2.5"/></g></g><g transform="translate(283 50)"><g class="tt" data-i="7" data-dx="0" data-dy="1" data-a="-4" data-ox="15" data-oy="26"><path class="tw" d="M3.6 -22L26.4 -22C29.4 18.2 30 28.6 29.1 38.5Q27 52 15 52Q3 52 0.9 38.5C0 28.6 0.6 18.2 3.6 -22Z"/><rect class="br" x="9" y="20" width="12" height="12" rx="2.5"/></g></g><g transform="translate(59 44)"><g class="tt" data-i="1" data-dx="3" data-dy="-13" data-a="-9" data-ox="17" data-oy="31"><path class="tw" d="M4.4 -22L29.6 -22C33.7 21.7 34 38.4 32.3 50.8Q27.2 57 19.7 61.1Q17 62.6 14.3 61.1Q6.8 57 1.7 50.8C0 38.4 0.3 21.7 4.4 -22Z"/><rect class="br" x="11" y="25" width="12" height="12" rx="2.5"/></g></g><g transform="translate(247 44)"><g class="tt" data-i="6" data-dx="-2" data-dy="-7" data-a="7" data-ox="17" data-oy="31"><path class="tw" d="M4.4 -22L29.6 -22C33.7 21.7 34 38.4 32.3 50.8Q27.2 57 19.7 61.1Q17 62.6 14.3 61.1Q6.8 57 1.7 50.8C0 38.4 0.3 21.7 4.4 -22Z"/><rect class="br" x="11" y="25" width="12" height="12" rx="2.5"/></g></g><g transform="translate(128 42)"><g class="tt" data-i="3" data-dx="3" data-dy="3" data-a="-6" data-ox="20.5" data-oy="32"><path class="tw" d="M4.1 -22L36.9 -22C40.6 22.4 41 38.4 39.8 55Q38.9 64 32.8 64L8.2 64Q2.1 64 1.2 55C0 38.4 0.4 22.4 4.1 -22Z"/><rect class="br" x="14.5" y="26" width="12" height="12" rx="2.5"/></g></g><g transform="translate(171 42)"><g class="tt" data-i="4" data-dx="-5" data-dy="-1" data-a="8" data-ox="20.5" data-oy="32"><path class="tw" d="M4.1 -22L36.9 -22C40.6 22.4 41 38.4 39.8 55Q38.9 64 32.8 64L8.2 64Q2.1 64 1.2 55C0 38.4 0.4 22.4 4.1 -22Z"/><rect class="br" x="14.5" y="26" width="12" height="12" rx="2.5"/></g></g><g class="brace"><path class="wire" d="M42 76L76 75L110.5 75L148.5 74L191.5 74L229.5 75L264 75L298 76"/><g class="ties"><circle cx="42" cy="76" r="2.6"/><circle cx="76" cy="75" r="2.6"/><circle cx="110.5" cy="75" r="2.6"/><circle cx="148.5" cy="74" r="2.6"/><circle cx="191.5" cy="74" r="2.6"/><circle cx="229.5" cy="75" r="2.6"/><circle cx="264" cy="75" r="2.6"/><circle cx="298" cy="76" r="2.6"/></g></g><path class="gum" d="M0 0H340V64L313 63Q298 41 283 63L281 57Q264 35 247 57L245 61Q229.5 39 214 61L212 55Q191.5 33 171 55L169 55Q148.5 33 128 55L126 61Q110.5 39 95 61L93 57Q76 35 59 57L57 63Q42 41 27 63L0 64Z"/></svg>
+          <div class="tl-now">
+            <p class="tl-now-k" id="tlK">Braces, start to finish</p>
+            <p class="tl-now-t" id="tlT">Six steps from consultation to retainer</p>
+            <div class="tl-pips"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+        </div>
+        <p class="tl-cap">Illustration, not a patient's teeth.</p>
+      </div>
+      <ol class="tl-list">
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 1 · Weekday evening, 30 min</p><h3>Consultation</h3><p>We check the bite and spacing, take photos, and tell you whether braces or aligners make sense now or a little later.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 2 · 45 min</p><h3>Records and plan</h3><p>Scans and X-rays. You get a written plan with the type of braces, a rough timeline and the full price. Family plan members get 15% off.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Visit 3 · Saturday, about 90 min</p><h3>Braces on</h3><p>Brackets go on and the first wire goes in. Teeth can feel sore for a few days, so plan soft food for dinner.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Usually every 4 to 6 weeks · After school, 20 min</p><h3>Adjustments</h3><p>A wire change and a quick check. Book the next one before you leave, and pick an evening that suits.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Usually 18 to 24 months in · About 60 min</p><h3>Braces off</h3><p>Brackets come off, the teeth are polished, and the retainer is measured.</p></li>
+        <li class="tl-step"><span class="tl-dot" aria-hidden="true"></span><p class="tl-when">Follow-up · Usually 3, 6 and 12 months after</p><h3>Retainer checks</h3><p>Short visits to make sure the teeth stay where they moved to.</p></li>
+      </ol>
     </div>
   </div>
 </section>
 
-<section class="services" id="services">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">Services</div>
-      <h2>Everything one family needs, in one place.</h2>
-    </div>
-    <div class="svc-grid">
-      <div class="svc-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div><h3>General Checkups</h3><p>Routine exams and cleaning for adults and kids alike.</p></div>
-      <div class="svc-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg></div><h3>Kids' Dentistry</h3><p>A separate play corner and no-fear approach for young patients.</p></div>
-      <div class="svc-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M4 12h16M4 12a8 8 0 0116 0"/></svg></div><h3>Braces & Aligners</h3><p>Metal, ceramic, and clear aligner options for teens and adults.</p></div>
-      <div class="svc-card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8"><path d="M5 13l4 4L19 7"/></svg></div><h3>Emergency Slots</h3><p>Same-day emergency appointments held open daily.</p></div>
-    </div>
-  </div>
-</section>
-
-<section id="plans">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">Family Membership Plans</div>
-      <h2>One yearly plan, the whole household covered.</h2>
-      <p>Two checkups a year, priority booking, and a discount on all other treatment — billed once, covers everyone at home.</p>
+<section class="plans" id="plans" aria-labelledby="plans-title">
+  <div class="wrap">
+    <div class="sec-intro reveal">
+      <p class="eyebrow">Family plans</p>
+      <h2 id="plans-title">One yearly plan for the whole household.</h2>
+      <p>Two checkups a year, priority booking and a discount on other treatment. Billed once for everyone at home.</p>
     </div>
     <div class="plans-grid">
-      <div class="plan-card">
-        <h3>Individual</h3>
-        <div class="price">₹1,499<span> / year</span></div>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>2 checkups + cleanings</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>10% off other treatment</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Priority booking slots</li>
+      <article class="plan-main reveal">
+        <h3>Family</h3>
+        <p class="plan-for">Up to 5 people at one address</p>
+        <ul class="ticks">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>2 checkups per member</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>15% off other treatment</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>One shared family record</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Free fluoride treatment for kids</li>
         </ul>
-        <a class="plan-btn" href="#contact">Choose Plan</a>
-      </div>
-      <div class="plan-card featured">
-        <span class="feat-tag">MOST CHOSEN</span>
-        <h3>Family (up to 5)</h3>
-        <div class="price">₹4,999<span> / year</span></div>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>2 checkups per member</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>15% off other treatment</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>One shared family record</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Free kids' fluoride treatment</li>
-        </ul>
-        <a class="plan-btn" href="#contact">Choose Plan</a>
-      </div>
-      <div class="plan-card">
-        <h3>Corporate</h3>
-        <div class="price">Custom<span> pricing</span></div>
-        <ul>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Volume pricing per employee</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>On-site camp option</li>
-          <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg>Monthly billing to HR</li>
-        </ul>
-        <a class="plan-btn" href="#contact">Talk to Us</a>
+        <div class="plan-buy">
+          <p class="price">₹4,999<span>a year</span></p>
+          <a class="btn btn-coral" href="#bookForm">Choose the family plan</a>
+        </div>
+      </article>
+      <div class="plan-side">
+        <article class="plan-mini reveal">
+          <h3>Individual</h3>
+          <p class="price">₹1,499<span>a year</span></p>
+          <ul class="ticks">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>2 checkups and cleanings</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>10% off other treatment, priority booking</li>
+          </ul>
+          <a class="link" href="#bookForm"><span class="u">Choose Individual</span><span aria-hidden="true">&rarr;</span></a>
+        </article>
+        <article class="plan-mini reveal">
+          <h3>Corporate</h3>
+          <p class="price">Custom<span>pricing</span></p>
+          <ul class="ticks">
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Volume pricing per employee</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>On-site camp option, monthly billing to HR</li>
+          </ul>
+          <a class="link" href="#bookForm"><span class="u">Talk to us about Corporate</span><span aria-hidden="true">&rarr;</span></a>
+        </article>
       </div>
     </div>
   </div>
 </section>
 
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="photo-ph" style="height:420px;">
-      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Team photo</span>
+<section class="about" id="about" aria-labelledby="about-title">
+  <div class="wrap about-grid">
+    <div class="about-copy reveal">
+      <p class="eyebrow">About NorthPoint</p>
+      <h2 id="about-title">Started in 2015 with one dentist.</h2>
+      <p>NorthPoint began as a single evening clinic for Velachery families who couldn't make daytime appointments. It has since grown to two dentists and still keeps the same late hours.</p>
     </div>
-    <div>
-      <div class="eyebrow">About NorthPoint</div>
-      <h2 style="margin-top:12px; font-size:clamp(24px,3vw,34px);">Started as one dentist's evening clinic in 2015.</h2>
-      <p style="font-size:15px; color:var(--muted); line-height:1.8; margin-top:16px;">NorthPoint began as a single evening clinic for Velachery families who couldn't make daytime appointments. It's since grown to a two-dentist practice, but the evening-and-weekend focus never changed.</p>
-      <div class="stat-row">
-        <div><h4>10 yrs</h4><p>Serving Velachery</p></div>
-        <div><h4>600+</h4><p>Family plan members</p></div>
-        <div><h4>4.6 ★</h4><p>Google rating</p></div>
-      </div>
-    </div>
+    <dl class="about-stats reveal">
+      <div><dt>Family plan members</dt><dd>600+</dd></div>
+      <div><dt>Google rating</dt><dd>4.6<span class="sr"> out of 5</span></dd></div>
+      <div><dt>Dentists</dt><dd>2</dd></div>
+    </dl>
   </div>
 </section>
 
-<section id="contact">
-  <div class="wrap contact-grid reveal">
-    <div>
-      <div class="eyebrow">Visit Us</div>
-      <h2 style="margin:12px 0 32px; font-size:clamp(24px,3vw,34px);">Book an appointment.</h2>
-      <div class="info-row"><div class="lbl">ADDRESS</div><div>44 Vijayanagaram 1st St, Velachery, Chennai 600042</div></div>
-      <div class="info-row"><div class="lbl">PHONE</div><div>+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">HOURS</div><div>Mon–Sat, 11 AM – 9 PM · Sun 10 AM – 3 PM</div></div>
-      <div class="info-row"><div class="lbl">WHATSAPP</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--coral); font-weight:600;">Message the clinic →</a></div></div>
+<section class="contact" id="contact" aria-labelledby="contact-title">
+  <div class="wrap contact-grid">
+    <div class="reveal">
+      <p class="eyebrow">Visit us</p>
+      <h2 id="contact-title">Book an evening or weekend slot.</h2>
+      <dl class="info">
+        <div><dt>Address</dt><dd>44 Vijayanagaram 1st St, Velachery, Chennai 600042</dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></dd></div>
+        <div><dt>Hours</dt><dd>Mon to Sat, 11 AM – 9 PM<br>Sunday, 10 AM – 3 PM</dd></div>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Message the clinic <span aria-hidden="true">&rarr;</span></a></dd></div>
+      </dl>
     </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="4" placeholder="Number of family members / reason for visit"></textarea>
-      <button type="submit">Request Appointment</button>
+    <form class="form" id="bookForm" action="mailto:?subject=Appointment%20request" method="post" enctype="text/plain">
+      <div class="form-row">
+        <div class="field"><label for="f-name">Your name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" placeholder="98XXX XXXXX" required></div>
+      </div>
+      <div class="form-row">
+        <div class="field"><label for="f-who">Who is coming?</label>
+          <select id="f-who" name="who"><option>Just me</option><option>Me and my child</option><option>Two or more of us</option><option>Not sure yet</option></select></div>
+        <div class="field"><label for="f-when">Best time</label>
+          <select id="f-when" name="when"><option>Weekday evenings</option><option>Saturday</option><option>Sunday morning</option><option>Any time</option></select></div>
+      </div>
+      <button class="btn" type="submit">Request appointment</button>
+      <p class="form-note">This drafts a mail with your number in it, so the clinic can call about a time.</p>
     </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap foot-inner">
-  <span>© 2026 NorthPoint Family Dental, Velachery.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap foot-inner">
+    <span>© 2026 NorthPoint Family Dental, Velachery.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal (content is visible without JS; see the noscript rule).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Phone menu.
+  (function(){
+    var btn = document.querySelector('.burger'), menu = document.getElementById('mMenu');
+    if(!btn || !menu) return;
+    function set(open){ btn.setAttribute('aria-expanded', open ? 'true' : 'false'); menu.hidden = !open; }
+    btn.addEventListener('click', function(){ set(menu.hidden); });
+    menu.addEventListener('click', function(e){ if(e.target.closest('a')) set(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && !menu.hidden){ set(false); btn.focus(); } });
+  })();
+
+  // Booking form: a tidy email body (without JS the form posts the same fields as plain text).
+  (function(){
+    var form = document.getElementById('bookForm');
+    if(!form) return;
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var f = form.elements;
+      var body = 'Name: ' + f.name.value + '\nPhone: ' + f.phone.value + '\nWho is coming: ' + f.who.value + '\nBest time: ' + f.when.value;
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('Appointment request') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+
+  // Signature: treatment-timeline. As a step's dot passes a reading line (55% down the screen), the step
+  // is marked reached, the coral line fills toward the next dot, and the drawing follows the treatment:
+  // brackets on at "Braces on", teeth straightening through the adjustments, brackets off at "Braces off".
+  // It only reads the scroll position; it never moves the page. Under reduced motion, or without JS,
+  // everything stays in its finished state: all steps marked, straight teeth with brackets.
+  (function(){
+    var root = document.querySelector('[data-signature="treatment-timeline"]');
+    if(!root || !window.requestAnimationFrame || !window.matchMedia) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var steps = [].slice.call(root.querySelectorAll('.tl-step'));
+    var dots = steps.map(function(s){ return s.querySelector('.tl-dot'); });
+    var svg = root.querySelector('.teeth');
+    var wire = svg.querySelector('.wire'), ties = svg.querySelectorAll('.ties circle');
+    var label = document.getElementById('tlK'), title = document.getElementById('tlT');
+    var pips = root.querySelectorAll('.tl-pips i');
+    var teeth = [].slice.call(svg.querySelectorAll('.tt')).map(function(g){
+      var at = g.parentNode.getAttribute('transform').match(/-?[\d.]+/g);
+      return { g:g, i:+g.getAttribute('data-i'), x:+at[0], y:+at[1], dx:+g.getAttribute('data-dx'), dy:+g.getAttribute('data-dy'),
+        a:+g.getAttribute('data-a'), ox:+g.getAttribute('data-ox'), oy:+g.getAttribute('data-oy') };
+    }).sort(function(p, q){ return p.i - q.i; });
+    var ON = 2, OFF = 4; // "Braces on" and "Braces off" step indexes
+    var frame = 0, near = false, shown = -1;
+    function clamp(v){ return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    function drawTeeth(t){
+      var k = 1 - t, pts = [];
+      teeth.forEach(function(p){
+        if(k > 0.001) p.g.setAttribute('transform', 'translate(' + (p.dx*k).toFixed(2) + ' ' + (p.dy*k).toFixed(2) + ') rotate(' + (p.a*k).toFixed(2) + ' ' + p.ox + ' ' + p.oy + ')');
+        else p.g.removeAttribute('transform');
+        pts.push([p.x + p.ox + p.dx*k, p.y + p.oy + p.dy*k]);
+      });
+      wire.setAttribute('d', 'M' + pts.map(function(q){ return q[0].toFixed(1) + ' ' + q[1].toFixed(1); }).join('L'));
+      pts.forEach(function(q, i){ ties[i].setAttribute('cx', q[0].toFixed(1)); ties[i].setAttribute('cy', q[1].toFixed(1)); });
+    }
+
+    function paint(){
+      frame = 0;
+      // Reads first.
+      var line = window.innerHeight * 0.55;
+      var ys = dots.map(function(d){ var r = d.getBoundingClientRect(); return r.top + r.height / 2; });
+      // Then writes.
+      var reached = 0;
+      ys.forEach(function(y){ if(y <= line) reached++; });
+      steps.forEach(function(s, i){
+        s.classList.toggle('is-reached', i < reached);
+        if(i < ys.length - 1) s.style.setProperty('--f', clamp((line - ys[i]) / (ys[i+1] - ys[i])).toFixed(3));
+      });
+      root.classList.toggle('no-braces', !(reached > ON && reached <= OFF));
+      drawTeeth(clamp((line - ys[ON]) / (ys[OFF] - ys[ON])));
+      var now = Math.max(reached, 1) - 1;
+      if(now !== shown){
+        shown = now;
+        label.textContent = 'Step ' + (now + 1) + ' of ' + steps.length;
+        title.textContent = steps[now].querySelector('h3').textContent;
+        for(var i=0;i<pips.length;i++) pips[i].classList.toggle('on', i <= now);
+      }
+    }
+    function ask(){ if(near && !frame) frame = requestAnimationFrame(paint); }
+
+    root.classList.add('is-live');
+    if('IntersectionObserver' in window){
+      // Only listen hard while the timeline is on or near the screen.
+      new IntersectionObserver(function(entries){ near = entries[0].isIntersecting; ask(); }, {rootMargin:'25% 0px'}).observe(root);
+    }else{
+      near = true;
+    }
+    addEventListener('scroll', ask, {passive:true});
+    addEventListener('resize', ask);
+    paint();
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#bookForm">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>

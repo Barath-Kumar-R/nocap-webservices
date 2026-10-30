@@ -3,180 +3,433 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aurora Calm Dental — Sriperumbudur</title>
+<title>Aurora Calm Dental · Sriperumbudur</title>
+<meta name="description" content="Aurora Calm Dental, a fictional clinic for nervous patients in Sriperumbudur, in a soft aurora style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Petrona:ital,wght@0,400;1,400;1,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{ --bg:#0B1220; --panel:rgba(255,255,255,0.05); --line:rgba(255,255,255,0.1); --teal:#34D9C9; --violet:#8B5CF6; --pink:#FF6FA5; --text:#E8ECF5; --muted:#9AA3BD; }
+  :root{
+    --bg:#0B1220; --bg2:#0E1628; --panel:#121B30; --line:#24304D; --ctl:#6C7896;
+    --text:#E8ECF5; --muted:#B3BBD2; --teal:#6FE3D5; --teal-deep:#34D9C9; --violet:#8B5CF6; --lilac:#C9B8FF; --pink:#FF6FA5;
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',sans-serif; background:var(--bg); color:var(--text); font-weight:300; overflow-x:hidden; -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Petrona',serif; font-weight:400; font-style:italic;}
+  body{font-family:'Work Sans',system-ui,sans-serif; font-size:17px; line-height:1.65; font-weight:400; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Petrona',Georgia,serif; font-weight:400; font-style:italic; line-height:1.15; letter-spacing:-0.01em; text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:1160px; margin:0 auto; padding:0 24px;}
+  .wrap{max-width:1160px; margin:0 auto; padding-left:24px; padding-right:24px;}
+  .eyebrow{font-size:14px; font-weight:500; letter-spacing:.12em; text-transform:uppercase; color:var(--teal);}
+  section[id]{scroll-margin-top:16px;}
+  html :focus-visible{outline-color:var(--teal) !important;}
 
-  .aurora-wrap{position:fixed; inset:0; z-index:-1; overflow:hidden;}
-  .aurora-band{position:absolute; border-radius:50%; filter:blur(90px); opacity:0.35; animation:drift 28s ease-in-out infinite;}
-  .a1{width:520px; height:420px; background:var(--teal); top:-140px; left:-80px; animation-delay:0s;}
-  .a2{width:460px; height:400px; background:var(--violet); top:60px; right:-100px; animation-delay:-9s;}
-  .a3{width:480px; height:380px; background:var(--pink); bottom:-160px; left:30%; animation-delay:-18s;}
-  @keyframes drift{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(30px,-40px) scale(1.08);} }
-  @media (prefers-reduced-motion:reduce){ .aurora-band{animation:none;} }
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 28px; border:0; border-radius:100px; background:var(--teal); color:var(--bg); font:600 16px/1.2 'Work Sans',system-ui,sans-serif; text-decoration:none; cursor:pointer;}
+  .btn:hover{background:#9AEDE3;}
+  .text-link{display:inline-flex; align-items:center; gap:8px; min-height:44px; color:var(--text); font-weight:500; text-decoration:underline; text-decoration-color:var(--ctl); text-underline-offset:6px;}
+  .text-link:hover{text-decoration-color:var(--teal);}
 
-  nav{padding:26px 0;}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{font-family:'Petrona',serif; font-style:italic; font-size:20px; display:flex; align-items:center; gap:10px;}
-  .logo-orb{width:24px; height:24px; border-radius:50%; background:linear-gradient(135deg,var(--teal),var(--violet),var(--pink));}
-  .nav-links{display:flex; gap:32px; font-size:13.5px; font-weight:400; color:var(--muted); font-family:'Work Sans',sans-serif;}
-  .nav-links a{text-decoration:none; color:var(--muted);}
-  .btn-aurora{background:rgba(255,255,255,0.08); border:1px solid var(--line); color:var(--text); padding:11px 22px; border-radius:100px; font-size:13px; text-decoration:none; backdrop-filter:blur(8px);}
+  /* Header */
+  .top{position:absolute; top:0; left:0; right:0; z-index:5; background:linear-gradient(180deg, rgba(11,18,32,.78), rgba(11,18,32,.35) 70%, rgba(11,18,32,0));}
+  .nav{display:flex; align-items:center; gap:20px; min-height:84px;}
+  .logo{display:inline-flex; align-items:center; gap:12px; min-height:44px; font-family:'Petrona',Georgia,serif; font-style:italic; font-size:22px; text-decoration:none;}
+  .logo svg{width:30px; height:30px; flex:none;}
+  .nav-links{display:flex; gap:2px; margin-left:auto;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; color:#DDE2EE; font-size:15px; text-decoration:none; white-space:nowrap;}
+  .nav-links a:hover{color:#fff; text-decoration:underline; text-underline-offset:6px;}
+  .btn-nav{min-height:44px; padding:0 20px; font-size:15px; font-weight:500; background:rgba(232,236,245,.08); color:var(--text); border:1px solid var(--ctl); white-space:nowrap;}
+  .btn-nav:hover{background:rgba(232,236,245,.14);}
 
-  .hero{padding:70px 0 110px; text-align:center;}
-  .eyebrow{font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--teal); font-family:'Work Sans',sans-serif; font-weight:500;}
-  .hero h1{font-size:clamp(34px,5.4vw,64px); line-height:1.2; margin:20px auto; max-width:760px;}
-  .hero p{font-size:16px; color:var(--muted); max-width:480px; margin:0 auto; line-height:1.8; font-weight:300;}
-  .hero-ctas{display:flex; gap:14px; margin-top:36px; justify-content:center; flex-wrap:wrap;}
-  .btn-primary{background:linear-gradient(120deg,var(--teal),var(--violet)); color:#0B1220; padding:15px 30px; border-radius:100px; font-size:14px; font-weight:600; text-decoration:none; font-family:'Work Sans',sans-serif;}
-  .btn-ghost{border:1px solid var(--line); color:var(--text); padding:15px 30px; border-radius:100px; font-size:14px; text-decoration:none; font-family:'Work Sans',sans-serif;}
+  /* Hero + signature: aurora-cursor. Three soft curtains of colour sit behind the hero; with a mouse or pen
+     they ease a little toward the pointer (keyboard focus in the hero does the same). A dark scrim keeps the
+     copy area dim, so text stays AA wherever the bands sit. */
+  .hero{position:relative; isolation:isolate; overflow:hidden; min-height:min(92vh, 860px); display:flex; align-items:flex-end; padding:168px 0 104px;}
+  .sky{position:absolute; inset:0; z-index:-2; pointer-events:none; animation:skyIn .6s ease-out both;}
+  @keyframes skyIn{from{opacity:0;}}
+  .band{position:absolute; display:block; filter:blur(18px); will-change:transform;}
+  .band::before{content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 6%, var(--c) 46%, transparent 92%);
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent), repeating-linear-gradient(90deg, #000 0 12px, rgba(0,0,0,.42) 25px, #000 41px, rgba(0,0,0,.7) 53px, #000 66px);
+    -webkit-mask-composite:source-in; mask-image:linear-gradient(90deg, transparent, #000 22%, #000 78%, transparent), repeating-linear-gradient(90deg, #000 0 12px, rgba(0,0,0,.42) 25px, #000 41px, rgba(0,0,0,.7) 53px, #000 66px); mask-composite:intersect;}
+  .b1{--c:rgba(52,217,201,.5); left:-8%; top:-6%; width:82%; height:46%; transform:rotate(-9deg) skewX(-18deg);}
+  .b2{--c:rgba(139,92,246,.5); left:28%; top:2%; width:78%; height:44%; transform:rotate(-6deg) skewX(-22deg);}
+  .b3{--c:rgba(255,111,165,.3); left:54%; top:20%; width:56%; height:34%; transform:rotate(-12deg) skewX(-14deg);}
+  .scrim{position:absolute; inset:0; z-index:-1; pointer-events:none; background:
+    radial-gradient(ellipse 70% 62% at 24% 82%, rgba(11,18,32,.94) 0 38%, rgba(11,18,32,.6) 62%, transparent 82%),
+    linear-gradient(180deg, transparent 55%, var(--bg) 100%);}
+  .hero-inner{width:100%;}
+  .hero .eyebrow{color:#BDF4EC;}
+  .hero h1{font-size:clamp(44px,6.4vw,84px); line-height:1.04; letter-spacing:-0.02em; margin-top:18px; max-width:11.5em;}
+  .lede{margin-top:24px; font-size:20px; line-height:1.6; color:#CDD3E3; max-width:31em; font-weight:300; text-wrap:pretty;}
+  .hero-ctas{display:flex; flex-wrap:wrap; align-items:center; gap:12px 26px; margin-top:36px;}
+  .hero-facts{margin-top:30px; font-size:15px; color:var(--muted);}
 
-  .glass{background:var(--panel); border:1px solid var(--line); border-radius:24px; backdrop-filter:blur(14px);}
+  /* Sections */
+  main > section{padding:120px 0;}
+  h2{font-size:clamp(36px,4.2vw,54px); margin-top:14px;}
 
-  section{padding:80px 0;}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 50px;}
-  .sec-head h2{font-size:clamp(26px,3.2vw,38px); margin-top:14px;}
-  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:14px; font-weight:300;}
+  /* Approach: three habits, set down the page in a slow diagonal */
+  .approach-head{display:grid; grid-template-columns:minmax(0,6fr) minmax(0,5fr); gap:24px 64px; align-items:end;}
+  .approach-head p:not(.eyebrow){color:var(--muted);}
+  .habits{list-style:none; margin-top:64px;}
+  .habit{display:grid; grid-template-columns:56px minmax(0,1fr); gap:24px; max-width:620px; padding:30px 0; border-top:1px solid var(--line);}
+  .habit:nth-child(2){margin-left:calc((100% - 620px) / 2);}
+  .habit:nth-child(3){margin-left:calc(100% - 620px); border-bottom:1px solid var(--line);}
+  .habit-ic{display:grid; place-items:center; width:56px; height:56px; border-radius:50%; border:1px solid var(--line); background:var(--bg2);}
+  .habit-ic svg{width:26px; height:26px; fill:none; stroke:var(--teal); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round;}
+  .habit h3{font-size:28px;}
+  .habit p{color:var(--muted); margin-top:6px;}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
-  .svc-card{padding:32px 26px;}
-  .svc-icon{width:44px; height:44px; border-radius:50%; background:rgba(255,255,255,0.08); display:flex; align-items:center; justify-content:center; margin-bottom:18px;}
-  .svc-icon svg{width:20px; height:20px; stroke:var(--teal); fill:none; stroke-width:1.4;}
-  .svc-card h3{font-size:19px; margin-bottom:10px; font-style:italic;}
-  .svc-card p{font-size:13.5px; color:var(--muted); line-height:1.7; font-weight:300; font-family:'Work Sans',sans-serif;}
+  /* Dentist */
+  .dentist{background:var(--bg2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .dentist-grid{display:grid; grid-template-columns:minmax(0,6fr) minmax(0,5fr); gap:72px; align-items:center;}
+  .room-fig{border:1px solid var(--line); border-radius:28px; overflow:hidden; background:var(--panel);}
+  .room{display:block; width:100%; height:auto;}
+  .r-wall{fill:#121B30;} .r-win{fill:#0B1220; stroke:#33436A; stroke-width:2;} .r-frame{fill:none; stroke:#33436A; stroke-width:2;}
+  .r-floor{stroke:#2A3A5E; stroke-width:2;} .r-arm{fill:none; stroke:#3A4B74; stroke-width:4; stroke-linecap:round;}
+  .r-lamp{fill:#2A3A5E; stroke:#FFE7B8; stroke-opacity:.6; stroke-width:1.5;}
+  .r-base{stroke:#3A4B74; stroke-width:8; stroke-linecap:round;} .r-post{stroke:#3A4B74; stroke-width:14; stroke-linecap:round;}
+  .r-chair{fill:none; stroke:#2C3D63; stroke-width:26; stroke-linecap:round; stroke-linejoin:round;}
+  .r-hint{fill:none; stroke:#6FE3D5; stroke-opacity:.5; stroke-width:1.5; stroke-linecap:round;}
+  .r-table{fill:none; stroke:#3A4B74; stroke-width:4; stroke-linecap:round;}
+  .r-phones{fill:none; stroke:#C9B8FF; stroke-width:3; stroke-linecap:round;} .r-cup{fill:#C9B8FF;}
+  .r-pot{fill:#2C3D63;} .r-leaf{fill:#2F6B66;}
+  .room-fig figcaption{padding:14px 22px 16px; font-size:14px; color:var(--muted); border-top:1px solid var(--line);}
+  .dentist-copy > p:not(.eyebrow){color:var(--muted); margin-top:20px; max-width:30em;}
+  .stats{display:grid; grid-template-columns:repeat(3,auto); justify-content:start; gap:20px 40px; margin-top:36px;}
+  .stats div{display:flex; flex-direction:column-reverse; justify-content:flex-end;}
+  .stats dd{font-family:'Petrona',Georgia,serif; font-style:italic; font-size:36px; line-height:1.1; color:var(--teal);}
+  .stats dt{font-size:14px; color:var(--muted); margin-top:4px;}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:0; overflow:hidden;}
-  .about-photo{min-height:420px; background:rgba(255,255,255,0.04); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px; border-right:1px solid var(--line);}
-  .about-photo svg{width:28px; height:28px; stroke:var(--muted); fill:none; stroke-width:1.2;}
-  .about-photo span{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; font-family:'Work Sans',sans-serif;}
-  .about-copy{padding:48px;}
-  .about-copy h3{font-size:24px; margin-bottom:16px;}
-  .about-copy p{font-size:15px; color:var(--muted); line-height:1.85; font-weight:300;}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:28px;}
-  .mini-glass{background:rgba(255,255,255,0.05); border:1px solid var(--line); border-radius:16px; padding:16px;}
-  .mini-glass b{font-family:'Petrona',serif; font-style:italic; font-size:24px; display:block; color:var(--teal);}
-  .mini-glass span{font-size:11px; color:var(--muted); font-family:'Work Sans',sans-serif;}
+  /* Visit */
+  .visit{position:relative; isolation:isolate;}
+  .visit::before{content:''; position:absolute; left:0; right:0; top:0; height:340px; z-index:-1; pointer-events:none; background:radial-gradient(ellipse 50% 100% at 78% 0%, rgba(139,92,246,.16), transparent 70%), radial-gradient(ellipse 40% 80% at 18% 0%, rgba(52,217,201,.12), transparent 70%);}
+  .visit-grid{display:grid; grid-template-columns:minmax(0,5fr) minmax(0,6fr); gap:72px; align-items:start;}
+  .visit-copy > p:not(.eyebrow){color:var(--muted); margin-top:20px; max-width:26em;}
+  .info{margin-top:36px; border-top:1px solid var(--line);}
+  .info div{display:grid; grid-template-columns:110px minmax(0,1fr); gap:14px; align-items:center; min-height:60px; padding:8px 0; border-bottom:1px solid var(--line);}
+  .info dt{font-size:14px; letter-spacing:.08em; text-transform:uppercase; color:var(--teal);}
+  .info dd a{display:inline-flex; align-items:center; gap:6px; min-height:44px; text-decoration:underline; text-decoration-color:var(--ctl); text-underline-offset:6px;}
+  .info dd a:hover{text-decoration-color:var(--teal);}
+  .form{padding:40px; border:1px solid var(--line); border-radius:28px; background:var(--panel); scroll-margin-top:16px;}
+  .form-title{font-family:'Petrona',Georgia,serif; font-style:italic; font-size:28px; line-height:1.2;}
+  .field{margin-top:20px;}
+  .field label{display:block; font-size:15px; font-weight:500; margin-bottom:6px;}
+  .field .opt{color:var(--muted); font-weight:400;}
+  .field input, .field select, .field textarea{width:100%; min-height:50px; padding:0 16px; border:1px solid var(--ctl); border-radius:14px; background:var(--bg); color:var(--text); font:400 16px 'Work Sans',system-ui,sans-serif;}
+  .field textarea{min-height:104px; padding:12px 16px; resize:vertical; line-height:1.5;}
+  .field select{appearance:none; -webkit-appearance:none; padding-right:44px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E8ECF5' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:18px;}
+  .field input:hover, .field select:hover, .field textarea:hover{border-color:var(--muted);}
+  .form .btn{width:100%; margin-top:26px;}
+  .form-note{margin-top:14px; font-size:16px; color:var(--muted);}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
-  .contact-card{padding:40px;}
-  .info-row{display:flex; gap:14px; padding:16px 0; border-bottom:1px solid var(--line);}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-size:11.5px; text-transform:uppercase; letter-spacing:0.06em; color:var(--teal); flex-shrink:0; font-family:'Work Sans',sans-serif;}
-  .info-row .val{font-size:14px; font-family:'Work Sans',sans-serif; font-weight:400;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:1px solid var(--line); background:rgba(255,255,255,0.05); border-radius:14px; padding:14px 16px; font-family:'Work Sans',sans-serif; font-size:14px; color:var(--text);}
-  .form input::placeholder, .form textarea::placeholder{color:var(--muted);}
-  .form button{background:linear-gradient(120deg,var(--teal),var(--violet)); color:#0B1220; border:none; padding:15px; border-radius:14px; font-size:13.5px; font-weight:600; cursor:pointer; font-family:'Work Sans',sans-serif;}
+  footer{border-top:1px solid var(--line);}
+  .foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; padding-top:28px; padding-bottom:36px; font-size:14px; color:var(--muted);}
 
-  footer{padding:32px 0; font-size:12.5px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-family:'Work Sans',sans-serif;}
+  .wa-float{display:none; position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#1FA855; align-items:center; justify-content:center; box-shadow:0 12px 30px rgba(0,0,0,0.4); text-decoration:none;}
+  .wa-float svg{width:26px; height:26px; fill:#fff;}
+  @media (min-width:1320px){ .wa-float{display:flex;} }
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 12px 30px rgba(0,0,0,0.4); text-decoration:none;}
-  .wa-float svg{width:26px; height:26px; fill:white;}
-
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal{opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} .sky{animation:none;} }
 
+  @media (max-width:1023px){
+    .habit:nth-child(2){margin-left:10%;}
+    .habit:nth-child(3){margin-left:20%;}
+    .dentist-grid, .visit-grid{gap:48px;}
+  }
   @media (max-width:900px){
     .nav-links{display:none;}
-    .svc-grid{grid-template-columns:1fr;}
-    .about-grid{grid-template-columns:1fr;}
-    .about-photo{border-right:none; border-bottom:1px solid var(--line); min-height:240px;}
-    .contact-grid{grid-template-columns:1fr;}
+    .approach-head, .dentist-grid, .visit-grid{grid-template-columns:minmax(0,1fr);}
+    .room-fig{max-width:560px;}
+    main > section{padding:88px 0;}
   }
+  @media (max-width:720px){
+    .btn-nav{display:none;}
+    .wrap{padding-left:18px; padding-right:18px;}
+    .nav{min-height:72px;}
+    .hero{min-height:0; padding:128px 0 72px;}
+    .hero h1{font-size:clamp(40px,11.6vw,56px);}
+    .lede{font-size:18px;}
+    .scrim{background:radial-gradient(ellipse 120% 70% at 30% 78%, rgba(11,18,32,.94) 0 45%, rgba(11,18,32,.55) 70%, transparent 90%), linear-gradient(180deg, transparent 55%, var(--bg) 100%);}
+    main > section{padding:72px 0;}
+    .habits{margin-top:40px;}
+    .habit, .habit:nth-child(2), .habit:nth-child(3){margin-left:0; max-width:none; grid-template-columns:44px minmax(0,1fr); gap:18px; padding:24px 0;}
+    .habit-ic{width:44px; height:44px;}
+    .habit-ic svg{width:22px; height:22px;}
+    .habit h3{font-size:24px;}
+    .stats{grid-template-columns:repeat(3,auto); gap:16px 24px;}
+    .stats dd{font-size:30px;}
+    .info div{grid-template-columns:minmax(0,1fr); gap:0; padding:10px 0;}
+    .form{padding:28px 20px; scroll-margin-top:12px;}
+  }
+  @media (max-width:380px){
+    .stats{grid-template-columns:repeat(2,auto);}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#111A2E;--nc-fg:#E8ECF5;--nc-accent:#6FE3D5;--nc-on-accent:#111A2E;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<div class="aurora-wrap">
-  <div class="aurora-band a1"></div>
-  <div class="aurora-band a2"></div>
-  <div class="aurora-band a3"></div>
-</div>
-
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><div class="logo-orb"></div>Aurora Calm Dental</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-aurora" href="#contact">Book gently</a>
-  </div>
-</nav>
-
-<header class="wrap hero reveal">
-  <span class="eyebrow">Sriperumbudur · Anxiety-Friendly Dentistry</span>
-  <h1>For everyone who's been putting it off.</h1>
-  <p>Sedation options, slower pacing, and a dentist who explains before doing anything — built for people who genuinely dread the chair.</p>
-  <div class="hero-ctas">
-    <a class="btn-primary" href="#contact">Book a calm visit</a>
-    <a class="btn-ghost" href="#services">See our approach</a>
-  </div>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top"><svg viewBox="0 0 30 30" aria-hidden="true"><circle cx="15" cy="15" r="13" fill="#121B30" stroke="#33436A"/><path d="M5 17c4-6 9-9 20-10" fill="none" stroke="#6FE3D5" stroke-width="2.4" stroke-linecap="round"/><path d="M6 21c5-5 10-7 19-8" fill="none" stroke="#C9B8FF" stroke-width="2" stroke-linecap="round" opacity=".85"/></svg>Aurora Calm Dental</a>
+    <div class="nav-links">
+      <a href="#approach">Our approach</a>
+      <a href="#dentist">The dentist</a>
+      <a href="#visit">Visit</a>
+    </div>
+    <a class="btn btn-nav" href="#book">Request a visit</a>
+  </nav>
 </header>
 
-<section class="wrap" id="services">
-  <div class="sec-head reveal"><span class="eyebrow">Our Approach</span><h2>Care, paced to you.</h2></div>
-  <div class="svc-grid reveal">
-    <div class="svc-card glass"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 22c5-4 9-8 9-13a9 9 0 1 0-18 0c0 5 4 9 9 13Z"/></svg></div><h3>Sedation options</h3><p>Nitrous oxide or oral sedation, explained and offered upfront — never assumed.</p></div>
-    <div class="svc-card glass"><div class="svc-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></div><h3>Longer appointments</h3><p>Slots are booked longer than average, so nothing ever feels rushed.</p></div>
-    <div class="svc-card glass"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div><h3>Full explanations</h3><p>Every step is talked through before it happens, and you can pause anytime.</p></div>
+<main id="top">
+<div class="hero" data-signature="aurora-cursor">
+  <div class="sky" aria-hidden="true"><i class="band b1"></i><i class="band b2"></i><i class="band b3"></i></div>
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Sriperumbudur · For nervous patients</p>
+    <h1>For everyone who’s been putting it off.</h1>
+    <p class="lede">Sedation if you want it, longer appointments, and a dentist who explains each step before doing it.</p>
+    <div class="hero-ctas">
+      <a class="btn" href="#book">Request a visit</a>
+      <a class="text-link" href="#approach">How visits work</a>
+    </div>
+    <p class="hero-facts">Mon–Sat, 10 AM – 6 PM · SIPCOT, Sriperumbudur</p>
+  </div>
+</div>
+
+<section id="approach" aria-labelledby="approach-title">
+  <div class="wrap">
+    <div class="approach-head reveal">
+      <div><p class="eyebrow">Our approach</p><h2 id="approach-title">Care, paced to you.</h2></div>
+      <p>Three habits we keep at every visit, whatever the treatment.</p>
+    </div>
+    <ol class="habits">
+      <li class="habit reveal">
+        <span class="habit-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><g transform="rotate(-40 12 12)"><rect x="3" y="8.25" width="18" height="7.5" rx="3.75"/><path d="M12 8.25v7.5"/></g></svg></span>
+        <div><h3>Sedation, only if you want it</h3><p>Nitrous oxide or oral sedation, explained before the visit and never assumed. Your dentist checks first that it suits you.</p></div>
+      </li>
+      <li class="habit reveal">
+        <span class="habit-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7v5l3.5 2"/></svg></span>
+        <div><h3>An hour, at least</h3><p>Each appointment is booked for at least 60 minutes, even a check-up.</p></div>
+      </li>
+      <li class="habit reveal">
+        <span class="habit-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 13.5V6.2a1.4 1.4 0 0 1 2.8 0v5.3"/><path d="M10.8 11.5V4.7a1.4 1.4 0 0 1 2.8 0v6.8"/><path d="M13.6 11.5V5.9a1.4 1.4 0 0 1 2.8 0v6.6"/><path d="M16.4 12V8.6a1.4 1.4 0 0 1 2.8 0v5.2c0 4-2.8 7.2-6.8 7.2h-.6c-2.2 0-3.6-.9-4.9-2.6l-2.6-3.5a1.4 1.4 0 0 1 2.1-1.8L8 13.5"/></svg></span>
+        <div><h3>Nothing without a word first</h3><p>Each step is explained before it happens. Raise a hand at any point and we stop.</p></div>
+      </li>
+    </ol>
   </div>
 </section>
 
-<section class="wrap" id="about">
-  <div class="about-grid glass reveal">
-    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Calming treatment room photo</span></div>
-    <div class="about-copy">
-      <span class="eyebrow">The Dentist</span>
-      <h3 style="margin-top:12px;">Dr. [Name], BDS — trained specifically in anxiety-managed care.</h3>
-      <p>After years of watching patients delay treatment out of fear, Dr. [Name] built a practice around slowing down: dimmer lighting, noise-cancelling headphones on request, and a strict no-surprise rule for every procedure.</p>
-      <div class="stat-row">
-        <div class="mini-glass"><b>60 min</b><span>Minimum slot length</span></div>
-        <div class="mini-glass"><b>6 yrs</b><span>Anxiety-focused practice</span></div>
-        <div class="mini-glass"><b>4.9 ★</b><span>Google rating</span></div>
+<section class="dentist" id="dentist" aria-labelledby="dentist-title">
+  <div class="wrap dentist-grid">
+    <figure class="room-fig reveal">
+      <svg class="room" viewBox="0 0 400 320" role="img" aria-labelledby="room-t"><title id="room-t">Illustration of a treatment room with the lights dimmed: a reclined chair under a low lamp, headphones on a side table and a window at night.</title>
+<defs>
+<radialGradient id="lampGlow"><stop offset="0" stop-color="#FFD59A" stop-opacity=".26"/><stop offset=".6" stop-color="#FFD59A" stop-opacity=".09"/><stop offset="1" stop-color="#FFD59A" stop-opacity="0"/></radialGradient>
+<clipPath id="winClip"><rect x="36" y="38" width="114" height="88" rx="9"/></clipPath>
+<filter id="soft" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="5"/></filter>
+</defs>
+<rect class="r-wall" x="0" y="0" width="400" height="320"/>
+<rect class="r-win" x="34" y="36" width="118" height="92" rx="10"/>
+<g clip-path="url(#winClip)"><g filter="url(#soft)">
+<path d="M30 96c26-30 60-46 124-52v14c-58 6-92 20-124 52Z" fill="#34D9C9" opacity=".55"/>
+<path d="M30 74c34-22 70-32 124-34v12c-50 2-88 12-124 36Z" fill="#8B5CF6" opacity=".45"/>
+</g></g>
+<path class="r-frame" d="M93 36v92M34 82h118"/>
+<path class="r-floor" d="M0 282h400"/>
+<ellipse cx="236" cy="196" rx="156" ry="112" fill="url(#lampGlow)"/>
+<path class="r-arm" d="M376 0v36c0 14-8 22-22 26l-92 26"/>
+<rect class="r-lamp" x="214" y="80" width="56" height="22" rx="11" transform="rotate(-16 242 91)"/>
+<path class="r-base" d="M196 282h76"/>
+<path class="r-post" d="M236 232l-4 50"/>
+<path class="r-chair" d="M84 170 190 224 284 220c18 0 32 8 42 26"/>
+<path class="r-hint" d="M92 165l12 6M118 179l68 33M196 212l84-3"/>
+<path class="r-table" d="M330 214h56M342 214v68M374 214v68"/>
+<path class="r-phones" d="M344 210c0-14 8-22 15-22s15 8 15 22"/>
+<rect class="r-cup" x="339" y="200" width="9" height="14" rx="4"/>
+<rect class="r-cup" x="370" y="200" width="9" height="14" rx="4"/>
+<path class="r-pot" d="M30 282l-5-30h34l-5 30Z"/>
+<path class="r-leaf" d="M42 252c-2-16-12-26-24-30 2 14 10 24 24 30ZM42 252c2-20 12-32 26-36-2 18-12 30-26 36ZM42 252c0-22-4-36-12-44-4 16 0 32 12 44Z"/>
+</svg>
+      <figcaption>Treatment room with the lights dimmed. Illustration.</figcaption>
+    </figure>
+    <div class="dentist-copy reveal">
+      <p class="eyebrow">The dentist</p>
+      <h2 id="dentist-title">Dr. Arun Prakash, BDS</h2>
+      <p>In his treatment room the lights stay dim, noise-cancelling headphones are there if you ask, and no procedure starts as a surprise.</p>
+      <dl class="stats">
+        <div><dt>Shortest slot</dt><dd>60 min</dd></div>
+        <div><dt>Anxiety-focused practice</dt><dd>6 yrs</dd></div>
+        <div><dt>Google rating</dt><dd>4.9 ★</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit" aria-labelledby="visit-title">
+  <div class="wrap visit-grid">
+    <div class="visit-copy reveal">
+      <p class="eyebrow">Visit</p>
+      <h2 id="visit-title">Find us in SIPCOT, Sriperumbudur.</h2>
+      <p>Tell us anything that would help us prepare. A short note is fine, and so is none.</p>
+      <dl class="info">
+        <div><dt>Address</dt><dd>SIPCOT Industrial Area, Sriperumbudur 602105</dd></div>
+        <div><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></dd></div>
+        <div><dt>Hours</dt><dd>Mon–Sat, 10 AM – 6 PM</dd></div>
+        <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Message on WhatsApp <span aria-hidden="true">→</span></a></dd></div>
+      </dl>
+    </div>
+    <form class="form" id="book" action="mailto:?subject=Visit%20request" method="post" enctype="text/plain">
+      <p class="form-title">Ask for a visit</p>
+      <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+      <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
+      <div class="field"><label for="f-when">Preferred time</label>
+        <select id="f-when" name="when">
+          <option>Morning</option>
+          <option>Afternoon</option>
+          <option>Either is fine</option>
+        </select>
       </div>
-    </div>
-  </div>
-</section>
-
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><span class="eyebrow">Visit</span><h2>Take the first step, gently.</h2></div>
-  <div class="contact-grid reveal">
-    <div class="contact-card glass">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">SIPCOT Industrial Area, Sriperumbudur 602105</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 10 AM – 6 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--teal);">Message us quietly →</a></div></div>
-    </div>
-    <form class="contact-card glass form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nAnything we should know: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="3" placeholder="Anything that would help us prepare?"></textarea>
-      <button type="submit">Book gently</button>
+      <div class="field"><label for="f-note">Anything we should know? <span class="opt">(optional)</span></label><textarea id="f-note" name="note" rows="3"></textarea></div>
+      <button class="btn" type="submit">Send request</button>
+      <p class="form-note">This opens your email app with your details. It asks for a visit; it does not book one.</p>
     </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap">
-  <span>© 2026 Aurora Calm Dental, Sriperumbudur.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Aurora Calm Dental, Sriperumbudur.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal (content is visible without JS; see the noscript rule).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Signature: aurora-cursor. With a mouse or pen over the hero (header included), each band eases a little toward the pointer
+  // (nearer bands move more), then rAF stops once they settle. Keyboard focus on a hero link pulls the bands
+  // toward that link. Touch is ignored (the aurora stays put), work stops while the hero is off screen, and
+  // under reduced motion nothing moves.
+  (function(){
+    var hero = document.querySelector('[data-signature="aurora-cursor"]');
+    if(!hero || !window.requestAnimationFrame) return;
+    var calm = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var fine = window.matchMedia ? matchMedia('(hover: hover) and (pointer: fine)') : null;   // phones keep a still sky
+    var bands = [].slice.call(hero.querySelectorAll('.band'));
+    var REST = bands.map(function(b){ return getComputedStyle(b).transform === 'none' ? '' : getComputedStyle(b).transform; });
+    var K = [{x:.11, y:.05}, {x:.075, y:.035}, {x:.045, y:.02}];   // share of the pointer offset each band follows
+    var cur = bands.map(function(){ return {x:0, y:0}; });
+    var tx = 0, ty = 0, raf = 0, last = 0, onScreen = true;
+
+    function quiet(){ return !!(calm && calm.matches); }
+    function aim(px, py, r){
+      r = r || hero.getBoundingClientRect();
+      tx = Math.max(-1, Math.min(1, (px - r.left - r.width / 2) / (r.width / 2))) * r.width / 2;
+      ty = Math.max(-1, Math.min(1, (py - r.top - r.height / 2) / (r.height / 2))) * r.height / 2;
+      kick();
+    }
+    function rest(){ tx = 0; ty = 0; kick(); }
+    function kick(){ if(!raf && onScreen && !quiet()){ last = 0; raf = requestAnimationFrame(step); } }
+    function step(t){
+      raf = 0;
+      var dt = last ? Math.min(64, t - last) : 16.7; last = t;
+      var ease = 1 - Math.pow(1 - 0.045, dt / 16.7), moving = false;
+      bands.forEach(function(b, i){
+        var gx = tx * K[i].x, gy = ty * K[i].y, c = cur[i];
+        c.x += (gx - c.x) * ease; c.y += (gy - c.y) * ease;
+        if(Math.abs(gx - c.x) > 0.15 || Math.abs(gy - c.y) > 0.15) moving = true; else { c.x = gx; c.y = gy; }
+        b.style.transform = 'translate3d(' + c.x.toFixed(2) + 'px,' + c.y.toFixed(2) + 'px,0) ' + REST[i];
+      });
+      if(moving && onScreen) raf = requestAnimationFrame(step);
+    }
+    function reset(){
+      if(raf){ cancelAnimationFrame(raf); raf = 0; }
+      tx = ty = 0;
+      bands.forEach(function(b, i){ cur[i].x = cur[i].y = 0; b.style.transform = ''; });
+    }
+
+    // The header floats over the hero, so listen on the document and act while the pointer is inside the hero.
+    document.addEventListener('pointermove', function(e){
+      if(e.pointerType === 'touch' || !onScreen || quiet() || (fine && !fine.matches)) return;
+      var r = hero.getBoundingClientRect();
+      if(e.clientY >= r.top && e.clientY <= r.bottom) aim(e.clientX, e.clientY, r); else if(tx || ty) rest();
+    }, {passive:true});
+    document.documentElement.addEventListener('pointerleave', function(e){ if(e.pointerType !== 'touch') rest(); });
+    hero.addEventListener('focusin', function(e){ var r = e.target.getBoundingClientRect(); aim(r.left + r.width / 2, r.top + r.height / 2); });
+    hero.addEventListener('focusout', function(e){ if(!hero.contains(e.relatedTarget)) rest(); });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){
+        onScreen = es[0].isIntersecting;
+        if(!onScreen && raf){ cancelAnimationFrame(raf); raf = 0; }
+        if(onScreen) kick();
+      }).observe(hero);
+    }
+    if(calm && calm.addEventListener) calm.addEventListener('change', function(){ if(quiet()) reset(); });
+    if(quiet()) reset();
+  })();
+
+  // Visit request: tidy email body when JS is on; without JS the form still posts as mailto.
+  (function(){
+    var f = document.getElementById('book');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var body = 'Name: ' + f.elements.name.value + '\nPhone: ' + f.elements.phone.value + '\nPreferred time: ' + f.elements.when.value
+        + (f.elements.note.value ? '\nNote: ' + f.elements.note.value : '');
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('Visit request') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>

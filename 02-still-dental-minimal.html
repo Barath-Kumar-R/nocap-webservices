@@ -3,177 +3,343 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Still Dental Studio — Sriperumbudur</title>
+<title>Still Dental Studio · Sriperumbudur</title>
+<meta name="description" content="Still Dental Studio, a fictional one-dentist practice in Sriperumbudur, in a quiet minimal style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Karla:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script>
+  // type-reveal: hold the headline lines below their masks only when JS runs and motion is allowed.
+  // The reveal script at the end of the page lets them rise; the timeout makes sure they never stay hidden.
+  if (window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches && document.documentElement.animate) {
+    document.documentElement.classList.add('tr-pending');
+    setTimeout(function () { document.documentElement.classList.remove('tr-pending'); }, 2500);
+  }
+</script>
 <style>
-  :root{ --bg:#FAFAF9; --ink:#17171A; --accent:#4A5C56; --line:#EAE8E2; --muted:#8C8C86; }
+  :root{ --bg:#FAFAF9; --ink:#17171A; --accent:#4A5C56; --line:#E4E2DB; --muted:#66665F; --tint:#F1F0EB; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Karla',sans-serif; background:var(--bg); color:var(--ink); font-weight:300; -webkit-font-smoothing:antialiased;}
-  .serif{font-family:'Instrument Serif',serif; font-weight:400;}
-  .serif.i{font-style:italic;}
+  body{font-family:'Karla',sans-serif; font-size:17px; line-height:1.7; background:var(--bg); color:var(--ink); font-weight:400; -webkit-font-smoothing:antialiased;}
+  .serif, h1, h2{font-family:'Instrument Serif',Georgia,serif; font-weight:400;}
+  em{font-style:italic;}
+  p{text-wrap:pretty;}
+  h2{text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:820px; margin:0 auto; padding:0 32px;}
-  .wide{max-width:1080px; margin:0 auto; padding:0 32px;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
 
-  nav{padding:40px 0;}
-  .nav-inner{max-width:1080px; margin:0 auto; padding:0 32px; display:flex; justify-content:space-between; align-items:center;}
-  .logo{font-family:'Instrument Serif',serif; font-size:22px; letter-spacing:0.01em;}
-  .nav-links{display:flex; gap:36px; font-size:13.5px; letter-spacing:0.02em;}
-  .nav-links a{text-decoration:none; color:var(--muted);}
+  /* Nav */
+  nav{padding:36px 0 0;}
+  .nav-inner{display:flex; justify-content:space-between; align-items:center;}
+  .logo{display:inline-flex; align-items:center; min-height:44px; font-family:'Instrument Serif',serif; font-size:24px; letter-spacing:0.01em; text-decoration:none;}
+  .nav-links{display:flex; gap:12px;}
+  .nav-links a{text-decoration:none; color:var(--muted); font-size:16px; padding:10px 12px;}
   .nav-links a:hover{color:var(--ink);}
 
-  .hero{padding:110px 0 140px;}
-  .hero .k{font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:28px; display:block;}
-  .hero h1{font-size:clamp(42px,7vw,84px); line-height:1.06; letter-spacing:-0.01em;}
-  .hero p{margin-top:36px; font-size:18px; line-height:1.8; color:var(--muted); max-width:520px;}
-  .hero-links{margin-top:48px; display:flex; gap:36px; align-items:center;}
-  .hero-links a{text-decoration:none; font-size:14.5px; border-bottom:1px solid var(--ink); padding-bottom:3px;}
-  .hero-links .ghost{border-bottom:1px solid var(--line); color:var(--muted);}
+  /* Editorial grid: a narrow label rail on the left, content on the right */
+  .row{display:grid; grid-template-columns:200px minmax(0,1fr); column-gap:56px;}
+  .rail{font-size:14px; letter-spacing:0.12em; text-transform:uppercase; color:var(--accent); font-weight:500; padding-top:14px;}
+
+  /* Hero */
+  .hero{padding:120px 0 128px;}
+  .hero .rail{padding-top:26px; line-height:1.9;}
+  .type{font-size:clamp(50px,7.4vw,96px); line-height:1.02; letter-spacing:-0.012em;}
+  .type .ln{display:block; overflow:hidden; padding:0 .14em .14em .08em; margin:0 0 -.14em -.08em;}
+  .type .ln > span{display:inline-block;}
+  .type em{color:var(--accent);}
+  .tr-pending .type .ln > span{transform:translateY(112%);}
+  .hero p{margin-top:40px; font-size:19px; line-height:1.75; color:var(--muted); max-width:520px;}
+  .hero-links{margin-top:44px; display:flex; gap:32px; align-items:center; flex-wrap:wrap;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; min-height:50px; padding:0 30px; background:var(--ink); color:var(--bg); text-decoration:none; font-size:16px; font-weight:500; letter-spacing:0.02em; border:1px solid var(--ink); cursor:pointer; font-family:inherit;}
+  .btn:hover{background:#2B2B30;}
+  .quiet{display:inline-flex; align-items:center; min-height:44px; text-decoration:none; color:var(--muted); border-bottom:1px solid var(--line);}
+  .quiet:hover{color:var(--ink); border-bottom-color:var(--ink);}
 
   .rule{border:none; border-top:1px solid var(--line); margin:0;}
+  section{padding:104px 0;}
+  h2{font-size:clamp(30px,3.6vw,44px); line-height:1.22; max-width:720px;}
+  h2 em{color:var(--accent);}
+  .lede{margin-top:22px; color:var(--muted); max-width:560px;}
 
-  section{padding:100px 0;}
-  .label{font-size:12.5px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:20px;}
-  .statement{font-size:clamp(24px,3.4vw,38px); line-height:1.4; max-width:760px; font-family:'Instrument Serif',serif;}
-  .statement em{font-style:italic; color:var(--accent);}
+  /* A day at the studio: appointments placed on a 10 AM to 6 PM line, half-hour columns */
+  .day{grid-column:1/-1; margin-top:72px;}
+  .day-head{display:flex; justify-content:space-between; align-items:baseline; gap:16px; font-size:15px; color:var(--muted); margin-bottom:18px;}
+  .day-head b{font-family:'Instrument Serif',serif; font-weight:400; font-size:22px; color:var(--ink);}
+  .slots{list-style:none; display:grid; grid-template-columns:repeat(16,minmax(0,1fr)); column-gap:4px; border-bottom:1px solid var(--ink); padding-bottom:10px;}
+  .slots li{grid-row:1; background:var(--tint); border-top:2px solid var(--accent); padding:12px 10px 14px; min-height:88px; display:flex; flex-direction:column; gap:2px; font-size:15px; line-height:1.35;}
+  .slots time{color:var(--muted); font-size:14px; font-variant-numeric:tabular-nums;}
+  .ticks{position:relative; height:28px; margin-top:8px; font-size:14px; color:var(--muted); font-variant-numeric:tabular-nums;}
+  .ticks span{position:absolute; top:0; transform:translateX(-50%); white-space:nowrap;}
+  .ticks span:first-child{transform:none;}
+  .ticks span:last-child{transform:translateX(-100%);}
+  .day-note{margin-top:14px; font-size:15px; color:var(--muted);}
 
-  .photo-block{margin-top:70px; height:420px; max-width:1080px; margin-left:auto; margin-right:auto; background:repeating-linear-gradient(135deg,#F0EFEB,#F0EFEB 14px,#E7E5DE 14px,#E7E5DE 15px); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .photo-block svg{width:28px; height:28px; stroke:#A6A69E; fill:none; stroke-width:1.2;}
-  .photo-block span{font-size:11px; color:#A6A69E; text-transform:uppercase; letter-spacing:0.06em;}
+  /* Services */
+  .svc{list-style:none; margin-top:52px; border-top:1px solid var(--line);}
+  .svc li{display:grid; grid-template-columns:56px minmax(0,1fr) auto; align-items:baseline; gap:24px; padding:26px 0; border-bottom:1px solid var(--line);}
+  .svc .num{font-family:'Instrument Serif',serif; font-size:18px; color:var(--muted);}
+  .svc h3{font-size:19px; font-weight:500;}
+  .svc p{font-size:16px; color:var(--muted); margin-top:4px; line-height:1.6; max-width:460px;}
+  .svc .price{font-family:'Instrument Serif',serif; font-size:24px; white-space:nowrap;}
+  .svc .price small{font-family:'Karla',sans-serif; font-size:15px; color:var(--muted); margin-right:6px;}
 
-  .services-list{margin-top:56px; display:flex; flex-direction:column;}
-  .svc-row{display:grid; grid-template-columns:64px 1fr auto; align-items:baseline; gap:24px; padding:28px 0; border-bottom:1px solid var(--line);}
-  .svc-row:first-child{border-top:1px solid var(--line);}
-  .svc-row .num{font-family:'Instrument Serif',serif; font-size:16px; color:var(--muted);}
-  .svc-row h3{font-family:'Karla',sans-serif; font-size:18px; font-weight:500;}
-  .svc-row p{font-size:13.5px; color:var(--muted); margin-top:6px; font-weight:300; line-height:1.6; max-width:440px;}
-  .svc-row .price{font-family:'Instrument Serif',serif; font-size:20px; white-space:nowrap;}
+  /* Dentist */
+  .years{font-family:'Instrument Serif',serif; font-size:clamp(120px,14vw,190px); line-height:.82; color:var(--ink); letter-spacing:-0.02em; margin-top:18px; text-transform:none;}
+  .years-cap{display:block; margin-top:14px; font-size:14px; letter-spacing:0.12em; color:var(--muted); line-height:1.6;}
+  .dentist p{margin-top:22px; color:var(--muted); max-width:580px;}
+  .sig{margin-top:36px; font-family:'Instrument Serif',serif; font-style:italic; font-size:24px; color:var(--ink);}
+  .sig span{display:block; font-family:'Karla',sans-serif; font-style:normal; font-size:15px; color:var(--muted); margin-top:4px;}
 
-  .about-sec{display:grid; grid-template-columns:0.8fr 1.2fr; gap:80px; align-items:center;}
-  .about-photo{height:460px; background:repeating-linear-gradient(135deg,#F0EFEB,#F0EFEB 14px,#E7E5DE 14px,#E7E5DE 15px); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .about-photo svg{width:28px; height:28px; stroke:#A6A69E; fill:none; stroke-width:1.2;}
-  .about-photo span{font-size:11px; color:#A6A69E; text-transform:uppercase; letter-spacing:0.06em;}
-  .about-copy h3{font-family:'Instrument Serif',serif; font-size:30px; font-weight:400; line-height:1.35; margin-bottom:22px;}
-  .about-copy p{font-size:15.5px; color:var(--muted); line-height:1.85; font-weight:300;}
-  .sig{margin-top:32px; font-family:'Instrument Serif',serif; font-style:italic; font-size:19px;}
-  .sig span{display:block; font-family:'Karla',sans-serif; font-style:normal; font-size:12px; color:var(--muted); margin-top:4px; letter-spacing:0.04em;}
+  /* Visit */
+  .visit-grid{margin-top:56px; display:grid; grid-template-columns:1fr 1fr; gap:64px;}
+  .info{list-style:none; border-top:1px solid var(--line);}
+  .info li{padding:9px 0; min-height:64px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; gap:20px; font-size:16px;}
+  .info .k{color:var(--muted);}
+  .info span:last-child{text-align:right;}
+  .info a{display:inline-flex; align-items:center; min-height:44px; text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:4px;}
+  .form{display:flex; flex-direction:column; gap:10px;}
+  .form label{font-size:15px; color:var(--muted); margin-top:8px;}
+  .form input, .form textarea{width:calc(100% + 24px); margin:0 -12px; border:none; border-bottom:1px solid var(--line); background:transparent; padding:12px 12px; font-family:'Karla',sans-serif; font-size:17px; color:var(--ink); resize:vertical;}
+  /* the shared focus ring frames the field, so the focused field only needs the tint */
+  .form input:focus, .form textarea:focus{outline:none; border-bottom-color:transparent; background:var(--tint);}
+  .form .btn{margin-top:28px; align-self:flex-start;}
+  .form .note{font-size:15px; color:var(--muted); margin-top:4px;}
 
-  .contact-sec{text-align:left;}
-  .contact-grid{margin-top:60px; display:grid; grid-template-columns:1fr 1fr; gap:60px;}
-  .info-line{padding:20px 0; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; font-size:14.5px;}
-  .info-line .k2{color:var(--muted);}
-  .form{display:flex; flex-direction:column; gap:0;}
-  .form input, .form textarea{border:none; border-bottom:1px solid var(--line); background:transparent; padding:16px 0; font-family:'Karla',sans-serif; font-size:15px; font-weight:300;}
-  .form input:focus, .form textarea:focus{outline:none; border-bottom-color:var(--ink);}
-  .form button{margin-top:28px; background:none; border:1px solid var(--ink); padding:15px; font-size:13.5px; letter-spacing:0.04em; cursor:pointer; width:fit-content; padding-left:32px; padding-right:32px;}
+  footer{padding:44px 0 56px;}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; font-size:14px; color:var(--muted);}
 
-  footer{padding:50px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:12.5px; color:var(--muted); max-width:1080px; margin:0 auto; padding-left:32px; padding-right:32px;}
-
-  .wa-float{position:fixed; bottom:30px; right:30px; z-index:90; width:50px; height:50px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; text-decoration:none;}
+  .wa-float{position:fixed; bottom:30px; right:30px; z-index:90; width:52px; height:52px; border-radius:50%; background:var(--ink); display:flex; align-items:center; justify-content:center; text-decoration:none;}
   .wa-float svg{width:22px; height:22px; fill:var(--bg);}
 
   .reveal{opacity:0; transform:translateY(10px); transition:opacity .6s ease, transform .6s ease;}
   .reveal.in{opacity:1; transform:none;}
   @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
-  @media (max-width:760px){
-    .nav-links{display:none;}
-    .about-sec{grid-template-columns:1fr; gap:40px;}
-    .contact-grid{grid-template-columns:1fr; gap:40px;}
-    .svc-row{grid-template-columns:1fr; gap:6px;}
+  @media (max-width:900px){
+    .row{grid-template-columns:1fr;}
+    .rail{padding-top:0; margin-bottom:22px;}
+    .hero .rail{padding-top:0;}
+    .years{font-size:120px; margin-top:20px;}
+    .years-cap{margin-bottom:12px;}
   }
+  @media (max-width:1080px){
+    /* too narrow for the time line: the day becomes a short list */
+    .day{grid-column:-2 / -1; margin-top:56px;}
+    .day-head{max-width:560px;}
+    .slots{display:block; border-bottom:none; padding:0; border-top:1px solid var(--line); max-width:560px;}
+    .slots li{display:grid; grid-template-columns:130px 1fr; min-height:0; padding:14px 0; background:none; border-top:none; border-bottom:1px solid var(--line); font-size:16px;}
+    .slots time{font-size:15px;}
+    .ticks{display:none;}
+  }
+  @media (max-width:760px){
+    .wrap{padding:0 24px;}
+    nav{padding-top:24px;}
+    .nav-links{display:none;}
+    .hero{padding:72px 0 80px;}
+    .hero p{font-size:18px; margin-top:28px;}
+    section{padding:72px 0;}
+    .visit-grid{grid-template-columns:1fr; gap:44px;}
+    .svc li{grid-template-columns:minmax(0,1fr) auto; gap:4px 16px;}
+    .svc .num{display:none;}
+    .info li{flex-direction:column; align-items:flex-start; gap:0; padding:12px 0;}
+    .info span:last-child{text-align:left;}
+    /* Phones get the call/book bar; WhatsApp stays in the Visit list. */
+    html body .wa-float{display:none;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    html:root{--nc-radius:0px;}
+    html .nc-bar{font-weight:500; letter-spacing:0.02em;}
+    html .nc-bar a{border-width:1px;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#FAFAF9;--nc-fg:#17171A;--nc-accent:#17171A;--nc-on-accent:#FAFAF9;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">Still Dental Studio</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">Dentist</a><a href="#contact">Visit</a></div>
+<nav aria-label="Main">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#top">Still Dental Studio</a>
+    <div class="nav-links"><a href="#services">Services</a><a href="#dentist">Dentist</a><a href="#contact">Visit</a></div>
   </div>
 </nav>
 
-<header class="wrap hero reveal">
-  <span class="k">Sriperumbudur · Solo Practice</span>
-  <h1>Dentistry, <span class="serif i">practiced quietly.</span></h1>
-  <p>One dentist, one chair, your full attention for the length of your visit. No hurry, no hand-off, no waiting room crowd.</p>
-  <div class="hero-links">
-    <a href="#contact">Book a visit</a>
-    <a class="ghost" href="#services">View services</a>
+<header class="hero" id="top">
+  <div class="wrap row">
+    <div class="rail">Sriperumbudur<br>Solo practice</div>
+    <div>
+      <h1 class="type" data-signature="type-reveal"><span class="ln"><span>Dentistry,</span></span><span class="ln"><span><em>practiced quietly.</em></span></span></h1>
+      <p>One dentist, one chair, and your full attention for the length of your visit. No hurry, no hand-off, no crowded waiting room.</p>
+      <div class="hero-links">
+        <a class="btn" href="#contact">Book a visit</a>
+        <a class="quiet" href="#services">See services and prices</a>
+      </div>
+    </div>
   </div>
 </header>
 
 <hr class="rule">
 
-<section class="wide reveal">
-  <div class="label">Philosophy</div>
-  <p class="statement">Most clinics optimise for how many patients fit in a day. <em>We optimise for how well we know each one.</em> A single dentist means every visit, every note and every follow-up stays with the same person — start to finish.</p>
-  <div class="photo-block"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Studio interior photo</span></div>
-</section>
-
-<hr class="rule">
-
-<section class="wrap reveal" id="services">
-  <div class="label">Services & Pricing</div>
-  <p class="statement">A short, deliberate list — <em>not everything, done well.</em></p>
-  <div class="services-list">
-    <div class="svc-row"><span class="num">01</span><div><h3>Consultation</h3><p>Full exam and a written plan, no obligation to proceed.</p></div><span class="price">₹400</span></div>
-    <div class="svc-row"><span class="num">02</span><div><h3>Cleaning</h3><p>Ultrasonic scaling, polish, and a home-care review.</p></div><span class="price">₹1,000</span></div>
-    <div class="svc-row"><span class="num">03</span><div><h3>Restorations</h3><p>Tooth-coloured fillings, matched to your shade.</p></div><span class="price">from ₹1,400</span></div>
-    <div class="svc-row"><span class="num">04</span><div><h3>Root Canal</h3><p>Single-visit where possible, crown quoted separately.</p></div><span class="price">from ₹5,500</span></div>
-    <div class="svc-row"><span class="num">05</span><div><h3>Whitening</h3><p>In-chair whitening, one session, visible same day.</p></div><span class="price">₹4,500</span></div>
-  </div>
-</section>
-
-<hr class="rule">
-
-<section class="wide about-sec reveal" id="about">
-  <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Dentist portrait</span></div>
-  <div class="about-copy">
-    <div class="label">The Dentist</div>
-    <h3>Dr. [Name], BDS — practicing in Sriperumbudur for eight years, seeing one patient at a time.</h3>
-    <p>Trained in general and cosmetic dentistry, with a deliberate choice to run a single-chair studio rather than scale up. Appointments are spaced generously so nothing feels rushed.</p>
-    <div class="sig">A quieter kind of care.<span>— Dr. [Name]</span></div>
-  </div>
-</section>
-
-<hr class="rule">
-
-<section class="wrap contact-sec reveal" id="contact">
-  <div class="label">Visit</div>
-  <p class="statement">Book a slot. <em>We'll hold it for you.</em></p>
-  <div class="contact-grid">
+<section class="reveal">
+  <div class="wrap row">
+    <div class="rail">Philosophy</div>
     <div>
-      <div class="info-line"><span class="k2">Address</span><span>Kancheepuram Road, Sriperumbudur 602105</span></div>
-      <div class="info-line"><span class="k2">Phone</span><span>+91 98XXX XXXXX</span></div>
-      <div class="info-line"><span class="k2">Hours</span><span>Tue–Sun, 10 AM – 6 PM</span></div>
-      <div class="info-line"><span class="k2">WhatsApp</span><span><a href="https://wa.me/9198XXXXXXXX" style="border-bottom:1px solid var(--ink);">Message directly →</a></span></div>
+      <h2>Most clinics plan for how many patients fit in a day. <em>We plan for how well we know each one.</em></h2>
+      <p class="lede">With one dentist, every visit, every note and every follow-up stays with the same person, from the first exam to the last check.</p>
     </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="2" placeholder="What brings you in?"></textarea>
-      <button type="submit">Request a slot</button>
-    </form>
+    <div class="day">
+      <div class="day-head"><b>A day at the studio</b><span>Tue–Sun</span></div>
+      <ol class="slots">
+        <li style="grid-column:1/3"><time>10:00–11:00</time>Consultation</li>
+        <li style="grid-column:4/6"><time>11:30–12:30</time>Cleaning</li>
+        <li style="grid-column:8/11"><time>1:30–3:00</time>Root canal</li>
+        <li style="grid-column:12/14"><time>3:30–4:30</time>Filling</li>
+        <li style="grid-column:15/17"><time>5:00–6:00</time>Consultation</li>
+      </ol>
+      <div class="ticks" aria-hidden="true"><span style="left:0">10 AM</span><span style="left:25%">12</span><span style="left:50%">2 PM</span><span style="left:75%">4</span><span style="left:100%">6 PM</span></div>
+      <p class="day-note">A handful of appointments, with room either side of each one.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="reveal" id="services">
+  <div class="wrap row">
+    <div class="rail">Services &amp; prices</div>
+    <div>
+      <h2>A short list, done well.</h2>
+      <ol class="svc">
+        <li><span class="num">01</span><div><h3>Consultation</h3><p>Full exam and a written plan, with no obligation to go ahead.</p></div><span class="price">₹400</span></li>
+        <li><span class="num">02</span><div><h3>Cleaning</h3><p>Ultrasonic scaling, polish, and a review of how you brush.</p></div><span class="price">₹1,000</span></li>
+        <li><span class="num">03</span><div><h3>Fillings</h3><p>Tooth-coloured, matched to your shade.</p></div><span class="price"><small>from</small>₹1,400</span></li>
+        <li><span class="num">04</span><div><h3>Root canal</h3><p>Single visit where possible. The crown is quoted separately.</p></div><span class="price"><small>from</small>₹5,500</span></li>
+        <li><span class="num">05</span><div><h3>Whitening</h3><p>One in-chair session. You see the change the same day.</p></div><span class="price">₹4,500</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="reveal" id="dentist">
+  <div class="wrap row">
+    <div class="rail">The dentist
+      <div class="years" aria-hidden="true">8</div>
+      <span class="years-cap">Years in<br>Sriperumbudur</span>
+    </div>
+    <div class="dentist">
+      <h2>Dr. Anitha Raman, BDS</h2>
+      <p>Eight years in Sriperumbudur, one patient at a time. Trained in general and cosmetic dentistry, she chose to run a single-chair studio rather than grow into a bigger clinic. Appointments are spaced out so nothing feels rushed, and you will see her at every visit.</p>
+      <p class="sig">A quieter kind of care.<span>Dr. Anitha Raman</span></p>
+    </div>
+  </div>
+</section>
+
+<hr class="rule">
+
+<section class="reveal" id="contact">
+  <div class="wrap row">
+    <div class="rail">Visit</div>
+    <div>
+      <h2>Book a slot. We'll hold it for you.</h2>
+      <div class="visit-grid">
+        <ul class="info">
+          <li><span class="k">Address</span><span>Kancheepuram Road, Sriperumbudur 602105</span></li>
+          <li><span class="k">Phone</span><span><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></span></li>
+          <li><span class="k">Hours</span><span>Tue–Sun, 10 AM – 6 PM</span></li>
+          <li><span class="k">WhatsApp</span><span><a href="https://wa.me/9198XXXXXXXX">Message directly</a></span></li>
+        </ul>
+        <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+          <label for="f-phone">Phone</label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel" required>
+          <label for="f-note">What brings you in?</label>
+          <textarea id="f-note" name="note" rows="2"></textarea>
+          <button class="btn" type="submit">Request a slot</button>
+          <p class="note">A few lines, written out in your mail app. Sending them reserves nothing yet.</p>
+        </form>
+      </div>
+    </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Still Dental Studio, Sriperumbudur.</span>
-  <span>Design portfolio piece · Not a live business</span>
+  <div class="wrap">
+    <span>© 2026 Still Dental Studio, Sriperumbudur.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal for the sections below the hero (visible without JS; see the noscript rule).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Signature: type-reveal. Once, on load, each headline line rises out from under its mask.
+  // Waits up to 350ms for the web font so the lines do not reflow mid-reveal. Skipped under reduced motion.
+  (function(){
+    var root = document.documentElement;
+    var h = document.querySelector('[data-signature="type-reveal"]');
+    if(!h || !root.classList.contains('tr-pending')) return;
+    var started = false;
+    function go(){
+      if(started) return; started = true;
+      var lines = h.querySelectorAll('.ln > span');
+      for(var i=0;i<lines.length;i++){
+        lines[i].animate([{transform:'translateY(112%)'},{transform:'translateY(0)'}],
+          {duration:580, delay:60 + i*140, easing:'cubic-bezier(.2,.75,.15,1)', fill:'backwards'});
+      }
+      root.classList.remove('tr-pending');
+    }
+    if(document.fonts && document.fonts.ready) document.fonts.ready.then(go, go);
+    setTimeout(go, 350);
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#contact">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>

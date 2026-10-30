@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bite Club Dental — Thirukalukundram</title>
+<title>Bite Club Dental · Thirukalukundram</title>
+<meta name="description" content="Bite Club Dental, a fictional no-fluff clinic in Thirukalukundram with a price for every procedure, in a neobrutalist style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -11,185 +12,456 @@
   :root{ --ink:#0A0A0A; --white:#FFFFFF; --yellow:#F5FF3D; --red:#FF3B30; --blue:#2F5CFF; --bg:#FFFDF4; }
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
-  body{font-family:'Space Mono',monospace; background:var(--bg); color:var(--ink);}
-  h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; line-height:1.1; text-transform:uppercase;}
+  body{font-family:'Space Mono',monospace; font-size:16px; line-height:1.65; background:var(--bg); color:var(--ink);}
+  h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; line-height:1.04; text-transform:uppercase; letter-spacing:-0.01em;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
-  .hard{border:4px solid var(--ink); box-shadow:8px 8px 0 var(--ink);}
+  .nowrap{white-space:nowrap;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 24px;}
 
-  nav{padding:20px 0; border-bottom:4px solid var(--ink); background:var(--white);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{font-family:'Archivo Black',sans-serif; font-size:20px; text-transform:uppercase; display:flex; align-items:center; gap:10px;}
-  .logo-box{width:34px; height:34px; background:var(--red); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center;}
-  .logo-box svg{width:18px; height:18px; stroke:white; fill:none; stroke-width:2;}
-  .nav-links{display:flex; gap:0; font-size:13px; font-weight:700; text-transform:uppercase;}
-  .nav-links a{text-decoration:none; color:var(--ink); padding:10px 18px; border-left:3px solid var(--ink);}
-  .btn-brut{background:var(--yellow); color:var(--ink); padding:11px 20px; border:3px solid var(--ink); font-family:'Space Mono',monospace; font-weight:700; font-size:13px; text-decoration:none; text-transform:uppercase;}
+  /* ---------- press: anything with a hard shadow sinks into it ---------- */
+  .btn, .pcard, .wa-float{--sh:6px; box-shadow:var(--sh) var(--sh) 0 var(--ink); transition:transform .08s ease-out, box-shadow .08s ease-out;}
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:56px; padding:0 26px; border:3px solid var(--ink); background:var(--yellow); color:var(--ink); font-family:'Archivo Black',sans-serif; font-size:17px; line-height:1.1; text-transform:uppercase; text-decoration:none; cursor:pointer; -webkit-tap-highlight-color:transparent;}
+  .btn svg{width:20px; height:20px; flex:none;}
+  @media (hover:hover){
+    .btn:hover, .pcard:hover, .wa-float:hover{transform:translate(-2px,-2px); box-shadow:calc(var(--sh) + 2px) calc(var(--sh) + 2px) 0 var(--ink);}
+  }
+  .btn:active, .btn.is-pressed, .wa-float:active, .wa-float.is-pressed,
+  .pcard:active, .pcard.is-pressed, .pcard.is-on{transform:translate(var(--sh),var(--sh)); box-shadow:0 0 0 var(--ink);}
+  /* :has() rules stay separate so a browser without :has() keeps the press rules above; there JS adds .is-on and .has-focus */
+  .pcard:has(input:active), .pcard:has(input:checked){transform:translate(var(--sh),var(--sh)); box-shadow:0 0 0 var(--ink);}
+  .btn:focus-visible, .wa-float:focus-visible{box-shadow:0 0 0 2px #fff, var(--sh) var(--sh) 0 var(--ink)!important;}
+  .btn:active:focus-visible, .btn.is-pressed:focus-visible, .wa-float.is-pressed:focus-visible{box-shadow:0 0 0 2px #fff!important;}
 
-  .hero{padding:64px 0; border-bottom:4px solid var(--ink);}
-  .hero-grid{display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:start;}
-  .tag{display:inline-block; background:var(--ink); color:var(--yellow); font-size:12px; font-weight:700; padding:6px 14px; text-transform:uppercase; margin-bottom:20px;}
-  .hero h1{font-size:clamp(34px,5vw,58px);}
-  .hero h1 mark{background:var(--red); color:white; padding:0 8px; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
-  .hero p{margin-top:22px; font-size:15px; line-height:1.8; max-width:460px;}
-  .hero-ctas{display:flex; gap:14px; margin-top:30px; flex-wrap:wrap;}
-  .btn-blk{background:var(--ink); color:white; padding:16px 26px; font-family:'Archivo Black',sans-serif; font-size:14px; text-decoration:none; border:3px solid var(--ink); text-transform:uppercase;}
-  .btn-out{background:var(--white); color:var(--ink); padding:16px 26px; font-family:'Archivo Black',sans-serif; font-size:14px; text-decoration:none; border:3px solid var(--ink); text-transform:uppercase;}
+  /* ---------- top bar ---------- */
+  .top{background:var(--white); border-bottom:4px solid var(--ink);}
+  .nav{display:flex; align-items:stretch; justify-content:space-between; min-height:78px;}
+  .logo{display:inline-flex; align-items:center; gap:12px; min-height:44px; align-self:center; font-family:'Archivo Black',sans-serif; font-size:20px; text-transform:uppercase; text-decoration:none;}
+  .logo-box{width:40px; height:40px; background:var(--red); border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; flex:none;}
+  .logo-box svg{width:22px; height:22px;}
+  .nav-links{display:flex; margin-left:auto;}
+  .nav-links a{display:flex; align-items:center; min-height:44px; padding:0 20px; border-left:3px solid var(--ink); font-weight:700; font-size:15px; text-transform:uppercase; text-decoration:none;}
+  .nav-links a:last-child{border-right:3px solid var(--ink);}
+  .nav-links a:hover{background:var(--yellow);}
+  .nav .btn{--sh:4px; align-self:center; margin-left:24px; min-height:48px; padding:0 18px; font-size:15px;}
 
-  .hero-photo{height:340px; background:var(--blue); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .hero-photo svg{width:30px; height:30px; stroke:white; fill:none; stroke-width:1.6;}
-  .hero-photo span{font-size:10.5px; color:white; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;}
+  /* ---------- hero ---------- */
+  .hero{display:grid; grid-template-columns:minmax(0,1.15fr) minmax(0,0.85fr); gap:56px; align-items:center; padding-top:64px; padding-bottom:84px;}
+  .tag{display:inline-block; background:var(--ink); color:var(--yellow); font-size:14px; font-weight:700; line-height:1.4; padding:6px 12px; text-transform:uppercase; letter-spacing:0.02em;}
+  .hero h1{font-size:clamp(36px,5.1vw,64px); margin-top:22px;}
+  .hero h1 mark{background:var(--red); color:var(--white); padding:0 0.12em; box-decoration-break:clone; -webkit-box-decoration-break:clone;}
+  .lede{margin-top:24px; font-size:17px; max-width:31em;}
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:20px 30px; margin-top:34px;}
+  .text-link{display:inline-flex; align-items:center; min-height:44px; font-weight:700; text-transform:uppercase; text-decoration:underline; text-decoration-thickness:3px; text-underline-offset:6px;}
+  .text-link:hover{background:var(--yellow);}
+  .hero-art{background:var(--blue); border:4px solid var(--ink); box-shadow:12px 12px 0 var(--ink); aspect-ratio:10/9;}
+  .hero-art svg{display:block; width:100%; height:100%;}
 
-  section{padding:70px 0;}
-  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px; margin-bottom:40px; padding-bottom:24px; border-bottom:4px solid var(--ink);}
-  .sec-head h2{font-size:clamp(24px,3.2vw,36px);}
-  .sec-head p{font-size:13px; max-width:280px;}
+  /* ---------- sections ---------- */
+  .sec{border-top:4px solid var(--ink); padding-top:84px; padding-bottom:92px;}
+  .sec-head{display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:18px 40px; margin-bottom:40px;}
+  .sec-head h2{font-size:clamp(30px,4vw,48px); margin-top:14px;}
+  .sec-head > p{max-width:25em; font-size:16px;}
 
-  .price-sheet{border-top:3px solid var(--ink); border-left:3px solid var(--ink);}
-  .price-row{display:grid; grid-template-columns:70px 1fr 1fr 140px; border-right:3px solid var(--ink); border-bottom:3px solid var(--ink);}
-  .price-row.head{background:var(--ink); color:white; font-weight:700; text-transform:uppercase; font-size:11.5px;}
-  .price-row div{padding:16px 18px; display:flex; align-items:center; font-size:13.5px;}
-  .price-row div:not(:last-child){border-right:3px solid var(--ink);}
-  .price-row.head div:not(:last-child){border-right:3px solid #333;}
-  .price-row .code{font-weight:700;}
-  .price-row .amt{font-family:'Archivo Black',sans-serif; font-size:16px;}
-  .row-yellow{background:var(--yellow);}
-  .row-red{background:var(--red); color:white;}
-  .row-blue{background:var(--blue); color:white;}
+  /* ---------- signature: price cards that press into their shadow ---------- */
+  .press-hint{display:flex; align-items:center; gap:12px; margin-bottom:24px; font-weight:700;}
+  .press-hint svg{width:30px; height:30px; flex:none;}
+  .pgrid{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:30px 30px; list-style:none;}
+  .pcard{position:relative; display:flex; flex-direction:column; height:100%; min-height:214px; padding:18px 20px 20px; background:var(--c,var(--white)); color:var(--t,var(--ink)); border:3px solid var(--ink); cursor:pointer; user-select:none; -webkit-user-select:none; -webkit-tap-highlight-color:transparent;}
+  .pcard input{position:absolute; top:18px; right:20px; width:30px; height:30px; margin:0; opacity:0; pointer-events:none;}
+  .pcard:has(input:focus-visible){outline:3px solid #111; outline-offset:4px;}
+  .pc-top{display:flex; align-items:center; justify-content:space-between; gap:10px; font-weight:700; font-size:15px;}
+  .pc-flag{display:none; margin-left:auto; padding:1px 8px; background:var(--ink); color:var(--yellow); font-size:14px; font-weight:700; text-transform:uppercase;}
+  .pc-box{flex:none; width:30px; height:30px; border:3px solid var(--ink); background:var(--white);}
+  .pc-box svg{display:block; width:100%; height:100%; opacity:0;}
+  .pcard.is-on .pc-box{background:var(--ink);}
+  .pcard.is-on .pc-box svg{opacity:1;}
+  .pcard.is-on .pc-flag{display:inline-block;}
+  .pcard.has-focus{outline:3px solid #111; outline-offset:4px;}
+  .pcard:has(input:checked) .pc-box{background:var(--ink);}
+  .pcard:has(input:checked) .pc-box svg{opacity:1;}
+  .pcard:has(input:checked) .pc-flag{display:inline-block;}
+  .pc-name{font-family:'Archivo Black',sans-serif; font-size:22px; line-height:1.1; text-transform:uppercase; margin-top:20px;}
+  .pc-note{font-size:15px; margin-top:8px;}
+  .pc-price{font-family:'Archivo Black',sans-serif; font-size:32px; line-height:1; margin-top:auto; padding-top:18px;}
+  .price-foot{display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:16px 24px; margin-top:40px; padding:16px 18px; border:3px solid var(--ink); background:var(--white);}
+  .price-foot p{font-size:16px;}
+  .slip-sum{font-weight:700;}
+  .slip-sum b{font-family:'Archivo Black',sans-serif; font-weight:400; font-size:18px;}
+  .price-foot .btn{--sh:4px; min-height:48px; font-size:15px; padding:0 18px;}
+  .js .slip-static, .no-js .slip-live{display:none;}
 
-  .about-brut{display:grid; grid-template-columns:0.85fr 1.15fr; gap:0;}
-  .about-photo{background:repeating-linear-gradient(45deg,#EFEFEF,#EFEFEF 12px,#E2E2E2 12px,#E2E2E2 13px); border:4px solid var(--ink); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .about-photo svg{width:28px; height:28px; stroke:#666; fill:none; stroke-width:1.4;}
-  .about-photo span{font-size:10.5px; color:#666; text-transform:uppercase; letter-spacing:0.05em; font-weight:700;}
-  .about-copy{padding:0 0 0 44px; display:flex; flex-direction:column; justify-content:center;}
-  .about-copy h3{font-size:26px; margin-bottom:16px;}
-  .about-copy p{font-size:14px; line-height:1.85;}
-  .stat-strip{display:flex; gap:0; margin-top:28px; border:3px solid var(--ink);}
-  .stat-strip div{flex:1; padding:16px; border-right:3px solid var(--ink);}
-  .stat-strip div:last-child{border-right:none;}
-  .stat-strip b{font-family:'Archivo Black',sans-serif; font-size:22px; display:block;}
-  .stat-strip span{font-size:10.5px; text-transform:uppercase;}
+  /* ---------- dentist ---------- */
+  .who{display:grid; grid-template-columns:minmax(0,0.8fr) minmax(0,1.2fr); gap:64px; align-items:center;}
+  .badge-wrap{display:flex; justify-content:center; padding-top:40px;}
+  .badge{position:relative; width:min(100%,330px); background:var(--white); border:4px solid var(--ink); box-shadow:12px 12px 0 var(--ink); transform:rotate(-3deg);}
+  .badge::before{content:""; position:absolute; left:50%; top:-64px; width:38px; height:64px; margin-left:-19px; background:var(--yellow); border:4px solid var(--ink); border-bottom:none;}
+  .badge::after{content:""; position:absolute; left:50%; top:14px; width:60px; height:12px; margin-left:-30px; border:3px solid var(--ink); background:var(--bg);}
+  .badge-head{padding:38px 18px 12px; background:var(--red); border-bottom:4px solid var(--ink); font-family:'Archivo Black',sans-serif; font-size:16px; text-transform:uppercase; text-align:center;}
+  .badge-main{display:grid; grid-template-columns:auto 1fr; gap:6px 16px; align-items:center; padding:22px 20px 16px;}
+  .badge-init{grid-row:span 2; display:flex; align-items:center; justify-content:center; width:84px; height:84px; background:var(--blue); border:3px solid var(--ink); color:var(--white); font-family:'Archivo Black',sans-serif; font-size:36px;}
+  .badge-name{font-family:'Archivo Black',sans-serif; font-size:18px; line-height:1.15; text-transform:uppercase;}
+  .badge-role{font-size:14px; font-weight:700; text-transform:uppercase;}
+  .badge-code{display:block; width:calc(100% - 40px); height:44px; margin:4px 20px 20px;}
+  .who-copy h3{font-size:clamp(24px,2.6vw,30px);}
+  .who-copy p{margin-top:16px; font-size:17px; max-width:34em;}
+  .stat-strip{display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); margin-top:32px; border:3px solid var(--ink); list-style:none;}
+  .stat-strip li{padding:16px 18px; border-right:3px solid var(--ink);}
+  .stat-strip li:last-child{border-right:none;}
+  .stat-strip li:nth-child(2){background:var(--yellow);}
+  .stat-strip b{display:block; font-family:'Archivo Black',sans-serif; font-weight:400; font-size:30px; line-height:1.1;}
+  .stat-strip span{font-size:14px; font-weight:700; text-transform:uppercase;}
 
-  .contact-brut{display:grid; grid-template-columns:1fr 1fr; gap:0; border:4px solid var(--ink);}
-  .contact-info{padding:40px; border-right:4px solid var(--ink); background:var(--ink); color:var(--white);}
-  .info-row{display:flex; gap:14px; padding:16px 0; border-bottom:2px solid #333;}
+  /* ---------- visit ---------- */
+  .visit{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1.1fr); border:4px solid var(--ink); box-shadow:12px 12px 0 var(--ink); background:var(--white);}
+  .info{background:var(--ink); color:var(--white); padding:30px 34px;}
+  .info-row{display:grid; grid-template-columns:118px minmax(0,1fr); gap:14px; align-items:center; padding:14px 0; border-bottom:2px solid #3A3A3A;}
   .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-size:11px; font-weight:700; color:var(--yellow); flex-shrink:0; text-transform:uppercase;}
-  .info-row .val{font-size:13.5px;}
-  .form{padding:40px; display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{border:3px solid var(--ink); padding:14px; font-family:'Space Mono',monospace; font-size:13.5px;}
-  .form button{background:var(--red); color:white; border:3px solid var(--ink); padding:15px; font-family:'Archivo Black',sans-serif; font-size:13.5px; cursor:pointer; text-transform:uppercase;}
+  .info-row .lbl{color:var(--yellow); font-size:14px; font-weight:700; text-transform:uppercase;}
+  .info-row .val{font-size:16px;}
+  .info-row .val a{display:inline-flex; align-items:center; min-height:44px; color:var(--yellow); font-weight:700; text-decoration-thickness:2px; text-underline-offset:4px;}
+  .form{padding:30px 34px 34px; scroll-margin-top:20px;}
+  .form h3{font-size:24px; margin-bottom:20px;}
+  .field{margin-bottom:18px;}
+  .field label, .slip-box .slip-k{display:block; margin-bottom:6px; font-size:15px; font-weight:700; text-transform:uppercase;}
+  .field input, .field textarea{display:block; width:100%; min-height:52px; padding:12px 14px; border:3px solid var(--ink); border-radius:0; background:var(--white); color:var(--ink); font:16px 'Space Mono',monospace;}
+  .field textarea{min-height:96px; resize:vertical;}
+  .field input::placeholder, .field textarea::placeholder{color:#5C5C5C;}
+  .slip-box{margin-bottom:20px; padding:12px 14px; border:3px dashed var(--ink); background:var(--bg);}
+  .slip-list{list-style:none;}
+  .slip-list li{display:flex; justify-content:space-between; gap:12px; padding:4px 0; font-size:15px;}
+  .slip-list li b{white-space:nowrap;}
+  .slip-box p{font-size:16px;}
+  .slip-box a{font-weight:700;}
+  .form .btn{width:100%; background:var(--red);}
+  .form-note{margin-top:16px; font-size:16px;}
 
-  footer{padding:26px 0; font-size:12.5px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:4px solid var(--ink); font-weight:700;}
+  footer{border-top:4px solid var(--ink);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 20px; padding-top:24px; padding-bottom:34px; font-size:14px; font-weight:700; text-transform:uppercase;}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; box-shadow:5px 5px 0 var(--ink); text-decoration:none;}
-  .wa-float svg{width:26px; height:26px; fill:white;}
+  .wa-float{--sh:5px; position:fixed; bottom:26px; right:26px; z-index:90; width:58px; height:58px; background:#25D366; border:3px solid var(--ink); display:flex; align-items:center; justify-content:center; text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:var(--white);}
+  /* shown only where it clears the 1072px column by 20px or more (from 1280px); below that WhatsApp lives in Visit */
+  @media (max-width:1279px){ html body .wa-float{display:none;} }
 
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .4s ease, transform .4s ease;}
   .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
 
-  @media (max-width:900px){
-    .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr;}
-    .price-row{grid-template-columns:50px 1fr 100px;}
-    .price-row .desc-col{display:none;}
-    .about-brut{grid-template-columns:1fr;}
-    .about-copy{padding:32px 0 0;}
-    .about-photo{min-height:260px;}
-    .contact-brut{grid-template-columns:1fr;}
-    .contact-info{border-right:none; border-bottom:4px solid var(--ink);}
+  @media (max-width:1000px){
+    .pgrid{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .who{gap:44px;}
   }
+  @media (max-width:900px){
+    .nav-links a{padding:0 14px;}
+    .nav .btn{margin-left:16px;}
+    .hero{grid-template-columns:minmax(0,1fr); gap:52px; padding-top:44px;}
+    .hero-art{max-width:500px; width:calc(100% - 12px);}
+    .who{grid-template-columns:minmax(0,1fr);}
+    .visit{grid-template-columns:minmax(0,1fr);}
+  }
+  @media (max-width:720px){
+    .nav-links, .nav .btn{display:none;}
+    .nav{min-height:68px;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    html:root{--nc-radius:0px;}
+    html .nc-bar{border-top:4px solid var(--ink); padding-right:16px;}
+    html .nc-bar a{border:3px solid var(--ink); box-shadow:4px 4px 0 var(--ink); transition:transform .08s ease-out, box-shadow .08s ease-out; -webkit-tap-highlight-color:transparent;}
+    html .nc-bar a.nc-book{border-color:var(--ink);}
+    html .nc-bar a:active, html .nc-bar a.is-pressed{transform:translate(4px,4px); box-shadow:0 0 0 var(--ink);}
+    html .nc-bar a:focus-visible{box-shadow:0 0 0 2px #fff, 4px 4px 0 var(--ink)!important;}
+    html .nc-bar a:active:focus-visible, html .nc-bar a.is-pressed:focus-visible{box-shadow:0 0 0 2px #fff!important;}
+    .form{scroll-margin-top:12px;}
+  }
+  @media (max-width:640px){
+    .wrap{padding-left:18px; padding-right:18px;}
+    .hero{padding-top:40px; padding-bottom:64px;}
+    .sec{padding-top:64px; padding-bottom:72px;}
+    .hero-actions .btn{width:calc(100% - 6px);}
+    .pgrid{grid-template-columns:minmax(0,1fr); gap:22px;}
+    .pcard{min-height:0; display:grid; grid-template-columns:minmax(0,1fr) auto; grid-template-areas:"top top" "name price" "note price"; column-gap:14px; padding:14px 16px 16px;}
+    .pc-top{grid-area:top;}
+    .pc-name{grid-area:name; font-size:19px; margin-top:12px;}
+    .pc-note{grid-area:note; margin-top:4px;}
+    .pc-price{grid-area:price; align-self:end; font-size:26px; padding-top:0;}
+    .price-foot .btn{width:100%;}
+    .stat-strip{grid-template-columns:minmax(0,1fr);}
+    .stat-strip li{border-right:none; border-bottom:3px solid var(--ink); display:flex; align-items:baseline; justify-content:space-between; gap:12px;}
+    .stat-strip li:last-child{border-bottom:none;}
+    .info{padding:22px 20px;}
+    .info-row{grid-template-columns:minmax(0,1fr); gap:2px;}
+    .form{padding:24px 20px 26px;}
+    .visit{box-shadow:8px 8px 0 var(--ink); margin-right:8px;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#FFFFFF;--nc-fg:#0A0A0A;--nc-accent:#F5FF3D;--nc-on-accent:#0A0A0A;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><div class="logo-box"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div>Bite Club Dental</div>
-    <div class="nav-links"><a href="#pricing">Pricing</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-brut" href="#contact">Book →</a>
-  </div>
-</nav>
-
-<header class="wrap hero reveal">
-  <div class="hero-grid">
-    <div>
-      <span class="tag">Thirukalukundram · No-Fluff Dentistry</span>
-      <h1>We <mark>tell you the price</mark> before we touch a tooth.</h1>
-      <p>No vague estimates, no "we'll see once we're in there." Every procedure is listed with a real number. If it changes, we tell you why, before we do it.</p>
-      <div class="hero-ctas">
-        <a class="btn-blk" href="#contact">Book appointment</a>
-        <a class="btn-out" href="#pricing">See real prices</a>
-      </div>
-    </div>
-    <div class="hero-photo hard"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Clinic photo</span></div>
-  </div>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top"><span class="logo-box" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z" fill="none" stroke="#fff" stroke-width="2.2" stroke-linejoin="round"/></svg></span>Bite Club Dental</a>
+    <div class="nav-links"><a href="#prices">Prices</a><a href="#dentist">Dentist</a><a href="#visit">Visit</a></div>
+    <a class="btn" href="#bookForm">Book →</a>
+  </nav>
 </header>
 
-<section class="wrap" id="pricing">
-  <div class="sec-head reveal">
-    <div><span class="tag">The Price List</span><h2 style="margin-top:12px;">No hidden line items.</h2></div>
-    <p>Every number below is what you pay. Not "starting from." Not "call for quote."</p>
+<main id="top">
+<section class="wrap hero">
+  <div>
+    <span class="tag">Thirukalukundram · No-fluff dentistry</span>
+    <h1>We <mark>tell you the price</mark> before we touch a tooth.</h1>
+    <p class="lede">No vague estimates, no “we'll see once we're in there.” Every procedure is listed with a real number. If it changes, we tell you why, before we do it.</p>
+    <div class="hero-actions">
+      <a class="btn" href="#bookForm">Book appointment</a>
+      <a class="text-link" href="#prices">See the price list ↓</a>
+    </div>
   </div>
-  <div class="price-sheet reveal">
-    <div class="price-row head"><div>Code</div><div>Procedure</div><div class="desc-col">Notes</div><div>Price</div></div>
-    <div class="price-row"><div class="code">GEN-01</div><div>Consultation + X-ray</div><div class="desc-col">Full exam, written plan</div><div class="amt">₹500</div></div>
-    <div class="price-row row-yellow"><div class="code">GEN-02</div><div>Cleaning & Polish</div><div class="desc-col">Ultrasonic scaling</div><div class="amt">₹1,100</div></div>
-    <div class="price-row"><div class="code">RST-03</div><div>Composite Filling</div><div class="desc-col">Per tooth</div><div class="amt">₹1,400+</div></div>
-    <div class="price-row row-red"><div class="code">END-04</div><div>Root Canal</div><div class="desc-col">Crown billed separately</div><div class="amt">₹5,800+</div></div>
-    <div class="price-row row-blue"><div class="code">IMP-05</div><div>Single Implant</div><div class="desc-col">Guided placement + crown</div><div class="amt">₹24,000+</div></div>
-    <div class="price-row"><div class="code">EMR-06</div><div>Emergency Slot</div><div class="desc-col">Same-day, walk-in</div><div class="amt">₹700</div></div>
+  <div class="hero-art" aria-hidden="true">
+    <svg viewBox="0 0 400 360" focusable="false">
+      <g stroke="#5578FF" stroke-width="2">
+        <path d="M40 0 V360 M80 0 V360 M120 0 V360 M160 0 V360 M200 0 V360 M240 0 V360 M280 0 V360 M320 0 V360 M360 0 V360"/>
+        <path d="M0 40 H400 M0 80 H400 M0 120 H400 M0 160 H400 M0 200 H400 M0 240 H400 M0 280 H400 M0 320 H400"/>
+      </g>
+      <path d="M179 270 A25 7 0 0 1 229 270" transform="rotate(-8 204 270)" fill="none" stroke="#0A0A0A" stroke-width="4"/>
+      <g transform="translate(-26 4) rotate(-6 180 170)" stroke="#0A0A0A" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M100 84 C100 40 140 30 164 46 C176 54 196 54 208 46 C232 30 272 40 272 84 C272 124 260 152 254 182 C248 216 247 260 230 290 C220 306 202 300 198 280 C194 258 194 232 186 232 C178 232 178 258 174 280 C170 300 152 306 142 290 C125 260 124 216 118 182 C112 152 100 124 100 84 Z" fill="#FFFFFF" stroke-width="7"/>
+        <path d="M122 88 C123 68 134 58 150 57" fill="none" stroke-width="7"/>
+      </g>
+      <path d="M179 270 A25 7 0 0 0 229 270" transform="rotate(-8 204 270)" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round"/>
+      <path d="M229 268 C244 284 266 278 275 256" fill="none" stroke="#0A0A0A" stroke-width="4" stroke-linecap="round"/>
+      <g transform="translate(252 262) rotate(-14)" stroke="#0A0A0A" stroke-linejoin="round">
+        <path d="M0 0 L30 -34 H134 V34 H30 Z" fill="#F5FF3D" stroke-width="5"/>
+        <circle cx="24" cy="0" r="7.5" fill="#2F5CFF" stroke-width="4"/>
+        <text x="86" y="13" text-anchor="middle" font-family="Archivo Black, sans-serif" font-size="34" fill="#0A0A0A" stroke="none">₹500</text>
+      </g>
+    </svg>
   </div>
 </section>
 
-<section class="wrap" id="about">
-  <div class="sec-head reveal"><div><span class="tag">Who's Behind This</span><h2 style="margin-top:12px;">One dentist, zero upsell.</h2></div></div>
-  <div class="about-brut reveal">
-    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Dentist portrait</span></div>
-    <div class="about-copy">
-      <h3>Dr. [Name], BDS.</h3>
-      <p>Started Bite Club after years of patients asking "why does the price change every visit." Now it doesn't. Every treatment plan is quoted flat and explained in plain terms before you agree to anything.</p>
-      <div class="stat-strip">
-        <div><b>7 yrs</b><span>SOLO PRACTICE</span></div>
-        <div><b>0</b><span>SURPRISE BILLS</span></div>
-        <div><b>4.8★</b><span>GOOGLE RATING</span></div>
+<section class="sec" id="prices">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div><span class="tag">The price list</span><h2>No hidden line items.</h2></div>
+      <p>A plain number is fixed. A + means the final figure depends on your case. You get it before we start.</p>
+    </div>
+    <p class="press-hint"><svg viewBox="0 0 30 30" aria-hidden="true" focusable="false"><rect x="2" y="2" width="20" height="20" fill="#fff" stroke="#0A0A0A" stroke-width="3"/><rect x="8" y="8" width="20" height="20" fill="#F5FF3D" stroke="#0A0A0A" stroke-width="3"/></svg>Press the ones you need. They go on your booking slip.</p>
+    <ul class="pgrid" data-signature="brutal-press">
+      <li><label class="pcard"><input type="checkbox" name="slip" form="bookForm" value="GEN-01 Consultation + X-ray, Rs 500" data-code="GEN-01" data-name="Consultation + X-ray" data-price="500"><span class="pc-top"><span>GEN-01</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Consultation + <span class="nowrap">X-ray</span></span><span class="pc-note">Full exam, written plan</span><span class="pc-price">₹500</span></label></li>
+      <li><label class="pcard" style="--c:#F5FF3D;"><input type="checkbox" name="slip" form="bookForm" value="GEN-02 Cleaning and polish, Rs 1,100" data-code="GEN-02" data-name="Cleaning and polish" data-price="1100"><span class="pc-top"><span>GEN-02</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Cleaning and polish</span><span class="pc-note">Ultrasonic scaling</span><span class="pc-price">₹1,100</span></label></li>
+      <li><label class="pcard"><input type="checkbox" name="slip" form="bookForm" value="RST-03 Composite filling, from Rs 1,400 per tooth" data-code="RST-03" data-name="Composite filling" data-price="1400" data-plus="1"><span class="pc-top"><span>RST-03</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Composite filling</span><span class="pc-note">Per tooth</span><span class="pc-price">₹1,400+</span></label></li>
+      <li><label class="pcard" style="--c:#FF3B30;"><input type="checkbox" name="slip" form="bookForm" value="END-04 Root canal, from Rs 5,800 (crown billed separately)" data-code="END-04" data-name="Root canal" data-price="5800" data-plus="1"><span class="pc-top"><span>END-04</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Root canal</span><span class="pc-note">Crown billed separately</span><span class="pc-price">₹5,800+</span></label></li>
+      <li><label class="pcard" style="--c:#2F5CFF; --t:#FFFFFF;"><input type="checkbox" name="slip" form="bookForm" value="IMP-05 Single implant, from Rs 24,000" data-code="IMP-05" data-name="Single implant" data-price="24000" data-plus="1"><span class="pc-top"><span>IMP-05</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Single implant</span><span class="pc-note">Guided placement + crown</span><span class="pc-price">₹24,000+</span></label></li>
+      <li><label class="pcard"><input type="checkbox" name="slip" form="bookForm" value="EMR-06 Emergency slot, Rs 700" data-code="EMR-06" data-name="Emergency slot" data-price="700"><span class="pc-top"><span>EMR-06</span><span class="pc-flag">On slip</span><span class="pc-box" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#F5FF3D" stroke-width="3.5" stroke-linecap="square"/></svg></span></span><span class="pc-name">Emergency slot</span><span class="pc-note">Same-day, walk-in</span><span class="pc-price">₹700</span></label></li>
+    </ul>
+    <div class="price-foot">
+      <p class="slip-static">Anything you press here is sent with your booking request.</p>
+      <p class="slip-live slip-sum" aria-live="polite">Your slip is empty.</p>
+      <a class="btn" href="#bookForm">Go to booking ↓</a>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="dentist">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><span class="tag">Who's behind this</span><h2>One dentist, zero upsell.</h2></div></div>
+    <div class="who">
+      <div class="badge-wrap" aria-hidden="true">
+        <div class="badge">
+          <div class="badge-head">Bite Club Dental</div>
+          <div class="badge-main">
+            <span class="badge-init">SM</span>
+            <span class="badge-name">Dr. Senthil<br>Murugan</span>
+            <span class="badge-role">BDS · Dentist</span>
+          </div>
+          <svg class="badge-code" viewBox="0 0 290 44" preserveAspectRatio="none" focusable="false"><g fill="#0A0A0A"><rect x="0" width="6" height="44"/><rect x="10" width="3" height="44"/><rect x="17" width="9" height="44"/><rect x="30" width="3" height="44"/><rect x="37" width="3" height="44"/><rect x="44" width="12" height="44"/><rect x="60" width="3" height="44"/><rect x="67" width="6" height="44"/><rect x="77" width="3" height="44"/><rect x="84" width="9" height="44"/><rect x="97" width="3" height="44"/><rect x="104" width="6" height="44"/><rect x="114" width="12" height="44"/><rect x="130" width="3" height="44"/><rect x="137" width="3" height="44"/><rect x="144" width="9" height="44"/><rect x="157" width="6" height="44"/><rect x="167" width="3" height="44"/><rect x="174" width="12" height="44"/><rect x="190" width="3" height="44"/><rect x="197" width="6" height="44"/><rect x="207" width="3" height="44"/><rect x="214" width="9" height="44"/><rect x="227" width="3" height="44"/><rect x="234" width="6" height="44"/><rect x="244" width="12" height="44"/><rect x="260" width="3" height="44"/><rect x="267" width="9" height="44"/><rect x="280" width="3" height="44"/><rect x="287" width="3" height="44"/></g></svg>
+        </div>
+      </div>
+      <div class="who-copy reveal">
+        <h3>Dr. Senthil Murugan, BDS.</h3>
+        <p>Started Bite Club after years of patients asking “why does the price change every visit?” Now it doesn't. Every treatment plan is quoted flat and explained in plain terms before you agree to anything.</p>
+        <ul class="stat-strip">
+          <li><b>7 yrs</b><span>Solo practice</span></li>
+          <li><b>0</b><span>Surprise bills</span></li>
+          <li><b>4.8★</b><span>Google rating</span></li>
+        </ul>
       </div>
     </div>
   </div>
 </section>
 
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><div><span class="tag">Visit</span><h2 style="margin-top:12px;">Book a real slot.</h2></div></div>
-  <div class="contact-brut reveal">
-    <div class="contact-info">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">Mahabalipuram Road, Thirukalukundram 603109</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM – 7 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--yellow); font-weight:700;">Message us →</a></div></div>
+<section class="sec" id="visit">
+  <div class="wrap">
+    <div class="sec-head reveal"><div><span class="tag">Visit</span><h2>Ask for a slot.</h2></div><p>Mon–Sat, 9 AM to 7 PM. Walk in for emergencies.</p></div>
+    <div class="visit">
+      <div class="info">
+        <div class="info-row"><div class="lbl">Address</div><div class="val">Mahabalipuram Road, Thirukalukundram 603109</div></div>
+        <div class="info-row"><div class="lbl">Phone</div><div class="val"><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></div></div>
+        <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM to 7 PM</div></div>
+        <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX">Message us →</a></div></div>
+      </div>
+      <form class="form" id="bookForm" action="mailto:?subject=Appointment%20request" method="post" enctype="text/plain">
+        <h3>Booking request</h3>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
+        <div class="slip-box">
+          <span class="slip-k">Your slip</span>
+          <p class="slip-static">Items you pressed in the price list are sent with this request.</p>
+          <div class="slip-live"><ul class="slip-list"></ul><p class="slip-empty">Nothing on it yet. <a href="#prices">Pick from the price list</a> or tell us below.</p></div>
+        </div>
+        <div class="field"><label for="f-note">What's going on? (optional)</label><textarea id="f-note" name="note" rows="3"></textarea></div>
+        <button class="btn" type="submit">Send request</button>
+        <p class="form-note">Press it: a ready email opens in your mail app, slip and all. You send it. No slot is held until we say so.</p>
+      </form>
     </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nProcedure code (if known): ' + this.code.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="code" type="text" placeholder="Procedure code (optional, see price list)">
-      <button type="submit">Book slot</button>
-    </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap">
-  <span>© 2026 BITE CLUB DENTAL, THIRUKALUKUNDRAM.</span>
-  <span>DESIGN PORTFOLIO PIECE · NOT A LIVE BUSINESS</span>
+<footer>
+  <div class="wrap"><span>© 2026 Bite Club Dental, Thirukalukundram.</span><span>Design portfolio piece · Not a live business</span></div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.1});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  /* signature: brutal press. Pointer presses use CSS :active. Keyboard gets the same sink:
+     Enter on links and buttons, Space on buttons, Enter or Space on a price card. */
+  (function(){
+    var PRESS = '.btn, .wa-float, .nc-bar a';
+    var held = null, shown = null, t0 = 0, timer = 0;
+    function hostFor(t){
+      if(!t || !t.closest) return null;
+      if(t.matches('.pcard input')) return t.closest('.pcard');
+      return t.closest(PRESS);
+    }
+    // keep a key press visible for at least 140ms: Enter on a link navigates and moves focus at once
+    function release(){
+      if(!held) return;
+      held = null;
+      clearTimeout(timer);
+      timer = setTimeout(function(){ if(shown && !held){ shown.classList.remove('is-pressed'); shown = null; } }, Math.max(0, 140 - (Date.now() - t0)));
+    }
+    document.addEventListener('keydown', function(e){
+      if(e.key !== 'Enter' && e.key !== ' ') return;
+      var h = hostFor(e.target);
+      if(!h) return;
+      if(e.key === ' ' && h.tagName === 'A') return;
+      if(e.key === 'Enter' && e.target.matches('.pcard input')){ e.preventDefault(); if(!e.repeat) e.target.click(); }
+      if(e.repeat && held === h) return;
+      clearTimeout(timer);
+      if(shown && shown !== h) shown.classList.remove('is-pressed');
+      h.classList.add('is-pressed');
+      held = shown = h;
+      t0 = Date.now();
+    });
+    document.addEventListener('keyup', function(e){ if(e.key === 'Enter' || e.key === ' ') release(); });
+    document.addEventListener('focusout', release);
+    window.addEventListener('blur', release);
+    // lets iOS Safari apply :active on touch; passive, so it never blocks scrolling
+    document.addEventListener('touchstart', function(){}, {passive:true});
+  })();
+
+  /* booking slip: lists pressed cards and adds up the listed prices */
+  (function(){
+    var boxes = [].slice.call(document.querySelectorAll('.pcard input'));
+    var sum = document.querySelector('.slip-sum');
+    var list = document.querySelector('.slip-list');
+    var empty = document.querySelector('.slip-empty');
+    function rs(n){ return '₹' + n.toLocaleString('en-IN'); }
+    function update(){
+      var on = boxes.filter(function(b){ return b.checked; });
+      boxes.forEach(function(b){ b.parentNode.classList.toggle('is-on', b.checked); });
+      var total = 0, plus = false;
+      list.textContent = '';
+      on.forEach(function(b){
+        total += +b.dataset.price;
+        if(b.dataset.plus) plus = true;
+        var li = document.createElement('li');
+        var name = document.createElement('span');
+        name.textContent = b.dataset.code + ' ' + b.dataset.name;
+        var price = document.createElement('b');
+        price.textContent = rs(+b.dataset.price) + (b.dataset.plus ? '+' : '');
+        li.appendChild(name); li.appendChild(price);
+        list.appendChild(li);
+      });
+      empty.hidden = on.length > 0;
+      if(!on.length){ sum.textContent = 'Your slip is empty.'; return; }
+      sum.innerHTML = '';
+      sum.appendChild(document.createTextNode(on.length + (on.length === 1 ? ' item' : ' items') + ' on your slip. Listed prices: '));
+      var b = document.createElement('b');
+      b.textContent = rs(total) + (plus ? '+' : '');
+      sum.appendChild(b);
+    }
+    boxes.forEach(function(b){
+      b.addEventListener('change', update);
+      // fallbacks for browsers without :has(): mirror focus-visible onto the card
+      b.addEventListener('focus', function(){ var fv = true; try { fv = b.matches(':focus-visible'); } catch(err){} b.parentNode.classList.toggle('has-focus', fv); });
+      b.addEventListener('blur', function(){ b.parentNode.classList.remove('has-focus'); });
+    });
+    update();
+  })();
+
+  /* booking form: tidy email body when JS is on; without JS it still posts as mailto */
+  (function(){
+    var f = document.getElementById('bookForm');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var items = [].slice.call(document.querySelectorAll('.pcard input:checked')).map(function(b){ return '- ' + b.value; });
+      var body = 'Name: ' + f.elements.name.value + '\nPhone: ' + f.elements.phone.value
+        + '\nOn my slip:\n' + (items.length ? items.join('\n') : '- nothing picked')
+        + (f.elements.note.value ? '\nNote: ' + f.elements.note.value : '');
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('Appointment request') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#bookForm">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>

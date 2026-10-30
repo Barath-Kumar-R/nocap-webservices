@@ -1,219 +1,485 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Prism Dental Collective — Kanchipuram</title>
+<title>Prism Dental Collective · Kanchipuram</title>
+<meta name="description" content="Prism Dental Collective, a fictional three-dentist clinic on Gandhi Road, Kanchipuram, in a bold poster style. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy:#1A2A4A; --orange:#FF6B35; --cream:#FAF6F0; --sunflower:#FFC93C; --muted:#5C6478; --white:#FFFFFF;
+    --navy:#1A2A4A; --orange:#FF6B35; --cream:#FAF6F0; --sun:#FFC93C; --blue:#3D5A8A; --blue-l:#5B7CB6; --beige:#EDE3D4;
+    --muted:#4F586C; --on-navy:#C9D0DE; --nav-h:76px;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
-  body{font-family:'Work Sans',sans-serif; background:var(--cream); color:var(--navy);}
-  h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; letter-spacing:-0.01em; text-transform:uppercase; line-height:1;}
+  /* In-page links and keyboard focus land below the sticky header (--nav-h). Focus on a text field scrolls to its
+     caret, about 15px inside the field, hence the 24px; the bottom padding keeps a focused textarea whole on screen.
+     Phones (header not sticky) keep the default top, see the 720px block. */
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--nav-h) + 24px); scroll-padding-bottom:64px;}
+  body{font-family:'Work Sans',sans-serif; font-size:17px; line-height:1.6; background:var(--cream); color:var(--navy);}
+  h1,h2,h3{font-family:'Archivo Black',sans-serif; font-weight:400; line-height:1.02; letter-spacing:-0.005em;}
+  h1,h2{text-transform:uppercase; text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:1200px; margin:0 auto; padding:0 28px;}
-  .eyebrow{font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--orange); font-weight:700;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 28px;}
+  .eyebrow{font-size:14px; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:#B8431A;}
+  .nowrap{white-space:nowrap;}
 
-  nav{position:fixed; top:0; left:0; right:0; z-index:100; background:rgba(250,246,240,0.94); backdrop-filter:blur(8px); border-bottom:3px solid var(--navy);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between; padding:18px 28px; max-width:1200px; margin:0 auto;}
-  .logo{font-family:'Archivo Black',sans-serif; font-size:19px; text-transform:uppercase;}
-  .logo span{color:var(--orange);}
-  .nav-links{display:flex; gap:28px; font-size:14px; font-weight:600; text-transform:uppercase; letter-spacing:0.03em;}
-  .nav-links a{text-decoration:none; color:var(--navy);}
-  .nav-links a:hover{color:var(--orange);}
-  .btn-fill{background:var(--navy); color:var(--cream); padding:12px 24px; font-size:13px; font-weight:700; text-decoration:none; text-transform:uppercase; letter-spacing:0.03em;}
-  .burger{display:none; background:none; border:none; font-size:22px; cursor:pointer; color:var(--navy);}
-  .mobile-menu{display:none; flex-direction:column; gap:16px; padding:20px 28px 26px; border-top:2px solid var(--navy);}
-  .mobile-menu.open{display:flex;}
-  .mobile-menu a{text-decoration:none; color:var(--navy); font-size:15px; font-weight:700; text-transform:uppercase;}
+  /* ---------- buttons and links ---------- */
+  .btn{display:inline-flex; align-items:center; justify-content:center; min-height:54px; padding:0 28px; border:0; background:var(--sun); color:var(--navy); font:700 15px/1.2 'Work Sans',sans-serif; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; cursor:pointer; transition:background .2s, transform .2s;}
+  .btn:hover{background:#FFD76A;}
+  .btn:active{transform:translateY(1px);}
+  .btn-navy{background:var(--navy); color:var(--cream);}
+  .btn-navy:hover{background:#2A3F68;}
+  .text-link{display:inline-flex; align-items:center; min-height:44px; font-weight:700; text-transform:uppercase; letter-spacing:0.05em; font-size:15px; text-decoration:underline; text-decoration-thickness:2px; text-underline-offset:7px;}
+  .on-navy :focus-visible{outline-color:var(--sun)!important;}
 
-  .hero{padding:150px 0 0;}
-  .hero-block{background:var(--navy); color:var(--cream); padding:80px 0 60px; position:relative; overflow:hidden;}
-  .hero-block::after{content:''; position:absolute; bottom:0; right:5%; width:280px; height:280px; background:var(--orange); border-radius:50%; opacity:0.9; transform:translateY(35%);}
-  .hero-inner{display:grid; grid-template-columns:1.2fr 0.8fr; gap:40px; align-items:center; position:relative; z-index:1;}
-  .hero h1{font-size:clamp(34px,5.2vw,64px); color:var(--cream);}
-  .hero h1 .o{color:var(--sunflower);}
-  .hero p{font-size:16px; line-height:1.75; color:#C7CEDD; max-width:420px; margin:24px 0 32px; font-weight:400;}
-  .hero-ctas{display:flex; gap:14px; flex-wrap:wrap;}
-  .btn-sun{background:var(--sunflower); color:var(--navy); padding:15px 28px; font-size:13.5px; font-weight:700; text-decoration:none; text-transform:uppercase; letter-spacing:0.03em;}
-  .btn-outline-w{border:2px solid var(--cream); color:var(--cream); padding:13px 26px; font-size:13.5px; font-weight:700; text-decoration:none; text-transform:uppercase; letter-spacing:0.03em;}
-  .photo-ph{height:400px; background:linear-gradient(160deg,#24365C,#1A2A4A); border:2px solid rgba(250,246,240,0.25); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;}
-  .photo-ph svg{width:32px; height:32px; stroke:var(--sunflower); opacity:0.7;}
-  .photo-ph span{font-size:11.5px; color:#B9C2D6; text-transform:uppercase; letter-spacing:0.05em; font-weight:600;}
+  /* ---------- nav ---------- */
+  .top{position:sticky; top:0; z-index:100; background:var(--cream); border-bottom:3px solid var(--navy);}
+  .nav{display:flex; align-items:center; gap:30px; min-height:73px;}
+  .logo{display:inline-flex; align-items:center; gap:12px; min-height:44px; font-family:'Archivo Black',sans-serif; font-size:20px; text-transform:uppercase; text-decoration:none;}
+  .logo svg{width:34px; height:30px; flex:none;}
+  .logo span{color:#B8431A;}
+  .nav-links{display:flex; gap:4px; margin-left:auto;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 12px; font-size:15px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase; text-decoration:none; white-space:nowrap;}
+  .nav-links a:hover{color:#B8431A;}
+  .nav .btn{min-height:46px; padding:0 20px; white-space:nowrap;}
 
-  .stat-band{background:var(--sunflower); border-bottom:3px solid var(--navy);}
-  .stat-band .wrap{display:grid; grid-template-columns:repeat(4,1fr); padding:36px 28px;}
-  .stat-band .s{text-align:center; border-right:2px solid rgba(26,42,74,0.2);}
-  .stat-band .s:last-child{border-right:none;}
-  .stat-band h3{font-size:clamp(28px,3.4vw,42px); color:var(--navy);}
-  .stat-band p{font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:0.04em; margin-top:6px; color:var(--navy);}
+  /* ---------- hero + signature: prism split ---------- */
+  .hero{background:var(--navy); color:var(--cream); overflow:hidden;}
+  .hero-inner{display:grid; grid-template-columns:minmax(0,1.2fr) minmax(0,0.8fr); gap:48px; align-items:center; padding-top:76px; padding-bottom:76px;}
+  .hero .eyebrow{color:var(--sun);}
+  .hero h1{margin-top:18px; font-size:clamp(40px,4.6vw,59px);}
+  .hero h1 .o{display:block; color:var(--sun);}
+  .lede{margin-top:24px; max-width:31em; font-size:18px; color:var(--on-navy);}
+  .hero-actions{display:flex; flex-wrap:wrap; align-items:center; gap:14px 30px; margin-top:34px;}
+  .hero .text-link{color:var(--cream); text-decoration-color:var(--orange);}
+  .prism{display:block; width:100%; max-width:460px; height:auto; margin-left:auto;}
+  .prism .reg{fill:none; stroke:rgba(250,246,240,0.45); stroke-width:2;}
 
-  section{padding:100px 0;}
-  .sec-head{margin-bottom:52px;}
-  .sec-head h2{font-size:clamp(28px,3.8vw,44px); max-width:640px;}
-  .sec-head p{color:var(--muted); font-size:15px; margin-top:16px; max-width:460px; line-height:1.7;}
+  /* stat band */
+  .stats{background:var(--sun); border-bottom:3px solid var(--navy);}
+  .stats ul{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); list-style:none; padding-top:34px; padding-bottom:34px;}
+  .stats li{padding:0 18px; text-align:center; border-right:2px solid rgba(26,42,74,0.25);}
+  .stats li:last-child{border-right:0;}
+  .stats b{display:block; font-family:'Archivo Black',sans-serif; font-weight:400; font-size:clamp(30px,3.4vw,42px); line-height:1.1;}
+  .stats span{display:block; margin-top:6px; font-size:14px; font-weight:700; letter-spacing:0.05em; text-transform:uppercase;}
 
-  .svc-poster{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
-  .svc-block{padding:34px 28px; color:var(--white); position:relative; min-height:220px; display:flex; flex-direction:column; justify-content:space-between;}
-  .svc-block h3{font-size:22px; color:var(--white); text-transform:none;}
-  .svc-block p{font-size:13.5px; margin-top:14px; line-height:1.6; opacity:0.92;}
-  .svc-block .num{font-family:'Archivo Black',sans-serif; font-size:15px; opacity:0.7;}
+  /* ---------- sections ---------- */
+  .sec{padding-top:104px; padding-bottom:104px;}
+  .sec h2{font-size:clamp(30px,3.9vw,48px); margin-top:14px;}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
-  .about-photo{height:460px; background:linear-gradient(160deg,#EDE3D4,#E3D6BF); border:2px solid var(--navy); display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;}
-  .about-photo svg{width:32px; height:32px; stroke:var(--navy); opacity:0.4;}
-  .about-photo span{font-size:11.5px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; font-weight:600;}
-  .quote-bio{font-size:19px; font-weight:600; color:var(--navy); line-height:1.6; margin:24px 0; border-left:4px solid var(--orange); padding-left:22px;}
+  /* services: one poster of flat colour planes */
+  .svc-head{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:18px 48px; margin-bottom:44px;}
+  .svc-head h2{max-width:12em;}
+  .svc-head p{max-width:24em; color:var(--muted);}
+  .poster{display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); grid-auto-rows:minmax(212px,auto); gap:10px; list-style:none;}
+  .plane{position:relative; display:flex; flex-direction:column; padding:26px 26px 28px; background:var(--c); color:var(--t,var(--navy));}
+  .plane .num{font-family:'Archivo Black',sans-serif; font-size:15px; letter-spacing:0.06em;}
+  .plane h3{margin-top:auto; padding-top:26px; font-size:23px; line-height:1.15;}
+  .plane p{margin-top:10px; font-size:16px; max-width:30em;}
+  .plane .mark{position:absolute; top:24px; right:24px; width:30px; height:26px;}
+  .plane.big{grid-column:span 2; grid-row:span 2; padding:34px;}
+  .plane.big h3{font-size:clamp(28px,3vw,38px); text-transform:uppercase;}
+  .plane.big p{font-size:18px;}
+  .plane.big .mark{width:64px; height:56px; top:32px; right:32px;}
+  .plane.wide{grid-column:span 2;}
+  .plane.outline{box-shadow:inset 0 0 0 2px var(--navy);}
 
-  .contact-block{background:var(--navy); color:var(--cream);}
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px;}
-  .info-row{display:flex; gap:16px; padding:18px 0; border-bottom:1px solid rgba(250,246,240,0.18);}
-  .info-row .lbl{width:110px; font-size:12px; text-transform:uppercase; letter-spacing:0.06em; color:var(--sunflower); font-weight:700; flex-shrink:0;}
-  .form{display:flex; flex-direction:column; gap:14px;}
-  .form input, .form textarea{background:rgba(250,246,240,0.08); border:1.5px solid rgba(250,246,240,0.3); padding:14px; font-family:'Work Sans',sans-serif; font-size:14px; color:var(--cream);}
-  .form input::placeholder,.form textarea::placeholder{color:#A7AFC3;}
-  .form button{background:var(--sunflower); color:var(--navy); border:none; padding:15px; font-size:13.5px; font-weight:700; cursor:pointer; text-transform:uppercase; letter-spacing:0.03em;}
+  /* the collective */
+  .team{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,0.95fr); gap:64px; align-items:start;}
+  .team-copy p{margin-top:20px; max-width:31em; font-size:18px;}
+  .team-copy p + p{color:var(--muted); font-size:17px;}
+  .key{border-top:3px solid var(--navy);}
+  .key h3{padding:16px 0 6px; font-size:16px; letter-spacing:0.12em; text-transform:uppercase;}
+  .key ul{list-style:none;}
+  .key li{display:grid; grid-template-columns:64px minmax(0,1fr); gap:18px; align-items:center; padding:14px 0; border-bottom:1px solid rgba(26,42,74,0.25);}
+  .key li:last-child{border-bottom:0;}
+  .key svg{width:64px; height:56px;}
+  .key b{display:block; font-size:18px; line-height:1.3;}
+  .key span{display:block; color:var(--muted); font-size:16px;}
 
-  footer{padding:32px 0; border-top:3px solid var(--navy); font-size:13px; color:var(--muted); font-weight:500;}
-  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+  /* visit */
+  .visit-block{background:var(--navy); color:var(--cream);}
+  .visit-block .eyebrow{color:var(--sun);}
+  .visit{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:64px; margin-top:44px;}
+  .info-row{display:grid; grid-template-columns:112px minmax(0,1fr); gap:14px; align-items:baseline; padding:16px 0; border-bottom:1px solid rgba(250,246,240,0.22);}
+  .info-row:first-child{border-top:1px solid rgba(250,246,240,0.22);}
+  .info-row .lbl{font-size:14px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--sun);}
+  .info-row a{display:inline-flex; align-items:center; min-height:44px; margin:-10px 0; color:var(--sun); font-weight:700; text-underline-offset:4px;}
+  .form h3{font-size:24px; text-transform:uppercase; margin-bottom:22px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; margin-bottom:7px; font-size:15px; font-weight:600;}
+  .field input, .field select, .field textarea{display:block; width:100%; min-height:52px; padding:12px 14px; border:1.5px solid #8C95A8; border-radius:0; background:#22355A; color:var(--cream); font:16px 'Work Sans',sans-serif;}
+  .field select{appearance:none; -webkit-appearance:none; padding-right:44px; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 9l6 6 6-6' fill='none' stroke='%23FFC93C' stroke-width='2.6' stroke-linecap='square'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:20px;}
+  .field textarea{min-height:96px; resize:vertical;}
+  .field input::placeholder, .field textarea::placeholder{color:#A9B1C3;}
+  .form .btn{width:100%;}
+  .form-note{margin-top:14px; font-size:16px; color:var(--on-navy);}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; border:2px solid var(--navy); display:flex; align-items:center; justify-content:center; box-shadow:0 6px 18px rgba(26,42,74,0.3); text-decoration:none;}
-  .wa-float svg{width:28px; height:28px; fill:white;}
+  footer{border-top:3px solid var(--navy);}
+  footer .wrap{display:flex; flex-wrap:wrap; justify-content:space-between; gap:8px 24px; padding-top:26px; padding-bottom:32px; font-size:14px; font-weight:500; color:var(--muted);}
 
-  .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
-  .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; border:2px solid var(--navy); display:flex; align-items:center; justify-content:center; text-decoration:none;}
+  .wa-float svg{width:28px; height:28px; fill:#fff;}
+  /* shown only from 1280px, where it clears the 1064px column; below that WhatsApp is in Visit and the phone bar */
+  @media (max-width:1279px){ html body .wa-float{display:none;} }
 
-  @media (max-width:900px){
-    .nav-links,.btn-fill{display:none;}
-    .burger{display:block;}
-    .hero-inner,.about-grid,.contact-grid{grid-template-columns:1fr;}
-    .svc-poster{grid-template-columns:1fr;}
-    .stat-band .wrap{grid-template-columns:1fr 1fr; row-gap:24px;}
-    .stat-band .s:nth-child(2){border-right:none;}
-    section{padding:74px 0;}
+  .js .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
+  .js .reveal.in{opacity:1; transform:none;}
+
+  @media (max-width:1000px){
+    .poster{grid-template-columns:repeat(2,minmax(0,1fr));}
+    .plane.big{grid-row:span 1;}
+    .team{gap:44px;}
   }
+  @media (max-width:900px){
+    .hero-inner{grid-template-columns:minmax(0,1fr); gap:20px;}
+    .hero h1{font-size:clamp(40px,8vw,64px);}
+    .prism{max-width:400px; margin:0 auto;}
+    .team{grid-template-columns:minmax(0,1fr);}
+    .visit{grid-template-columns:minmax(0,1fr); gap:48px;}
+  }
+  @media (max-width:720px){
+    .top{position:static;}
+    :root{--nav-h:0px;}
+    .nav-links, .nav .btn{display:none;}
+    .nav{min-height:64px;}
+    .sec{padding-top:76px; padding-bottom:76px;}
+    .stats ul{grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:22px;}
+    .stats li:nth-child(2){border-right:0;}
+    html{scroll-padding-top:auto;}
+    .form{scroll-margin-top:12px;}
+    html body:has(.wa-float){padding-bottom:var(--nc-bar-h);}
+    /* a focused field lands clear of the call/book bar (focus scrolls to the caret, about 15px inside the field) */
+    html:root{scroll-padding-bottom:calc(var(--nc-bar-h) + 24px);}
+    html .nc-bar{border-top:3px solid var(--sun);}
+    html:root{--nc-radius:0px;}
+  }
+  @media (max-width:560px){
+    .wrap{padding-left:18px; padding-right:18px;}
+    .hero-inner{padding-top:40px; padding-bottom:48px;}
+    .hero h1{font-size:clamp(38px,11.4vw,52px);}
+    .lede{font-size:17px;}
+    .hero-actions .btn{width:100%;}
+    .prism{max-width:300px;}
+    .poster{grid-template-columns:minmax(0,1fr); grid-auto-rows:auto;}
+    .plane, .plane.big, .plane.wide{grid-column:auto; padding:22px 20px 24px;}
+    .plane h3{padding-top:18px;}
+    .plane.big .mark{width:44px; height:38px; top:22px; right:20px;}
+    .stats li{padding:0 8px;}
+    .info-row{grid-template-columns:minmax(0,1fr); gap:2px;}
+    .info-row a{margin:-4px 0;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#1A2A4A;--nc-fg:#FAF6F0;--nc-accent:#FFC93C;--nc-on-accent:#1A2A4A;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav>
-  <div class="nav-inner">
-    <div class="logo">Prism<span> Dental</span></div>
-    <div class="nav-links">
-      <a href="#services">Services</a>
-      <a href="#about">About</a>
-      <a href="#contact">Visit</a>
-    </div>
-    <a class="btn-fill" href="#contact">Book Now</a>
-    <button class="burger" onclick="document.getElementById('mMenu').classList.toggle('open')">☰</button>
-  </div>
-  <div class="mobile-menu" id="mMenu">
-    <a href="#services">Services</a>
-    <a href="#about">About</a>
-    <a href="#contact">Visit</a>
-  </div>
-</nav>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top"><svg viewBox="0 0 34 30" aria-hidden="true" focusable="false"><polygon points="17,1 9.5,14 24.5,14" fill="#FFC93C"/><polygon points="9.5,14 2,27 17,27" fill="#FF6B35"/><polygon points="24.5,14 17,27 32,27" fill="#3D5A8A"/><polygon points="9.5,14 24.5,14 17,27" fill="#1A2A4A"/></svg>Prism<span>Dental</span></a>
+    <div class="nav-links"><a href="#services">Services</a><a href="#dentists">Dentists</a><a href="#visit">Visit</a></div>
+    <a class="btn btn-navy" href="#bookForm">Book</a>
+  </nav>
+</header>
 
-<section class="hero">
-  <div class="hero-block">
-    <div class="wrap hero-inner">
-      <div>
-        <div class="eyebrow" style="color:var(--sunflower);">Kanchipuram Town</div>
-        <h1 style="margin-top:16px;">Modern dentistry, <span class="o">made bold.</span></h1>
-        <p>Prism brings city-style dental care to Kanchipuram — digital scans, transparent pricing, and a clinic that doesn't look or feel like it's stuck in 2005.</p>
-        <div class="hero-ctas">
-          <a class="btn-sun" href="#contact">Book Appointment</a>
-          <a class="btn-outline-w" href="#services">Our Services</a>
-        </div>
-      </div>
-      <div class="photo-ph">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-        <span>Clinic interior photo</span>
+<main id="top">
+<section class="hero on-navy" data-signature="prism-split">
+  <div class="wrap hero-inner">
+    <div>
+      <p class="eyebrow">Gandhi Road · Kanchipuram</p>
+      <h1>Three dentists. <span class="o">One file.</span></h1>
+      <p class="lede">General, orthodontic and cosmetic care under one roof. Open every day of the week, Sundays until 2 PM.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#bookForm">Book an appointment</a>
+        <a class="text-link" href="#services">See services</a>
       </div>
     </div>
+    <svg class="prism" viewBox="0 0 560 520" role="img" aria-label="The Prism mark: a triangle cut into orange, yellow and blue planes around a cream centre with a tooth." focusable="false">
+      <g class="reg" aria-hidden="true">
+        <circle cx="40" cy="40" r="11"/><path d="M40 20v40M20 40h40"/>
+        <circle cx="520" cy="480" r="11"/><path d="M520 460v40M500 480h40"/>
+      </g>
+      <g data-piece data-ux="0" data-uy="-1" data-k="0.65" data-cx="280" data-cy="185.5"><polygon points="280,70 180,243.2 380,243.2" fill="#FFC93C" stroke="#1A2A4A" stroke-width="6" stroke-linejoin="round"/></g>
+      <g data-piece data-ux="-0.866" data-uy="0.5" data-k="1" data-cx="180" data-cy="358.7"><polygon points="180,243.2 80,416.4 280,416.4" fill="#FF6B35" stroke="#1A2A4A" stroke-width="6" stroke-linejoin="round"/></g>
+      <g data-piece data-ux="0.866" data-uy="0.5" data-k="0.35" data-cx="380" data-cy="358.7"><polygon points="380,243.2 280,416.4 480,416.4" fill="#5B7CB6" stroke="#1A2A4A" stroke-width="6" stroke-linejoin="round"/></g>
+      <g data-piece data-ux="0" data-uy="0" data-k="0.12" data-cx="280" data-cy="301"><polygon points="180,243.2 380,243.2 280,416.4" fill="#FAF6F0" stroke="#1A2A4A" stroke-width="6" stroke-linejoin="round"/>
+        <path transform="translate(280 304)" fill="#1A2A4A" d="M0-26C6-32 14-34 20-34C30-34 36-26 36-14C36-2 32 8 29 18C26 30 24 46 17 46C11 46 9 36 7 26C6 20 4 16 0 16C-4 16-6 20-7 26C-9 36-11 46-17 46C-24 46-26 30-29 18C-32 8-36-2-36-14C-36-26-30-34-20-34C-14-34-6-32 0-26Z"/>
+      </g>
+    </svg>
   </div>
 </section>
 
-<section class="stat-band">
+<section class="stats" aria-label="Clinic in numbers">
+  <ul class="wrap">
+    <li><b>12+</b><span>Years combined practice</span></li>
+    <li><b>6,000+</b><span>Patients treated</span></li>
+    <li><b>₹0</b><span>Consultation fee</span></li>
+    <li><b>4.6★</b><span>Google rating</span></li>
+  </ul>
+</section>
+
+<section class="sec" id="services">
   <div class="wrap">
-    <div class="s"><h3>12+</h3><p>Years Combined Practice</p></div>
-    <div class="s"><h3>6,000+</h3><p>Patients Treated</p></div>
-    <div class="s"><h3>₹0</h3><p>Consultation Fee</p></div>
-    <div class="s"><h3>4.6★</h3><p>Google Rating</p></div>
+    <div class="svc-head reveal">
+      <div><p class="eyebrow">Services</p><h2>From a first checkup to an implant.</h2></div>
+      <p>Coloured like the Prism mark: orange for general care, yellow for braces, blue for cosmetic work.</p>
+    </div>
+    <ul class="poster">
+      <li class="plane big" style="--c:var(--orange);">
+        <span class="num">01</span>
+        <svg class="mark" viewBox="0 0 34 30" aria-hidden="true" focusable="false"><polygon points="2,28 17,2 32,28" fill="#1A2A4A"/></svg>
+        <h3>General and preventive</h3>
+        <p>Checkups, cleanings and fillings: the everyday work. Not sure what you need? Start with a checkup.</p>
+      </li>
+      <li class="plane" style="--c:var(--sun);">
+        <span class="num">02</span>
+        <h3>Braces and aligners</h3>
+        <p>For teens and adults, with flexible payment plans.</p>
+      </li>
+      <li class="plane" style="--c:var(--blue); --t:var(--cream);">
+        <span class="num">03</span>
+        <h3>Cosmetic dentistry</h3>
+        <p>Veneers, whitening and bonding for a smile that photographs well.</p>
+      </li>
+      <li class="plane wide" style="--c:var(--beige);">
+        <span class="num">04</span>
+        <h3>Root canals and crowns</h3>
+        <p>Root canals done under a microscope. The crown is usually fitted within the same week.</p>
+      </li>
+      <li class="plane wide" style="--c:var(--navy); --t:var(--cream);">
+        <span class="num">05</span>
+        <h3>Dental implants</h3>
+        <p>Planned on a digital scan and placed with a visiting implant surgeon.</p>
+      </li>
+      <li class="plane wide outline" style="--c:var(--cream);">
+        <span class="num">06</span>
+        <h3>Children's dentistry</h3>
+        <p>A calmer first visit for young patients, from age 3.</p>
+      </li>
+    </ul>
   </div>
 </section>
 
-<section id="services">
-  <div class="wrap reveal">
-    <div class="sec-head">
-      <div class="eyebrow">Services</div>
-      <h2>Full-service<br>dental care</h2>
-      <p>From routine checkups to full smile makeovers — one clinic, transparent pricing, no repeat consultations.</p>
+<section class="sec" id="dentists">
+  <div class="wrap team">
+    <div class="team-copy reveal">
+      <p class="eyebrow">The collective</p>
+      <h2>The names behind the colours.</h2>
+      <p>Dr. Lakshmi Narayanan, Dr. Farhan Basheer and Dr. Deepa Rangan share one clinic and one patient record, so moving from one of them to another never means a repeat consultation.</p>
+      <p>Prism opened to bring city-style dental care to Kanchipuram, in a clinic that looks and feels current.</p>
     </div>
-    <div class="svc-poster">
-      <div class="svc-block" style="background:var(--orange);"><span class="num">01</span><div><h3>General & Preventive</h3><p>Checkups, cleanings, and fillings — the everyday work, done well and on time.</p></div></div>
-      <div class="svc-block" style="background:var(--navy);"><span class="num">02</span><div><h3>Cosmetic Dentistry</h3><p>Veneers, whitening, and bonding for a smile that photographs well.</p></div></div>
-      <div class="svc-block" style="background:#3D5A8A;"><span class="num">03</span><div><h3>Orthodontics</h3><p>Braces and clear aligners for teens and adults, with flexible payment plans.</p></div></div>
-      <div class="svc-block" style="background:#3D5A8A;"><span class="num">04</span><div><h3>Root Canal & Crowns</h3><p>Microscope-assisted RCT with same-week crown fitting.</p></div></div>
-      <div class="svc-block" style="background:var(--navy);"><span class="num">05</span><div><h3>Dental Implants</h3><p>Guided implant placement with digital scans, done in partnership with a visiting surgeon.</p></div></div>
-      <div class="svc-block" style="background:var(--orange);"><span class="num">06</span><div><h3>Kids' Dentistry</h3><p>A calmer approach for first-time young patients, from age 3 up.</p></div></div>
-    </div>
-  </div>
-</section>
-
-<section id="about">
-  <div class="wrap about-grid reveal">
-    <div class="about-photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="#1A2A4A" stroke-width="1.4"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg>
-      <span>Doctor & team photo</span>
-    </div>
-    <div>
-      <div class="eyebrow">The Collective</div>
-      <h2 style="margin-top:14px; font-size:clamp(24px,3.4vw,36px);">Three dentists,<br>one modern clinic.</h2>
-      <p class="quote-bio">"Kanchipuram deserved a clinic that felt current — not just competent, but current."</p>
-      <p style="font-size:14.5px; color:var(--muted); line-height:1.8; text-transform:none; font-weight:400;">Dr. [Name] (General), Dr. [Name] (Ortho), and Dr. [Name] (Cosmetic) share one clinic and one patient record system, so a referral between them never means starting over.</p>
+    <div class="key reveal">
+      <h3>Key to the Prism mark</h3>
+      <ul>
+        <li><svg viewBox="0 0 64 56" aria-hidden="true" focusable="false"><polygon points="32,3 3,53 61,53" fill="#FF6B35"/></svg><div><b>Dr. Lakshmi Narayanan</b><span>General dentistry</span></div></li>
+        <li><svg viewBox="0 0 64 56" aria-hidden="true" focusable="false"><polygon points="32,3 3,53 61,53" fill="#FFC93C"/></svg><div><b>Dr. Farhan Basheer</b><span>Orthodontics</span></div></li>
+        <li><svg viewBox="0 0 64 56" aria-hidden="true" focusable="false"><polygon points="32,3 3,53 61,53" fill="#3D5A8A"/></svg><div><b>Dr. Deepa Rangan</b><span>Cosmetic dentistry</span></div></li>
+        <li><svg viewBox="0 0 64 56" aria-hidden="true" focusable="false"><polygon points="3,3 61,3 32,53" fill="#FAF6F0" stroke="#1A2A4A" stroke-width="2.5" stroke-linejoin="round"/><path transform="translate(32 22) scale(.36)" fill="#1A2A4A" d="M0-26C6-32 14-34 20-34C30-34 36-26 36-14C36-2 32 8 29 18C26 30 24 46 17 46C11 46 9 36 7 26C6 20 4 16 0 16C-4 16-6 20-7 26C-9 36-11 46-17 46C-24 46-26 30-29 18C-32 8-36-2-36-14C-36-26-30-34-20-34C-14-34-6-32 0-26Z"/></svg><div><b>You, in the middle</b><span>One record all three read</span></div></li>
+      </ul>
     </div>
   </div>
 </section>
 
-<section class="contact-block" id="contact">
-  <div class="wrap contact-grid reveal">
-    <div>
-      <div class="eyebrow" style="color:var(--sunflower);">Visit Us</div>
-      <h2 style="margin:14px 0 32px; font-size:clamp(24px,3.4vw,36px); color:var(--cream);">Book an appointment.</h2>
-      <div class="info-row"><div class="lbl">ADDRESS</div><div>18 Gandhi Road, Kanchipuram 631502</div></div>
-      <div class="info-row"><div class="lbl">PHONE</div><div>+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">HOURS</div><div>Mon–Sat, 9:30 AM – 8 PM · Sun 10 AM – 2 PM</div></div>
-      <div class="info-row"><div class="lbl">WHATSAPP</div><div><a href="https://wa.me/9198XXXXXXXX" style="color:var(--sunflower); font-weight:700;">Message the clinic →</a></div></div>
+<section class="sec visit-block on-navy" id="visit">
+  <div class="wrap">
+    <div class="reveal"><p class="eyebrow">Visit</p><h2>Book an appointment.</h2></div>
+    <div class="visit">
+      <div class="info">
+        <div class="info-row"><div class="lbl">Address</div><div>18 Gandhi Road, Kanchipuram 631502</div></div>
+        <div class="info-row"><div class="lbl">Phone</div><div><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></div></div>
+        <div class="info-row"><div class="lbl">Hours</div><div>Mon–Sat, 9:30 AM to 8 PM<br>Sunday, 10 AM to 2 PM</div></div>
+        <div class="info-row"><div class="lbl">WhatsApp</div><div><a href="https://wa.me/9198XXXXXXXX">Message the clinic →</a></div></div>
+      </div>
+      <form class="form" id="bookForm" action="mailto:?subject=Appointment%20request" method="post" enctype="text/plain">
+        <h3>Appointment request</h3>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" type="text" autocomplete="name" required></div>
+        <div class="field"><label for="f-phone">Phone</label><input id="f-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+91" required></div>
+        <div class="field"><label for="f-for">What is it for?</label>
+          <select id="f-for" name="for">
+            <option>Not sure yet</option>
+            <option>Checkup or cleaning</option>
+            <option>Braces or aligners</option>
+            <option>Cosmetic work</option>
+            <option>Root canal or crown</option>
+            <option>Implant</option>
+            <option>A child's first visit</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-note">Anything else? (optional)</label><textarea id="f-note" name="note" rows="3" placeholder="A day that suits you, or what's bothering you"></textarea></div>
+        <button class="btn" type="submit">Send request</button>
+        <p class="form-note">Your request becomes an email that you send yourself. It stays a request until the clinic names a day and a dentist.</p>
+      </form>
     </div>
-    <form class="form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nNote: ' + this.note.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <textarea name="note" rows="4" placeholder="Reason for visit"></textarea>
-      <button type="submit">Request Appointment</button>
-    </form>
   </div>
 </section>
+</main>
 
-<footer class="wrap foot-inner">
-  <span>© 2026 Prism Dental Collective, Kanchipuram.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<footer>
+  <div class="wrap"><span>© 2026 Prism Dental Collective, Kanchipuram.</span><span>Design portfolio piece · Not a live business</span></div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.15});
-  els.forEach(el=>io.observe(el));
+  document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+
+  /* sticky nav height for scroll offsets */
+  (function(){
+    var top = document.querySelector('.top');
+    function fit(){ if(getComputedStyle(top).position === 'sticky') document.documentElement.style.setProperty('--nav-h', top.offsetHeight + 'px'); else document.documentElement.style.removeProperty('--nav-h'); }
+    fit();
+    addEventListener('resize', fit);
+  })();
+
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  /* signature: prism split. The mark is four colour planes in register. With a mouse or pen in the hero
+     they split apart (more as the pointer nears the mark) and fan toward the pointer, each by its own
+     amount, like light through a prism; when the pointer leaves they spring back into register.
+     A tap on the mark splits it once. The planes stay inside the mark's own box, so the text beside it
+     never changes. Keyboard: a focused hero link acts as the pointer. Reduced motion and no JS: still. */
+  (function(){
+    var hero = document.querySelector('[data-signature="prism-split"]');
+    var svg = hero && hero.querySelector('.prism');
+    if(!svg || !window.requestAnimationFrame) return;
+    var VB_W = 560, VB_H = 520, GX = 280, GY = 301, GAP = 34, DISP = 22, ROT = 6;
+    var pieces = [].map.call(svg.querySelectorAll('[data-piece]'), function(g){
+      return {g:g, ux:+g.getAttribute('data-ux'), uy:+g.getAttribute('data-uy'), k:+g.getAttribute('data-k'),
+        cx:g.getAttribute('data-cx'), cy:g.getAttribute('data-cy'), x:0, y:0, r:0, vx:0, vy:0, vr:0};
+    });
+    var mq = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    var reduce = !!(mq && mq.matches);
+    var px = 0, py = 0, focusEl = null, active = false, inView = true, raf = 0, pulseUntil = 0, lastType = '';
+
+    function paint(p){
+      if(!p.x && !p.y && !p.r){ p.g.removeAttribute('transform'); return; }
+      p.g.setAttribute('transform', 'translate(' + p.x.toFixed(2) + ' ' + p.y.toFixed(2) + ') rotate(' + p.r.toFixed(2) + ' ' + p.cx + ' ' + p.cy + ')');
+    }
+    function frame(now){
+      raf = 0;
+      // reads first, then writes
+      var b = svg.getBoundingClientRect();
+      if(focusEl){ var fr = focusEl.getBoundingClientRect(); px = fr.left + fr.width / 2; py = fr.top + fr.height / 2; }
+      var q = 0, dx = 0, dy = 0;
+      if(now < pulseUntil){ q = 1; }
+      else if(active && b.width){
+        var nx = (px - (b.left + b.width * GX / VB_W)) / b.width, ny = (py - (b.top + b.height * GY / VB_H)) / b.width;
+        var dist = Math.sqrt(nx * nx + ny * ny);
+        q = Math.max(0, Math.min(1, (1.15 - dist) / 0.85));
+        var m = Math.max(dist, 0.5); dx = nx / m; dy = ny / m;
+      }
+      var moving = now < pulseUntil;
+      pieces.forEach(function(p){
+        var tx = p.ux * q * GAP + p.k * dx * DISP, ty = p.uy * q * GAP + p.k * dy * DISP, tr = p.k * dx * ROT;
+        p.vx = (p.vx + (tx - p.x) * 0.14) * 0.72; p.vy = (p.vy + (ty - p.y) * 0.14) * 0.72; p.vr = (p.vr + (tr - p.r) * 0.14) * 0.72;
+        p.x += p.vx; p.y += p.vy; p.r += p.vr;
+        if(Math.abs(tx - p.x) < 0.05 && Math.abs(ty - p.y) < 0.05 && Math.abs(tr - p.r) < 0.02 && Math.abs(p.vx) + Math.abs(p.vy) + Math.abs(p.vr) < 0.05){ p.x = tx; p.y = ty; p.r = tr; p.vx = p.vy = p.vr = 0; }
+        else moving = true;
+        paint(p);
+      });
+      if(moving) raf = requestAnimationFrame(frame);
+    }
+    function kick(){ if(!raf) raf = requestAnimationFrame(frame); }
+    function rest(){
+      active = false; focusEl = null; pulseUntil = 0;
+      if(raf){ cancelAnimationFrame(raf); raf = 0; }
+      pieces.forEach(function(p){ p.x = p.y = p.r = p.vx = p.vy = p.vr = 0; paint(p); });
+    }
+
+    hero.addEventListener('pointermove', function(e){
+      if(reduce || !inView || e.pointerType === 'touch') return;
+      px = e.clientX; py = e.clientY; focusEl = null; active = true; kick();
+    });
+    hero.addEventListener('pointerleave', function(e){
+      if(e.pointerType === 'touch' || !active || focusEl) return;
+      active = false; kick();
+    });
+    addEventListener('scroll', function(){ if(active) kick(); }, {passive:true});
+    // a tap is a click, so a swipe across the mark scrolls the page and never splits it
+    svg.addEventListener('pointerdown', function(e){ lastType = e.pointerType; });
+    svg.addEventListener('click', function(){
+      if(reduce || !inView || lastType !== 'touch') return;
+      pulseUntil = performance.now() + 420; kick();
+    });
+    hero.addEventListener('focusin', function(e){
+      if(reduce || !inView || !e.target.matches('a, button')) return;
+      focusEl = e.target; active = true; kick();
+    });
+    hero.addEventListener('focusout', function(e){
+      if(!focusEl || (e.relatedTarget && hero.contains(e.relatedTarget))) return;
+      focusEl = null; active = false; kick();
+    });
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        inView = entries[0].isIntersecting;
+        if(!inView) rest();
+      }).observe(hero);
+    }
+    if(mq){
+      var onPref = function(){ reduce = mq.matches; if(reduce) rest(); };
+      if(mq.addEventListener) mq.addEventListener('change', onPref); else if(mq.addListener) mq.addListener(onPref);
+    }
+  })();
+
+  /* appointment request: tidy email body when JS is on; without JS the form still posts as mailto */
+  (function(){
+    var f = document.getElementById('bookForm');
+    if(!f) return;
+    f.addEventListener('submit', function(e){
+      e.preventDefault();
+      var body = 'Name: ' + f.elements.name.value + '\nPhone: ' + f.elements.phone.value + '\nFor: ' + f.elements['for'].value
+        + (f.elements.note.value ? '\nNote: ' + f.elements.note.value : '');
+      window.location.href = 'mailto:?subject=' + encodeURIComponent('Appointment request') + '&body=' + encodeURIComponent(body);
+    });
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#bookForm">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>

@@ -3,210 +3,611 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NovaCare Dental — Kanchipuram</title>
+<title>NovaCare Dental · Kanchipuram</title>
+<meta name="description" content="NovaCare Dental, a fictional two-dentist clinic in Kanchipuram, with a chat-style helper that writes your WhatsApp request. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-  :root{ --bg:#0B0E14; --panel:#12151F; --panel2:#171B27; --violet:#8B5CF6; --cyan:#22D3EE; --white:#F4F5F8; --muted:#8A90A6; --line:#232838; }
+  :root{
+    --bg:#0C0D12; --panel:#14161D; --panel2:#1C1F29; --line:#2A2E3B; --ctl:#6E7590;
+    --text:#ECEDF2; --muted:#A3A9BC; --lilac:#B9A6FF; --lilac-hi:#CDBFFF; --on-lilac:#14161D; --cyan:#6FE3F2;
+  }
   *{box-sizing:border-box; margin:0; padding:0;}
+  [hidden]{display:none !important;}
   html{scroll-behavior:smooth;}
-  body{font-family:'IBM Plex Sans',sans-serif; background:var(--bg); color:var(--white); font-weight:300; -webkit-font-smoothing:antialiased;}
-  h1,h2,h3{font-family:'Space Grotesk',sans-serif; font-weight:600;}
-  .mono{font-family:'IBM Plex Mono',monospace;}
+  body{font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:17px; line-height:1.6; font-weight:400; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; letter-spacing:-0.015em; line-height:1.1; text-wrap:balance;}
   a{color:inherit;}
-  .wrap{max-width:1180px; margin:0 auto; padding:0 24px;}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+  .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
+  .wrap{max-width:1200px; margin:0 auto; padding-left:32px; padding-right:32px;}
+  .eyebrow{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; letter-spacing:.02em; color:var(--cyan);}
+  section[id]{scroll-margin-top:16px;}
+  html :focus-visible{outline-color:var(--lilac) !important;}
 
-  nav{padding:22px 0; border-bottom:1px solid var(--line);}
-  .nav-inner{display:flex; align-items:center; justify-content:space-between;}
-  .logo{font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:18px; display:flex; align-items:center; gap:10px;}
-  .logo-dot{width:9px; height:9px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan);}
-  .nav-links{display:flex; gap:30px; font-size:14px; font-weight:500; color:var(--muted);}
-  .nav-links a{text-decoration:none; color:var(--muted);}
-  .nav-links a:hover{color:var(--white);}
-  .btn-ai{background:linear-gradient(90deg,var(--violet),var(--cyan)); color:var(--bg); padding:11px 22px; border-radius:8px; font-size:13.5px; font-weight:700; text-decoration:none;}
+  /* Buttons and links */
+  .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:48px; padding:0 22px; border:0; border-radius:10px; font:600 16px/1.2 'IBM Plex Sans',system-ui,sans-serif; text-decoration:none; cursor:pointer;}
+  .btn svg{width:20px; height:20px; fill:currentColor; flex:none;}
+  .btn-primary{background:var(--lilac); color:var(--on-lilac);}
+  .btn-primary:hover{background:var(--lilac-hi);}
+  .btn-nav{min-height:44px; padding:0 18px; font-size:15px; border:1px solid var(--ctl); background:transparent; color:var(--text);}
+  .btn-nav:hover{border-color:var(--lilac);}
+  .call-link{display:inline-flex; align-items:center; min-height:44px; color:var(--text); font-weight:500; text-decoration:underline; text-decoration-color:var(--ctl); text-underline-offset:5px;}
+  .call-link:hover{text-decoration-color:var(--lilac);}
+  .nowrap{white-space:nowrap;}
 
-  .hero{padding:70px 0 100px;}
-  .hero-grid{display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center;}
-  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:0.05em; color:var(--cyan); text-transform:uppercase; display:flex; align-items:center; gap:8px;}
-  .eyebrow::before{content:''; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 8px var(--cyan);}
-  .hero h1{font-size:clamp(32px,4.4vw,50px); line-height:1.15; margin-top:18px;}
-  .hero p{margin-top:20px; font-size:15.5px; color:var(--muted); line-height:1.75; max-width:440px;}
-  .hero-ctas{display:flex; gap:14px; margin-top:32px; flex-wrap:wrap;}
-  .btn-primary{background:linear-gradient(90deg,var(--violet),var(--cyan)); color:var(--bg); padding:15px 28px; border-radius:8px; font-size:14px; font-weight:700; text-decoration:none;}
-  .btn-ghost{border:1px solid var(--line); color:var(--white); padding:15px 28px; border-radius:8px; font-size:14px; font-weight:600; text-decoration:none;}
+  /* Header */
+  .top{border-bottom:1px solid var(--line);}
+  .nav{display:flex; align-items:center; justify-content:space-between; gap:20px; min-height:72px;}
+  .logo{display:inline-flex; align-items:center; gap:10px; min-height:44px; font-family:'Space Grotesk',system-ui,sans-serif; font-weight:700; font-size:19px; text-decoration:none; letter-spacing:-0.01em;}
+  .logo-mark{display:grid; place-items:center; width:26px; height:26px; border-radius:8px 8px 8px 2px; background:var(--lilac); flex:none;}
+  .logo-mark svg{width:16px; height:16px; fill:none; stroke:var(--on-lilac); stroke-width:2; stroke-linejoin:round;}
+  .nav-links{display:flex; gap:2px; margin-left:auto;}
+  .nav-links a{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; color:var(--muted); font-size:15px; font-weight:500; text-decoration:none;}
+  .nav-links a:hover{color:var(--text);}
 
-  /* chat widget */
-  .chat{background:var(--panel); border:1px solid var(--line); border-radius:18px; overflow:hidden;}
-  .chat-head{display:flex; align-items:center; gap:10px; padding:16px 20px; border-bottom:1px solid var(--line); background:var(--panel2);}
-  .chat-avatar{width:28px; height:28px; border-radius:50%; background:linear-gradient(135deg,var(--violet),var(--cyan));}
-  .chat-head b{font-size:13.5px; font-weight:600;}
-  .chat-head span{font-size:11px; color:var(--muted); display:block;}
-  .chat-body{padding:22px 20px; display:flex; flex-direction:column; gap:14px; min-height:280px;}
-  .bubble{max-width:80%; padding:12px 16px; border-radius:14px; font-size:13.5px; line-height:1.5;}
-  .bubble.user{align-self:flex-end; background:var(--violet); color:white; border-bottom-right-radius:4px;}
-  .bubble.ai{align-self:flex-start; background:var(--panel2); border:1px solid var(--line); border-bottom-left-radius:4px;}
-  .bubble.ai .mono{color:var(--cyan); font-size:11px; display:block; margin-bottom:5px;}
-  .typing{display:flex; gap:4px; align-self:flex-start; padding:12px 16px;}
-  .typing span{width:6px; height:6px; border-radius:50%; background:var(--muted); animation:blink 1.3s infinite;}
-  .typing span:nth-child(2){animation-delay:0.2s;} .typing span:nth-child(3){animation-delay:0.4s;}
-  @keyframes blink{0%,60%,100%{opacity:0.25;} 30%{opacity:1;}}
-  @media (prefers-reduced-motion:reduce){ .typing span{animation:none; opacity:0.6;} }
-  .chat-slots{display:flex; gap:8px; padding:0 20px 20px; flex-wrap:wrap;}
-  .slot-chip{background:var(--panel2); border:1px solid var(--cyan); color:var(--cyan); font-family:'IBM Plex Mono',monospace; font-size:12px; padding:8px 14px; border-radius:100px;}
-  .chat-input{display:flex; gap:10px; padding:16px 20px; border-top:1px solid var(--line);}
-  .chat-input input{flex:1; background:var(--panel2); border:1px solid var(--line); border-radius:100px; padding:11px 16px; color:var(--white); font-family:'IBM Plex Sans',sans-serif; font-size:13px;}
-  .chat-input button{width:38px; height:38px; border-radius:50%; background:linear-gradient(135deg,var(--violet),var(--cyan)); border:none; display:flex; align-items:center; justify-content:center; cursor:pointer;}
-  .chat-input button svg{width:16px; height:16px; stroke:var(--bg); fill:none; stroke-width:2;}
+  /* Hero */
+  .hero{position:relative; padding:56px 0 96px;}
+  .hero::before{content:''; position:absolute; inset:0; background:radial-gradient(circle at 1px 1px, #232633 1px, transparent 1.5px) 0 0 / 24px 24px; -webkit-mask-image:linear-gradient(#000 30%, transparent); mask-image:linear-gradient(#000 30%, transparent); pointer-events:none;}
+  .hero-grid{position:relative; display:grid; grid-template-columns:minmax(0,1fr) 470px; gap:64px; align-items:center;}
+  .hero h1{font-size:clamp(40px,5.1vw,64px); line-height:1.03; letter-spacing:-0.03em; margin-top:18px; max-width:11em;}
+  .caret{display:inline-block; width:.42em; height:.78em; margin-left:.08em; background:var(--lilac); vertical-align:-0.04em; border-radius:2px;}
+  .lede{margin-top:22px; font-size:19px; color:var(--muted); max-width:29em;}
+  .meta{display:flex; flex-wrap:wrap; gap:4px 0; margin-top:28px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted); list-style:none;}
+  .meta li{display:flex; align-items:center;}
+  .meta li + li::before{content:''; width:4px; height:4px; margin:0 12px; border-radius:50%; background:var(--ctl);}
+  .hero-contact{display:flex; flex-wrap:wrap; gap:0 26px; margin-top:14px;}
 
-  section{padding:80px 0; border-top:1px solid var(--line);}
-  .sec-head{text-align:center; max-width:600px; margin:0 auto 50px;}
-  .sec-head h2{font-size:clamp(26px,3.2vw,36px); margin-top:12px;}
-  .sec-head p{color:var(--muted); font-size:14.5px; margin-top:12px;}
+  /* Signature: chat-booking */
+  .chat{display:flex; flex-direction:column; background:var(--panel); border:1px solid var(--line); border-radius:16px; overflow:hidden; scroll-margin-top:16px; box-shadow:0 40px 90px -50px #000;}
+  .chat-head{display:grid; grid-template-columns:34px minmax(0,1fr) auto; grid-template-areas:"mark title step" "mark sub sub"; align-items:center; column-gap:12px; padding:13px 18px; background:var(--panel2); border-bottom:1px solid var(--line);}
+  .chat-mark{grid-area:mark;}
+  .chat-title{grid-area:title;}
+  .chat-sub{grid-area:sub;}
+  .chat-step{grid-area:step;}
+  .chat-mark{display:grid; place-items:center; width:34px; height:34px; border-radius:10px 10px 10px 3px; background:var(--lilac); flex:none;}
+  .chat-mark svg{width:20px; height:20px; fill:none; stroke:var(--on-lilac); stroke-width:1.7; stroke-linejoin:round;}
+  .chat-title{font-family:'Space Grotesk',system-ui,sans-serif; font-weight:600; font-size:17px; line-height:1.3;}
+  .chat-sub{font-size:14px; color:var(--muted); line-height:1.35;}
+  .chat-step{padding-left:8px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); white-space:nowrap;}
+  .chat-live{display:flex; flex-direction:column; min-height:0; flex:1;}
+  .log{list-style:none; display:flex; flex-direction:column; gap:10px; padding:20px 18px; scroll-behavior:smooth;}
+  .log > .msg-sys + .msg{margin-top:auto;}
+  .msg-sys{align-self:center; max-width:30em; padding:2px 8px 6px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; line-height:1.5; color:var(--muted); text-align:center;}
+  .msg{max-width:88%; padding:10px 14px; border-radius:14px; font-size:16px; line-height:1.45;}
+  .msg-bot{align-self:flex-start; background:var(--panel2); border:1px solid var(--line); border-bottom-left-radius:4px;}
+  .msg-me{align-self:flex-end; background:var(--lilac); color:var(--on-lilac); font-weight:500; border-bottom-right-radius:4px;}
+  .msg-link{display:flex; align-items:center; width:fit-content; min-height:44px; margin-top:2px; color:var(--text); font-weight:600; text-decoration:underline; text-underline-offset:4px;}
+  .msg-card{align-self:stretch; max-width:none; padding:14px 16px 8px; background:var(--bg); border:1px solid var(--ctl); border-radius:12px;}
+  .card-k{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); margin-bottom:6px;}
+  .card-dl div{display:grid; grid-template-columns:92px minmax(0,1fr); gap:12px; padding:8px 0; border-top:1px solid var(--line);}
+  .card-dl dt{font-size:15px; color:var(--muted);}
+  .card-dl dd{font-weight:500;}
+  .msg-in{animation:msgIn .22s ease-out both;}
+  @keyframes msgIn{from{opacity:0; transform:translateY(6px);}}
+  .composer{padding:14px 18px 18px; border-top:1px solid var(--line); background:var(--panel);}
+  .chat-ask{display:flex; align-items:center; gap:8px; margin-bottom:10px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan);}
+  .chat-ask::before{content:'>'; color:var(--ctl);}
+  .opts{display:flex; flex-wrap:wrap; gap:8px;}
+  .opt{display:inline-flex; align-items:center; min-height:44px; padding:0 14px; border:1px solid var(--ctl); border-radius:10px; background:transparent; color:var(--text); font:400 16px/1.2 'IBM Plex Sans',system-ui,sans-serif; cursor:pointer; white-space:nowrap;}
+  .opt:hover{border-color:var(--lilac); background:#1F1C30;}
+  .opt-ghost{border-style:dashed; color:var(--muted);}
+  .opt-group{display:grid; grid-template-columns:92px minmax(0,1fr); align-items:center; gap:10px; padding:4px 0;}
+  .opt-k{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted);}
+  .opt-tail{margin-top:8px;}
+  .chat-send{width:100%;}
+  .chat-alt{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px;}
+  .chat-alt .opt{flex:1; justify-content:center;}
+  .chat-note{margin-top:12px; font-size:16px; line-height:1.5; color:var(--muted);}
+  .chat-call{margin-top:4px;}
+  .chat-static{padding:20px 18px 22px; display:flex; flex-direction:column; align-items:flex-start; gap:14px;}
+  .hours-mini{list-style:none; width:100%; border-top:1px solid var(--line);}
+  .hours-mini li{display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid var(--line); font-size:16px;}
+  .hours-mini span:first-child{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:15px; color:var(--cyan);}
 
-  .svc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
-  .svc-card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:26px;}
-  .svc-icon{width:42px; height:42px; border-radius:10px; background:var(--panel2); display:flex; align-items:center; justify-content:center; margin-bottom:16px;}
-  .svc-icon svg{width:20px; height:20px; stroke:var(--cyan); fill:none; stroke-width:1.6;}
-  .svc-card h3{font-size:16px; margin-bottom:8px;}
-  .svc-card p{font-size:13px; color:var(--muted); line-height:1.6;}
+  /* Sections */
+  main > section{padding:112px 0; border-top:1px solid var(--line);}
+  h2{font-size:clamp(32px,3.6vw,46px); margin-top:14px;}
 
-  .about-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:56px; align-items:center;}
-  .about-photo{height:420px; background:var(--panel); border:1px solid var(--line); border-radius:18px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:10px;}
-  .about-photo svg{width:28px; height:28px; stroke:var(--muted); fill:none; stroke-width:1.4;}
-  .about-photo span{font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em;}
-  .about-copy h3{font-size:22px; margin-bottom:16px;}
-  .about-copy p{font-size:15px; color:var(--muted); line-height:1.8;}
-  .stat-row{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:28px;}
-  .mini-stat{background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px;}
-  .mini-stat b{font-family:'Space Grotesk',sans-serif; font-size:22px; display:block; color:var(--cyan);}
-  .mini-stat span{font-size:11px; color:var(--muted);}
+  /* Services: a list, not a card grid */
+  .svc-grid{display:grid; grid-template-columns:4fr 7fr; gap:72px; align-items:start;}
+  .svc-lede{margin-top:18px; color:var(--muted); max-width:24em;}
+  .svc-list{list-style:none; border-top:1px solid var(--ctl);}
+  .svc-list li{display:grid; grid-template-columns:44px 36px minmax(0,1fr) auto; gap:0 16px; align-items:center; padding:22px 0; border-bottom:1px solid var(--line);}
+  .svc-no{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted);}
+  .svc-ic{width:32px; height:32px; fill:none; stroke:var(--lilac); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round;}
+  .svc-list h3{font-size:21px; font-weight:600;}
+  .svc-list p{color:var(--muted); font-size:16px; margin-top:3px;}
+  .svc-ask{display:inline-flex; align-items:center; gap:6px; min-height:44px; padding:0 4px 0 12px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); text-decoration:none; white-space:nowrap;}
+  .svc-ask:hover{text-decoration:underline; text-underline-offset:4px;}
 
-  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
-  .contact-card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:36px;}
-  .info-row{display:flex; gap:14px; padding:15px 0; border-bottom:1px solid var(--line);}
-  .info-row:last-child{border-bottom:none;}
-  .info-row .lbl{width:100px; font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--cyan); flex-shrink:0;}
-  .info-row .val{font-size:14px; color:var(--white);}
-  .form{display:flex; flex-direction:column; gap:12px;}
-  .form input, .form textarea{background:var(--panel2); border:1px solid var(--line); border-radius:10px; padding:13px 16px; color:var(--white); font-family:'IBM Plex Sans',sans-serif; font-size:13.5px;}
-  .form button{background:linear-gradient(90deg,var(--violet),var(--cyan)); color:var(--bg); border:none; padding:14px; border-radius:10px; font-size:13.5px; font-weight:700; cursor:pointer;}
+  /* How it works */
+  .how{background:var(--panel);}
+  .how-grid{display:grid; grid-template-columns:7fr 5fr; gap:80px; align-items:center;}
+  .how-lede{margin-top:18px; color:var(--muted); max-width:32em;}
+  .steps{list-style:none; margin-top:36px; border-left:1px solid var(--ctl);}
+  .steps li{display:grid; grid-template-columns:56px minmax(0,1fr); padding:0 0 26px;}
+  .steps li:last-child{padding-bottom:0;}
+  .st-no{position:relative; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); padding-left:18px; line-height:28px;}
+  .st-no::before{content:''; position:absolute; left:-5px; top:9px; width:9px; height:9px; border-radius:2px; background:var(--cyan);}
+  .steps h3{font-size:20px; line-height:28px;}
+  .steps p{color:var(--muted); font-size:16px;}
+  .phone{max-width:360px; justify-self:end; width:100%; background:var(--bg); border:1px solid var(--line); border-radius:28px; padding:14px; box-shadow:0 40px 80px -50px #000;}
+  .ph-head{display:flex; align-items:center; gap:10px; padding:6px 8px 14px; border-bottom:1px solid var(--line); font-size:15px; font-weight:500;}
+  .ph-av{width:30px; height:30px; border-radius:50%; background:var(--panel2); border:1px solid var(--ctl); display:grid; place-items:center; flex:none;}
+  .ph-av svg{width:16px; height:16px; fill:none; stroke:var(--lilac); stroke-width:1.8;}
+  .ph-body{display:flex; flex-direction:column; gap:10px; padding:16px 4px 8px;}
+  .ph-out, .ph-in{max-width:92%; padding:10px 12px; border-radius:12px; font-size:16px; line-height:1.45;}
+  .ph-out{align-self:flex-end; background:#2A2443; border:1px solid #4A3F7A; border-bottom-right-radius:4px;}
+  .ph-in{align-self:flex-start; background:var(--panel2); border:1px solid var(--line); border-bottom-left-radius:4px;}
+  .ph-who{display:block; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan); margin-bottom:2px;}
+  .phone figcaption{padding:10px 8px 4px; font-size:14px; color:var(--muted); border-top:1px solid var(--line);}
 
-  footer{padding:30px 0; font-size:13px; color:var(--muted); display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; border-top:1px solid var(--line);}
+  /* Visit */
+  .visit-grid{display:grid; grid-template-columns:5fr 6fr; gap:80px; align-items:start;}
+  .visit-lede{margin-top:18px; color:var(--muted); max-width:26em;}
+  .week{list-style:none; display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:6px; margin-top:40px; max-width:440px;}
+  .week li{display:flex; flex-direction:column; gap:8px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted);}
+  .week i{display:block; height:56px; border-radius:6px; background:#231F38; border:1px solid #4A3F7A; border-top:3px solid var(--lilac);}
+  .week .off i{background:none; border:1px dashed var(--ctl);}
+  .week-cap{margin-top:12px; font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--muted);}
+  .info{border-top:1px solid var(--ctl);}
+  .info div{display:grid; grid-template-columns:120px minmax(0,1fr); gap:16px; align-items:center; min-height:64px; padding:10px 0; border-bottom:1px solid var(--line);}
+  .info dt{font-family:'IBM Plex Mono',ui-monospace,monospace; font-size:14px; color:var(--cyan);}
+  .info dd a{display:inline-flex; align-items:center; gap:6px; min-height:44px; font-weight:500; text-decoration:underline; text-decoration-color:var(--ctl); text-underline-offset:5px;}
+  .info dd a:hover{text-decoration-color:var(--lilac);}
 
-  .wa-float{position:fixed; bottom:26px; right:26px; z-index:90; width:56px; height:56px; border-radius:50%; background:#25D366; display:flex; align-items:center; justify-content:center; box-shadow:0 8px 22px rgba(0,0,0,0.4); text-decoration:none;}
-  .wa-float svg{width:26px; height:26px; fill:white;}
+  footer{border-top:1px solid var(--line);}
+  .foot{display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; padding-top:28px; padding-bottom:36px; font-size:14px; color:var(--muted);}
 
   .reveal{opacity:0; transform:translateY(14px); transition:opacity .5s ease, transform .5s ease;}
   .reveal.in{opacity:1; transform:none;}
-  @media (prefers-reduced-motion:reduce){.reveal{opacity:1; transform:none; transition:none;}}
+  @media (prefers-reduced-motion:reduce){ .reveal{opacity:1; transform:none; transition:none;} }
 
-  @media (max-width:900px){
-    .nav-links{display:none;}
-    .hero-grid{grid-template-columns:1fr;}
-    .svc-grid{grid-template-columns:1fr 1fr;}
-    .about-grid{grid-template-columns:1fr;}
-    .contact-grid{grid-template-columns:1fr;}
+  /* Desktop: the chat keeps a fixed height and its log scrolls, so the hero never jumps */
+  @media (min-width:960px){
+    .chat{height:600px;}
+    .log{flex:1; min-height:0; overflow-y:auto; -webkit-mask-image:linear-gradient(transparent 0, #000 20px); mask-image:linear-gradient(transparent 0, #000 20px);}
   }
-  @media (max-width:560px){ .svc-grid{grid-template-columns:1fr;} }
+  @media (max-width:1100px){
+    .hero-grid{grid-template-columns:minmax(0,1fr) 440px; gap:48px;}
+    .svc-grid, .how-grid, .visit-grid{gap:56px;}
+  }
+  @media (max-width:959px){
+    .hero{padding:44px 0 72px;}
+    .hero-grid{grid-template-columns:minmax(0,1fr);}
+    .hero h1{max-width:12em;}
+    .chat{max-width:600px; width:100%;}
+    .svc-grid, .how-grid, .visit-grid{grid-template-columns:minmax(0,1fr);}
+    .phone{justify-self:start;}
+    main > section{padding:80px 0;}
+  }
+  @media (max-width:720px){
+    .nav-links, .btn-nav{display:none;}
+    .wrap{padding-left:18px; padding-right:18px;}
+    .nav{min-height:64px;}
+    .hero{padding:32px 0 56px;}
+    .hero h1{font-size:clamp(34px,10.4vw,46px);}
+    .lede{font-size:18px;}
+    .chat{scroll-margin-top:12px;}
+    main > section{padding:64px 0;}
+    .svc-list li{grid-template-columns:36px minmax(0,1fr); grid-template-areas:"ic txt" ". ask"; padding:18px 0;}
+    .svc-no{display:none;}
+    .svc-ic{grid-area:ic; width:28px; height:28px; align-self:start; margin-top:2px;}
+    .svc-list li > div{grid-area:txt;}
+    .svc-ask{grid-area:ask; justify-self:start; padding-left:0;}
+    .svc-list h3{font-size:19px;}
+    .info div{grid-template-columns:minmax(0,1fr); gap:0; padding:12px 0;}
+    .foot{padding-top:24px; padding-bottom:28px;}
+  }
+  @media (max-width:420px){
+    .chat-head{padding:12px 14px;}
+    .chat-sub{font-size:14px;}
+    .log{padding:16px 12px;}
+    .msg{max-width:94%;}
+    .composer{padding:12px 12px 14px;}
+    .opt{padding:0 12px;}
+    .opt-group{grid-template-columns:minmax(0,1fr); gap:6px;}
+    .card-dl div{grid-template-columns:78px minmax(0,1fr); gap:10px;}
+    .chat-static{padding:16px 14px 18px;}
+  }
+/* nocap:polish v1 */
+:root{--nc-bg:#14161D;--nc-fg:#ECEDF2;--nc-accent:#B9A6FF;--nc-on-accent:#14161D;--nc-radius:10px;--nc-bar-h:calc(65px + env(safe-area-inset-bottom,0px))}
+:focus-visible{outline:3px solid #111!important;outline-offset:2px;box-shadow:0 0 0 2px #fff!important}
+.nc-bar{display:none}
+@media (max-width:720px){
+  html{scroll-padding-bottom:var(--nc-bar-h)}
+  body{padding-bottom:var(--nc-bar-h)}
+  .nc-bar{position:fixed;left:0;right:0;bottom:0;z-index:95;display:flex;gap:10px;padding:8px 12px calc(8px + env(safe-area-inset-bottom,0px));background:var(--nc-bg);border-top:1px solid rgba(128,128,128,.4);font-size:16px;font-weight:700;line-height:1.2}
+  .nc-bar a{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 14px;border:2px solid var(--nc-fg);border-radius:var(--nc-radius);color:var(--nc-fg);text-decoration:none}
+  .nc-bar a.nc-book{background:var(--nc-accent);border-color:var(--nc-accent);color:var(--nc-on-accent)}
+  .nc-bar svg{width:20px;height:20px;flex:none}
+  body .wa-float{bottom:calc(var(--nc-bar-h) + 14px)}
+  body:has(.wa-float){padding-bottom:calc(var(--nc-bar-h) + 72px)}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;animation-iteration-count:1!important;transition-duration:.01ms!important;transition-delay:0s!important;scroll-behavior:auto!important}
+  [class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important}
+}
 </style>
+<noscript><style>[class*="reveal"],[data-reveal],.fade-in,.fade-up{opacity:1!important;transform:none!important;visibility:visible!important}</style></noscript>
 </head>
 <body>
 
-<nav class="wrap">
-  <div class="nav-inner">
-    <div class="logo"><div class="logo-dot"></div>NovaCare Dental</div>
-    <div class="nav-links"><a href="#services">Services</a><a href="#about">About</a><a href="#contact">Visit</a></div>
-    <a class="btn-ai" href="#contact">Talk to us</a>
-  </div>
-</nav>
-
-<header class="wrap hero reveal">
-  <div class="hero-grid">
-    <div>
-      <span class="eyebrow">Kanchipuram · AI-Assisted Booking</span>
-      <h1>Book a dental slot the way you'd send a message.</h1>
-      <p>Tell our assistant what you need — a cleaning, a same-day emergency, a second opinion — and it finds the next real slot with a real dentist, instantly.</p>
-      <div class="hero-ctas">
-        <a class="btn-primary" href="#contact">Try booking now</a>
-        <a class="btn-ghost" href="#services">See services</a>
-      </div>
+<header class="top">
+  <nav class="wrap nav" aria-label="Main">
+    <a class="logo" href="#top"><span class="logo-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5c-2.4 0-3.6 1.8-3.6 4 0 1.9.7 3.1 1.2 4.7.5 1.7.7 3.7 1.2 5.2.4 1 1.4 1 1.8 0 .4-1.3.6-3.8 1.4-4.7.5-.5 1.5-.5 2 0 .8.9 1 3.4 1.4 4.7.4 1 1.4 1 1.8 0 .5-1.5.7-3.5 1.2-5.2.5-1.6 1.2-2.8 1.2-4.7 0-2.2-1.2-4-3.6-4-1.5 0-2.3.8-4 .8s-2.5-.8-4-.8Z"/></svg></span>NovaCare Dental</a>
+    <div class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#how">How it works</a>
+      <a href="#visit">Visit</a>
     </div>
-    <div class="chat">
-      <div class="chat-head"><div class="chat-avatar"></div><div><b>NovaCare Assistant</b><span>Usually replies instantly</span></div></div>
-      <div class="chat-body">
-        <div class="bubble user">Hi, I need a cleaning sometime this week, evenings only.</div>
-        <div class="bubble ai"><span class="mono">NOVA</span>Checking Dr. Meera's evening slots for this week...</div>
-        <div class="bubble user">Thursday works best.</div>
-        <div class="typing"><span></span><span></span><span></span></div>
-      </div>
-      <div class="chat-slots">
-        <div class="slot-chip">Thu · 6:30 PM</div>
-        <div class="slot-chip">Thu · 7:15 PM</div>
-        <div class="slot-chip">Fri · 6:00 PM</div>
-      </div>
-      <div class="chat-input"><input placeholder="Type or use voice..." disabled><button><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
-    </div>
-  </div>
+    <a class="btn btn-nav" href="#book">Request a slot</a>
+  </nav>
 </header>
 
-<section class="wrap" id="services">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Services</span><h2>Every appointment type, one assistant.</h2></div>
-  <div class="svc-grid reveal">
-    <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 21c-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2C6.4 18.4 5.8 21 4.8 21c-1.4 0-2.6-3.4-2.6-8.2C2.2 7.4 4.6 3 8.6 3c1.5 0 2.4.8 3.4.8S13.9 3 15.4 3c4 0 6.4 4.4 6.4 9.8 0 4.8-1.2 8.2-2.6 8.2-1 0-1.6-2.6-2-4.8-.3-1.7-.6-3.2-1.6-3.2s-1.3 1.5-1.6 3.2c-.4 2.2-1 4.8-2 4.8Z"/></svg></div><h3>General Dentistry</h3><p>Cleaning, fillings & checkups, booked in seconds.</p></div>
-    <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 5 6.5 5c2 0 3.5 1.2 5.5 4 2-2.8 3.5-4 5.5-4C21 5 23.5 8.5 21.5 12.5 19 16.65 12 21 12 21Z"/></svg></div><h3>Emergency Triage</h3><p>Describe your symptom, get routed to the next slot.</p></div>
-    <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M8 12h8M12 8v8"/></svg></div><h3>Implants</h3><p>Assistant pre-collects scan history before your visit.</p></div>
-    <div class="svc-card"><div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M12 3v18M5 8l7-5 7 5M5 16l7 5 7-5"/></svg></div><h3>Follow-ups</h3><p>Automatic reminders sent to WhatsApp, no calls needed.</p></div>
-  </div>
-</section>
+<main id="top">
+<div class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow">Kanchipuram · Railway Station Road</p>
+      <h1>Ask for a dental slot the way you’d send a message<span class="caret" aria-hidden="true"></span></h1>
+      <p class="lede" data-live="Pick what you need, a day and a time. WhatsApp then opens with the message written for you.">Message the front desk on WhatsApp, or call, with what you need and a day that suits you.</p>
+      <ul class="meta" aria-label="Clinic details">
+        <li>Mon–Sat</li>
+        <li>9 AM – 8 PM</li>
+        <li>2 dentists</li>
+      </ul>
+      <p class="hero-contact"><a class="call-link" href="tel:+9198XXXXXXXX"><span>Call <span class="nowrap">+91 98XXX XXXXX</span></span></a><a class="call-link" href="https://wa.me/9198XXXXXXXX"><span>Message on WhatsApp</span></a></p>
+    </div>
 
-<section class="wrap" id="about">
-  <div class="about-grid reveal">
-    <div class="about-photo"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7l1.5-3h5L16 7"/><circle cx="12" cy="13.5" r="3.4"/></svg><span>Clinic + team photo</span></div>
-    <div class="about-copy">
-      <span class="eyebrow">How It Works</span>
-      <h3 style="margin-top:12px;">The assistant books — real dentists still treat you.</h3>
-      <p>NovaCare's assistant only handles scheduling: reading your message, checking real-time chair availability, and confirming a slot with Dr. Meera or Dr. Karthik. Every diagnosis and treatment is still done in person, by hand.</p>
-      <div class="stat-row">
-        <div class="mini-stat"><b>&lt;30 sec</b><span>Avg. booking time</span></div>
-        <div class="mini-stat"><b>2</b><span>Dentists on staff</span></div>
-        <div class="mini-stat"><b>4.7 ★</b><span>Google rating</span></div>
+    <div class="chat" id="book" data-signature="chat-booking" role="region" aria-labelledby="chat-title">
+      <div class="chat-head">
+        <span class="chat-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5c-2.4 0-3.6 1.8-3.6 4 0 1.9.7 3.1 1.2 4.7.5 1.7.7 3.7 1.2 5.2.4 1 1.4 1 1.8 0 .4-1.3.6-3.8 1.4-4.7.5-.5 1.5-.5 2 0 .8.9 1 3.4 1.4 4.7.4 1 1.4 1 1.8 0 .5-1.5.7-3.5 1.2-5.2.5-1.6 1.2-2.8 1.2-4.7 0-2.2-1.2-4-3.6-4-1.5 0-2.3.8-4 .8s-2.5-.8-4-.8Z"/></svg></span>
+        <p class="chat-title" id="chat-title">Visit request</p>
+        <p class="chat-sub" data-live="Scripted helper · not a live chat">Front desk · Mon–Sat, 9 AM – 8 PM</p>
+        <p class="chat-step" id="chatStep" hidden></p>
+      </div>
+
+      <div class="chat-static">
+        <p class="msg msg-bot">Nothing is booked until the front desk replies with a time.</p>
+        <ul class="hours-mini">
+          <li><span>Mon–Sat</span><span>9 AM – 8 PM</span></li>
+          <li><span>Sunday</span><span>Closed</span></li>
+        </ul>
+        <a class="btn btn-primary" href="https://wa.me/9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24"/></svg>Message on WhatsApp</a>
+        <a class="call-link" href="tel:+9198XXXXXXXX"><span>Or call <span class="nowrap">+91 98XXX XXXXX</span></span></a>
+      </div>
+
+      <div class="chat-live" hidden>
+        <ol class="log" id="chatLog" role="log" aria-live="polite" aria-label="Conversation">
+          <li class="msg-sys">3 questions, then a summary. This page sends nothing by itself.</li>
+          <li class="msg msg-bot" data-q="0"><span class="sr">NovaCare helper: </span>Hello. This helper drafts a visit request for the NovaCare front desk. What would you like to come in for?</li>
+        </ol>
+        <div class="composer" id="chatComposer">
+          <p class="chat-ask" id="chatAsk"></p>
+          <div id="chatOpts" role="group" aria-labelledby="chatAsk"></div>
+        </div>
       </div>
     </div>
   </div>
-</section>
+</div>
 
-<section class="wrap" id="contact">
-  <div class="sec-head reveal"><span class="eyebrow" style="justify-content:center;">Visit</span><h2>Message us, or just walk in.</h2></div>
-  <div class="contact-grid reveal">
-    <div class="contact-card">
-      <div class="info-row"><div class="lbl">Address</div><div class="val">Railway Station Road, Kanchipuram 631502</div></div>
-      <div class="info-row"><div class="lbl">Phone</div><div class="val">+91 98XXX XXXXX</div></div>
-      <div class="info-row"><div class="lbl">Hours</div><div class="val">Mon–Sat, 9 AM – 8 PM</div></div>
-      <div class="info-row"><div class="lbl">WhatsApp</div><div class="val"><a href="https://wa.me/9198XXXXXXXX" style="color:var(--cyan);">Message the assistant →</a></div></div>
+<section id="services" aria-labelledby="svc-title">
+  <div class="wrap svc-grid">
+    <div class="svc-head reveal">
+      <p class="eyebrow">Services</p>
+      <h2 id="svc-title">What you can ask for.</h2>
+      <p class="svc-lede" data-live="Choose a row to start a request with that treatment already picked.">Each Request link leads to the front desk, on WhatsApp or by phone.</p>
     </div>
-    <form class="contact-card form" onsubmit="event.preventDefault(); window.location.href='mailto:?subject=Appointment Request&body=' + encodeURIComponent('Name: ' + this.name.value + '\nPhone: ' + this.phone.value + '\nWhat do you need: ' + this.need.value);">
-      <input name="name" type="text" placeholder="Full name" required>
-      <input name="phone" type="tel" placeholder="Phone number" required>
-      <input name="need" type="text" placeholder="What do you need? (e.g. cleaning, evenings)">
-      <button type="submit">Request a slot</button>
-    </form>
+    <ol class="svc-list reveal">
+      <li>
+        <span class="svc-no">01</span>
+        <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M10.5 5C7.3 5 5.5 7.6 5.5 10.6c0 2.6 1 4.3 1.7 6.6.7 2.3 1 5 1.7 7 .5 1.4 1.9 1.4 2.4 0 .6-1.8.8-5 1.9-6.3.7-.8 2-.8 2.7 0 1.1 1.3 1.3 4.5 1.9 6.3.5 1.4 1.9 1.4 2.4 0 .7-2 1-4.7 1.7-7 .7-2.3 1.7-4 1.7-6.6C23.5 7.6 21.7 5 18.5 5c-2 0-3 1.1-4 1.1S12.5 5 10.5 5Z" transform="translate(1.5 0)"/><path d="M11 10.5c1.2-1.2 2.6-1 4-.2" transform="translate(1.5 0)"/></svg>
+        <div><h3>Check-up and cleaning</h3><p>An exam first, then scaling and polishing, usually in the same visit.</p></div>
+        <a class="svc-ask" href="#book" data-ask="cleaning">Request<span class="sr"> a check-up and cleaning</span> <span aria-hidden="true">→</span></a>
+      </li>
+      <li>
+        <span class="svc-no">02</span>
+        <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M12 5C8.8 5 7 7.6 7 10.6c0 2.6 1 4.3 1.7 6.6.7 2.3 1 5 1.7 7 .5 1.4 1.9 1.4 2.4 0 .6-1.8.8-5 1.9-6.3.7-.8 2-.8 2.7 0 1.1 1.3 1.3 4.5 1.9 6.3.5 1.4 1.9 1.4 2.4 0 .7-2 1-4.7 1.7-7 .7-2.3 1.7-4 1.7-6.6C25 7.6 23.2 5 20 5c-2 0-3 1.1-4 1.1S14 5 12 5Z"/><path d="M13.2 11.2c.4-1.6 1.6-2.4 2.8-2.4s2.4.8 2.8 2.4c-.9.8-1.8 1.2-2.8 1.2s-1.9-.4-2.8-1.2Z" fill="currentColor" stroke="none" style="color:var(--cyan)"/></svg>
+        <div><h3>Fillings</h3><p>For a small cavity or a chipped edge.</p></div>
+        <a class="svc-ask" href="#book" data-ask="filling">Request<span class="sr"> a filling</span> <span aria-hidden="true">→</span></a>
+      </li>
+      <li>
+        <span class="svc-no">03</span>
+        <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M17.5 4 8.5 17.5h6.5L13.5 28l10-14.5h-6.5L17.5 4Z"/></svg>
+        <div><h3>Tooth pain</h3><p>Tell us where it hurts and since when. If it cannot wait, call.</p></div>
+        <a class="svc-ask" href="#book" data-ask="pain">Request<span class="sr"> a visit for tooth pain</span> <span aria-hidden="true">→</span></a>
+      </li>
+      <li>
+        <span class="svc-no">04</span>
+        <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><path d="M10 7.5C10 5.6 11.4 4.5 13.3 4.5h5.4c1.9 0 3.3 1.1 3.3 3S20.6 10.5 18.7 10.5h-5.4c-1.9 0-3.3-1.1-3.3-3Z"/><path d="M14 10.5v2.5h4v-2.5"/><path d="M13 13h6l-.8 11.5L16 28l-2.2-3.5L13 13Z"/><path d="M12.6 17h6.8M12.9 20.5h6.2"/></svg>
+        <div><h3>Implants</h3><p>Bring any old X-rays or scans. They help plan the first visit.</p></div>
+        <a class="svc-ask" href="#book" data-ask="implant">Request<span class="sr"> an implant consult</span> <span aria-hidden="true">→</span></a>
+      </li>
+      <li>
+        <span class="svc-no">05</span>
+        <svg class="svc-ic" viewBox="0 0 32 32" aria-hidden="true"><rect x="5" y="7" width="22" height="20" rx="3"/><path d="M5 12.5h22M11 4.5v5M21 4.5v5"/><path d="m11.5 19.5 3 3 6-6"/></svg>
+        <div><h3>Follow-ups</h3><p>A WhatsApp reminder before your next visit, if you want one.</p></div>
+        <a class="svc-ask" href="#book" data-ask="followup">Request<span class="sr"> a follow-up visit</span> <span aria-hidden="true">→</span></a>
+      </li>
+    </ol>
   </div>
 </section>
 
-<footer class="wrap">
-  <span>© 2026 NovaCare Dental, Kanchipuram.</span>
-  <span>Design portfolio piece · Not a live business</span>
+<section class="how" id="how" aria-labelledby="how-title">
+  <div class="wrap how-grid">
+    <div class="reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 id="how-title" data-live="It writes the message. People answer it.">You send a message. People answer it.</h2>
+      <p class="how-lede" data-live="The helper on this page is a short scripted form, not an AI and not a live chat. It cannot diagnose anything. It turns three answers into a message you read before you send it.">This page does not book or diagnose anything. Your request goes to the front desk on WhatsApp or by phone.</p>
+      <ol class="steps">
+        <li><span class="st-no">01</span><div><h3 data-live="You choose">You write</h3><p data-live="What you need, a day, and a time inside opening hours.">What you need and a day that suits you, Mon–Sat, 9 AM – 8 PM.</p></div></li>
+        <li><span class="st-no">02</span><div><h3>You send</h3><p data-live="WhatsApp opens with the message filled in. Edit it if you like.">Send it on WhatsApp, or call the front desk instead.</p></div></li>
+        <li><span class="st-no">03</span><div><h3>We reply</h3><p>The front desk replies with that time or another one.</p></div></li>
+      </ol>
+    </div>
+    <figure class="phone reveal">
+      <div class="ph-head"><span class="ph-av" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 4.5c-2.4 0-3.6 1.8-3.6 4 0 1.9.7 3.1 1.2 4.7.5 1.7.7 3.7 1.2 5.2.4 1 1.4 1 1.8 0 .4-1.3.6-3.8 1.4-4.7.5-.5 1.5-.5 2 0 .8.9 1 3.4 1.4 4.7.4 1 1.4 1 1.8 0 .5-1.5.7-3.5 1.2-5.2.5-1.6 1.2-2.8 1.2-4.7 0-2.2-1.2-4-3.6-4-1.5 0-2.3.8-4 .8s-2.5-.8-4-.8Z"/></svg></span>NovaCare front desk</div>
+      <div class="ph-body">
+        <p class="ph-out"><span class="ph-who">You</span>Hi NovaCare, could I come in for a check-up and cleaning on Thursday at 5:30 PM? Please let me know if that time works.</p>
+        <p class="ph-in"><span class="ph-who">Front desk</span>Thursday 5:30 PM works. See you then.</p>
+      </div>
+      <figcaption>Example messages, not a real patient.</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="visit" aria-labelledby="visit-title">
+  <div class="wrap visit-grid">
+    <div class="visit-copy reveal">
+      <p class="eyebrow">Visit</p>
+      <h2 id="visit-title">On Railway Station Road, Kanchipuram.</h2>
+      <p class="visit-lede">Walk in during opening hours, or send a request first so the front desk has the details.</p>
+      <ol class="week" aria-hidden="true">
+        <li><i></i>Mon</li><li><i></i>Tue</li><li><i></i>Wed</li><li><i></i>Thu</li><li><i></i>Fri</li><li><i></i>Sat</li><li class="off"><i></i>Sun</li>
+      </ol>
+      <p class="week-cap" aria-hidden="true">9 AM – 8 PM, Sunday closed</p>
+    </div>
+    <dl class="info reveal">
+      <div><dt>Address</dt><dd>Railway Station Road, Kanchipuram 631502</dd></div>
+      <div><dt>Phone</dt><dd><a href="tel:+9198XXXXXXXX">+91 98XXX XXXXX</a></dd></div>
+      <div><dt>Hours</dt><dd>Mon–Sat, 9 AM – 8 PM. Sunday closed.</dd></div>
+      <div><dt>WhatsApp</dt><dd><a href="https://wa.me/9198XXXXXXXX">Message the front desk <span aria-hidden="true">→</span></a></dd></div>
+      <div><dt>Dentists</dt><dd>Dr. Meera Jayaraman and Dr. Karthik Mohan</dd></div>
+      <div><dt>Rating</dt><dd>4.7 ★ on Google</dd></div>
+    </dl>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 NovaCare Dental, Kanchipuram.</span>
+    <span>Design portfolio piece · Not a live business</span>
+  </div>
 </footer>
 
-<a class="wa-float" href="https://wa.me/9198XXXXXXXX" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
-
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:0.1});
-  els.forEach(el=>io.observe(el));
+  // Scroll reveal (content is visible without JS; see the noscript rule).
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  })();
+
+  // Signature: chat-booking. A scripted, three-step form shaped like a chat: treatment, day, time,
+  // then a summary card. Nothing is sent anywhere by this page; the last step opens WhatsApp with the
+  // request filled in; nothing is booked until the front desk replies. Options are real buttons in a labelled group (the
+  // keyboard path); messages are added to a role="log" live region. Without JS the static panel shows.
+  (function(){
+    var root = document.querySelector('[data-signature="chat-booking"]');
+    if(!root) return;
+    var still = root.querySelector('.chat-static'), live = root.querySelector('.chat-live');
+    var log = document.getElementById('chatLog'), ask = document.getElementById('chatAsk');
+    var opts = document.getElementById('chatOpts'), composer = document.getElementById('chatComposer');
+    var stepEl = document.getElementById('chatStep');
+    var WA = 'https://wa.me/9198XXXXXXXX', TEL = 'tel:+9198XXXXXXXX', TEL_TXT = '+91 98XXX XXXXX';
+    var calm = window.matchMedia ? matchMedia('(prefers-reduced-motion: reduce)') : null;
+    function quiet(){ return !!(calm && calm.matches); }
+
+    var TREAT = [
+      {k:'cleaning', label:'Check-up and cleaning', msg:'a check-up and cleaning'},
+      {k:'filling', label:'Filling', msg:'a filling'},
+      {k:'pain', label:'Tooth pain', msg:'a visit for tooth pain'},
+      {k:'implant', label:'Implant consult', msg:'an implant consultation'},
+      {k:'followup', label:'Follow-up visit', msg:'a follow-up visit'},
+      {k:'other', label:'Something else', msg:'a visit (I will explain the reason)'}
+    ];
+    // All times sit inside Mon-Sat 9 AM - 8 PM; the last one leaves an hour before closing.
+    var TIMES = [['Morning',['9:30 AM','11:00 AM']],['Afternoon',['12:30 PM','2:30 PM','4:00 PM']],['Evening',['5:30 PM','7:00 PM']]];
+    var WD = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var WDL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var MO = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var MOL = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    // The next six open days (Monday to Saturday), counted from tomorrow in India time.
+    function todayIST(){
+      try{
+        var p = new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Kolkata', year:'numeric', month:'numeric', day:'numeric'}).formatToParts(new Date());
+        var get = function(t){ for(var i=0;i<p.length;i++){ if(p[i].type===t) return +p[i].value; } return 0; };
+        return Date.UTC(get('year'), get('month') - 1, get('day'));
+      }catch(e){
+        var d = new Date();
+        return Date.UTC(d.getFullYear(), d.getMonth(), d.getDate());
+      }
+    }
+    var start = todayIST(), days = [];
+    for(var i=1; days.length<6 && i<10; i++){
+      var d = new Date(start + i*864e5);
+      if(d.getUTCDay() !== 0) days.push({wd:d.getUTCDay(), date:d.getUTCDate(), mon:d.getUTCMonth()});
+    }
+
+    var state = {treat:null, day:null, time:null};
+    function dayShort(i){ var d = days[i]; return WD[d.wd] + ' ' + d.date + ' ' + MO[d.mon]; }
+    function dayLong(i){ var d = days[i]; return WDL[d.wd] + ' ' + d.date + ' ' + MOL[d.mon]; }
+
+    function make(tag, cls, html){ var n = document.createElement(tag); if(cls) n.className = cls; if(html != null) n.innerHTML = html; return n; }
+    function push(li){ if(!quiet()) li.classList.add('msg-in'); log.appendChild(li); return li; }
+    function say(html, q){ var li = make('li', 'msg msg-bot', '<span class="sr">NovaCare helper: </span>' + html); li.setAttribute('data-q', q); return push(li); }
+    function me(text, a){ var li = make('li', 'msg msg-me', '<span class="sr">You: </span>'); li.appendChild(document.createTextNode(text)); li.setAttribute('data-a', a); return push(li); }
+    function chip(text, aria, onPick, cls){
+      var b = make('button', 'opt' + (cls ? ' ' + cls : ''));
+      b.type = 'button'; b.textContent = text;
+      if(aria) b.setAttribute('aria-label', aria);
+      b.addEventListener('click', onPick);
+      return b;
+    }
+
+    function message(){
+      return 'Hi NovaCare, could I come in for ' + state.treat.msg + ' on ' + dayLong(state.day) + ' at ' + state.time + '? Please let me know if that time works.';
+    }
+
+    function show(stage, focus, noScroll){
+      stepEl.textContent = stage < 3 ? (stage + 1) + ' of 3' : 'Ready';
+      opts.innerHTML = '';
+      var row;
+      if(stage === 0){
+        ask.textContent = 'Choose a treatment';
+        row = make('div', 'opts');
+        TREAT.forEach(function(t){ row.appendChild(chip(t.label, null, function(){ pickTreat(t); })); });
+        opts.appendChild(row);
+      }else if(stage === 1){
+        ask.textContent = 'Choose a day';
+        row = make('div', 'opts');
+        days.forEach(function(d, i){ row.appendChild(chip(dayShort(i), null, function(){ pickDay(i); })); });
+        row.appendChild(chip('Start over', null, restart, 'opt-ghost'));
+        opts.appendChild(row);
+      }else if(stage === 2){
+        ask.textContent = 'Choose a time, ' + dayShort(state.day);
+        TIMES.forEach(function(g){
+          var grp = make('div', 'opt-group');
+          grp.appendChild(make('span', 'opt-k', g[0]));
+          var r = make('div', 'opts');
+          g[1].forEach(function(t){ r.appendChild(chip(t, null, function(){ pickTime(t); })); });
+          grp.appendChild(r);
+          opts.appendChild(grp);
+        });
+        row = make('div', 'opts opt-tail');
+        row.appendChild(chip('Change day', null, function(){ rewind(1); show(1, true); }, 'opt-ghost'));
+        row.appendChild(chip('Start over', null, restart, 'opt-ghost'));
+        opts.appendChild(row);
+      }else{
+        ask.textContent = 'Your request is ready';
+        var send = make('a', 'btn btn-primary chat-send', document.querySelector('.chat-static .btn svg').outerHTML + 'Open in WhatsApp');
+        send.href = WA + '?text=' + encodeURIComponent(message());
+        opts.appendChild(send);
+        row = make('div', 'chat-alt');
+        row.appendChild(chip('Change time', null, function(){ rewind(2); show(2, true); }, 'opt-ghost'));
+        row.appendChild(chip('Start over', null, restart, 'opt-ghost'));
+        opts.appendChild(row);
+        opts.appendChild(make('p', 'chat-note', 'Nothing is booked until the front desk replies with a time.'));
+        opts.appendChild(make('a', 'call-link chat-call', '<span>Need it sooner? Call <span class="nowrap">' + TEL_TXT + '</span></span>'));
+        opts.lastChild.href = TEL;
+      }
+      settle(focus, noScroll);
+    }
+
+    // Keep the newest message in view, and give the log a tab stop only while it scrolls.
+    function fitLog(){
+      if(log.scrollHeight > log.clientHeight + 1){ log.tabIndex = 0; } else { log.removeAttribute('tabindex'); }
+    }
+    function settle(focus, noScroll){
+      fitLog();
+      log.scrollTop = log.scrollHeight;
+      if(!focus) return;
+      var first = opts.querySelector('button, a');
+      if(first){ try{ first.focus({preventScroll:true}); }catch(e){ first.focus(); } }
+      if(!noScroll) composer.scrollIntoView({block:'nearest', behavior: quiet() ? 'auto' : 'smooth'});
+    }
+
+    function pickTreat(t, noScroll){
+      state.treat = t;
+      me(t.label, 0);
+      if(t.k === 'pain') say('If the pain is severe or there is swelling, call the clinic instead. <a class="msg-link" href="' + TEL + '">Call ' + TEL_TXT + '</a>', 1);
+      say('Which day suits you? We are open Monday to Saturday.', 1);
+      show(1, true, noScroll);
+    }
+    function pickDay(i){
+      state.day = i;
+      me(dayLong(i), 1);
+      say('What time on ' + dayLong(i) + '?', 2);
+      show(2, true);
+    }
+    function pickTime(t){
+      state.time = t;
+      me(t, 2);
+      var card = make('li', 'msg msg-card');
+      card.setAttribute('data-q', 3);
+      card.innerHTML = '<span class="sr">NovaCare helper: </span><p class="card-k">Your request</p><dl class="card-dl">'
+        + '<div><dt>Treatment</dt><dd>' + state.treat.label + '</dd></div>'
+        + '<div><dt>Day</dt><dd>' + dayLong(state.day) + '</dd></div>'
+        + '<div><dt>Time</dt><dd>' + t + '</dd></div>'
+        + '<div><dt>Clinic</dt><dd>NovaCare Dental, Railway Station Road</dd></div></dl>';
+      push(card);
+      show(3, true);
+    }
+
+    // Go back to a step: drop every answer from that step on, and every message after it.
+    function rewind(stage){
+      [].slice.call(log.children).forEach(function(li){
+        var a = li.getAttribute('data-a'), q = li.getAttribute('data-q');
+        if((a !== null && +a >= stage) || (q !== null && +q > stage)) log.removeChild(li);
+      });
+      if(stage <= 0) state.treat = null;
+      if(stage <= 1) state.day = null;
+      state.time = null;
+    }
+    function restart(){ rewind(0); show(0, true); }
+
+    // Service rows start a request with their treatment already picked.
+    document.querySelectorAll('[data-ask]').forEach(function(a){
+      a.addEventListener('click', function(e){
+        if(e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        var t = TREAT.filter(function(x){ return x.k === a.getAttribute('data-ask'); })[0];
+        if(!t) return;
+        e.preventDefault();
+        rewind(0);
+        pickTreat(t, true);
+        var pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingBottom) || 0;
+        var fits = root.offsetHeight <= innerHeight - pad - 24;
+        (fits ? root : composer).scrollIntoView({block: fits ? 'start' : 'end', behavior: quiet() ? 'auto' : 'smooth'});
+      });
+    });
+
+    addEventListener('resize', fitLog);
+    show(0, false);
+    // Wording that only holds while the helper runs is swapped in here; the defaults are true without JS.
+    [].forEach.call(document.querySelectorAll('[data-live]'), function(el){ el.textContent = el.getAttribute('data-live'); });
+    still.hidden = true;
+    live.hidden = false;
+    stepEl.hidden = false;
+    fitLog();
+  })();
+</script>
+<div class="nc-bar" role="group" aria-label="Call or book">
+  <a class="nc-call" href="tel:+9198XXXXXXXX"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>Call</a>
+  <a class="nc-book" href="#book">Book</a>
+</div>
+<script>
+/* nocap:polish v1 */
+(function () {
+  var bar = document.querySelector('.nc-bar');
+  if (!bar) return;
+  // Match page padding and the WhatsApp float to the bar's real height (larger text sizes, safe areas).
+  function fit() {
+    if (bar.offsetHeight) document.documentElement.style.setProperty('--nc-bar-h', bar.offsetHeight + 'px');
+  }
+  fit();
+  addEventListener('resize', fit);
+  // Without IntersectionObserver the demo's own scroll reveal never fires; show everything instead.
+  if (!('IntersectionObserver' in window)) {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
 </script>
 </body>
 </html>
