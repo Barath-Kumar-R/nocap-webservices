@@ -452,7 +452,7 @@
       <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
       <div class="field"><label for="f-note">Who’s coming, and what for?</label><textarea id="f-note" name="note" rows="4"></textarea></div>
       <button type="submit" class="btn">Send the request</button>
-      <p class="form-note">This turns into an email from your own mail app. Press send there, and the front desk comes back to you with a day for the visit.</p>
+      <p class="form-note">This turns into an email from your own mail app. Press send there, and the front desk will usually come back to you with a day for the visit.</p>
     </form>
   </div>
 </section>
@@ -590,7 +590,7 @@
     when.innerHTML = '<svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><circle cx="10" cy="10" r="8" fill="none" stroke="#3B2414" stroke-width="2"/><path d="M10 5.5V10l3 2" fill="none" stroke="#3B2414" stroke-width="2" stroke-linecap="round"/></svg>';
     var hrs = el('span'); hrs.innerHTML = k.when || HOURS; when.appendChild(hrs); wrap.appendChild(when);
     var n = noteFor(a); if (n) wrap.appendChild(el('p', 'q-note', n));
-    wrap.appendChild(el('p', 'q-honest', 'This is a suggestion from three answers, not a diagnosis. The dentist decides what is needed after a look, and the front desk confirms the day.'));
+    wrap.appendChild(el('p', 'q-honest', 'This is a suggestion from three answers, not a diagnosis. The dentist decides what is needed after a look, and the day is set with the front desk.'));
 
     var msg = 'Asking for: ' + k.title + '. Who: ' + lc(whoT) + '. About: ' + lc(whatT) + '. Feeling: ' + lc(feelT) + '.';
     var waText = 'Hello Sunshine Smiles, I would like to ask for ' + lc(k.title) + '. (' + whoT + '; ' + lc(whatT) + '; ' + lc(feelT) + '.) ' + (k.call ? 'Is anything free today?' : 'Which days are free?');
