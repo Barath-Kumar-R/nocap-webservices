@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NoCap Webservices · Website styles for clinics, built as working demos</title>
+<title>NoCap Webservices · 22 website styles for dental clinics</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -23,6 +23,7 @@
     --coral-ink:#CC3517; /* coral for small text: 5.1:1 on white, where --coral is 3.3:1 */
     --muted-on-bloom:#4A4A53; /* hero text over the moving bloom: 8.4:1 on paper, and at least 6.0:1 measured over the bloom */
     --edge:#8E8C85; /* outlines that mark a control: 3.2:1 on paper, 3.4:1 on white */
+    --gutter:28px; /* side padding of the page column (.wrap) */
     --nav-h:65px; /* the sticky nav: 64px plus its border. The script keeps it exact; scroll-padding uses it */
     --display:'Bricolage Grotesque','Bricolage Fallback',Arial,sans-serif;
     --text:'Inter','Inter Fallback',Arial,sans-serif;
@@ -40,7 +41,7 @@
   a{color:inherit;}
   :focus-visible{outline:3px solid var(--navy); outline-offset:3px;}
   /* Only side padding: a shorthand here used to zero the vertical padding of every section that is also a .wrap */
-  .wrap{max-width:1260px; margin:0 auto; padding-left:28px; padding-right:28px;}
+  .wrap{max-width:1260px; margin:0 auto; padding-left:var(--gutter); padding-right:var(--gutter);}
   .vh{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap;}
 
   /* NAV: full-width bar, content held to the page column */
@@ -89,7 +90,9 @@
 
   /* STYLE STRIP: one name per demo. Without script or with reduced motion it is a static, wrapping row in the page
      column. With script and motion allowed the two copies of the list slide by as one loop (the second copy is
-     aria-hidden, so assistive tech reads one list); hover, focus inside and the pause button stop it. */
+     aria-hidden, so assistive tech reads one list); hovering the names and the pause button stop it. Focus does not:
+     the button is the only focusable thing in it, so a focus pause left Play doing nothing until focus moved away,
+     and hover is on the names only, so Play works with the pointer still on the button. */
   .style-strip{position:relative; background:var(--ink); color:var(--white); overflow:hidden;}
   .strip-track{display:flex; justify-content:center; max-width:1260px; margin:0 auto; padding:12px 28px;}
   .strip-list{display:flex; flex-wrap:wrap; justify-content:center; column-gap:28px; list-style:none;}
@@ -108,7 +111,7 @@
     html.js .strip-list{flex-wrap:nowrap; column-gap:0;}
     html.js .strip-list[aria-hidden="true"]{display:flex;}
     html.js .strip-list li{padding:16px 0; margin-right:44px;}
-    html.js .style-strip:hover .strip-track, html.js .style-strip:focus-within .strip-track, html.js .style-strip.is-paused .strip-track{animation-play-state:paused;}
+    html.js .strip-track:hover, html.js .style-strip.is-paused .strip-track{animation-play-state:paused;}
   }
   @keyframes strip{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
 
@@ -168,8 +171,10 @@
   .fc-dot[aria-current="true"] .bar::after{transform:scaleX(1);}
   /* longhands, not the animation shorthand: the shorthand would reset play-state and outrank the pause rules */
   .featured.is-auto .fc-dot[aria-current="true"] .bar::after{animation-name:feat-fill; animation-duration:5s; animation-timing-function:linear; animation-fill-mode:forwards;}
-  .featured.is-focused .fc-dot .bar::after, .featured.is-offscreen .fc-dot .bar::after{animation-play-state:paused;}
-  @media (hover:hover){ .featured:hover .fc-dot .bar::after{animation-play-state:paused;} }
+  /* .play-now: the user just pressed Play, so hover and focus on the button do not hold it back (until the pointer
+     leaves the section or focus moves to another control) */
+  .featured.is-focused:not(.play-now) .fc-dot .bar::after, .featured.is-offscreen .fc-dot .bar::after{animation-play-state:paused;}
+  @media (hover:hover){ .featured:not(.play-now):hover .fc-dot .bar::after{animation-play-state:paused;} }
   @keyframes feat-fill{ from{transform:scaleX(0);} to{transform:scaleX(1);} }
   @media (prefers-reduced-motion:reduce){
     .feat-shot, .feat-slide, .feat-shot:not(.is-current), .feat-slide:not(.is-current){transition-duration:.15s; transition-delay:0s;}
@@ -200,6 +205,16 @@
   .cap-desc{font-size:16px; line-height:1.6; color:var(--muted);}
   .cap-eg{grid-column:3; margin-top:6px; font-size:15px; color:var(--ink);}
   .cap-eg span{color:var(--muted); white-space:nowrap;}
+  /* Phones: the row shows the name and the example; tapping the example line opens what the direction suits (native
+     details, so it works without script). It sits above the stretched link, which still covers the rest of the row. */
+  .cap-more{display:none; position:relative; z-index:1;}
+  .cap-more summary{display:flex; align-items:center; justify-content:space-between; gap:12px; min-height:44px; list-style:none; cursor:pointer;}
+  .cap-more summary::-webkit-details-marker{display:none;}
+  .cap-more .cap-eg{margin:0;}
+  .cap-why{flex:none; display:inline-flex; align-items:center; gap:6px; font-size:14px; font-weight:600; color:var(--ink); border-bottom:1px solid var(--edge);}
+  .cap-why::after{content:''; width:7px; height:7px; border-right:2px solid currentColor; border-bottom:2px solid currentColor; transform:translateY(-2px) rotate(45deg); transition:transform .2s;}
+  .cap-more[open] .cap-why::after{transform:translateY(2px) rotate(-135deg);}
+  .cap-more p{padding:2px 0 6px; font-size:16px; line-height:1.6; color:var(--muted);}
   .cap-go{grid-column:4; grid-row:1; justify-self:end; font-size:20px; transition:transform .2s;}
   .cap:hover, .cap:focus-within{background:#F1F7DC;}
   .cap:hover .cap-go, .cap:focus-within .cap-go{transform:translateX(4px);}
@@ -272,22 +287,25 @@
   .g-card:hover .g-frame::after{opacity:1; background-position:-20% 0;}
 
   /* MANIFESTO. The static version (no script, or reduced motion) is a short section with every word in its final
-     colour. With script and motion allowed it pins below the nav while the page scrolls on natively, and the words
-     light up one by one: grey to coral or navy. Both greys and colours pass AA for this large text, so every word can
-     be read at every point. A Skip link under the line jumps to the next section; in the static version it only
-     shows when focused. */
+     colour, and its Skip link only shows when focused. With script and motion allowed (.is-live) the Skip link always
+     shows under the line, and on screens at least 600px tall the section pins below the nav while the page scrolls
+     on natively, and the words light up one by one: grey to coral or navy. Both greys and colours pass AA for this
+     large text, so every word can be read at every point. The type follows the screen's height as well as its width,
+     so the whole line fits the pinned frame; shorter screens (landscape phones) get the static layout. */
   .manifesto-wrap{position:relative;}
   .manifesto-pin{display:flex; flex-direction:column; align-items:center; justify-content:center; gap:32px;}
-  .manifesto-line{max-width:1000px; text-align:center; font-size:clamp(30px,8.6vw,84px); line-height:1.18; padding:0 20px;}
+  .manifesto-line{max-width:1000px; text-align:center; font-size:clamp(30px,min(8.6vw,11vh),84px); font-size:clamp(30px,min(8.6vw,11svh),84px); line-height:1.18; padding:0 20px;}
   .manifesto-line .w{display:inline-block; color:var(--coral);}
   .manifesto-line .w:nth-of-type(3n){color:var(--navy);}
   .skip{display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0 18px; border-radius:100px; border:1px solid var(--edge); background:var(--white); color:var(--ink); font-size:15px; font-weight:600; text-decoration:none;}
-  .manifesto-wrap:not(.is-pinned) .skip:not(:focus){position:absolute; width:1px; height:1px; min-height:0; padding:0; border:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap;}
-  .manifesto-wrap.is-pinned{height:190vh; padding:0;}
-  .manifesto-wrap.is-pinned .manifesto-pin{position:sticky; top:var(--nav-h); height:calc(100vh - var(--nav-h)); height:calc(100svh - var(--nav-h)); overflow:hidden;}
-  .manifesto-wrap.is-pinned .w{color:#8C8B85; transform:translateY(0.12em); transition:color .35s ease, transform .35s ease;}
-  .manifesto-wrap.is-pinned .w.lit{color:var(--coral); transform:none;}
-  .manifesto-wrap.is-pinned .w.lit:nth-of-type(3n){color:var(--navy);}
+  .manifesto-wrap:not(.is-live) .skip:not(:focus){position:absolute; width:1px; height:1px; min-height:0; padding:0; border:0; overflow:hidden; clip-path:inset(50%); white-space:nowrap;}
+  @media (min-height:600px){
+    .manifesto-wrap.is-live{height:190vh; padding:0;}
+    .manifesto-wrap.is-live .manifesto-pin{position:sticky; top:var(--nav-h); height:calc(100vh - var(--nav-h)); height:calc(100svh - var(--nav-h)); overflow:hidden;}
+    .manifesto-wrap.is-live .w{color:#8C8B85; transform:translateY(0.12em); transition:color .35s ease, transform .35s ease;}
+    .manifesto-wrap.is-live .w.lit{color:var(--coral); transform:none;}
+    .manifesto-wrap.is-live .w.lit:nth-of-type(3n){color:var(--navy);}
+  }
 
   /* WHY / PROCESS */
   .why-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:22px;}
@@ -315,7 +333,8 @@
   .btn-dark{background:var(--ink); color:white; padding:0 30px;}
   .btn-outline-dark{background:transparent; border:2px solid var(--ink); color:var(--ink); padding:0 28px;}
 
-  footer{padding-top:40px; padding-bottom:40px; margin-top:72px; border-top:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px 24px; font-size:15px; line-height:1.5; color:var(--muted);}
+  footer{position:relative; padding-top:40px; padding-bottom:40px; margin-top:72px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px 24px; font-size:15px; line-height:1.5; color:var(--muted);}
+  footer::before{content:''; position:absolute; top:0; left:var(--gutter); right:var(--gutter); border-top:1px solid var(--line);} /* the rule spans the column, not its padding */
   footer .foot-links{display:flex; flex-wrap:wrap; gap:0 20px;}
   footer a{display:inline-flex; align-items:center; min-height:44px; text-decoration:none; color:var(--muted);}
   footer a:hover{color:var(--ink);}
@@ -370,8 +389,9 @@
   }
   @media (max-width:720px){
     .cap{grid-template-columns:36px minmax(0,1fr) 24px; column-gap:12px; padding:16px 4px 18px;}
-    .cap-desc, .cap-eg{grid-column:2;}
-    .cap-desc{margin-top:4px;}
+    li.cap > .cap-desc, li.cap > .cap-eg{display:none;}
+    .cap-more{display:block; grid-column:2 / 4;}
+    .cap-name a{margin:0;} /* a name that wraps to two lines must not spill into the line under it */
     .cap-go{grid-column:3;}
   }
   @media (max-width:640px){
@@ -392,15 +412,17 @@
     .fc-toggle{width:44px; padding:0;}
     .fc-toggle span{position:absolute; width:1px; height:1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap;} /* icon only; the word stays its name */
     .fc-dots{margin-left:auto;}
-    .manifesto-wrap.is-pinned{height:150vh;}
     footer{margin-top:56px;}
+  }
+  @media (max-width:640px) and (min-height:600px){
+    .manifesto-wrap.is-live{height:150vh;}
   }
   @media (max-width:360px){
     .fan{width:280px;}
     .bc2{left:60px;}
   }
   @media (max-width:480px){
-    .wrap{padding-left:20px; padding-right:20px;}
+    :root{--gutter:20px;}
     .hero .eyebrow{letter-spacing:0.03em; padding:7px 12px;}
     .logo-text{display:flex; flex-direction:column;}
     .logo-text b{font-size:18px;}
@@ -433,19 +455,19 @@
       <p>We don't send a slide deck. We build a working demo of your clinic's website first. Pick a direction below, and we rebuild it with your name, your team and your services.</p>
       <div class="hero-ctas">
         <a class="btn-primary" href="#gallery">Browse all 22 styles</a>
-        <a class="btn-secondary" href="https://wa.me/7395938220" target="_blank" rel="noopener">Talk to us on WhatsApp</a>
+        <a class="btn-secondary" href="https://wa.me/917395938220" target="_blank" rel="noopener">Talk to us on WhatsApp</a>
       </div>
       <div class="hero-stats">
-        <div><b data-count="22" data-suffix="">22</b><span>WORKING STYLES</span></div>
+        <div><b data-count="22" data-suffix="">22</b><span>DESIGN STYLES</span></div>
         <div><b data-count="0" data-suffix="">0</b><span>UPFRONT BUILD FEE*</span></div>
         <div><b data-count="48" data-suffix=" hrs">48 hrs</b><span>TYPICAL DEMO TURNAROUND</span></div>
       </div>
       <p class="hero-note">*A monthly rate covers hosting, uptime and your domain.</p>
     </div>
     <div class="fan" aria-hidden="true">
-      <div class="bcard bc1"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/05-biteclub-neobrutalism-640.jpg" width="640" height="1200" alt="" decoding="async"></div></div>
-      <div class="bcard bc3"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/09-auroracalm-aurora-640.jpg" width="640" height="1200" alt="" decoding="async"></div></div>
-      <div class="bcard bc2"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/01-meridian-dental-bento-640.jpg" width="640" height="1200" alt="" decoding="async"></div></div>
+      <div class="bcard bc1"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/05-biteclub-neobrutalism-640.jpg" width="640" height="1200" alt="" loading="lazy" decoding="async"></div></div>
+      <div class="bcard bc3"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/09-auroracalm-aurora-640.jpg" width="640" height="1200" alt="" loading="lazy" decoding="async"></div></div>
+      <div class="bcard bc2"><div class="chrome"><i></i><i></i><i></i><span class="url"></span></div><div class="shot"><img src="assets/shots/01-meridian-dental-bento-640.jpg" width="640" height="1200" alt="" loading="lazy" decoding="async"></div></div>
     </div>
   </div>
 </header>
@@ -466,8 +488,8 @@
   <div class="wrap feat-grid reveal">
     <div class="feat-intro">
       <span class="eyebrow"><span class="dot"></span>Featured work</span>
-      <h2 id="featured-title">Four pages worth opening first.</h2>
-      <p>Each one is finished and working. Open it and use it the way a patient would.</p>
+      <h2 id="featured-title">Start with these.</h2>
+      <p>Four pages we would open first, each shown on a laptop and a phone. Open one and try it the way a patient would.</p>
     </div>
 
     <div class="feat-stage">
@@ -491,7 +513,7 @@
 
     <div class="feat-controls" hidden>
       <button class="fc-btn" type="button" data-feat-step="-1" aria-label="Previous slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <button class="fc-btn fc-toggle" type="button" data-feat-toggle><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><span>Play</span></button>
+      <button class="fc-btn fc-toggle" type="button" data-feat-toggle aria-label="Play slideshow"><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="5.5" width="3.4" height="13" rx="1" fill="currentColor"/><rect x="13.6" y="5.5" width="3.4" height="13" rx="1" fill="currentColor"/></svg><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="currentColor"/></svg><span>Play</span></button>
       <button class="fc-btn" type="button" data-feat-step="1" aria-label="Next slide"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div class="fc-dots">
         <button class="fc-dot" type="button" aria-label="Show Helix Dental Digital Studio" aria-current="true"><span class="bar"></span></button>
@@ -546,17 +568,17 @@
 <section class="wrap" id="capabilities" aria-labelledby="caps-title">
   <div class="caps-grid">
     <div class="caps-head reveal">
-      <h2 id="caps-title">Seven directions, and the clinics they suit.</h2>
+      <h2 id="caps-title">Which direction suits your clinic?</h2>
       <p><span data-static>Each line leads to the gallery below, where every card names its direction.</span><span data-live hidden>Pick the line that sounds like your clinic, and the gallery below opens on just those demos.</span></p>
     </div>
     <ol class="caps-list reveal">
-      <li class="cap"><span class="cap-n" aria-hidden="true">01</span><h3 class="cap-name"><a href="#gallery" data-filter="modern">Modern &amp; Minimalist</a></h3><p class="cap-desc">Clear grids, plenty of white space, and prices and hours that are easy to find. A good fit for a general practice that sees every age.</p><p class="cap-eg">For example, Clarity Dental <span>· 5 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">02</span><h3 class="cap-name"><a href="#gallery" data-filter="bold">Trendy &amp; Bold</a></h3><p class="cap-desc">Heavy type, loud colour and short, blunt sentences. For a cosmetic studio or a late-opening clinic that wants to be remembered.</p><p class="cap-eg">For example, Bite Club Dental <span>· 5 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">03</span><h3 class="cap-name"><a href="#gallery" data-filter="tech">Futuristic &amp; Tech</a></h3><p class="cap-desc">Dark screens, glowing colour and tools patients can try on the page. It sits well with an implant or scan-led practice.</p><p class="cap-eg">For example, Halo Dental Implant Center <span>· 3 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">04</span><h3 class="cap-name"><a href="#gallery" data-filter="tactile">Artistic &amp; Tactile</a></h3><p class="cap-desc">Things that look made by hand: a paper collage you can drag about, an 8-bit price list. Made for a children's clinic or a student crowd.</p><p class="cap-eg">For example, Little Sprout Dental <span>· 2 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">05</span><h3 class="cap-name"><a href="#gallery" data-filter="luxury">Luxury &amp; Premium</a></h3><p class="cap-desc">Serif type, dark ink and gold or soft spa tones, and motion kept slow and quiet. Right for cosmetic and aesthetics practices.</p><p class="cap-eg">For example, Bloom Dental &amp; Aesthetics <span>· 2 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">06</span><h3 class="cap-name"><a href="#gallery" data-filter="warm">Warm &amp; Family</a></h3><p class="cap-desc">Soft colours, hand-drawn touches and plain, friendly words. Built for a neighbourhood clinic where children and grandparents share the waiting room.</p><p class="cap-eg">For example, Oakwood Family Dental <span>· 2 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
-      <li class="cap"><span class="cap-n" aria-hidden="true">07</span><h3 class="cap-name"><a href="#gallery" data-filter="3d">Immersive &amp; 3D</a></h3><p class="cap-desc">Cards that tilt toward the pointer, paper layers that drift as you scroll, a model drawn live in WebGL. Best for a clinic that scans first and wants patients to see it.</p><p class="cap-eg">For example, Vertex Dental Lab <span>· 3 demos</span></p><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">01</span><h3 class="cap-name"><a href="#gallery" data-filter="modern">Modern &amp; Minimalist</a></h3><p class="cap-desc">Clear grids, plenty of white space, and prices and hours that are easy to find. A good fit for a general practice that sees every age.</p><p class="cap-eg">For example, Clarity Dental <span>· 5 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Clarity Dental <span>· 5 demos</span></span><span class="cap-why">What it suits</span></summary><p>Clear grids, plenty of white space, and prices and hours that are easy to find. A good fit for a general practice that sees every age.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">02</span><h3 class="cap-name"><a href="#gallery" data-filter="bold">Trendy &amp; Bold</a></h3><p class="cap-desc">Heavy type, loud colour and short, blunt sentences. For a cosmetic studio or a late-opening clinic that wants to be remembered.</p><p class="cap-eg">For example, Bite Club Dental <span>· 5 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Bite Club Dental <span>· 5 demos</span></span><span class="cap-why">What it suits</span></summary><p>Heavy type, loud colour and short, blunt sentences. For a cosmetic studio or a late-opening clinic that wants to be remembered.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">03</span><h3 class="cap-name"><a href="#gallery" data-filter="tech">Futuristic &amp; Tech</a></h3><p class="cap-desc">Dark screens, glowing colour and tools patients can try on the page. It sits well with an implant or scan-led practice.</p><p class="cap-eg">For example, Halo Dental Implant Center <span>· 3 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Halo Dental Implant Center <span>· 3 demos</span></span><span class="cap-why">What it suits</span></summary><p>Dark screens, glowing colour and tools patients can try on the page. It sits well with an implant or scan-led practice.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">04</span><h3 class="cap-name"><a href="#gallery" data-filter="tactile">Artistic &amp; Tactile</a></h3><p class="cap-desc">Things that look made by hand: a paper collage you can drag about, an 8-bit price list. Made for a children's clinic or a student crowd.</p><p class="cap-eg">For example, Little Sprout Dental <span>· 2 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Little Sprout Dental <span>· 2 demos</span></span><span class="cap-why">What it suits</span></summary><p>Things that look made by hand: a paper collage you can drag about, an 8-bit price list. Made for a children's clinic or a student crowd.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">05</span><h3 class="cap-name"><a href="#gallery" data-filter="luxury">Luxury &amp; Premium</a></h3><p class="cap-desc">Serif type, dark ink and gold or soft spa tones, and motion kept slow and quiet. Right for cosmetic and aesthetics practices.</p><p class="cap-eg">For example, Bloom Dental &amp; Aesthetics <span>· 2 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Bloom Dental &amp; Aesthetics <span>· 2 demos</span></span><span class="cap-why">What it suits</span></summary><p>Serif type, dark ink and gold or soft spa tones, and motion kept slow and quiet. Right for cosmetic and aesthetics practices.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">06</span><h3 class="cap-name"><a href="#gallery" data-filter="warm">Warm &amp; Family</a></h3><p class="cap-desc">Soft colours, hand-drawn touches and plain, friendly words. Built for a neighbourhood clinic where children and grandparents share the waiting room.</p><p class="cap-eg">For example, Oakwood Family Dental <span>· 2 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Oakwood Family Dental <span>· 2 demos</span></span><span class="cap-why">What it suits</span></summary><p>Soft colours, hand-drawn touches and plain, friendly words. Built for a neighbourhood clinic where children and grandparents share the waiting room.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
+      <li class="cap"><span class="cap-n" aria-hidden="true">07</span><h3 class="cap-name"><a href="#gallery" data-filter="3d">Immersive &amp; 3D</a></h3><p class="cap-desc">Cards that tilt toward the pointer, paper layers that drift as you scroll, a model drawn live in WebGL. Best for a clinic that scans first and wants patients to see it.</p><p class="cap-eg">For example, Vertex Dental Lab <span>· 3 demos</span></p><details class="cap-more"><summary><span class="cap-eg">For example, Vertex Dental Lab <span>· 3 demos</span></span><span class="cap-why">What it suits</span></summary><p>Cards that tilt toward the pointer, paper layers that drift as you scroll, a model drawn live in WebGL. Best for a clinic that scans first and wants patients to see it.</p></details><span class="cap-go" aria-hidden="true">→</span></li>
     </ol>
   </div>
 </section>
@@ -565,7 +587,7 @@
   <div class="sec-head reveal">
     <span class="eyebrow">The Style Library</span>
     <h2>Twenty-two styles. Pick the one that's you.</h2>
-    <p>Each preview is a screenshot of a working page. Open any card to try the page itself.<span class="pan-hint"> On a computer, hover over a card or Tab to it, and its preview scrolls down the page.</span></p>
+    <p>Each preview is a screenshot of the full page. Open any card to try it.<span class="pan-hint"> On a computer, hover over a card or Tab to it, and its preview scrolls down the page.</span></p>
   </div>
 
   <div class="filters reveal">
@@ -912,7 +934,7 @@
   <div class="why-grid reveal">
     <div class="why-card"><div class="why-num">01</div><h3>See it before you pay</h3><p>We reskin the closest-matching style with your clinic's real name and services, so you're judging a real page, not a mood board.</p></div>
     <div class="why-card"><div class="why-num">02</div><h3>WhatsApp built in</h3><p>Every template ships with a working WhatsApp button, the channel most patients already use to book, instead of a contact form nobody checks.</p></div>
-    <div class="why-card"><div class="why-num">03</div><h3>Low cost to start</h3><p>No large upfront design fee. A small monthly rate covers hosting, uptime and your domain, with no long lock-in.</p></div>
+    <div class="why-card"><div class="why-num">03</div><h3>Low cost to start</h3><p>No large upfront design fee. A small monthly rate covers hosting, uptime and your domain: cancel-friendly, no long lock-in pressure.</p></div>
     <div class="why-card"><div class="why-num">04</div><h3>Honest, always</h3><p>No fake client counts, no stock testimonials. What you see in these demos is exactly the level of build you'll get.</p></div>
   </div>
 </section>
@@ -923,7 +945,7 @@
     <h2>From "which style?" to a live site.</h2>
     <div class="process-grid">
       <div class="process-step"><div class="n">01</div><h3>Pick a direction</h3><p>Browse the 22 demos above and tell us which one feels closest to your clinic.</p></div>
-      <div class="process-step"><div class="n">02</div><h3>We reskin it, live</h3><p>Your name, your services and your photos, built into that style within 48 hours.</p></div>
+      <div class="process-step"><div class="n">02</div><h3>We put your clinic in it</h3><p>Your name, your services and your photos, built into that style within 48 hours.</p></div>
       <div class="process-step"><div class="n">03</div><h3>You review, we tweak</h3><p>Nothing goes live until you're happy with how it reads and looks.</p></div>
       <div class="process-step"><div class="n">04</div><h3>We keep it running</h3><p>Hosting, uptime and domain handled monthly, so you can focus on the clinic.</p></div>
     </div>
@@ -935,7 +957,7 @@
     <h2>Tell us which style you liked. We'll build your version this week.</h2>
     <p>No pricing sheet on this page on purpose: every clinic's scope is a little different. Message us and we'll quote it straight.</p>
     <div class="cta-ctas">
-      <a class="btn-dark" href="https://wa.me/7395938220" target="_blank" rel="noopener">Message on WhatsApp</a>
+      <a class="btn-dark" href="https://wa.me/917395938220" target="_blank" rel="noopener">Message on WhatsApp</a>
       <a class="btn-outline-dark" href="mailto:nocapwebservices@gmail.com">Email us instead</a>
     </div>
   </div>
@@ -944,7 +966,7 @@
 <footer class="wrap">
   <span>© 2026 NoCap Webservices. Portfolio demos: clinic names and details are illustrative, not live businesses.</span>
   <div class="foot-links">
-    <a href="https://wa.me/7395938220">WhatsApp</a>
+    <a href="https://wa.me/917395938220">WhatsApp</a>
     <a href="tel:+917395938220">+91 73959 38220</a>
     <a href="mailto:nocapwebservices@gmail.com">nocapwebservices@gmail.com</a>
   </div>
@@ -953,7 +975,7 @@
 <div class="cursor-dot" id="cursorDot"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<a class="wa-float" href="https://wa.me/7395938220" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
+<a class="wa-float" href="https://wa.me/917395938220" aria-label="Chat on WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.28-1.39a9.9 9.9 0 0 0 4.76 1.21h.01c5.46 0 9.9-4.45 9.9-9.91C21.96 6.45 17.5 2 12.04 2m0 18.14h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.13.82.83-3.05-.2-.31a8.2 8.2 0 0 1-1.26-4.36c0-4.54 3.7-8.24 8.26-8.24 2.2 0 4.28.86 5.84 2.42a8.18 8.18 0 0 1 2.41 5.83c0 4.55-3.7 8.24-8.25 8.24m4.52-6.17c-.25-.12-1.47-.72-1.7-.81-.23-.08-.39-.12-.56.13-.17.24-.64.8-.78.97-.14.16-.29.18-.53.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.24-1.47-1.38-1.72-.15-.24-.02-.37.11-.5.11-.11.25-.29.37-.43.12-.15.16-.25.24-.41.08-.17.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.42-.14-.01-.31-.01-.47-.01-.17 0-.44.06-.67.31-.23.24-.87.86-.87 2.09s.9 2.42 1.02 2.59c.13.16 1.77 2.7 4.29 3.79.6.26 1.07.42 1.44.53.6.19 1.15.16 1.59.1.48-.07 1.47-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.11-.23-.17-.47-.29"/></svg></a>
 
 <script>
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1066,11 +1088,14 @@
       auto = on;
       sec.classList.toggle('is-auto', on);
       toggle.querySelector('span').textContent = on ? 'Pause' : 'Play';
+      toggle.setAttribute('aria-label', on ? 'Pause slideshow' : 'Play slideshow');
     }
     setAuto(!reduceMotion);
 
     sec.addEventListener('animationend', (e)=>{ if(e.animationName === 'feat-fill' && auto) show(cur + 1, false); });
-    toggle.addEventListener('click', ()=>setAuto(!auto));
+    /* Play starts the cycle at once, even with the pointer or keyboard focus still on the button */
+    toggle.addEventListener('click', ()=>{ setAuto(!auto); sec.classList.toggle('play-now', auto); });
+    sec.addEventListener('pointerleave', ()=>sec.classList.remove('play-now'));
     sec.querySelectorAll('[data-feat-step]').forEach(b=>b.addEventListener('click', ()=>show(cur + +b.dataset.featStep, true)));
     dots.forEach((d,k)=>d.addEventListener('click', ()=>show(k, true)));
 
@@ -1079,8 +1104,9 @@
       let kb = true;
       try{ kb = e.target.matches(':focus-visible'); }catch(err){}
       sec.classList.toggle('is-focused', kb);
+      if(e.target !== toggle) sec.classList.remove('play-now');
     });
-    sec.addEventListener('focusout', (e)=>{ if(!sec.contains(e.relatedTarget)) sec.classList.remove('is-focused'); });
+    sec.addEventListener('focusout', (e)=>{ if(!sec.contains(e.relatedTarget)){ sec.classList.remove('is-focused'); sec.classList.remove('play-now'); } });
 
     /* On screen means at least half the stage is showing */
     sec.classList.add('is-offscreen');
@@ -1212,13 +1238,14 @@
     });
   }
 
-  /* MANIFESTO: pinned word-by-word reveal, only with motion allowed (the static section reads in full without it).
-     Native scrolling throughout; the words follow the scroll position, measured only while the section is near. */
+  /* MANIFESTO: pinned word-by-word reveal, only with motion allowed (the static section reads in full without it;
+     CSS pins it only on screens at least 600px tall). Native scrolling throughout; the words follow the scroll
+     position, measured only while the section is near. */
   (function manifesto(){
     const section = document.getElementById('manifesto');
     const words = section ? section.querySelectorAll('.w') : [];
     if(!section || !words.length || reduceMotion) return;
-    section.classList.add('is-pinned');
+    section.classList.add('is-live');
     let near = false, raf = 0;
 
     function update(){

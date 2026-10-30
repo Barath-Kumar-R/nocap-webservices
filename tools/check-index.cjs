@@ -2,8 +2,8 @@
 'use strict';
 /*
  * Checks for the NoCap portfolio page (index.html): gallery cards, hover preview, badges, filters, links, layout,
- * the featured showcase, the style strip, the capabilities list, the manifesto, type and tap sizes, the sticky nav,
- * the WhatsApp float and the custom cursor.
+ * the featured showcase, the style strip, the capabilities list, the manifesto, type and tap sizes, contrast, the
+ * sticky nav, the WhatsApp float, the contact links and the custom cursor.
  *
  *   node tools/check-index.cjs [page.html] [--only=check,check]
  *
@@ -58,6 +58,12 @@ const STRIP_NAMES = 22; // one style name per demo in the strip under the hero
 const NAV_MAX = 6;
 const TAP_MIN = 44;
 const FLOAT_WIDTHS = [320, 390, 768, 1024, 1280, 1440, 1920];
+// The business contact details: every WhatsApp, phone and email link on the page must use exactly these.
+const WA_URL = 'https://wa.me/917395938220';
+const TEL_HREF = 'tel:+917395938220';
+const MAIL_HREF = 'mailto:nocapwebservices@gmail.com';
+// Short viewports (landscape phones, short laptop windows) where the manifesto must still fit whole on screen.
+const SHORT_VIEWPORTS = [[812, 375], [1280, 500]];
 
 /* ---------- shared page setup ---------- */
 
@@ -574,24 +580,6 @@ async function checkOverflow(browser) {
   return bad.length ? bad.join('; ') : null;
 }
 
-// Rendered elements inside gallery cards that directly hold non-empty text (each element once).
-const CARD_TEXT_FN = `(() => {
-  const els = [];
-  const seen = new Set();
-  for (const card of document.querySelectorAll('#galleryGrid .g-card')) {
-    const walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
-    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
-      const el = n.parentElement;
-      if (!el || seen.has(el) || !n.nodeValue.trim()) continue;
-      seen.add(el);
-      const cs = getComputedStyle(el);
-      if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) continue;
-      els.push(el);
-    }
-  }
-  return els;
-})()`;
-
 const describeEl = `(el) => { const cls = (el.getAttribute('class') || '').trim().split(/\\s+/)[0];
   return el.tagName.toLowerCase() + (cls ? '.' + cls : '') + ' "' + el.textContent.trim().slice(0, 18) + '"'; }`;
 
@@ -638,44 +626,140 @@ async function checkType(browser) {
   return bad.length ? bad.join('; ') : null;
 }
 
-// (i) WCAG AA for text in gallery cards, badges included: 4.5:1, or 3:1 for large text (24px, or 18.66px bold).
-// The background is the first opaque-enough background colour up the ancestor chain (alpha blended over white);
-// card text sits on flat colours, so a background image anywhere in that chain is reported rather than guessed.
-async function checkContrast(browser) {
-  const r = await withPage(browser, {}, (page) => page.evaluate(`(() => {
-    const name = ${describeEl};
-    const parse = (c) => { const m = c.match(/[\\d.]+/g).map(Number); return { r: m[0], g: m[1], b: m[2], a: m.length > 3 ? m[3] : 1 }; };
-    const over = (top, under) => ({ r: top.r * top.a + under.r * (1 - top.a), g: top.g * top.a + under.g * (1 - top.a), b: top.b * top.a + under.b * (1 - top.a), a: 1 });
-    const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
-      return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
-    const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
-    const bad = [], unknown = [];
-    let badges = 0;
-    for (const el of ${CARD_TEXT_FN}) {
-      const layers = [];
-      let image = false;
-      for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
-        const cs = getComputedStyle(n);
-        if (cs.backgroundImage !== 'none') { image = true; break; }
-        const c = parse(cs.backgroundColor);
-        if (c.a > 0) { layers.push(c); if (c.a >= 1) break; }
-      }
-      if (image) { unknown.push(name(el)); continue; }
-      let bg = { r: 255, g: 255, b: 255, a: 1 };
-      for (const c of layers.reverse()) bg = over(c, bg);
+// Rendered text elements (each once) inside the areas checked for contrast: the gallery cards and the page sections
+// with flat backgrounds (featured copy and controls, capabilities rows, why cards, process panel). Skipped as in
+// PAGE_TEXT_FN: unrendered, visibility:hidden (the other carousel slides), 1px screen-reader text.
+const CONTRAST_AREAS = '#galleryGrid .g-card, #featured, #capabilities, #why, #process';
+const AREA_TEXT_FN = `(() => {
+  const els = [];
+  const seen = new Set();
+  for (const area of document.querySelectorAll('${CONTRAST_AREAS}')) {
+    const walker = document.createTreeWalker(area, NodeFilter.SHOW_TEXT);
+    for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+      const el = n.parentElement;
+      if (!el || seen.has(el) || !n.nodeValue.trim() || el.closest('svg')) continue;
+      seen.add(el);
       const cs = getComputedStyle(el);
-      const fg = over(parse(cs.color), bg);
-      const size = parseFloat(cs.fontSize), weight = parseInt(cs.fontWeight, 10);
-      const need = size >= 24 || (size >= 18.66 && weight >= 700) ? 3 : 4.5;
-      const got = ratio(fg, bg);
-      if (el.closest('.badges')) badges++;
-      if (got < need) bad.push(name(el) + ' ' + got.toFixed(2) + ':1');
+      if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) continue;
+      const r = el.getBoundingClientRect();
+      if (r.width <= 1 && r.height <= 1) continue;
+      els.push(el);
     }
-    return { bad, unknown, badges };
-  })()`));
-  if (!r.badges) return 'no badge text to measure';
-  if (r.unknown.length) return `${r.unknown.length} text element(s) over a background image, e.g. ${r.unknown[0]}`;
-  return r.bad.length ? `${r.bad.length} text element(s) under AA, e.g. ${[...new Set(r.bad)].slice(0, 2).join(', ')}` : null;
+  }
+  return els;
+})()`;
+
+// (i) WCAG AA, at 1280 and 390, for text in the gallery cards (badges included) and in the featured, capabilities, why
+// and process sections: 4.5:1, or 3:1 for large text (24px, or 18.66px bold). The background is the first
+// opaque-enough background colour up the ancestor chain (alpha blended over white); these areas sit on flat colours,
+// so a background image anywhere in that chain is reported rather than guessed (the hero bloom, the strip and the CTA
+// gradient are measured on real pixels by hand instead; see the Task 12 report).
+async function checkContrast(browser) {
+  const bad = [];
+  for (const [width, height] of [[1280, 800], [390, 844]]) {
+    const r = await withPage(browser, { width, height }, (page) => page.evaluate(`(() => {
+      const name = ${describeEl};
+      ${COLOR_LIB}
+      const low = [], unknown = [];
+      let badges = 0;
+      for (const el of ${AREA_TEXT_FN}) {
+        const got = textRatio(el);
+        if (got === null) { unknown.push(name(el)); continue; }
+        if (el.closest('.badges')) badges++;
+        if (got < needFor(el)) low.push(name(el) + ' ' + got.toFixed(2) + ':1');
+      }
+      return { low, unknown, badges };
+    })()`));
+    if (!r.badges) bad.push(`@${width} no badge text to measure`);
+    if (r.unknown.length) bad.push(`@${width} ${r.unknown.length} text element(s) over a background image, e.g. ${r.unknown[0]}`);
+    if (r.low.length) bad.push(`@${width} ${r.low.length} text element(s) under AA, e.g. ${[...new Set(r.low)].slice(0, 2).join(', ')}`);
+  }
+  return bad.length ? bad.join('; ') : null;
+}
+
+// contact-links: every WhatsApp link is exactly WA_URL (a ?text= message may follow), every phone link is TEL_HREF and
+// every email link is MAIL_HREF, with at least one of each; and at 1440 wide, scrolled past the hero, the WhatsApp
+// float shows and points to the same number.
+async function checkContactLinks(browser) {
+  const hrefs = await withPage(browser, {}, (page) => page.evaluate(() => [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href'))));
+  const wa = hrefs.filter((h) => /wa\.me|whatsapp\.com/i.test(h));
+  const tel = hrefs.filter((h) => /^tel:/i.test(h));
+  const mail = hrefs.filter((h) => /^mailto:/i.test(h));
+  if (!wa.length || !tel.length || !mail.length) return `want at least one WhatsApp, phone and email link (found ${wa.length}, ${tel.length}, ${mail.length})`;
+  const badWa = wa.filter((h) => h !== WA_URL && !h.startsWith(WA_URL + '?text='));
+  if (badWa.length) return `${badWa.length} WhatsApp link(s) not ${WA_URL}, e.g. ${badWa[0]}`;
+  const badTel = tel.filter((h) => h !== TEL_HREF);
+  if (badTel.length) return `${badTel.length} phone link(s) not ${TEL_HREF}, e.g. ${badTel[0]}`;
+  const badMail = mail.filter((h) => h !== MAIL_HREF);
+  if (badMail.length) return `${badMail.length} email link(s) not ${MAIL_HREF}, e.g. ${badMail[0]}`;
+  const float = await withPage(browser, { width: 1440, height: 900 }, async (page) => {
+    await instantScroll(page);
+    await page.evaluate(() => scrollTo(0, document.getElementById('gallery').getBoundingClientRect().top + scrollY));
+    await page.waitForTimeout(500);
+    return page.evaluate(() => {
+      const f = document.querySelector('.wa-float');
+      if (!f) return { none: true };
+      const cs = getComputedStyle(f);
+      return { href: f.getAttribute('href') || '', shown: cs.display !== 'none' && cs.visibility !== 'hidden' && parseFloat(cs.opacity) > 0.5 };
+    });
+  });
+  if (float.none || !float.shown) return '@1440 the WhatsApp float does not show past the hero';
+  return float.href === WA_URL || float.href.startsWith(WA_URL + '?text=') ? null : `@1440 the WhatsApp float goes to ${float.href} (want ${WA_URL})`;
+}
+
+// manifesto-short: on short screens (SHORT_VIEWPORTS: a landscape phone and a short laptop window), with script and
+// motion allowed, scrolled to the middle of the manifesto (with the words centred below the nav), every word and the
+// Skip link are rendered, visible, wholly
+// on screen below the nav, and not cut off by any clipping ancestor (such as a pinned frame shorter than the text);
+// the Skip link is at least 44x44.
+async function checkManifestoShort(browser) {
+  for (const [width, height] of SHORT_VIEWPORTS) {
+    const r = await withPage(browser, { width, height }, async (page) => {
+      await instantScroll(page);
+      // to the middle of the pinned stretch, then (for the static layout, which can be taller than the screen) so the
+      // words and the Skip link sit centred in the room below the nav, as a visitor would scroll to read them
+      await page.evaluate(() => {
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        const nav = document.querySelector('nav').offsetHeight;
+        const top = sec.getBoundingClientRect().top + scrollY;
+        scrollTo(0, top - nav + (sec.offsetHeight - (innerHeight - nav)) / 2);
+      });
+      await page.waitForTimeout(300);
+      await page.evaluate(() => {
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        const nav = document.querySelector('nav').getBoundingClientRect().bottom;
+        const parts = [...sec.querySelectorAll('.w, a')].map((el) => el.getBoundingClientRect()).filter((r) => r.height > 1);
+        const mid = (Math.min(...parts.map((r) => r.top)) + Math.max(...parts.map((r) => r.bottom))) / 2;
+        scrollBy(0, mid - (nav + innerHeight) / 2);
+      });
+      await page.waitForTimeout(500);
+      return page.evaluate(() => {
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        if (!sec) return 'no manifesto section';
+        const nav = document.querySelector('nav').getBoundingClientRect().bottom;
+        const skip = [...sec.querySelectorAll('a')].find((a) => /skip/i.test(a.textContent));
+        if (!skip) return 'no Skip link in the manifesto';
+        const parts = [...sec.querySelectorAll('.w'), skip];
+        for (const el of parts) {
+          const label = el === skip ? 'the Skip link' : `"${el.textContent.trim()}"`;
+          const cs = getComputedStyle(el);
+          const r = el.getBoundingClientRect();
+          if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) return `${label} is not rendered`;
+          if (el === skip && (r.width < 44 || r.height < 44)) return `the Skip link is ${r.width.toFixed(0)}x${r.height.toFixed(0)} (hidden or under 44x44)`;
+          if (r.top < nav - 0.5 || r.bottom > innerHeight + 0.5) return `${label} is off screen or under the nav (top ${Math.round(r.top)}, bottom ${Math.round(r.bottom)}; visible area ${Math.round(nav)}-${innerHeight})`;
+          for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+            const c = getComputedStyle(a);
+            if (c.overflowX === 'visible' && c.overflowY === 'visible') continue;
+            const b = a.getBoundingClientRect();
+            if (r.top < b.top - 0.5 || r.bottom > b.bottom + 0.5 || r.left < b.left - 0.5 || r.right > b.right + 0.5) return `${label} is clipped by its ${a.className || a.tagName} (${Math.round(r.top)}-${Math.round(r.bottom)} in ${Math.round(b.top)}-${Math.round(b.bottom)})`;
+          }
+        }
+        return null;
+      });
+    });
+    if (r) return `@${width}x${height}: ${r}`;
+  }
+  return null;
 }
 
 // Page copy: no banned words and no emoji in the visible text or the title (glyphs © and arrows are fine).
@@ -822,7 +906,9 @@ async function featSlideParts(page, probe = true) {
 
 // featured-cycle: section#featured cycles FEATURED in order. On a desktop (1280x800, motion allowed) it advances by
 // itself, 4-6.5s apart, without announcing; it holds still while hovered (and resumes after), while keyboard focus is
-// inside it, while scrolled off screen, under reduced motion (where Next still works) and after Pause (Play resumes).
+// inside it, while scrolled off screen, under reduced motion (where Next still works) and after Pause (Play resumes,
+// also with the pointer resting on it and by Enter with focus on it). On a touch phone a vertical swipe that starts on
+// the stage scrolls the page without changing the slide, and a sideways swipe moves on.
 // Previous, Next, Pause and the four slide dots are real buttons with names, at least 44x44; user navigation is
 // announced in the aria-live region. Every slide shows one "View live" link (44px tall) to its own demo file, and its
 // desktop shot and -m phone shot as images with their real pixel sizes, alt naming the demo, lazy except on the first
@@ -889,6 +975,59 @@ async function checkFeatured(browser) {
     return (await nextAdvance(page)) ? null : `Play did not resume the cycle within ${CYCLE_LATE_MS / 1000}s`;
   });
   if (paused) return paused;
+
+  // Play must win over the hover and focus pauses: pressing it with the pointer still on it, or with Enter while focus
+  // stays on it, starts the cycle at once
+  const playHere = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    await featButton(page, /pause/i).first().click();
+    await featButton(page, /play/i).first().click();
+    return (await nextAdvance(page)) ? null : `mouse: Pause then Play with the pointer resting on the button did not resume within ${CYCLE_LATE_MS / 1000}s`;
+  });
+  if (playHere) return playHere;
+  const playKeys = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    const onToggle = () => !!document.activeElement.matches('#featured [data-feat-toggle], #featured button.fc-toggle');
+    if (!(await tabUntil(page, onToggle))) return 'keyboard: Tab never reaches the Pause button';
+    await page.keyboard.press('Enter');
+    await page.keyboard.press('Enter');
+    return (await nextAdvance(page)) ? null : `keyboard: Enter, Enter (Pause then Play) did not resume within ${CYCLE_LATE_MS / 1000}s with focus on the button`;
+  });
+  if (playKeys) return playKeys;
+
+  // Touch (phone, reduced motion so nothing advances by itself): a vertical swipe that starts on the stage scrolls the
+  // page and leaves the slide alone; a sideways swipe moves to the next slide
+  const touch = await withPage(browser, { touch: true, reduced: true, width: 390, height: 844 }, async (page) => {
+    await instantScroll(page);
+    await page.evaluate(() => { const st = document.querySelector('#featured .feat-stage'); scrollTo(0, st.getBoundingClientRect().top + scrollY - 200); });
+    await page.waitForTimeout(800);
+    const cdp = await page.context().newCDPSession(page);
+    const swipe = async (x0, y0, x1, y1) => {
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: x0, y: y0 }] });
+      for (let i = 1; i <= 12; i++) {
+        await cdp.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: x0 + (x1 - x0) * i / 12, y: y0 + (y1 - y0) * i / 12 }] });
+        await page.waitForTimeout(16);
+      }
+      await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+      await page.waitForTimeout(800);
+    };
+    const box = await page.locator('#featured .feat-stage').boundingBox();
+    const cx = box.x + box.width / 2, cy = box.y + Math.min(box.height / 2, 300);
+    const y0 = await page.evaluate(() => scrollY);
+    const s0 = await featName(page);
+    await swipe(cx, cy + 100, cx + 6, cy - 200);
+    const y1 = await page.evaluate(() => scrollY);
+    if (y1 - y0 < 100) return `touch: a vertical swipe on the stage scrolled the page ${Math.round(y1 - y0)}px (want the page to scroll)`;
+    if ((await featName(page)) !== s0) return 'touch: a vertical swipe on the stage changed the slide';
+    await page.evaluate((y) => scrollTo(0, y), y0);
+    await page.waitForTimeout(300);
+    const b2 = await page.locator('#featured .feat-stage').boundingBox();
+    const yy = b2.y + Math.min(b2.height / 2, 300);
+    await swipe(b2.x + b2.width * 0.8, yy, b2.x + b2.width * 0.2, yy + 10);
+    const now = await featName(page);
+    return now === names[1] ? null : `touch: a sideways swipe on the stage shows "${now}" (want "${names[1]}")`;
+  });
+  if (touch) return touch;
 
   const reduced = await withPage(browser, { reduced: true }, async (page) => {
     await showFeatured(page);
@@ -997,8 +1136,9 @@ const STRIP_FN = `(() => {
 // strip: .style-strip under the hero holds STRIP_NAMES style names in a list, and the same names again in a second
 // list marked aria-hidden (so assistive tech reads one list); names are at least 14px and AA on their background.
 // With motion allowed it moves (an infinite animation), holds still while hovered and after its pause button is
-// pressed. Under reduced motion and with JS off nothing in it animates and every name of the first list sits inside
-// the viewport (a static wrapping row). No horizontal page overflow at 320, 390 or 1280.
+// pressed; Play then moves it again at once, by mouse with the pointer still on the button and by keyboard (Enter,
+// Enter) with focus still on it. Under reduced motion and with JS off nothing in it animates and every name of the
+// first list sits inside the viewport (a static wrapping row). No horizontal page overflow at 320, 390 or 1280.
 async function checkStrip(browser) {
   const live = await withPage(browser, {}, async (page) => {
     await page.mouse.move(5, 5);
@@ -1030,9 +1170,30 @@ async function checkStrip(browser) {
     const p1 = (await page.evaluate(STRIP_FN)).transform;
     await page.waitForTimeout(600);
     if ((await page.evaluate(STRIP_FN)).transform !== p1) return 'the strip keeps moving after its pause button';
+    // Play again with the pointer still on the button: it must move at once
+    await page.locator('.style-strip button').first().click();
+    await page.waitForTimeout(300);
+    const m1 = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    if ((await page.evaluate(STRIP_FN)).transform === m1) return 'mouse: Pause then Play leaves the strip still (pointer resting on the button)';
     return null;
   });
   if (live) return live;
+  const keys = await withPage(browser, {}, async (page) => {
+    await page.mouse.move(5, 5);
+    if (!(await tabUntil(page, () => !!document.activeElement.closest('.style-strip')))) return 'keyboard: Tab never reaches the strip button';
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    const k1 = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    if ((await page.evaluate(STRIP_FN)).transform !== k1) return 'keyboard: Enter on the strip button does not pause it';
+    await page.keyboard.press('Enter');
+    await page.waitForTimeout(300);
+    const k2 = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    return (await page.evaluate(STRIP_FN)).transform === k2 ? 'keyboard: Enter, Enter (Pause then Play) leaves the strip still while the button has focus' : null;
+  });
+  if (keys) return keys;
   for (const [label, opts] of [['reduced motion', { reduced: true }], ['JS off', { js: false }]]) {
     for (const width of [390, 1280]) {
       const r = await withPage(browser, { ...opts, width }, async (page) => {
@@ -1336,7 +1497,9 @@ async function checkAnchors(browser) {
 
 // float: at FLOAT_WIDTHS, scrolled through the whole page in steps of 3/4 of a screen, the WhatsApp float (whenever it
 // shows: rendered, visible, opacity above 0.05) never overlaps a line of text, a link, a button or a form field.
-// Text is measured line by line (Range rects), so wide blocks with a free corner do not count.
+// Text is measured line by line (Range rects), so wide blocks with a free corner do not count. WhatsApp also stays
+// reachable at every width: the hero has a WhatsApp link, and either the float showed somewhere on the way down or a
+// WhatsApp link shows in the contact section or the footer.
 async function checkFloat(browser) {
   const bad = [];
   for (const width of FLOAT_WIDTHS) {
@@ -1344,6 +1507,7 @@ async function checkFloat(browser) {
     const r = await withPage(browser, { width, height }, async (page) => {
       await instantScroll(page);
       const total = await page.evaluate(() => document.documentElement.scrollHeight);
+      let floatSeen = false;
       for (let y = 0; y < total; y += Math.round(height * 0.75)) {
         await page.evaluate((y) => scrollTo(0, y), y);
         await page.waitForTimeout(350);
@@ -1354,6 +1518,7 @@ async function checkFloat(browser) {
           let op = 1;
           for (let n = f; n && n.nodeType === 1; n = n.parentElement) op *= parseFloat(getComputedStyle(n).opacity);
           if (cs.display === 'none' || cs.visibility === 'hidden' || op <= 0.05 || !f.getClientRects().length) return null;
+          window.__floatSeen = true;
           const fr = f.getBoundingClientRect();
           const meets = (r) => r.width > 0 && r.height > 0 && r.left < fr.right && r.right > fr.left && r.top < fr.bottom && r.bottom > fr.top;
           const visible = (el) => { for (let n = el; n && n.nodeType === 1; n = n.parentElement) { const c = getComputedStyle(n); if (c.visibility === 'hidden' || parseFloat(c.opacity) <= 0.05) return false; } return el.getClientRects().length > 0; };
@@ -1365,6 +1530,7 @@ async function checkFloat(browser) {
           for (let n = walker.nextNode(); n; n = walker.nextNode()) {
             const el = n.parentElement;
             if (!n.nodeValue.trim() || f.contains(el) || el.closest('script, style, noscript') || !visible(el)) continue;
+            if (el.closest('details:not([open])') && !el.closest('summary')) continue; // collapsed, so not drawn
             const range = document.createRange();
             range.selectNodeContents(n);
             for (const rr of range.getClientRects()) if (meets(rr)) return `text "${n.nodeValue.trim().slice(0, 20)}"`;
@@ -1373,6 +1539,19 @@ async function checkFloat(browser) {
         });
         if (hit) return `covers ${hit} at scroll ${y}`;
       }
+      // WhatsApp must stay reachable: a link in the hero, and the float (seen above) or a shown link in the contact
+      // section or the footer
+      const reach = await page.evaluate(() => {
+        const wa = (a) => /wa\.me|whatsapp\.com/i.test(a.getAttribute('href') || '');
+        const shown = (el) => { if (!el.getClientRects().length) return false; for (let n = el; n && n.nodeType === 1; n = n.parentElement) { const c = getComputedStyle(n); if (c.visibility === 'hidden' || parseFloat(c.opacity) < 0.99) return false; } return true; };
+        return {
+          hero: [...document.querySelectorAll('.hero a[href]')].some(wa),
+          inPage: [...document.querySelectorAll('#contact a[href], footer a[href]')].filter((a) => wa(a) && shown(a)).length,
+          float: !!window.__floatSeen,
+        };
+      });
+      if (!reach.hero) return 'no WhatsApp link in the hero';
+      if (!reach.float && !reach.inPage) return 'WhatsApp is not reachable (no float and no shown link in the contact section or footer)';
       return null;
     });
     if (r) bad.push(`@${width} ${r}`);
@@ -1446,11 +1625,13 @@ const CHECKS = {
   strip: checkStrip,
   'capabilities-link': checkCapabilities,
   'manifesto-nojs': checkManifesto,
+  'manifesto-short': checkManifestoShort,
   tap: checkTap,
   nav: checkNav,
   anchors: checkAnchors,
   float: checkFloat,
   'cursor-hidden': checkCursor,
+  'contact-links': checkContactLinks,
 };
 
 /* ---------- runner ---------- */
