@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Clarity Dental · Thoraipakkam, OMR</title>
+<meta name="description" content="Clarity Dental, a fictional clinic in Thoraipakkam on OMR, laid out on a Swiss grid with a visit-time picker. Design portfolio piece, not a live business.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -11,9 +12,12 @@
   :root{
     --white:#FFFFFF; --ink:#14181C; --mint:#B8E3D6; --mint-deep:#3E8E75; --mint-ink:#2F6F5B; --slate:#435669;
     --line:#DDE2E6; --ctl:#828F99; --tick:#AEB8C0; --bg:#F7F9FA; --muted:#5B6670;
+    --hdr-h:73px; /* sticky header height (72px nav + 1px border), measured at every width 721-1920 */
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  /* In-page links and keyboard focus land below the sticky header. Focus on a text field scrolls to its caret,
+     about 15px inside the field, hence the 24px. Phones (header not sticky) keep the default, see the 720px block. */
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr-h) + 24px);}
   body{font-family:'IBM Plex Sans',system-ui,sans-serif; font-size:16px; line-height:1.6; background:var(--white); color:var(--ink); -webkit-font-smoothing:antialiased;}
   h1,h2,h3{font-family:'Archivo',sans-serif; font-weight:700; letter-spacing:-0.01em; line-height:1.1;}
   .mono{font-family:'IBM Plex Mono',monospace;}
@@ -21,7 +25,6 @@
   .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
   .wrap{max-width:1220px; margin:0 auto; padding:0 28px;}
   .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:14px; letter-spacing:0.04em; color:var(--mint-ink); text-transform:uppercase;}
-  section[id], #book{scroll-margin-top:96px;}
 
   /* Header */
   .top{position:sticky; top:0; z-index:100; background:rgba(255,255,255,0.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--line);}
@@ -208,6 +211,7 @@
   }
   @media (max-width:720px){
     .top{position:relative;}
+    html{scroll-padding-top:auto;}
     section[id], #book{scroll-margin-top:12px;}
     .nav-book{display:none;}
     html:root{--nc-radius:0px;}
@@ -281,7 +285,7 @@
       <a href="#visit">Your visit</a>
       <a href="#find">Find us</a>
     </div>
-    <a class="btn-outline nav-book" href="#book">Pick a time</a>
+    <a class="btn-outline nav-book" href="#book">Request a time</a>
   </nav>
 </header>
 
