@@ -173,6 +173,10 @@
     .tally li{padding-right:6px;}
     .tally li + li{padding-left:10px;}
   }
+  /* the narrowest phones: "6,000+" at 28px is wider than its third of the row */
+  @media (max-width:360px){
+    .tally b{font-size:24px;}
+  }
 
   /* demo tuning of the shared polish block (bar, focus ring) */
   html:root{--nc-radius:6px;}
