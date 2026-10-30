@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 'use strict';
 /*
- * Checks for the NoCap portfolio page (index.html): gallery cards, hover preview, badges, filters, links, layout.
+ * Checks for the NoCap portfolio page (index.html): gallery cards, hover preview, badges, filters, links, layout,
+ * the featured showcase, the style strip, the capabilities list, the manifesto, type and tap sizes, the sticky nav,
+ * the WhatsApp float and the custom cursor.
  *
  *   node tools/check-index.cjs [page.html] [--only=check,check]
  *
@@ -40,6 +42,20 @@ const PAN_END_MS = 8000; // and have reached the bottom of the screenshot by now
 const PAN_BACK_MS = 1500; // after leaving, the image is back at the top by now
 const PARK_MS = 3000; // a pointer resting just inside a card's bottom edge must keep it hovered this long
 const SHOT_DIFF_MAX = 8; // mean RGB difference (0-255) allowed between a shot and its 640px variant at 16x30
+// The featured showcase cycles these demos in this order: [file without .html, the name its slide shows].
+const FEATURED = [
+  ['22-helix-dental-webgl3d', 'Helix Dental Digital Studio'],
+  ['21-depthscape-dental-parallax3d', 'Depthscape Dental Studio'],
+  ['12-aura-dental-luxury', 'Aura Dental Studio'],
+  ['07-novacare-ai-native', 'NovaCare Dental'],
+];
+const CYCLE_EARLY_MS = 4000; // two auto-advances must be at least this far apart (the slide time is 5s)
+const CYCLE_LATE_MS = 6500; // and an auto-advance must have come by this long after the last one
+const CYCLE_HOLD_MS = 6500; // a paused showcase is watched this long and must not change
+const STRIP_NAMES = 22; // one style name per demo in the strip under the hero
+const NAV_MAX = 6;
+const TAP_MIN = 44;
+const FLOAT_WIDTHS = [320, 390, 768, 1024, 1280, 1440, 1920];
 
 /* ---------- shared page setup ---------- */
 
@@ -55,13 +71,15 @@ function isFontLoadFailure(entry) {
 // Opens index.html in a fresh context, runs fn(page, errors), always cleans up.
 // errors collects console errors and uncaught exceptions: { type: 'error' | 'pageerror', text, url }.
 // touch: a phone context (hasTouch, isMobile), where (hover: none) and (pointer: coarse) match.
+// js:false opens the page with JavaScript disabled.
 async function withPage(browser, opts, fn) {
-  const { width = 1280, height = 800, reduced = false, touch = false } = opts;
+  const { width = 1280, height = 800, reduced = false, touch = false, js = true } = opts;
   const context = await browser.newContext({
     viewport: { width, height },
     reducedMotion: reduced ? 'reduce' : 'no-preference',
     hasTouch: touch,
     isMobile: touch,
+    javaScriptEnabled: js,
   });
   try {
     const page = await context.newPage();
@@ -575,16 +593,45 @@ const CARD_TEXT_FN = `(() => {
 const describeEl = `(el) => { const cls = (el.getAttribute('class') || '').trim().split(/\\s+/)[0];
   return el.tagName.toLowerCase() + (cls ? '.' + cls : '') + ' "' + el.textContent.trim().slice(0, 18) + '"'; }`;
 
-// (h) No text in a gallery card (chrome bar, tag, title, description, badges, location) under 14px, at 390 and 1280.
+// Rendered elements anywhere on the page that directly hold non-empty text (each element once). Skipped: text in
+// script/style/noscript/svg (SVG labels scale with their drawing and are judged by eye), text that does not render
+// (display:none up the chain, visibility:hidden) and visually hidden screen-reader text (a box of 1px or less).
+// Faded text (a scroll reveal that has not run yet) still counts: it will show.
+const PAGE_TEXT_FN = `(() => {
+  const els = [];
+  const seen = new Set();
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    const el = n.parentElement;
+    if (!el || seen.has(el) || !n.nodeValue.trim()) continue;
+    seen.add(el);
+    if (el.closest('script, style, noscript, svg')) continue;
+    const cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) continue;
+    const r = el.getBoundingClientRect();
+    if (r.width <= 1 && r.height <= 1) continue;
+    els.push(el);
+  }
+  return els;
+})()`;
+
+// (h) Type sizes over the whole page, at 390 and 1280: no rendered text under 14px (labels, eyebrows, stat captions,
+// card chrome, footer, strip; gallery cards included), body text at least 16px, and every paragraph of running text
+// (a p over 80 characters) at least 16px.
 async function checkType(browser) {
   const bad = [];
   for (const width of [390, 1280]) {
-    const small = await withPage(browser, { width }, (page) => page.evaluate(`(() => {
+    const r = await withPage(browser, { width }, (page) => page.evaluate(`(() => {
       const name = ${describeEl};
-      return ${CARD_TEXT_FN}.filter((el) => parseFloat(getComputedStyle(el).fontSize) < 14)
-        .map((el) => name(el) + ' ' + parseFloat(getComputedStyle(el).fontSize) + 'px');
+      const size = (el) => parseFloat(getComputedStyle(el).fontSize);
+      const small = ${PAGE_TEXT_FN}.filter((el) => size(el) < 14).map((el) => name(el) + ' ' + size(el) + 'px');
+      const paras = [...document.querySelectorAll('p')].filter((p) => p.getClientRects().length && getComputedStyle(p).visibility !== 'hidden'
+        && p.textContent.trim().replace(/\\s+/g, ' ').length > 80 && size(p) < 16).map((p) => name(p) + ' ' + size(p) + 'px');
+      return { body: size(document.body), small, paras };
     })()`));
-    if (small.length) bad.push(`@${width} ${small.length} text element(s) <14px, e.g. ${[...new Set(small)].slice(0, 2).join(', ')}`);
+    if (r.body < 16) bad.push(`@${width} body ${r.body}px`);
+    if (r.small.length) bad.push(`@${width} ${r.small.length} text element(s) <14px, e.g. ${[...new Set(r.small)].slice(0, 2).join(', ')}`);
+    if (r.paras.length) bad.push(`@${width} ${r.paras.length} paragraph(s) of running text <16px, e.g. ${r.paras[0]}`);
   }
   return bad.length ? bad.join('; ') : null;
 }
@@ -640,6 +687,746 @@ async function checkCopy(browser) {
   return problems.length ? problems.join('; ') : null;
 }
 
+/* ---------- shared helpers for the page-level checks ---------- */
+
+// Colour maths for page evaluation: parse a computed colour, blend over another, WCAG contrast ratio, and the
+// background an element's text sits on (the first opaque-enough colour up the ancestor chain, blended over white; null
+// when a background image is in the way, so it is never guessed).
+const COLOR_LIB = `
+  const parse = (c) => { const m = c.match(/[\\d.]+/g).map(Number); return { r: m[0], g: m[1], b: m[2], a: m.length > 3 ? m[3] : 1 }; };
+  const over = (top, under) => ({ r: top.r * top.a + under.r * (1 - top.a), g: top.g * top.a + under.g * (1 - top.a), b: top.b * top.a + under.b * (1 - top.a), a: 1 });
+  const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); };
+  const bgOf = (el) => {
+    const layers = [];
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+      const cs = getComputedStyle(n);
+      if (cs.backgroundImage !== 'none') return null;
+      const c = parse(cs.backgroundColor);
+      if (c.a > 0) { layers.push(c); if (c.a >= 1) break; }
+    }
+    let bg = { r: 255, g: 255, b: 255, a: 1 };
+    for (const c of layers.reverse()) bg = over(c, bg);
+    return bg;
+  };
+  const textRatio = (el) => { const bg = bgOf(el); if (!bg) return null; return ratio(over(parse(getComputedStyle(el).color), bg), bg); };
+  const needFor = (el) => { const cs = getComputedStyle(el); const s = parseFloat(cs.fontSize), w = parseInt(cs.fontWeight, 10);
+    return s >= 24 || (s >= 18.66 && w >= 700) ? 3 : 4.5; };
+`;
+
+// Sets scroll-behavior to auto, so scripted scrolls and fragment jumps land at once and can be measured.
+const instantScroll = (page) => page.evaluate(() => { document.documentElement.style.scrollBehavior = 'auto'; });
+
+// Bottom edge of the sticky nav in the viewport (0 when there is no nav).
+const navBottom = (page) => page.evaluate(() => { const n = document.querySelector('nav'); return n ? n.getBoundingClientRect().bottom : 0; });
+
+// Presses Tab (or Shift+Tab) until fn(document.activeElement) is true in the page; returns whether it got there.
+async function tabUntil(page, test, { back = false, max = 200 } = {}) {
+  for (let i = 0; i < max; i++) {
+    await page.keyboard.press(back ? 'Shift+Tab' : 'Tab');
+    if (await page.evaluate(test)) return true;
+  }
+  return false;
+}
+
+/* ---------- featured showcase ---------- */
+
+// The showcase as it shows now: names of its slides that are fully on screen (each slide names its demo in an h3;
+// rendered, visible and at full opacity), and the text of its aria-live region (null when it has none).
+const FEAT_FN = `(() => {
+  const shown = ${SHOWN_FN};
+  const ok = (el) => { const s = shown(el); return s.rendered && !s.hidden && s.opacity >= 0.99; };
+  const sec = document.getElementById('featured');
+  if (!sec) return null;
+  const live = sec.querySelector('[aria-live]');
+  return {
+    names: [...sec.querySelectorAll('h3')].filter(ok).map((h) => h.textContent.trim()),
+    all: [...sec.querySelectorAll('h3')].map((h) => h.textContent.trim()),
+    live: live ? live.textContent.trim() : null,
+  };
+})()`;
+
+async function featName(page) {
+  const s = await page.evaluate(FEAT_FN);
+  return s ? s.names.join(' + ') : null;
+}
+
+// Watches the showcase for up to ms; returns the first change ({ at, from, to }) or null if it held still.
+async function watchFeatured(page, ms) {
+  const from = await featName(page);
+  const t0 = Date.now();
+  while (Date.now() - t0 < ms) {
+    await page.waitForTimeout(200);
+    const to = await featName(page);
+    if (to !== from) return { at: Date.now() - t0, from, to };
+  }
+  return null;
+}
+
+// Waits for the next auto-advance and for its fade to finish; returns the slide name then, or null if none came.
+async function nextAdvance(page, ms = CYCLE_LATE_MS) {
+  const change = await watchFeatured(page, ms);
+  if (!change) return null;
+  await page.waitForTimeout(800);
+  return { at: change.at, name: await featName(page) };
+}
+
+// Puts the showcase in the middle of the screen with the pointer parked far from it (over the nav, top left), and
+// gives its scroll reveal (a 0.6s fade) time to finish.
+async function showFeatured(page) {
+  await page.mouse.move(5, 5);
+  await centre(page, '#featured', 0, 1000);
+}
+
+// A showcase button by its accessible name.
+const featButton = (page, name) => page.locator('#featured').getByRole('button', { name });
+
+// What the showcase shows on the current slide: its "View live" link(s) and its images, each judged visible as in
+// FEAT_FN. For images: src, width/height attributes, the pixel size of the file in src (probe: read by loading src
+// into a plain Image, which needs page script, so it is skipped with JS off), alt and loading. Waits for the
+// rendered images to finish first (hidden slides' lazy images never load, so they are not waited for).
+async function featSlideParts(page, probe = true) {
+  await page.waitForFunction(() => [...document.querySelectorAll('#featured img')].filter((img) => img.getClientRects().length)
+    .every((img) => img.complete), null, { timeout: 15000 }).catch(() => {});
+  if (!probe) {
+    return page.evaluate(`(() => {
+      const shown = ${SHOWN_FN};
+      const ok = (el) => { const s = shown(el); return s.rendered && !s.hidden && s.opacity >= 0.99; };
+      const sec = document.getElementById('featured');
+      return {
+        links: [...sec.querySelectorAll('a')].filter((a) => ok(a) && /view live/i.test(a.textContent)).map((a) => ({ href: a.getAttribute('href') || '' })),
+        imgs: [...sec.querySelectorAll('img')].filter(ok).map((img) => ({ src: img.getAttribute('src') || '', loaded: img.complete && img.naturalWidth > 0 })),
+      };
+    })()`);
+  }
+  return page.evaluate(`(async () => {
+    const shown = ${SHOWN_FN};
+    const ok = (el) => { const s = shown(el); return s.rendered && !s.hidden && s.opacity >= 0.99; };
+    const sec = document.getElementById('featured');
+    const links = [...sec.querySelectorAll('a')].filter((a) => ok(a) && /view live/i.test(a.textContent)).map((a) => ({
+      href: a.getAttribute('href') || '', h: a.getBoundingClientRect().height, w: a.getBoundingClientRect().width }));
+    const size = (src) => new Promise((res) => { const p = new Image(); p.onload = () => res([p.naturalWidth, p.naturalHeight]); p.onerror = () => res([0, 0]); p.src = src; });
+    const imgs = [];
+    for (const img of sec.querySelectorAll('img')) {
+      if (!ok(img)) continue;
+      const [nw, nh] = await size(img.getAttribute('src'));
+      imgs.push({ src: img.getAttribute('src') || '', w: +img.getAttribute('width'), h: +img.getAttribute('height'), nw, nh,
+        alt: img.getAttribute('alt') || '', loading: img.getAttribute('loading') || 'eager', loaded: img.complete && img.naturalWidth > 0 });
+    }
+    return { links, imgs };
+  })()`);
+}
+
+// featured-cycle: section#featured cycles FEATURED in order. On a desktop (1280x800, motion allowed) it advances by
+// itself, 4-6.5s apart, without announcing; it holds still while hovered (and resumes after), while keyboard focus is
+// inside it, while scrolled off screen, under reduced motion (where Next still works) and after Pause (Play resumes).
+// Previous, Next, Pause and the four slide dots are real buttons with names, at least 44x44; user navigation is
+// announced in the aria-live region. Every slide shows one "View live" link (44px tall) to its own demo file, and its
+// desktop shot and -m phone shot as images with their real pixel sizes, alt naming the demo, lazy except on the first
+// slide. With JS off the first slide shows, the others do not, the other three are plain links, and no button shows.
+async function checkFeatured(browser) {
+  const names = FEATURED.map(([, n]) => n);
+  const auto = await withPage(browser, {}, async (page) => {
+    const s = await page.evaluate(FEAT_FN);
+    if (!s) return 'no section#featured';
+    if (s.all.join(', ') !== names.join(', ')) return `slides are [${s.all.join(', ')}] (want [${names.join(', ')}])`;
+    await showFeatured(page);
+    const first = await featName(page);
+    if (first !== names[0]) return `first slide shown is "${first}" (want "${names[0]}")`;
+    const a = await nextAdvance(page);
+    if (!a) return `no auto-advance within ${CYCLE_LATE_MS / 1000}s on screen`;
+    if (a.name !== names[1]) return `auto-advance went to "${a.name}" (want "${names[1]}")`;
+    const b = await nextAdvance(page);
+    if (!b) return `no second auto-advance within ${CYCLE_LATE_MS / 1000}s`;
+    if (b.at + 800 < CYCLE_EARLY_MS) return `auto-advances only ${((b.at + 800) / 1000).toFixed(1)}s apart (want about 5s)`;
+    if (b.name !== names[2]) return `second auto-advance went to "${b.name}" (want "${names[2]}")`;
+    const live = (await page.evaluate(FEAT_FN)).live;
+    if (live === null) return 'no aria-live region in #featured';
+    if (live) return `auto-advance was announced ("${clip(live, 40)}"); only user navigation should be`;
+    // off screen: scrolled well past it, it must not advance
+    await centre(page, '#why', 0, 0);
+    await page.waitForTimeout(CYCLE_HOLD_MS);
+    await centre(page, '#featured', 0, 300);
+    const back = await featName(page);
+    if (back !== names[2]) return `advanced while off screen ("${names[2]}" -> "${back}")`;
+    return null;
+  });
+  if (auto) return auto;
+
+  const hover = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    const box = await page.locator('#featured').boundingBox();
+    await page.mouse.move(box.x + box.width * 0.7, box.y + box.height / 2);
+    if (await watchFeatured(page, CYCLE_HOLD_MS)) return 'changed slide while hovered';
+    await page.mouse.move(5, 5);
+    return (await nextAdvance(page)) ? null : `did not resume within ${CYCLE_LATE_MS / 1000}s after the pointer left`;
+  });
+  if (hover) return hover;
+
+  const focus = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    const inside = await tabUntil(page, () => !!document.activeElement.closest('#featured'));
+    if (!inside) return 'Tab never reached a control inside #featured';
+    await centre(page, '#featured', 0, 300);
+    return (await watchFeatured(page, CYCLE_HOLD_MS)) ? 'changed slide while keyboard focus was inside it' : null;
+  });
+  if (focus) return focus;
+
+  const paused = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    const pause = featButton(page, /pause/i);
+    if (!(await pause.count())) return 'no Pause button in #featured';
+    await pause.first().click();
+    await page.mouse.move(5, 5);
+    if (await watchFeatured(page, CYCLE_HOLD_MS)) return 'changed slide after Pause';
+    const play = featButton(page, /play/i);
+    if (!(await play.count())) return 'Pause did not become a Play button';
+    await play.first().click();
+    await page.mouse.move(5, 5);
+    return (await nextAdvance(page)) ? null : `Play did not resume the cycle within ${CYCLE_LATE_MS / 1000}s`;
+  });
+  if (paused) return paused;
+
+  const reduced = await withPage(browser, { reduced: true }, async (page) => {
+    await showFeatured(page);
+    if (await watchFeatured(page, CYCLE_HOLD_MS)) return 'reduced motion: advanced by itself';
+    await featButton(page, /next/i).first().click();
+    await page.waitForTimeout(800);
+    const now = await featName(page);
+    return now === names[1] ? null : `reduced motion: Next shows "${now}" (want "${names[1]}")`;
+  });
+  if (reduced) return reduced;
+
+  const controls = await withPage(browser, {}, async (page) => {
+    await showFeatured(page);
+    const sizes = await page.evaluate(() => [...document.querySelectorAll('#featured button')]
+      .filter((b) => b.getClientRects().length && getComputedStyle(b).visibility !== 'hidden')
+      .map((b) => { const r = b.getBoundingClientRect(); return { name: (b.getAttribute('aria-label') || b.textContent).trim(), w: r.width, h: r.height }; }));
+    const unnamed = sizes.filter((b) => !b.name);
+    if (unnamed.length) return `${unnamed.length} showcase button(s) without an accessible name`;
+    const small = sizes.filter((b) => b.w < TAP_MIN || b.h < TAP_MIN);
+    if (small.length) return `showcase button "${small[0].name}" is ${small[0].w.toFixed(1)}x${small[0].h.toFixed(1)} (want at least ${TAP_MIN}x${TAP_MIN})`;
+    const dots = sizes.filter((b) => !/^(previous|prev|next|pause|play)\b/i.test(b.name));
+    if (dots.length !== FEATURED.length) return `${dots.length} slide dot button(s) (want ${FEATURED.length})`;
+    await featButton(page, /^next/i).first().click();
+    await page.waitForTimeout(800);
+    if ((await featName(page)) !== names[1]) return `Next shows "${await featName(page)}" (want "${names[1]}")`;
+    const live = (await page.evaluate(FEAT_FN)).live || '';
+    if (!live.includes(names[1])) return `Next was not announced (live region reads "${clip(live, 40)}")`;
+    await featButton(page, /^prev/i).first().click();
+    await page.waitForTimeout(800);
+    if ((await featName(page)) !== names[0]) return `Previous shows "${await featName(page)}" (want "${names[0]}")`;
+    for (let i = 0; i < FEATURED.length; i++) {
+      await featButton(page, dots[i].name).first().click();
+      await page.waitForTimeout(800);
+      const now = await featName(page);
+      if (now !== names[i]) return `dot "${dots[i].name}" shows "${now}" (want "${names[i]}")`;
+      const [file] = FEATURED[i];
+      const parts = await featSlideParts(page);
+      if (parts.links.length !== 1) return `slide ${i + 1} shows ${parts.links.length} "View live" link(s) (want 1)`;
+      const link = parts.links[0];
+      if (link.href !== file + '.html') return `slide ${i + 1} "View live" goes to "${link.href}" (want ${file}.html)`;
+      if (!fs.existsSync(path.join(path.dirname(PAGE), link.href))) return `slide ${i + 1} "View live" target ${link.href} does not exist`;
+      if (link.h < TAP_MIN) return `slide ${i + 1} "View live" is ${link.h.toFixed(1)}px tall (want ${TAP_MIN})`;
+      for (const src of [`assets/shots/${file}.jpg`, `assets/shots/${file}-m.jpg`]) {
+        const img = parts.imgs.find((m) => m.src === src);
+        if (!img) return `slide ${i + 1} does not show ${src} (shows ${parts.imgs.map((m) => m.src).join(', ') || 'no image'})`;
+        if (!img.loaded) return `slide ${i + 1} image ${src} did not load`;
+        if (img.w !== img.nw || img.h !== img.nh) return `${src} has width/height ${img.w}x${img.h}, file is ${img.nw}x${img.nh}`;
+        if (!img.alt.includes(names[i])) return `${src} alt "${img.alt}" does not name "${names[i]}"`;
+        if (i > 0 && img.loading !== 'lazy') return `${src} is not loading="lazy" (only the first slide loads at once)`;
+      }
+    }
+    return null;
+  });
+  if (controls) return controls;
+
+  return withPage(browser, { js: false }, async (page) => {
+    const s = await page.evaluate(FEAT_FN);
+    if (s.names.join(', ') !== names[0]) return `JS off: slides shown are [${s.names.join(', ')}] (want just "${names[0]}")`;
+    const parts = await featSlideParts(page, false);
+    if (parts.links.length !== 1 || parts.links[0].href !== FEATURED[0][0] + '.html') return `JS off: the first slide has no "View live" link to ${FEATURED[0][0]}.html`;
+    const srcs = parts.imgs.map((m) => m.src);
+    if (!srcs.includes(`assets/shots/${FEATURED[0][0]}.jpg`) || !srcs.includes(`assets/shots/${FEATURED[0][0]}-m.jpg`)) return `JS off: first slide images not shown (${srcs.join(', ') || 'none'})`;
+    const unloaded = parts.imgs.filter((m) => !m.loaded);
+    if (unloaded.length) return `JS off: ${unloaded[0].src} did not load`;
+    const other = await page.evaluate(`(() => {
+      const shown = ${SHOWN_FN};
+      const ok = (el) => { const s = shown(el); return s.rendered && !s.hidden && s.opacity >= 0.99; };
+      const sec = document.getElementById('featured');
+      return {
+        hrefs: [...sec.querySelectorAll('a')].filter(ok).map((a) => a.getAttribute('href')),
+        buttons: [...sec.querySelectorAll('button')].filter(ok).map((b) => (b.getAttribute('aria-label') || b.textContent).trim()),
+      };
+    })()`);
+    const missing = FEATURED.slice(1).filter(([file]) => !other.hrefs.includes(file + '.html'));
+    if (missing.length) return `JS off: no plain link to ${missing.map(([f]) => f).join(', ')}`;
+    return other.buttons.length ? `JS off: ${other.buttons.length} dead button(s) show, e.g. "${other.buttons[0]}"` : null;
+  });
+}
+
+/* ---------- style strip ---------- */
+
+// The strip's state: its two lists (the second aria-hidden, the same names), the transform of its moving track, and
+// for the first list whether every name sits inside the viewport (a static, wrapping row).
+const STRIP_FN = `(() => {
+  ${COLOR_LIB}
+  const strip = document.querySelector('.style-strip');
+  if (!strip) return null;
+  const lists = [...strip.querySelectorAll('ul, ol')];
+  const items = (l) => [...l.querySelectorAll('li')].map((li) => li.textContent.trim().replace(/\\s+/g, ' '));
+  const first = lists[0];
+  const shownLis = first ? [...first.querySelectorAll('li')].filter((li) => li.getClientRects().length) : [];
+  const moving = document.getAnimations().filter((a) => a.effect && a.effect.target && strip.contains(a.effect.target) && a.playState === 'running');
+  const track = moving.length ? moving[0].effect.target : (first || strip);
+  return {
+    lists: lists.map((l) => ({ hidden: l.getAttribute('aria-hidden') === 'true' || !!l.closest('[aria-hidden="true"]'), items: items(l), rendered: l.getClientRects().length > 0 })),
+    running: moving.length,
+    transform: getComputedStyle(track).transform,
+    inside: shownLis.every((li) => { const r = li.getBoundingClientRect(); return r.left >= -0.5 && r.right <= innerWidth + 0.5; }),
+    small: shownLis.filter((li) => parseFloat(getComputedStyle(li).fontSize) < 14).length,
+    contrast: shownLis.map((li) => { const r = textRatio(li); return r === null ? null : +r.toFixed(2); }),
+    button: !!strip.querySelector('button'),
+    scroll: document.documentElement.scrollWidth, inner: innerWidth,
+  };
+})()`;
+
+// strip: .style-strip under the hero holds STRIP_NAMES style names in a list, and the same names again in a second
+// list marked aria-hidden (so assistive tech reads one list); names are at least 14px and AA on their background.
+// With motion allowed it moves (an infinite animation), holds still while hovered and after its pause button is
+// pressed. Under reduced motion and with JS off nothing in it animates and every name of the first list sits inside
+// the viewport (a static wrapping row). No horizontal page overflow at 320, 390 or 1280.
+async function checkStrip(browser) {
+  const live = await withPage(browser, {}, async (page) => {
+    await page.mouse.move(5, 5);
+    const s = await page.evaluate(STRIP_FN);
+    if (!s) return 'no .style-strip';
+    if (s.lists.length !== 2) return `${s.lists.length} list(s) in the strip (want 2: the names and an aria-hidden copy)`;
+    if (s.lists[0].hidden || !s.lists[1].hidden) return 'the second list (only) must be aria-hidden="true"';
+    if (s.lists[0].items.length !== STRIP_NAMES) return `${s.lists[0].items.length} style names (want ${STRIP_NAMES})`;
+    if (s.lists[0].items.join('|') !== s.lists[1].items.join('|')) return 'the aria-hidden copy does not repeat the same names';
+    if (s.small) return `${s.small} style name(s) under 14px`;
+    const weak = s.contrast.filter((c) => c === null || c < 4.5);
+    if (weak.length) return `style name contrast ${weak[0] === null ? 'over a background image' : weak[0] + ':1'} (want 4.5:1)`;
+    if (!s.running) return 'nothing in the strip moves with motion allowed';
+    await centre(page, '.style-strip', 0, 100);
+    const a = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    if ((await page.evaluate(STRIP_FN)).transform === a) return 'the strip does not move';
+    const box = await page.locator('.style-strip').boundingBox();
+    await page.mouse.move(box.x + box.width / 3, box.y + box.height / 2);
+    await page.waitForTimeout(300);
+    const h1 = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    if ((await page.evaluate(STRIP_FN)).transform !== h1) return 'the strip keeps moving while hovered';
+    await page.mouse.move(5, 5);
+    if (!s.button) return 'no pause button in the strip';
+    await page.locator('.style-strip button').first().click();
+    await page.mouse.move(5, 5);
+    await page.waitForTimeout(300);
+    const p1 = (await page.evaluate(STRIP_FN)).transform;
+    await page.waitForTimeout(600);
+    if ((await page.evaluate(STRIP_FN)).transform !== p1) return 'the strip keeps moving after its pause button';
+    return null;
+  });
+  if (live) return live;
+  for (const [label, opts] of [['reduced motion', { reduced: true }], ['JS off', { js: false }]]) {
+    for (const width of [390, 1280]) {
+      const r = await withPage(browser, { ...opts, width }, async (page) => {
+        const s = await page.evaluate(STRIP_FN);
+        if (s.running) return `${s.running} animation(s) running in the strip`;
+        if (!s.inside) return 'the names do not all fit on screen (want a static wrapping row)';
+        return null;
+      });
+      if (r) return `${label} @${width}: ${r}`;
+    }
+  }
+  for (const width of [320, 390, 1280]) {
+    const s = await withPage(browser, { width }, (page) => page.evaluate(STRIP_FN));
+    if (s.scroll > s.inner) return `@${width} page scrollWidth ${s.scroll}>${s.inner}`;
+  }
+  return null;
+}
+
+/* ---------- capabilities ---------- */
+
+// capabilities-link: section#capabilities lists the 7 design directions as links to #gallery, one per filter
+// (data-filter, the same keys as FILTER_CARDS), each with a description and a real example demo of that direction
+// (the name of one of its cards). With JS, activating one (click, or Enter on the last) selects that filter (the
+// gallery shows exactly its pinned cards, one active button), scrolls the filter bar into view below the sticky nav
+// and puts focus on the active filter button. Without JS each link simply jumps to #gallery.
+async function checkCapabilities(browser) {
+  const keys = Object.keys(FILTER_CARDS);
+  const read = (page) => page.evaluate(() => {
+    const sec = document.getElementById('capabilities');
+    if (!sec) return null;
+    const cardNames = {};
+    for (const c of document.querySelectorAll('#galleryGrid .g-card')) {
+      const n = (c.getAttribute('href') || '').slice(0, 2);
+      cardNames[n] = (c.querySelector('h3') || { textContent: '' }).textContent.trim();
+    }
+    return {
+      cardNames,
+      links: [...sec.querySelectorAll('a[data-filter]')].map((a) => {
+        const item = a.closest('li') || a.parentElement;
+        return { filter: a.dataset.filter, href: a.getAttribute('href'), text: a.textContent.trim(), item: item.textContent.replace(/\s+/g, ' ').trim(), h: a.getBoundingClientRect().height };
+      }),
+    };
+  });
+  const r = await withPage(browser, {}, async (page) => {
+    const s = await read(page);
+    if (!s) return 'no section#capabilities';
+    const got = s.links.map((l) => l.filter);
+    if (got.slice().sort().join() !== keys.slice().sort().join()) return `capability links [${got.join(', ')}] (want one for each of [${keys.join(', ')}])`;
+    for (const l of s.links) {
+      if (l.href !== '#gallery') return `"${l.text}" links to "${l.href}" (want #gallery)`;
+      if (l.item.length - l.text.length < 40) return `"${l.text}" has no description`;
+      const examples = FILTER_CARDS[l.filter].map((n) => s.cardNames[n]);
+      if (!examples.some((name) => name && l.item.includes(name))) return `"${l.text}" names no example demo of its own direction (one of ${examples.join(', ')})`;
+    }
+    await instantScroll(page);
+    for (const [i, key] of keys.entries()) {
+      const link = page.locator(`#capabilities a[data-filter="${key}"]`);
+      await link.scrollIntoViewIfNeeded();
+      if (i === keys.length - 1) { await link.focus(); await page.keyboard.press('Enter'); } else await link.click();
+      await page.waitForTimeout(900);
+      const g = await page.evaluate(() => {
+        const bar = document.querySelector('.filters').getBoundingClientRect();
+        const nav = document.querySelector('nav').getBoundingClientRect();
+        const active = [...document.querySelectorAll('.filter-btn.active')];
+        return {
+          active: active.map((b) => b.dataset.filter),
+          shown: [...document.querySelectorAll('#galleryGrid .g-card')].filter((c) => c.getClientRects().length).map((c) => (c.getAttribute('href') || '').slice(0, 2)).sort(),
+          barTop: bar.top, navBottom: nav.bottom, inner: innerHeight,
+          focus: document.activeElement && document.activeElement.classList.contains('filter-btn') ? document.activeElement.dataset.filter : null,
+        };
+      });
+      if (g.active.join() !== key) return `"${key}" capability: active filter is [${g.active.join(', ')}]`;
+      if (g.shown.join(', ') !== FILTER_CARDS[key].join(', ')) return `"${key}" capability: gallery shows [${g.shown.join(', ')}] (want [${FILTER_CARDS[key].join(', ')}])`;
+      if (g.barTop < g.navBottom - 0.5 || g.barTop > g.inner * 0.6) return `"${key}" capability: filter bar lands at ${Math.round(g.barTop)}px (nav ends at ${Math.round(g.navBottom)}px)`;
+      if (g.focus !== key) return `"${key}" capability: focus is not on the active filter button`;
+    }
+    return null;
+  });
+  if (r) return r;
+  return withPage(browser, { js: false }, async (page) => {
+    const s = await read(page);
+    const wrong = s.links.filter((l) => l.href !== '#gallery');
+    if (wrong.length) return `JS off: "${wrong[0].text}" links to "${wrong[0].href}"`;
+    await page.locator('#capabilities a[data-filter]').first().click();
+    await page.waitForTimeout(300);
+    const hash = await page.evaluate(() => location.hash);
+    return hash === '#gallery' ? null : `JS off: a capability link went to "${hash}" (want #gallery)`;
+  });
+}
+
+/* ---------- manifesto ---------- */
+
+// The manifesto's words and how they read: effective opacity, visibility, contrast with the page behind them, and
+// whether anything in the section is pinned (sticky or fixed); also the section's height against the viewport.
+const MANIFESTO_FN = `(() => {
+  ${COLOR_LIB}
+  const shown = ${SHOWN_FN};
+  const sec = document.querySelector('#manifesto, .manifesto-wrap');
+  if (!sec) return null;
+  let words = [...sec.querySelectorAll('.w')];
+  if (!words.length) words = [...sec.querySelectorAll('h2, p')];
+  return {
+    words: words.map((w) => { const s = shown(w); const c = textRatio(w); return { text: w.textContent.trim(), opacity: s.opacity, hidden: s.hidden || !s.rendered, contrast: c === null ? 0 : +c.toFixed(2), need: needFor(w) }; }),
+    pinned: [sec, ...sec.querySelectorAll('*')].some((el) => /sticky|fixed/.test(getComputedStyle(el).position)),
+    height: sec.getBoundingClientRect().height, inner: innerHeight,
+  };
+})()`;
+
+const unreadWord = (m) => m.words.find((w) => w.hidden || w.opacity < 0.99 || w.contrast < w.need);
+const describeWord = (w) => `"${w.text}" ${w.hidden ? 'hidden' : w.opacity < 0.99 ? 'at opacity ' + w.opacity : 'contrast ' + w.contrast + ':1'}`;
+
+// manifesto-nojs: the manifesto (#manifesto or .manifesto-wrap) reads in full without script and without motion:
+// with JS off (1280 and 390) and under reduced motion every word is at full opacity with AA contrast for its size,
+// nothing is pinned and the section is at most 1.2 screens tall. With motion allowed every word stays readable at
+// every 10% of the way through it (the reveal may change colour, never hide a word). A "Skip" link (an in-page link
+// in or just before the section) is reached by Tab, is visible when focused (on screen, below the nav, at least
+// 44x44), and Enter on it scrolls past the manifesto so the next Tab lands after it. Checked at 1280 and 390 with JS
+// on, and at 1280 with JS off.
+async function checkManifesto(browser) {
+  for (const [label, opts] of [['JS off @1280', { js: false }], ['JS off @390', { js: false, width: 390, height: 844 }], ['reduced motion', { reduced: true }]]) {
+    const r = await withPage(browser, opts, async (page) => {
+      let m = await page.evaluate(MANIFESTO_FN);
+      if (!m) return 'no manifesto section';
+      if (m.pinned) return 'the manifesto is pinned (sticky or fixed)';
+      if (m.height > m.inner * 1.2) return `the manifesto is ${Math.round(m.height)}px tall (${(m.height / m.inner).toFixed(1)} screens)`;
+      if (opts.reduced) { await centre(page, '#manifesto, .manifesto-wrap', 0, 300); m = await page.evaluate(MANIFESTO_FN); }
+      const w = unreadWord(m);
+      return w ? describeWord(w) : null;
+    });
+    if (r) return `${label}: ${r}`;
+  }
+  const scrolled = await withPage(browser, {}, async (page) => {
+    await instantScroll(page);
+    const span = await page.evaluate(() => {
+      const sec = document.querySelector('#manifesto, .manifesto-wrap');
+      const top = sec.getBoundingClientRect().top + scrollY;
+      return { from: top - innerHeight, to: top + sec.offsetHeight };
+    });
+    for (let k = 0; k <= 10; k++) {
+      await page.evaluate((y) => scrollTo(0, y), span.from + (span.to - span.from) * k / 10);
+      await page.waitForTimeout(250);
+      const w = unreadWord(await page.evaluate(MANIFESTO_FN));
+      if (w) return `${k * 10}% through: ${describeWord(w)}`;
+    }
+    return null;
+  });
+  if (scrolled) return `motion: ${scrolled}`;
+  for (const [label, opts] of [['@1280', {}], ['@390', { width: 390, height: 844 }], ['JS off', { js: false }]]) {
+    const r = await withPage(browser, opts, async (page) => {
+      await instantScroll(page);
+      const isSkip = () => {
+        const a = document.activeElement;
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        if (!a || a.tagName !== 'A' || !/skip/i.test(a.textContent) || !(a.getAttribute('href') || '').startsWith('#')) return false;
+        return sec.contains(a) || sec.previousElementSibling === a || (a.parentElement && a.parentElement.nextElementSibling === sec);
+      };
+      if (!(await tabUntil(page, isSkip))) return 'no Skip link reached by Tab';
+      await page.waitForTimeout(400);
+      const f = await page.evaluate(`(() => {
+        const shown = ${SHOWN_FN};
+        const a = document.activeElement;
+        const r = a.getBoundingClientRect();
+        const s = shown(a);
+        return { s, top: r.top, bottom: r.bottom, w: r.width, h: r.height, nav: document.querySelector('nav').getBoundingClientRect().bottom, inner: innerHeight };
+      })()`);
+      if (!f.s.rendered || f.s.hidden || f.s.opacity < 0.99) return 'the focused Skip link is not visible';
+      if (f.top < f.nav - 0.5 || f.bottom > f.inner + 0.5) return `the focused Skip link is off screen or under the nav (top ${Math.round(f.top)}, nav ${Math.round(f.nav)})`;
+      if (f.w < TAP_MIN || f.h < TAP_MIN) return `the Skip link is ${f.w.toFixed(1)}x${f.h.toFixed(1)} (want at least ${TAP_MIN}x${TAP_MIN})`;
+      await page.keyboard.press('Enter');
+      await page.waitForTimeout(600);
+      const past = await page.evaluate(() => {
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        let words = [...sec.querySelectorAll('.w')];
+        if (!words.length) words = [...sec.querySelectorAll('h2, p')];
+        return { bottom: Math.max(...words.map((w) => w.getBoundingClientRect().bottom)), nav: document.querySelector('nav').getBoundingClientRect().bottom };
+      });
+      if (past.bottom > past.nav + 1) return `Enter on Skip left the manifesto words on screen (their bottom at ${Math.round(past.bottom)}px, nav ${Math.round(past.nav)}px)`;
+      await page.keyboard.press('Tab');
+      const after = await page.evaluate(() => {
+        const sec = document.querySelector('#manifesto, .manifesto-wrap');
+        const a = document.activeElement;
+        return a && a !== document.body && !sec.contains(a) && !!(sec.compareDocumentPosition(a) & Node.DOCUMENT_POSITION_FOLLOWING);
+      });
+      return after ? null : 'after Skip, Tab does not land past the manifesto';
+    });
+    if (r) return `Skip ${label}: ${r}`;
+  }
+  return null;
+}
+
+/* ---------- tap targets, nav ---------- */
+
+// tap: at 390 and 1280 every rendered, visible link, button and form control is at least 44x44 (compared unrounded),
+// filter buttons, nav items and footer links included. Exempt: a link inside running text (a p that holds more text
+// than the link) and visually hidden screen-reader text (a box of 1px or less; the skip link is judged in
+// manifesto-nojs when focused).
+async function checkTap(browser) {
+  const bad = [];
+  for (const [width, height] of [[390, 844], [1280, 800]]) {
+    const small = await withPage(browser, { width, height }, (page) => page.evaluate(() => {
+      const out = [];
+      for (const el of document.querySelectorAll('a[href], button, [role=button], input, select, textarea, summary')) {
+        const cs = getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) continue;
+        const r = el.getBoundingClientRect();
+        if (r.width <= 1 && r.height <= 1) continue;
+        const p = el.tagName === 'A' && el.parentElement.closest('p');
+        if (p && p.textContent.trim() !== el.textContent.trim()) continue;
+        if (r.width < 44 || r.height < 44) {
+          const cls = (el.getAttribute('class') || '').trim().split(/\s+/)[0];
+          out.push(`${el.tagName.toLowerCase()}${cls ? '.' + cls : ''} "${(el.getAttribute('aria-label') || el.textContent).trim().slice(0, 16)}" ${+r.width.toFixed(1)}x${+r.height.toFixed(1)}`);
+        }
+      }
+      return out;
+    }));
+    if (small.length) bad.push(`@${width} ${small.length} target(s) under ${TAP_MIN}px, e.g. ${small.slice(0, 2).join(', ')}`);
+  }
+  return bad.length ? bad.join('; ') : null;
+}
+
+// nav: distinct nav links (by href plus text) excluding the logo and the btn/cta link: at most NAV_MAX (as in
+// tools/check.cjs).
+async function checkNav(browser) {
+  const count = await withPage(browser, {}, (page) => page.evaluate(() => {
+    const links = [...document.querySelectorAll('nav a')];
+    const cls = (a) => a.getAttribute('class') || '';
+    const looksLikeLogo = (a) => /^(\/|#|#top)?$/.test(a.getAttribute('href') || '') || !!a.querySelector('svg, [class*=logo], [class*=brand]');
+    const items = links.filter((a, i) => !/logo|brand/i.test(cls(a)) && !/btn|cta/i.test(cls(a)) && !(i === 0 && looksLikeLogo(a)));
+    return new Set(items.map((a) => `${a.getAttribute('href') || ''}|${a.textContent.trim().replace(/\s+/g, ' ').toLowerCase()}`)).size;
+  }));
+  return count <= NAV_MAX ? null : `${count} distinct nav links (max ${NAV_MAX}, logo and CTA excluded)`;
+}
+
+/* ---------- landings under the sticky nav ---------- */
+
+// anchors: at 721, 1024, 1280 and 390 wide, a jump to every in-page link target (#id, as a click or a typed URL
+// does, so nav links hidden at that width count too) lands with the target's first line of text and its first
+// heading at or below the sticky nav's bottom edge. Then Tab through the whole page and Shift+Tab back: no focused
+// element (that fits on screen) ever sits under the nav.
+async function checkAnchors(browser) {
+  const bad = [];
+  for (const [width, height] of [[721, 800], [1024, 800], [1280, 800], [390, 844]]) {
+    const r = await withPage(browser, { width, height }, async (page) => {
+      await instantScroll(page);
+      const ids = await page.evaluate(() => [...new Set([...document.querySelectorAll('a[href^="#"]')]
+        .map((a) => decodeURIComponent(a.getAttribute('href').slice(1))).filter(Boolean))]);
+      for (const id of ids) {
+        await page.evaluate(() => { history.replaceState(null, '', location.pathname); scrollTo(0, 0); });
+        await page.evaluate((id) => { location.hash = id; }, id);
+        await page.waitForTimeout(200);
+        const m = await page.evaluate((id) => {
+          const t = document.getElementById(id);
+          if (!t) return null;
+          const nav = document.querySelector('nav').getBoundingClientRect().bottom;
+          const walker = document.createTreeWalker(t, NodeFilter.SHOW_TEXT);
+          let first = null;
+          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+            const el = n.parentElement;
+            if (!n.nodeValue.trim() || !el.getClientRects().length || getComputedStyle(el).visibility === 'hidden') continue;
+            const r = el.getBoundingClientRect();
+            if (r.width <= 1 && r.height <= 1) continue;
+            first = { text: n.nodeValue.trim().slice(0, 20), top: r.top };
+            break;
+          }
+          const h = t.matches('h1, h2, h3') ? t : t.querySelector('h1, h2, h3');
+          return { nav, first, heading: h ? { text: h.textContent.trim().slice(0, 20), top: h.getBoundingClientRect().top } : null };
+        }, id);
+        if (!m) continue;
+        for (const part of [m.first, m.heading]) {
+          if (part && part.top < m.nav - 0.5) return `#${id} lands with "${part.text}" ${Math.round(m.nav - part.top)}px under the nav`;
+        }
+      }
+      await page.evaluate(() => { history.replaceState(null, '', location.pathname); scrollTo(0, 0); document.activeElement.blur(); });
+      const under = () => page.evaluate(() => {
+        const a = document.activeElement;
+        if (!a || a === document.body || a.closest('nav') || getComputedStyle(a).position === 'fixed') return null;
+        const nav = document.querySelector('nav').getBoundingClientRect().bottom;
+        const r = a.getBoundingClientRect();
+        if (r.height > innerHeight - nav) return null;
+        return r.top < nav - 0.5 ? `${a.tagName.toLowerCase()} "${(a.getAttribute('aria-label') || a.textContent).trim().replace(/\s+/g, ' ').slice(0, 20)}" ${Math.round(nav - r.top)}px under the nav` : null;
+      });
+      const seen = new Set();
+      for (const back of [false, true]) {
+        for (let i = 0; i < 250; i++) {
+          await page.keyboard.press(back ? 'Shift+Tab' : 'Tab');
+          const key = await page.evaluate(() => { const a = document.activeElement; return a === document.body ? 'body' : [...document.querySelectorAll('*')].indexOf(a); });
+          if (key === 'body' || (!back && seen.has(key))) break;
+          seen.add(key);
+          const u = await under();
+          if (u) return `${back ? 'Shift+Tab' : 'Tab'}: ${u}`;
+        }
+      }
+      return null;
+    });
+    if (r) bad.push(`@${width} ${r}`);
+  }
+  return bad.length ? bad.join('; ') : null;
+}
+
+/* ---------- WhatsApp float ---------- */
+
+// float: at FLOAT_WIDTHS, scrolled through the whole page in steps of 3/4 of a screen, the WhatsApp float (whenever it
+// shows: rendered, visible, opacity above 0.05) never overlaps a line of text, a link, a button or a form field.
+// Text is measured line by line (Range rects), so wide blocks with a free corner do not count.
+async function checkFloat(browser) {
+  const bad = [];
+  for (const width of FLOAT_WIDTHS) {
+    const height = width < 721 ? 844 : 800;
+    const r = await withPage(browser, { width, height }, async (page) => {
+      await instantScroll(page);
+      const total = await page.evaluate(() => document.documentElement.scrollHeight);
+      for (let y = 0; y < total; y += Math.round(height * 0.75)) {
+        await page.evaluate((y) => scrollTo(0, y), y);
+        await page.waitForTimeout(350);
+        const hit = await page.evaluate(() => {
+          const f = document.querySelector('.wa-float');
+          if (!f) return null;
+          const cs = getComputedStyle(f);
+          let op = 1;
+          for (let n = f; n && n.nodeType === 1; n = n.parentElement) op *= parseFloat(getComputedStyle(n).opacity);
+          if (cs.display === 'none' || cs.visibility === 'hidden' || op <= 0.05 || !f.getClientRects().length) return null;
+          const fr = f.getBoundingClientRect();
+          const meets = (r) => r.width > 0 && r.height > 0 && r.left < fr.right && r.right > fr.left && r.top < fr.bottom && r.bottom > fr.top;
+          const visible = (el) => { for (let n = el; n && n.nodeType === 1; n = n.parentElement) { const c = getComputedStyle(n); if (c.visibility === 'hidden' || parseFloat(c.opacity) <= 0.05) return false; } return el.getClientRects().length > 0; };
+          for (const el of document.querySelectorAll('a[href], button, input, select, textarea')) {
+            if (f.contains(el) || !visible(el)) continue;
+            if (meets(el.getBoundingClientRect())) return `${el.tagName.toLowerCase()} "${(el.getAttribute('aria-label') || el.textContent).trim().slice(0, 20)}"`;
+          }
+          const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+          for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+            const el = n.parentElement;
+            if (!n.nodeValue.trim() || f.contains(el) || el.closest('script, style, noscript') || !visible(el)) continue;
+            const range = document.createRange();
+            range.selectNodeContents(n);
+            for (const rr of range.getClientRects()) if (meets(rr)) return `text "${n.nodeValue.trim().slice(0, 20)}"`;
+          }
+          return null;
+        });
+        if (hit) return `covers ${hit} at scroll ${y}`;
+      }
+      return null;
+    });
+    if (r) bad.push(`@${width} ${r}`);
+  }
+  return bad.length ? bad.slice(0, 3).join('; ') + (bad.length > 3 ? ` (+${bad.length - 3} more widths)` : '') : null;
+}
+
+/* ---------- custom cursor ---------- */
+
+// The custom cursor's parts (.cursor-dot, .cursor-ring, or any element whose class names a cursor): whether any of
+// them shows (rendered, visible, opacity above 0.05, and on screen), and the html cursor style.
+const CURSOR_FN = `(() => {
+  const parts = [...document.querySelectorAll('[class*="cursor"]')].filter((el) => el !== document.documentElement);
+  const shows = parts.filter((el) => {
+    const cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden' || !el.getClientRects().length) return false;
+    let op = 1;
+    for (let n = el; n && n.nodeType === 1; n = n.parentElement) op *= parseFloat(getComputedStyle(n).opacity);
+    const r = el.getBoundingClientRect();
+    return op > 0.05 && r.right > 0 && r.bottom > 0 && r.left < innerWidth && r.top < innerHeight;
+  });
+  const dot = document.querySelector('.cursor-dot');
+  const r = dot ? dot.getBoundingClientRect() : null;
+  return { parts: parts.length, shows: shows.map((el) => el.className), cursor: getComputedStyle(document.body).cursor,
+    dot: r ? { x: r.left + r.width / 2, y: r.top + r.height / 2 } : null };
+})()`;
+
+// cursor-hidden: before the first pointer move on a desktop no part of the custom cursor shows and the system cursor
+// is not hidden; after a move the dot shows at the pointer (the feature still works). With JS off, and on a touch
+// phone after a tap, no part shows.
+async function checkCursor(browser) {
+  const desk = await withPage(browser, {}, async (page) => {
+    await page.waitForTimeout(500);
+    const before = await page.evaluate(CURSOR_FN);
+    if (before.shows.length) return `before any pointer move, "${before.shows[0]}" shows`;
+    if (before.cursor === 'none') return 'the system cursor is hidden before the custom cursor shows';
+    await page.mouse.move(400, 300);
+    await page.mouse.move(420, 320);
+    await page.waitForTimeout(400);
+    const after = await page.evaluate(CURSOR_FN);
+    if (!after.parts) return null; // no custom cursor at all is fine
+    if (!after.shows.length) return 'after a pointer move the custom cursor does not show';
+    if (after.dot && Math.hypot(after.dot.x - 420, after.dot.y - 320) > 4) return `the cursor dot is at ${Math.round(after.dot.x)},${Math.round(after.dot.y)}, not at the pointer`;
+    return null;
+  });
+  if (desk) return desk;
+  const off = await withPage(browser, { js: false }, (page) => page.evaluate(CURSOR_FN));
+  if (off.shows.length) return `JS off: "${off.shows[0]}" shows`;
+  return withPage(browser, { touch: true, width: 390, height: 844 }, async (page) => {
+    await page.touchscreen.tap(200, 400);
+    await page.waitForTimeout(400);
+    const s = await page.evaluate(CURSOR_FN);
+    return s.shows.length ? `touch: "${s.shows[0]}" shows after a tap` : null;
+  });
+}
+
 const CHECKS = {
   images: checkImages,
   visible: checkVisible,
@@ -653,6 +1440,15 @@ const CHECKS = {
   contrast: checkContrast,
   copy: checkCopy,
   'nojs-stats': checkNoJsStats,
+  'featured-cycle': checkFeatured,
+  strip: checkStrip,
+  'capabilities-link': checkCapabilities,
+  'manifesto-nojs': checkManifesto,
+  tap: checkTap,
+  nav: checkNav,
+  anchors: checkAnchors,
+  float: checkFloat,
+  'cursor-hidden': checkCursor,
 };
 
 /* ---------- runner ---------- */
@@ -676,7 +1472,7 @@ async function main() {
         reason = `error: ${clip(String(e.message || e).split('\n')[0], 100)}`;
       }
       if (reason) failed++;
-      console.log(`  ${id.padEnd(10)} ${reason ? 'FAIL ' + reason : 'PASS'}`);
+      console.log(`  ${id.padEnd(17)} ${reason ? 'FAIL ' + reason : 'PASS'}`);
     }
   } finally {
     await browser.close();
