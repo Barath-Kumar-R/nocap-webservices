@@ -41,7 +41,9 @@ const PAN_EARLY_MS = 2000; // the pan must already be under way by now
 const PAN_END_MS = 8000; // and have reached the bottom of the screenshot by now (about 6s plus a short delay)
 const PAN_BACK_MS = 1500; // after leaving, the image is back at the top by now
 const PARK_MS = 3000; // a pointer resting just inside a card's bottom edge must keep it hovered this long
-const SHOT_DIFF_MAX = 8; // mean RGB difference (0-255) allowed between a shot and its 640px variant at 16x30
+// Mean RGB difference (0-255) allowed between a shot and its 640px variant at 16x30. Real pairs measure 0.1-0.9; the
+// closest wrong pair (15's shot against 02's thumbnail) measures 11.3.
+const SHOT_DIFF_MAX = 4;
 // The featured showcase cycles these demos in this order: [file without .html, the name its slide shows].
 const FEATURED = [
   ['22-helix-dental-webgl3d', 'Helix Dental Digital Studio'],
@@ -251,7 +253,7 @@ async function checkImages(browser) {
   if (alt.length) return `${alt.length} image(s) whose alt is not "<card name> website preview", e.g. "${alt[0].alt}" on ${alt[0].name}`;
   const diffs = await imageDiffs(browser, cards.map((c) => [base(c) + '.jpg', base(c) + '-640.jpg']));
   const stale = cards.map((c, i) => ({ c, d: diffs[i] })).filter((x) => x.d > SHOT_DIFF_MAX);
-  if (stale.length) return `${stale.length} 640px shot(s) do not match the full shot, e.g. ${base(stale[0].c)}-640.jpg (diff ${stale[0].d})`;
+  if (stale.length) return `${stale.length} 640px shot(s) do not match the full shot, e.g. ${base(stale[0].c)}-640.jpg (diff ${stale[0].d}); run python3 -I tools/make-thumbs.py`;
   return null;
 }
 
