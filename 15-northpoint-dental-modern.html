@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NorthPoint Family Dental · Velachery, Chennai</title>
+<meta name="description" content="NorthPoint Family Dental, a fictional family clinic in Velachery, Chennai, with a scroll-linked treatment timeline in a clean modern style. Design portfolio piece, not a live business.">
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,9 +13,12 @@
   :root{
     --navy:#1C2B39; --navy-soft:#2E4258; --powder:#CFE0EA; --powder-soft:#EAF2F7; --coral:#FF6B57; --coral-ink:#C2402E;
     --bg:#FBFCFD; --white:#FFFFFF; --line:#E2E9EE; --muted:#566676; --gum:#F3B8AE;
+    --hdr-h:73px; /* sticky header height (72px nav + 1px border), measured at every width 721-1920 */
   }
   *{box-sizing:border-box; margin:0; padding:0;}
-  html{scroll-behavior:smooth;}
+  /* In-page links and keyboard focus land below the sticky header. Focus on a text field scrolls to its caret,
+     about 15px inside the field, hence the 24px. Phones (header not sticky) keep the default, see the 720px block. */
+  html{scroll-behavior:smooth; scroll-padding-top:calc(var(--hdr-h) + 24px);}
   body{font-family:'Public Sans',system-ui,sans-serif; font-size:16px; line-height:1.65; background:var(--bg); color:var(--navy); -webkit-font-smoothing:antialiased;}
   h1,h2,h3{font-family:'Outfit',sans-serif; font-weight:600; letter-spacing:-0.015em; line-height:1.1; color:var(--navy);}
   h2{text-wrap:balance;}
@@ -22,7 +26,6 @@
   a{color:inherit;}
   .sr{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;}
   .wrap{max-width:1160px; margin:0 auto; padding:0 28px;}
-  section[id], #bookForm{scroll-margin-top:84px;}
   .eyebrow{display:inline-flex; align-items:center; gap:10px; font-size:14px; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; color:var(--coral-ink);}
   .eyebrow::before{content:''; width:8px; height:8px; border-radius:50%; background:var(--coral);}
   .sec-intro{max-width:620px;}
@@ -162,9 +165,9 @@
   .field{display:grid; gap:6px;}
   .field label{font-size:15px; font-weight:600;}
   .form-row{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
-  .form input, .form select{width:100%; min-height:50px; border:1px solid #CBD7E0; border-radius:12px; padding:0 14px; font:inherit; font-size:16px; color:var(--navy); background:var(--bg);}
+  .form input, .form select{width:100%; min-height:50px; border:1px solid #7A8D9C; border-radius:12px; padding:0 14px; font:inherit; font-size:16px; color:var(--navy); background:var(--bg);}
   .form select{appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231C2B39' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; background-size:18px; padding-right:40px;}
-  .form input:hover, .form select:hover{border-color:#9FB2C1;}
+  .form input:hover, .form select:hover{border-color:#5E7282;}
   .form .btn{width:100%; margin-top:4px;}
   .form-note{font-size:14px; color:var(--muted);}
 
@@ -217,6 +220,7 @@
   }
   @media (max-width:720px){
     .top{position:relative;}
+    html{scroll-padding-top:auto;}
     section[id]{scroll-margin-top:0;}
     #bookForm{scroll-margin-top:12px;}
     .btn-nav{display:none;}
@@ -447,7 +451,7 @@
           <select id="f-when" name="when"><option>Weekday evenings</option><option>Saturday</option><option>Sunday morning</option><option>Any time</option></select></div>
       </div>
       <button class="btn" type="submit">Request appointment</button>
-      <p class="form-note">Opens your email app with these details. The clinic calls back to confirm.</p>
+      <p class="form-note">This drafts a mail with your number in it, so the clinic can call about a time.</p>
     </form>
   </div>
 </section>
