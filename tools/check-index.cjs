@@ -3,25 +3,43 @@
 /*
  * Checks for the NoCap portfolio page (index.html): gallery cards, hover preview, badges, filters, links, layout.
  *
- *   node tools/check-index.cjs
+ *   node tools/check-index.cjs [page.html] [--only=check,check]
  *
+ * page.html defaults to index.html next to tools/ (another path is for testing the checks on a changed copy; local
+ * links then resolve next to that copy). --only runs just the named checks.
  * One line per check: PASS or FAIL <short reason>. Last line is a SUMMARY.
- * Exit code: 0 all pass, 1 any check failed.
+ * Exit code: 0 all pass, 1 any check failed, 2 bad arguments.
  */
 const fs = require('fs');
 const path = require('path');
 const { chromium } = require('playwright');
 
 const ROOT = path.resolve(__dirname, '..');
-const PAGE = path.join(ROOT, 'index.html');
+const ARGS = process.argv.slice(2);
+const PAGE = path.resolve(ARGS.find((a) => !a.startsWith('--')) || path.join(ROOT, 'index.html'));
+const ONLY = (ARGS.find((a) => a.startsWith('--only=')) || '').slice(7).split(',').filter(Boolean);
 const FONT_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com'];
 const BANNED_COPY = /elevate|unlock|seamless|cutting-edge|revolutionize|smile journey/gi;
 const CARD_COUNT = 22;
-const FILTER_COUNT = 8;
+// Which demos each filter must show (by file number). Pinned here, not read from the page, so a card with the wrong
+// data-cat fails instead of quietly moving to another filter.
+const FILTER_CARDS = {
+  modern: ['01', '02', '03', '14', '15'],
+  bold: ['04', '05', '06', '18', '19'],
+  tech: ['07', '08', '09'],
+  tactile: ['10', '11'],
+  luxury: ['12', '13'],
+  warm: ['16', '17'],
+  '3d': ['20', '21', '22'],
+};
+// The hero stats, as the counters end: these exact strings must be in the markup (JS off) and on screen at the end.
+const STATS = ['22', '0', '48 hrs'];
 const PAN_CARD = 4; // which card the hover tests use (any card works; this one is mid-grid at every width)
 const PAN_EARLY_MS = 2000; // the pan must already be under way by now
-const PAN_END_MS = 7000; // and have reached the bottom of the screenshot by now (about 6s plus a short delay)
+const PAN_END_MS = 8000; // and have reached the bottom of the screenshot by now (about 6s plus a short delay)
 const PAN_BACK_MS = 1500; // after leaving, the image is back at the top by now
+const PARK_MS = 3000; // a pointer resting just inside a card's bottom edge must keep it hovered this long
+const SHOT_DIFF_MAX = 8; // mean RGB difference (0-255) allowed between a shot and its 640px variant at 16x30
 
 /* ---------- shared page setup ---------- */
 
@@ -99,33 +117,124 @@ async function scrollThrough(page) {
 
 /* ---------- checks: each returns null (pass) or a short failure reason ---------- */
 
-// (a) Every card has a .g-shot img of its own demo (assets/shots/<demo>.jpg) that loads, with width/height attributes
-// equal to the file's pixel size (so nothing shifts while it loads) and an alt that names the demo.
-async function checkImages(browser) {
-  return withPage(browser, {}, async (page) => {
-    await loadCardImages(page);
-    const cards = await page.evaluate(() => [...document.querySelectorAll('#galleryGrid .g-card')].map((card) => {
-      const img = card.querySelector('.g-shot img');
-      const href = card.getAttribute('href') || '';
-      if (!img) return { href, missing: true };
-      return {
-        href, src: img.getAttribute('src') || '', alt: img.getAttribute('alt') || '',
-        nw: img.naturalWidth, nh: img.naturalHeight, w: +img.getAttribute('width'), h: +img.getAttribute('height'),
+// Shows of an element: whether it renders at all (display:none on it or an ancestor leaves no client rects), its
+// computed visibility, and its effective opacity (product up the ancestor chain, so a faded wrapper counts).
+const SHOWN_FN = `(el) => {
+  let opacity = 1;
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) opacity *= parseFloat(getComputedStyle(n).opacity);
+  return { rendered: el.getClientRects().length > 0, hidden: getComputedStyle(el).visibility !== 'visible',
+    opacity: Math.round(opacity * 100) / 100 };
+}`;
+const notShown = (s) => (!s.rendered ? 'display:none' : s.hidden ? 'visibility:hidden' : s.opacity < 0.99 ? `opacity ${s.opacity}` : '');
+
+// How alike two image files look: each is drawn at 16x30 on a canvas, and the mean RGB difference (0-255) is returned
+// per pair. The files are served from a made-up http origin through page.route, because a page cannot read canvas
+// pixels of file:// images.
+async function imageDiffs(browser, pairs) {
+  const context = await browser.newContext();
+  try {
+    const page = await context.newPage();
+    const dir = path.dirname(PAGE);
+    await page.route('http://shots.check/**', (route) => {
+      const rel = decodeURIComponent(new URL(route.request().url()).pathname.slice(1));
+      if (!rel) return route.fulfill({ contentType: 'text/html', body: '<!doctype html><title>diff</title>' });
+      const file = path.join(dir, rel);
+      return fs.existsSync(file) ? route.fulfill({ path: file }) : route.fulfill({ status: 404, body: '' });
+    });
+    await page.goto('http://shots.check/');
+    return await page.evaluate(async (pairs) => {
+      const load = (src) => new Promise((res, rej) => {
+        const img = new Image();
+        img.onload = () => res(img);
+        img.onerror = () => rej(new Error('cannot load ' + src));
+        img.src = '/' + src;
+      });
+      const pixels = (img) => {
+        const c = document.createElement('canvas');
+        c.width = 16; c.height = 30;
+        const ctx = c.getContext('2d');
+        ctx.drawImage(img, 0, 0, 16, 30);
+        return ctx.getImageData(0, 0, 16, 30).data;
       };
-    }));
-    if (cards.length !== CARD_COUNT) return `${cards.length} cards (want ${CARD_COUNT})`;
-    const missing = cards.filter((c) => c.missing);
-    if (missing.length) return `${missing.length} card(s) without a .g-shot img, e.g. ${missing[0].href}`;
-    const wrong = cards.filter((c) => c.src !== 'assets/shots/' + c.href.replace(/\.html$/, '') + '.jpg');
-    if (wrong.length) return `${wrong.length} card(s) show another demo's shot, e.g. ${wrong[0].href} -> ${wrong[0].src}`;
-    const broken = cards.filter((c) => !(c.nw > 0));
-    if (broken.length) return `${broken.length} image(s) did not load, e.g. ${broken[0].src}`;
-    const size = cards.filter((c) => c.w !== c.nw || c.h !== c.nh);
-    if (size.length) return `${size.length} image(s) with width/height unlike the file, e.g. ${size[0].src} ${size[0].w}x${size[0].h} vs ${size[0].nw}x${size[0].nh}`;
-    const alt = cards.filter((c) => !/\S website preview$/.test(c.alt));
-    if (alt.length) return `${alt.length} image(s) without a "<name> website preview" alt, e.g. ${alt[0].src}`;
-    return null;
+      const out = [];
+      for (const [a, b] of pairs) {
+        const [pa, pb] = [pixels(await load(a)), pixels(await load(b))];
+        let sum = 0;
+        for (let k = 0; k < pa.length; k += 4) sum += Math.abs(pa[k] - pb[k]) + Math.abs(pa[k + 1] - pb[k + 1]) + Math.abs(pa[k + 2] - pb[k + 2]);
+        out.push(Math.round(sum / (pa.length / 4 * 3) * 10) / 10);
+      }
+      return out;
+    }, pairs);
+  } finally {
+    await context.close();
+  }
+}
+
+// (a) Every card has a .g-shot img of its own demo that loads and shows once scrolled into view (not display:none,
+// visibility:hidden or faded). Its alt is the card's own name plus " website preview". src is the full shot
+// assets/shots/<demo>.jpg with width/height equal to that file's pixels (so nothing shifts while it loads); srcset
+// offers the same picture 640px wide (<demo>-640.jpg, half the height, 640w) and the full one (1280w), and whichever
+// the browser picked has the matching size. The 640 file must show the same picture as the full one, so a re-shot
+// page with a stale 640 copy fails.
+async function checkImages(browser) {
+  const result = await withPage(browser, {}, async (page) => {
+    await loadCardImages(page);
+    const n = await page.locator('#galleryGrid .g-card').count();
+    if (n !== CARD_COUNT) return { reason: `${n} cards (want ${CARD_COUNT})` };
+    const cards = [];
+    for (let i = 0; i < n; i++) {
+      await centre(page, '#galleryGrid .g-card', i, i === 0 ? 800 : 60);
+      // With srcset, naturalWidth is scaled by the picked candidate's density, so the file's own pixel size is read by
+      // loading currentSrc into a plain Image.
+      cards.push(await page.evaluate(`(async (i) => {
+        const shown = ${SHOWN_FN};
+        const card = document.querySelectorAll('#galleryGrid .g-card')[i];
+        const img = card.querySelector('.g-shot img');
+        const h3 = card.querySelector('h3');
+        const href = card.getAttribute('href') || '';
+        if (!img) return { href, missing: true };
+        const file = img.complete && img.naturalWidth ? await new Promise((res) => {
+          const probe = new Image();
+          probe.onload = () => res({ nw: probe.naturalWidth, nh: probe.naturalHeight });
+          probe.onerror = () => res({ nw: 0, nh: 0 });
+          probe.src = img.currentSrc || img.src;
+        }) : { nw: 0, nh: 0 };
+        return {
+          href, name: h3 ? h3.textContent.trim() : '', src: img.getAttribute('src') || '', srcset: img.getAttribute('srcset') || '',
+          current: decodeURIComponent(new URL(img.currentSrc || img.src).pathname).split('/').slice(-3).join('/'),
+          alt: img.getAttribute('alt') || '', nw: file.nw, nh: file.nh,
+          w: +img.getAttribute('width'), h: +img.getAttribute('height'), shown: shown(img),
+        };
+      })(${i})`));
+    }
+    return { cards };
   });
+  if (result.reason) return result.reason;
+  const { cards } = result;
+  const missing = cards.filter((c) => c.missing);
+  if (missing.length) return `${missing.length} card(s) without a .g-shot img, e.g. ${missing[0].href}`;
+  const base = (c) => 'assets/shots/' + c.href.replace(/\.html$/, '');
+  const wrong = cards.filter((c) => c.src !== base(c) + '.jpg');
+  if (wrong.length) return `${wrong.length} card(s) show another demo's shot, e.g. ${wrong[0].href} -> ${wrong[0].src}`;
+  const set = cards.filter((c) => c.srcset.replace(/\s+/g, ' ').trim() !== `${base(c)}-640.jpg 640w, ${base(c)}.jpg 1280w`);
+  if (set.length) return `${set.length} image(s) without srcset "<demo>-640.jpg 640w, <demo>.jpg 1280w", e.g. ${set[0].href}: "${set[0].srcset}"`;
+  const hidden = cards.filter((c) => notShown(c.shown));
+  if (hidden.length) return `${hidden.length} image(s) not visible after scrolling into view, e.g. ${hidden[0].href} (${notShown(hidden[0].shown)})`;
+  const broken = cards.filter((c) => !(c.nw > 0));
+  if (broken.length) return `${broken.length} image(s) did not load, e.g. ${broken[0].current}`;
+  const size = cards.filter((c) => (c.current === base(c) + '.jpg'
+    ? c.w !== c.nw || c.h !== c.nh
+    : c.current !== base(c) + '-640.jpg' || c.nw !== 640 || c.nh !== Math.round(c.h * 640 / c.w)));
+  if (size.length) {
+    const c = size[0];
+    return `${size.length} image(s) whose loaded file does not match: ${c.current} is ${c.nw}x${c.nh}, width/height say ${c.w}x${c.h}`;
+  }
+  const alt = cards.filter((c) => c.alt !== `${c.name} website preview`);
+  if (alt.length) return `${alt.length} image(s) whose alt is not "<card name> website preview", e.g. "${alt[0].alt}" on ${alt[0].name}`;
+  const diffs = await imageDiffs(browser, cards.map((c) => [base(c) + '.jpg', base(c) + '-640.jpg']));
+  const stale = cards.map((c, i) => ({ c, d: diffs[i] })).filter((x) => x.d > SHOT_DIFF_MAX);
+  if (stale.length) return `${stale.length} 640px shot(s) do not match the full shot, e.g. ${base(stale[0].c)}-640.jpg (diff ${stale[0].d})`;
+  return null;
 }
 
 // Pan state of card i's screenshot: the computed object-position and transform (compared as text), and where the
@@ -143,6 +252,9 @@ function panState(page, i) {
       key: cs.objectPosition + ' | ' + cs.transform,
       bottom: moved ? Math.abs(r.bottom - win.bottom) <= 1.5 : /(^|\s)100%$/.test(cs.objectPosition),
       gap: Math.round((r.bottom - win.bottom) * 10) / 10,
+      // how far down the page the window shows: px slid (translate) plus the vertical object-position (object-position)
+      progress: (win.top - r.top) + (parseFloat(cs.objectPosition.split(' ')[1]) || 0),
+      hovered: img.closest('.g-card').matches(':hover'),
     };
   }, i);
 }
@@ -152,9 +264,21 @@ async function hoverCard(page, i) {
   await page.locator('#galleryGrid .g-card').nth(i).hover();
 }
 
+// Presses Tab until a gallery card has focus; returns its index, or -1.
+async function tabToCard(page) {
+  for (let tab = 0; tab < 60; tab++) {
+    await page.keyboard.press('Tab');
+    const i = await page.evaluate(() => [...document.querySelectorAll('#galleryGrid .g-card')].indexOf(document.activeElement));
+    if (i >= 0) return i;
+  }
+  return -1;
+}
+
 // (b) Desktop (1280x800, hover and fine pointer): hovering a card moves its screenshot within 2s, reaches the bottom of
-// the screenshot by 7s and returns to the top after the pointer leaves. Keyboard focus (Tab, :focus-visible) also
-// moves it. Under reduced motion, and on a touch phone (hover: none), hovering does not move it.
+// the screenshot by 8s and returns to the top after the pointer leaves. A pointer resting 2px inside a card's bottom
+// edge keeps it hovered for 3s and the pan only moves forward (a hover lift that moves the card out from under the
+// pointer would make it flicker and restart). Keyboard focus (Tab, :focus-visible) also moves it. Under reduced
+// motion neither hover nor keyboard focus moves it, and on a touch phone (hover: none) hovering does not.
 async function checkPan(browser) {
   const desktop = await withPage(browser, {}, async (page) => {
     const before = await panState(page, PAN_CARD);
@@ -174,13 +298,25 @@ async function checkPan(browser) {
   });
   if (desktop) return desktop;
 
+  const parked = await withPage(browser, {}, async (page) => {
+    await centre(page, '#galleryGrid .g-card', PAN_CARD);
+    const box = await page.locator('#galleryGrid .g-card').nth(PAN_CARD).boundingBox();
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height - 2);
+    let last = (await panState(page, PAN_CARD)).progress;
+    for (let t = 0; t < PARK_MS; t += 100) {
+      await page.waitForTimeout(100);
+      const s = await panState(page, PAN_CARD);
+      if (!s.hovered) return `pointer 2px inside the card's bottom edge: card lost :hover after ${(t + 100) / 1000}s`;
+      if (s.progress < last - 0.5) return `pointer 2px inside the card's bottom edge: pan went back (${Math.round(last)} -> ${Math.round(s.progress)}px) after ${(t + 100) / 1000}s`;
+      last = s.progress;
+    }
+    return last > 0 ? null : `pointer 2px inside the card's bottom edge: image did not move in ${PARK_MS / 1000}s`;
+  });
+  if (parked) return parked;
+
   const keyboard = await withPage(browser, {}, async (page) => {
     const before = await panState(page, 0);
-    let i = -1;
-    for (let tab = 0; tab < 60 && i < 0; tab++) {
-      await page.keyboard.press('Tab');
-      i = await page.evaluate(() => [...document.querySelectorAll('#galleryGrid .g-card')].indexOf(document.activeElement));
-    }
+    const i = await tabToCard(page);
     if (i < 0) return 'keyboard: Tab never reached a gallery card';
     const visible = await page.evaluate(() => { try { return document.activeElement.matches(':focus-visible'); } catch (e) { return false; } });
     if (!visible) return 'keyboard: focused card is not :focus-visible';
@@ -189,6 +325,16 @@ async function checkPan(browser) {
     return after.key === before.key ? `keyboard: focusing card ${i + 1} did not move its image` : null;
   });
   if (keyboard) return keyboard;
+
+  const reducedFocus = await withPage(browser, { reduced: true }, async (page) => {
+    const before = await panState(page, 0);
+    const i = await tabToCard(page);
+    if (i < 0) return 'reduced motion: Tab never reached a gallery card';
+    await page.waitForTimeout(PAN_EARLY_MS);
+    const after = await panState(page, i);
+    return after.key !== before.key ? `reduced motion: keyboard focus moved the image (${clip(after.key, 60)})` : null;
+  });
+  if (reducedFocus) return reducedFocus;
 
   for (const [label, opts] of [['reduced motion', { reduced: true }], ['touch', { touch: true, width: 390, height: 844 }]]) {
     const still = await withPage(browser, opts, async (page) => {
@@ -203,26 +349,24 @@ async function checkPan(browser) {
   return null;
 }
 
-// Effective opacity of every card (product up the ancestor chain, so a faded gallery wrapper counts).
-function cardOpacities(page) {
-  return page.evaluate(() => [...document.querySelectorAll('#galleryGrid .g-card')].map((card) => {
-    let opacity = 1;
-    for (let n = card; n && n.nodeType === 1; n = n.parentElement) opacity *= parseFloat(getComputedStyle(n).opacity);
-    return Math.round(opacity * 100) / 100;
-  }));
+// How every card shows (see SHOWN_FN): rendered at all, visibility, effective opacity.
+function cardStates(page) {
+  return page.evaluate(`[...document.querySelectorAll('#galleryGrid .g-card')].map(${SHOWN_FN})`);
 }
 
-// Cards must actually show: on a phone (390x844, 320x568) and on desktop, each card scrolled into view reaches full
-// opacity (the gallery's scroll reveal must fire even though one column of 22 cards is many screens tall), and with
-// JS off every card is fully visible without scrolling.
+// Cards must actually show: on a phone (390x844, 320x568) and on desktop, each card scrolled into view is rendered,
+// visible and at full opacity (the gallery's scroll reveal must fire even though one column of 22 cards is many
+// screens tall), and with JS off every card shows without scrolling.
 async function checkVisible(browser) {
   for (const [width, height] of [[390, 844], [320, 568], [1280, 800]]) {
     const reason = await withPage(browser, { width, height }, async (page) => {
       const n = await page.locator('#galleryGrid .g-card').count();
+      if (n !== CARD_COUNT) return `${n} cards (want ${CARD_COUNT})`;
       for (let i = 0; i < n; i++) {
-        await centre(page, '#galleryGrid .g-card', i, i === 0 ? 800 : 60);
-        const op = (await cardOpacities(page))[i];
-        if (op < 0.99) return `card ${i + 1} at opacity ${op} after scrolling it into view`;
+        const rendered = await page.evaluate((i) => document.querySelectorAll('#galleryGrid .g-card')[i].getClientRects().length > 0, i);
+        if (rendered) await centre(page, '#galleryGrid .g-card', i, i === 0 ? 800 : 60);
+        const why = notShown((await cardStates(page))[i]);
+        if (why) return `card ${i + 1} not visible after scrolling it into view (${why})`;
       }
       return null;
     });
@@ -232,12 +376,48 @@ async function checkVisible(browser) {
   try {
     const page = await context.newPage();
     await page.goto('file://' + PAGE, { waitUntil: 'load' });
-    const ops = await cardOpacities(page);
-    const hidden = ops.filter((o) => o < 0.99).length;
-    return hidden ? `JS off: ${hidden} card(s) not fully visible (opacity ${Math.min(...ops)})` : null;
+    const states = await cardStates(page);
+    const hidden = states.map((s, i) => ({ i, why: notShown(s) })).filter((x) => x.why);
+    return hidden.length ? `JS off: ${hidden.length} card(s) not visible, e.g. card ${hidden[0].i + 1} (${hidden[0].why})` : null;
   } finally {
     await context.close();
   }
+}
+
+// Hero stats with JavaScript disabled read their true values straight from the markup (22 / 0 / 48 hrs, as pinned in
+// STATS, and each equal to what its counter counts to: data-count plus data-suffix). With JS on under reduced motion
+// they show the same values at once, never a count from 0; with JS on they end on the same values.
+async function checkNoJsStats(browser) {
+  const read = (page) => page.evaluate(() => [...document.querySelectorAll('.hero-stats b')].map((b) => ({
+    text: b.textContent.trim(), counter: (b.dataset.count || '') + (b.dataset.suffix || ''),
+  })));
+  const context = await browser.newContext({ viewport: { width: 1280, height: 800 }, javaScriptEnabled: false });
+  let off;
+  try {
+    const page = await context.newPage();
+    await page.goto('file://' + PAGE, { waitUntil: 'load' });
+    off = await read(page);
+  } finally {
+    await context.close();
+  }
+  const texts = (stats) => stats.map((s) => s.text).join(' / ');
+  if (texts(off) !== STATS.join(' / ')) return `JS off: stats read "${texts(off)}" (want "${STATS.join(' / ')}")`;
+  const odd = off.find((s) => s.text !== s.counter);
+  if (odd) return `JS off: stat "${odd.text}" is not what its counter counts to ("${odd.counter}")`;
+  const reduced = await withPage(browser, { reduced: true }, async (page) => {
+    for (let k = 0; k < 6; k++) {
+      const now = texts(await read(page));
+      if (now !== STATS.join(' / ')) return `reduced motion: stats read "${now}" at ${k * 100}ms (want "${STATS.join(' / ')}" throughout)`;
+      await page.waitForTimeout(100);
+    }
+    return null;
+  });
+  if (reduced) return reduced;
+  return withPage(browser, {}, async (page) => {
+    await page.waitForTimeout(2000);
+    const end = texts(await read(page));
+    return end === STATS.join(' / ') ? null : `JS on: counters end on "${end}" (want "${STATS.join(' / ')}")`;
+  });
 }
 
 // (c) Every card has a .badges row holding 1 to 3 badges, each with text.
@@ -262,43 +442,47 @@ async function checkBadges(browser) {
   });
 }
 
-// (d) The 8 filter buttons: clicking each shows exactly the cards of its category (all of them for "all"), marks itself
-// active, and the "all" button's label states the card count. Every data-cat value has a button.
+// (d) The 8 filter buttons (all plus the 7 in FILTER_CARDS): clicking each shows exactly the demos pinned for it (all
+// 22 for "all"), compared by file number, not just by count, and marks itself the one active button. The "all" button's
+// label states 22.
 async function checkFilters(browser) {
+  const allCards = Array.from({ length: CARD_COUNT }, (_, i) => String(i + 1).padStart(2, '0'));
+  const want = { all: allCards, ...FILTER_CARDS };
   return withPage(browser, {}, async (page) => {
-    const info = await page.evaluate(() => ({
-      buttons: [...document.querySelectorAll('.filter-btn')].map((b) => ({ filter: b.dataset.filter, text: b.textContent.trim() })),
-      cats: [...document.querySelectorAll('#galleryGrid .g-card')].map((c) => c.dataset.cat),
-    }));
-    if (info.buttons.length !== FILTER_COUNT) return `${info.buttons.length} filter buttons (want ${FILTER_COUNT})`;
-    if (info.cats.length !== CARD_COUNT) return `${info.cats.length} cards (want ${CARD_COUNT})`;
-    const orphan = [...new Set(info.cats)].filter((c) => !info.buttons.some((b) => b.filter === c));
-    if (orphan.length) return `data-cat without a filter button: ${orphan.join(', ')}`;
-    const all = info.buttons.find((b) => b.filter === 'all');
-    if (!all) return 'no "all" filter button';
+    const buttons = await page.evaluate(() => [...document.querySelectorAll('.filter-btn')]
+      .map((b) => ({ filter: b.dataset.filter, text: b.textContent.trim() })));
+    const names = buttons.map((b) => b.filter);
+    if (names.slice().sort().join() !== Object.keys(want).sort().join()) return `filter buttons are [${names.join(', ')}] (want [${Object.keys(want).join(', ')}])`;
+    const all = buttons.find((b) => b.filter === 'all');
     if (!all.text.includes(String(CARD_COUNT))) return `"all" button reads "${all.text}" (want the count ${CARD_COUNT})`;
     await centre(page, '.filters');
-    for (const [i, b] of info.buttons.entries()) {
+    for (const [i, b] of buttons.entries()) {
       await page.locator('.filter-btn').nth(i).click();
       const got = await page.evaluate((i) => ({
-        shown: [...document.querySelectorAll('#galleryGrid .g-card')].filter((c) => c.getClientRects().length).map((c) => c.dataset.cat),
+        shown: [...document.querySelectorAll('#galleryGrid .g-card')].filter((c) => c.getClientRects().length)
+          .map((c) => (c.getAttribute('href') || '').slice(0, 2)),
         active: document.querySelectorAll('.filter-btn')[i].classList.contains('active'),
         actives: document.querySelectorAll('.filter-btn.active').length,
       }), i);
-      const want = b.filter === 'all' ? info.cats.length : info.cats.filter((c) => c === b.filter).length;
-      if (got.shown.length !== want) return `"${b.text}" shows ${got.shown.length} cards (want ${want})`;
-      if (b.filter !== 'all' && got.shown.some((c) => c !== b.filter)) return `"${b.text}" shows a card from another category`;
+      const shown = got.shown.slice().sort().join(', ');
+      if (shown !== want[b.filter].join(', ')) return `"${b.text}" shows [${shown}] (want [${want[b.filter].join(', ')}])`;
       if (!got.active || got.actives !== 1) return `"${b.text}" is not the one active button after a click`;
     }
     return null;
   });
 }
 
-// (e) Every local href/src resolves: files exist (relative to index.html), #anchors name an element id. External
-// links (http, https, mailto, tel, data) are not followed. Every .g-card links to a distinct, existing local demo.
+// (e) Every local href, src and srcset URL resolves: files exist (relative to the page), #anchors name an element id.
+// External links (http, https, mailto, tel, data) are not followed. Every .g-card links to a distinct, existing local
+// demo.
 async function checkLinks(browser) {
   const found = await withPage(browser, {}, (page) => page.evaluate(() => ({
-    refs: [...document.querySelectorAll('[href], [src]')].map((el) => el.getAttribute(el.hasAttribute('href') ? 'href' : 'src')),
+    refs: [
+      ...[...document.querySelectorAll('[href]')].map((el) => el.getAttribute('href')),
+      ...[...document.querySelectorAll('[src]')].map((el) => el.getAttribute('src')),
+      ...[...document.querySelectorAll('[srcset]')].flatMap((el) => el.getAttribute('srcset').split(',')
+        .map((part) => part.trim().split(/\s+/)[0]).filter(Boolean)),
+    ],
     ids: [...document.querySelectorAll('[id]')].map((el) => el.id),
     cards: [...document.querySelectorAll('#galleryGrid .g-card')].map((c) => c.getAttribute('href') || ''),
   })));
@@ -468,16 +652,23 @@ const CHECKS = {
   type: checkType,
   contrast: checkContrast,
   copy: checkCopy,
+  'nojs-stats': checkNoJsStats,
 };
 
 /* ---------- runner ---------- */
 
 async function main() {
+  const unknown = ONLY.filter((id) => !CHECKS[id]);
+  if (unknown.length || !fs.existsSync(PAGE)) {
+    console.error(`check-index: ${unknown.length ? `unknown check(s): ${unknown.join(', ')}` : `no such page: ${PAGE}`}`);
+    process.exit(2);
+  }
+  const run = Object.entries(CHECKS).filter(([id]) => !ONLY.length || ONLY.includes(id));
   const browser = await chromium.launch();
   let failed = 0;
   try {
-    console.log('index.html');
-    for (const [id, check] of Object.entries(CHECKS)) {
+    console.log(path.relative(ROOT, PAGE) || PAGE);
+    for (const [id, check] of run) {
       let reason;
       try {
         reason = await check(browser);
@@ -485,12 +676,12 @@ async function main() {
         reason = `error: ${clip(String(e.message || e).split('\n')[0], 100)}`;
       }
       if (reason) failed++;
-      console.log(`  ${id.padEnd(9)} ${reason ? 'FAIL ' + reason : 'PASS'}`);
+      console.log(`  ${id.padEnd(10)} ${reason ? 'FAIL ' + reason : 'PASS'}`);
     }
   } finally {
     await browser.close();
   }
-  const total = Object.keys(CHECKS).length;
+  const total = run.length;
   console.log(`SUMMARY ${total} checks: ${total - failed} passed, ${failed} failed`);
   process.exit(failed ? 1 : 0);
 }
