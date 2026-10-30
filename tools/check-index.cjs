@@ -677,11 +677,25 @@ async function checkContrast(browser) {
   return bad.length ? bad.join('; ') : null;
 }
 
-// contact-links: every WhatsApp link is exactly WA_URL (a ?text= message may follow), every phone link is TEL_HREF and
-// every email link is MAIL_HREF, with at least one of each; and at 1440 wide, scrolled past the hero, the WhatsApp
-// float shows and points to the same number.
+// contact-links: the page describes itself to search and link previews: a meta description and the Open Graph tags
+// og:title, og:description, og:type "website", og:image (an absolute https URL) and og:image:alt, all non-empty;
+// every WhatsApp link opens in a new tab (target="_blank", rel with noopener); every WhatsApp link is exactly WA_URL
+// (a ?text= message may follow), every phone link is TEL_HREF and every email link is MAIL_HREF, with at least one of
+// each; and at 1440 wide, scrolled past the hero, the WhatsApp float shows and points to the same number.
+const OG_TAGS = ['og:title', 'og:description', 'og:type', 'og:image', 'og:image:alt'];
 async function checkContactLinks(browser) {
-  const hrefs = await withPage(browser, {}, (page) => page.evaluate(() => [...document.querySelectorAll('a[href]')].map((a) => a.getAttribute('href'))));
+  const { links, meta } = await withPage(browser, {}, (page) => page.evaluate((og) => ({
+    links: [...document.querySelectorAll('a[href]')].map((a) => ({ href: a.getAttribute('href'), target: a.getAttribute('target') || '', rel: a.getAttribute('rel') || '' })),
+    meta: Object.fromEntries([['description', (document.querySelector('meta[name="description"]') || { content: '' }).content.trim()]]
+      .concat(og.map((p) => [p, (document.querySelector(`meta[property="${p}"]`) || { content: '' }).content.trim()]))),
+  }), OG_TAGS));
+  const missing = ['description', ...OG_TAGS].filter((k) => !meta[k]);
+  if (missing.length) return `missing or empty meta tag(s): ${missing.join(', ')}`;
+  if (meta['og:type'] !== 'website') return `og:type is "${meta['og:type']}" (want website)`;
+  if (!/^https:\/\/[^/]+\/.+\.(jpe?g|png|webp)$/i.test(meta['og:image'])) return `og:image is not an absolute https image URL: ${meta['og:image']}`;
+  const hrefs = links.map((l) => l.href);
+  const sameTab = links.filter((l) => /wa\.me|whatsapp\.com/i.test(l.href) && (l.target !== '_blank' || !/\bnoopener\b/.test(l.rel)));
+  if (sameTab.length) return `${sameTab.length} WhatsApp link(s) without target="_blank" rel="noopener"`;
   const wa = hrefs.filter((h) => /wa\.me|whatsapp\.com/i.test(h));
   const tel = hrefs.filter((h) => /^tel:/i.test(h));
   const mail = hrefs.filter((h) => /^mailto:/i.test(h));

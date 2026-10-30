@@ -15,6 +15,10 @@
  *   <name>-m.jpg   390px phone viewport, first screen (844 CSS px), under 150KB
  * where <name> is the demo file name without .html.
  *
+ * Fixed clock: every page sees Wednesday 28 October 2026, 11:00 India time (Date only, via Playwright's
+ * clock.setFixedTime; timers, animation frames and performance.now run normally), so lines that follow the clock
+ * (open now, the next days in a picker) do not depend on when the shots are taken.
+ *
  * Real fonts only: before every shot the page's own web fonts must be loaded (heading and body font from
  * tools/demos.json). If they are not, the demo FAILS and none of its files are written, so a blocked Google Fonts
  * can never leave fallback-font screenshots behind.
@@ -48,6 +52,8 @@ const FONTS_WAIT_MS = 1200; // after document.fonts.ready, so intros that start 
 const FINITE_ANIMATION_CAP_MS = 3000;
 const SCROLL_STEP_WAIT_MS = 150;
 const AFTER_SCROLL_BACK_MS = 600;
+// What Date says in every shot: a weekday late morning, inside every demo clinic's stated hours (see the header).
+const SHOT_TIME = new Date('2026-10-28T11:00:00+05:30');
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
@@ -218,6 +224,7 @@ async function withDemoPage(browser, demoFile, kind, contextOptions, shoot) {
     timezoneId: 'Asia/Kolkata', // the demos are clinics in Tamil Nadu; "open now" lines follow the clock
   });
   try {
+    await context.clock.setFixedTime(SHOT_TIME);
     const page = await context.newPage();
     page.setDefaultTimeout(20000);
     await page.goto('file://' + path.join(ROOT, demoFile), { waitUntil: 'load' });

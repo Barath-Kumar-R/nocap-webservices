@@ -45,14 +45,16 @@ function isFontLoadFailure(entry) {
 
 // Opens `file` in a fresh context, runs fn(page, errors), always cleans up.
 // errors collects console errors and uncaught exceptions: { type: 'error' | 'pageerror', text, url }.
+// opts.init: a function run in the page before any of its scripts (page.addInitScript).
 async function withPage(browser, file, opts, fn) {
-  const { width = 1280, height = 800, js = true, reduced = false, offline = false } = opts;
+  const { width = 1280, height = 800, js = true, reduced = false, offline = false, init = null } = opts;
   const context = await browser.newContext({
     viewport: { width, height },
     javaScriptEnabled: js,
     reducedMotion: reduced ? 'reduce' : 'no-preference',
   });
   try {
+    if (init) await context.addInitScript(init);
     if (offline) {
       await context.route('**/*', (route) =>
         route.request().url().startsWith('file://') ? route.continue() : route.abort());
@@ -121,21 +123,48 @@ async function checkOverflow(browser, file) {
   return bad.length ? bad.join('; ') : null;
 }
 
-// JS off: headings must not depend on script to become visible (effective opacity, see renderStates).
+// JS off: there is at least one h1, and every h1 and h2 is shown without script: effective opacity >= 0.99, not
+// visibility:hidden, and a non-empty box (display:none or a zero-size box fails), as renderStates judges them.
 async function checkNoJs(browser, file) {
-  const states = await withPage(browser, file, { js: false }, (page) => renderStates(page, 'h1,h2'));
-  const hidden = states.filter((h) => h.opacity < 0.99);
+  const { states, h1s } = await withPage(browser, file, { js: false }, async (page) => ({
+    states: await renderStates(page, 'h1,h2'),
+    h1s: await page.evaluate(() => document.querySelectorAll('h1').length),
+  }));
+  if (!h1s) return 'no h1 element';
+  const why = (h) => (h.opacity < 0.99 ? `opacity ${h.opacity}` : h.hidden ? 'visibility hidden' : h.empty ? 'no box (display:none or zero size)' : '');
+  const hidden = states.filter(why);
   if (!hidden.length) return null;
-  return `${hidden.length} heading(s) hidden without JS, e.g. "${hidden[0].text}" opacity ${hidden[0].opacity}`;
+  return `${hidden.length} heading(s) hidden without JS, e.g. "${hidden[0].text}" ${why(hidden[0])}`;
+}
+
+// Under reduced motion: no infinite CSS/Web animation running, and no requestAnimationFrame loop. rAF calls are
+// counted for RAF_WINDOW_MS once the page has settled, on screen and with no input; a page that draws one frame (or a
+// few) and stops passes, a loop that keeps asking for frames (about 60 a second) fails.
+const RAF_WINDOW_MS = 1000;
+const RAF_MAX_CALLS = 3;
+function countAnimationFrames() {
+  const raf = window.requestAnimationFrame;
+  window.__ncRaf = 0;
+  window.requestAnimationFrame = function (cb) {
+    window.__ncRaf++;
+    return raf.call(window, cb);
+  };
 }
 
 async function checkReduced(browser, file) {
-  const running = await withPage(browser, file, { reduced: true }, (page) =>
-    page.evaluate(() => document.getAnimations()
+  const r = await withPage(browser, file, { reduced: true, init: countAnimationFrames }, async (page) => {
+    const running = await page.evaluate(() => document.getAnimations()
       .filter((a) => a.playState === 'running' && a.effect && a.effect.getComputedTiming().iterations === Infinity)
-      .map((a) => a.animationName || a.transitionProperty || 'animation')));
-  if (!running.length) return null;
-  return `${running.length} infinite animation(s) running under reduced motion, e.g. ${[...new Set(running)].slice(0, 3).join(', ')}`;
+      .map((a) => a.animationName || a.transitionProperty || 'animation'));
+    await page.evaluate(() => { window.__ncRaf = 0; });
+    await page.waitForTimeout(RAF_WINDOW_MS);
+    const frames = await page.evaluate(() => ({ calls: window.__ncRaf, visible: document.visibilityState }));
+    return { running, frames };
+  });
+  if (r.running.length) return `${r.running.length} infinite animation(s) running under reduced motion, e.g. ${[...new Set(r.running)].slice(0, 3).join(', ')}`;
+  if (r.frames.visible !== 'visible') return `page is ${r.frames.visible}, cannot count animation frames`;
+  if (r.frames.calls > RAF_MAX_CALLS) return `requestAnimationFrame loop under reduced motion: ${r.frames.calls} calls in ${RAF_WINDOW_MS}ms with no input (max ${RAF_MAX_CALLS})`;
+  return null;
 }
 
 // Body >= 16px, every rendered p >= 14px, p over 80 chars >= 16px. Checked on desktop and phone widths.
@@ -236,10 +265,17 @@ async function checkSections(browser, file) {
   return count <= 7 ? null : `${count} h2 sections (max 7)`;
 }
 
-// Visible text and title: no banned words, no emoji. Plain text glyphs are exempt: copyright, registered and
-// trademark signs and the rating stars U+2605 / U+2606.
+// Visible text, the title, and text kept in attributes (alt, title, aria-label, placeholder on any element; the meta
+// description and the Open Graph / Twitter meta tags): no banned words, no emoji. Plain text glyphs are exempt:
+// copyright, registered and trademark signs and the rating stars U+2605 / U+2606.
 async function checkCopy(browser, file) {
-  const text = await withPage(browser, file, {}, (page) => page.evaluate(() => document.title + '\n' + document.body.innerText));
+  const text = await withPage(browser, file, {}, (page) => page.evaluate(() => {
+    const attrs = [...document.querySelectorAll('[alt], [title], [aria-label], [placeholder]')]
+      .flatMap((el) => ['alt', 'title', 'aria-label', 'placeholder'].map((a) => el.getAttribute(a) || ''));
+    const meta = [...document.querySelectorAll('meta[name="description"], meta[property^="og:"], meta[name^="og:"], meta[name^="twitter:"], meta[property^="twitter:"]')]
+      .map((m) => m.getAttribute('content') || '');
+    return [document.title, document.body.innerText, ...attrs, ...meta].join('\n');
+  }));
   const problems = [];
   const banned = [...new Set((text.match(BANNED_COPY) || []).map((w) => w.toLowerCase()))];
   if (banned.length) problems.push(`banned: ${banned.join(', ')}`);
@@ -343,8 +379,48 @@ async function checkBar(browser, file) {
 // at 1280 and 390, and 1.5s after load asserts: no uncaught exceptions and no console errors (Google Fonts failures
 // excepted, as in console); the first h1 and the primary CTA (first btn/cta-class link or button after that h1)
 // shown, judged as in nojs/offline; the static illustration ([data-fallback] inside the signature element) shown and
-// at least 120x120px; and at 390 no horizontal overflow.
+// at least 120x120px and really drawn (see fallbackInk); and at 390 no horizontal overflow.
 const WEBGL_OFF_ARGS = ['--disable-3d-apis', '--disable-gpu'];
+const FALLBACK_MIN_SHAPES = 3; // shape elements (path, circle, rect...) with a non-empty bounding box
+const FALLBACK_MIN_INK = 0.02; // share of the fallback's pixels that differ clearly from its most common colour
+
+// What the fallback actually draws: the number of shape elements inside it with a non-empty bounding box, and the
+// share of the pixels of its screenshot that differ by more than 32 (0-255, in any channel) from the most common colour
+// there. An empty <svg data-fallback></svg> has a box from CSS but no shapes and no ink. The PNG is decoded on a canvas
+// in a blank page of the same context.
+async function fallbackInk(page, sel) {
+  const shapes = await page.evaluate((s) => [...document.querySelector(s).querySelectorAll('path, circle, ellipse, rect, line, polyline, polygon, text, use, image')]
+    .filter((el) => { try { const b = el.getBBox(); return b.width > 0 || b.height > 0; } catch (e) { return false; } }).length, sel);
+  const png = await page.locator(sel).first().screenshot();
+  const blank = await page.context().newPage();
+  try {
+    const ink = await blank.evaluate(async (b64) => {
+      const img = new Image();
+      img.src = 'data:image/png;base64,' + b64;
+      await img.decode();
+      const c = document.createElement('canvas');
+      c.width = img.width;
+      c.height = img.height;
+      const ctx = c.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const d = ctx.getImageData(0, 0, c.width, c.height).data;
+      const counts = new Map();
+      for (let i = 0; i < d.length; i += 4) {
+        const k = `${d[i] >> 3},${d[i + 1] >> 3},${d[i + 2] >> 3}`;
+        counts.set(k, (counts.get(k) || 0) + 1);
+      }
+      const common = [...counts.entries()].sort((a, b) => b[1] - a[1])[0][0].split(',').map((v) => v * 8 + 4);
+      let inked = 0;
+      for (let i = 0; i < d.length; i += 4) {
+        if (Math.max(Math.abs(d[i] - common[0]), Math.abs(d[i + 1] - common[1]), Math.abs(d[i + 2] - common[2])) > 32) inked++;
+      }
+      return inked / (d.length / 4);
+    }, png.toString('base64'));
+    return { shapes, ink };
+  } finally {
+    await blank.close();
+  }
+}
 
 async function checkWebglOff(browser, file) {
   const off = await chromium.launch({ args: WEBGL_OFF_ARGS });
@@ -382,6 +458,9 @@ async function checkWebglOff(browser, file) {
           return { w: Math.round(r.width), h: Math.round(r.height) };
         }, fbSel);
         if (box.w < 120 || box.h < 120) return `fallback illustration only ${box.w}x${box.h}px (want at least 120x120)`;
+        const drawn = await fallbackInk(page, fbSel);
+        if (drawn.shapes < FALLBACK_MIN_SHAPES) return `fallback illustration has ${drawn.shapes} drawn shape(s) (want at least ${FALLBACK_MIN_SHAPES})`;
+        if (drawn.ink < FALLBACK_MIN_INK) return `fallback illustration is nearly blank: ${(drawn.ink * 100).toFixed(1)}% of its pixels drawn (want at least ${FALLBACK_MIN_INK * 100}%)`;
         if (width === 390) {
           const sw = await page.evaluate(() => ({ scroll: document.documentElement.scrollWidth, inner: window.innerWidth }));
           if (sw.scroll > sw.inner) return `scrollWidth ${sw.scroll}>${sw.inner}`;
